@@ -1,8 +1,8 @@
-module.exports = function(api) {
+module.exports = function(api: any) {
 	api.cache(true);
 
 	const presets = ["@babel/preset-env", "@babel/preset-react"];
-	const plugins = [];
+	const plugins: Array<any> = [];
 
 	return {
 		presets,

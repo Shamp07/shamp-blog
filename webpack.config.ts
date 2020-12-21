@@ -1,7 +1,8 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+import * as path from 'path';
+import * as webpack from 'webpack';
+const HtmlWebpackPlugin =  require('html-webpack-plugin');
 
-module.exports = {
+const config: webpack.Configuration = {
   mode: "development",
   entry: "./src/index",
 
@@ -52,7 +53,7 @@ module.exports = {
   },
 
   plugins: [
-    new HtmlWebpackPlugin({
+    new HtmlWebpackPlugin ({
       template: `./public/index.html`,
       favicon: './public/favicon.ico',
     })
@@ -64,3 +65,5 @@ module.exports = {
     port: 8080
   },
 };
+
+export default config;
