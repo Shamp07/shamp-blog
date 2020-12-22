@@ -1,15 +1,16 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Header from './layout/Header';
+// import Header from './components/layout/Header';
 
-const App: React.FC = () => {
+const Index: React.FC = () => {
   return (
     <Router>
       <GlobalStyle />
       <Switch>
-        <Route path='/**/' component={Header} />
-      </Switch></Router>
+        <div></div>
+      </Switch>
+    </Router>
   );
 };
 
@@ -20,4 +21,4 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export default App;
+export default Index;

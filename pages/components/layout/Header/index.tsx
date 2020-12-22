@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import { Container } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { Link } from 'react-router-dom';
-const logo = require('../../../resources/images/logo.png').default;
+import Link from 'next/link';
+const logo = require('../../../../src/resources/images/logo.png').default;
 
 const Header: React.FC = () => (
     <HeaderTopBar>
       <Container maxWidth="lg">
-        <Link to="/">
+        <Link href="/">
           <Logo src={logo} />
         </Link>
         <RightList>
