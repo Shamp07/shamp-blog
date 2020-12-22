@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from './layout/Header';
 import { createGlobalStyle } from 'styled-components'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Header from './layout/Header';
 
 const App: React.FC = () => {
   return (
@@ -9,10 +9,9 @@ const App: React.FC = () => {
       <GlobalStyle />
       <Switch>
         <Route path='/**/' component={Header} />
-      </Switch>
-    </Router>
+      </Switch></Router>
   );
-}
+};
 
 const GlobalStyle = createGlobalStyle`
   body {

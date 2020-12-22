@@ -1,16 +1,16 @@
-import React from 'react';
+import React from "react";
 import styled from 'styled-components';
 import { Container } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { Link } from 'react-router-dom';
+const logo = require('../../../resources/images/logo.png').default;
 
-const Header: React.FC = () => {
-  return (
+const Header: React.FC = () => (
     <HeaderTopBar>
       <Container maxWidth="lg">
         <Link to="/">
-          <Logo src={(require('../../../resources/images/logo.png').default)} />
+          <Logo src={logo} />
         </Link>
         <RightList>
           <li>
@@ -21,8 +21,7 @@ const Header: React.FC = () => {
         </RightList>
       </Container>
     </HeaderTopBar>
-  )
-}
+);
 
 const HeaderTopBar = styled.div`
   height: 70px;
@@ -33,7 +32,7 @@ const HeaderTopBar = styled.div`
 const RightList = styled.ul`
   list-style: none;
   float: right;
-`
+`;
 
 const NoStyleA = styled.a`
   color: #FFFFFF;
@@ -45,6 +44,6 @@ const Icon = styled(FontAwesomeIcon)`
 
 const Logo = styled.img`
   height: 70px;
-`
+`;
 
 export default Header;
