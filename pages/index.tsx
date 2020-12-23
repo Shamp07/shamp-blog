@@ -1,18 +1,13 @@
 import React from 'react';
-import { createGlobalStyle } from 'styled-components'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-// import Header from './components/layout/Header';
+import { createGlobalStyle } from 'styled-components';
+import Header from '../components/layout/Header';
 
-const Index: React.FC = () => {
-  return (
-    <Router>
-      <GlobalStyle />
-      <Switch>
-        <div></div>
-      </Switch>
-    </Router>
-  );
-};
+const Index: React.FC = () => (
+  <div>
+    <GlobalStyle />
+    <Header />
+  </div>
+);
 
 const GlobalStyle = createGlobalStyle`
   body {
