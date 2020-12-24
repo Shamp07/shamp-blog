@@ -21,6 +21,8 @@
   "homepage": "https://github.com/Shamp07/shamp-blog#readme",
   "devDependencies": {
     "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-proposal-decorators": "^7.12.12",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
     "@types/node": "^14.14.14",
@@ -50,9 +52,32 @@
     "@types/react-router": "^5.1.8",
     "@types/react-router-dom": "^5.1.6",
     "@types/styled-components": "^5.1.7",
+    "babel-preset-react-app": "^10.0.0",
+    "mobx": "^6.0.4",
+    "mobx-react": "^7.0.5",
+    "mobx-react-lite": "^3.1.6",
     "next": "^10.0.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "styled-components": "^5.2.1"
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ],
+    "plugins": [
+      [
+        "@babel/plugin-proposal-decorators",
+        {
+          "legacy": true
+        }
+      ],
+      [
+        "@babel/plugin-proposal-class-properties",
+        {
+          "loose": true
+        }
+      ]
+    ]
   }
 }
