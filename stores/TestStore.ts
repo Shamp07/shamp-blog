@@ -1,7 +1,8 @@
 import { observable, action } from 'mobx';
 
-class Todo {
+class TestStore {
   root: any;
+
   @observable test: string = 'hello mobx!';
 
   constructor(root: any) {
@@ -13,4 +14,4 @@ class Todo {
   };
 }
 
-export default Todo;
+export default TestStore;

@@ -63,7 +63,8 @@
   "include": [
     "./pages/",
     "./stores/",
-    "./webpack.config.js"
+    "./components",
+    "./database"
   ],
   "exclude": [
     "node_modules",

@@ -105,3 +105,6 @@ dist
 
 # WebStore
 .idea/
+
+# Database Config
+database/db.config.json
