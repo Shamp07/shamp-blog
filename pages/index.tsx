@@ -1,9 +1,9 @@
 import React from 'react';
-import Link from 'next/link';
+import Link from 'next/Link';
 
 const Index: React.FC = () => (
   <Link href="/test">
-    <span>ㅎ</span>
+    <span>Link (test)</span>
   </Link>
 );
 
