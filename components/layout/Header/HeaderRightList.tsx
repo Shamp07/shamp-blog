@@ -1,34 +1,66 @@
 import React from 'react';
 import styled from 'styled-components';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button } from '@material-ui/core';
 
 const HeaderRightList: React.FC = () => (
-  <ListWrapper>
-    <RightList>
-      <li>
-        <NoStyleA>
-          로그인
-        </NoStyleA>
-      </li>
-      <li>
-        <NoStyleA>
-          회원가입
-        </NoStyleA>
-      </li>
-      <GithubList>
-        <NoStyleA href="https://github.com/Shamp07">
-          <Icon icon={faGithub} />
-        </NoStyleA>
-      </GithubList>
-    </RightList>
-  </ListWrapper>
+  <>
+    <ListWrapper>
+      <RightList>
+        <li>
+          <NoStyleA>
+            로그인
+          </NoStyleA>
+        </li>
+        <li>
+          <NoStyleA>
+            회원가입
+          </NoStyleA>
+        </li>
+        <GithubList>
+          <NoStyleA href="https://github.com/Shamp07">
+            <Icon icon={faGithub} />
+          </NoStyleA>
+        </GithubList>
+      </RightList>
+    </ListWrapper>
+    <SidebarWrapper>
+      <SidebarButton>
+        <Icon2 icon={faBars} />
+      </SidebarButton>
+    </SidebarWrapper>
+  </>
 );
+
+const SidebarButton = styled.div`
+  display: none;
+  padding: 7px 10px 5px 10px;
+  border: #ffffff solid 1px;
+  border-radius: 5px;
+  margin: 9px;
+  cursor: pointer;
+  float: right;
+  transition: all 0.2s;
+  
+  @media (max-width: 1064px) {
+    display: inline-block;
+  }
+`;
+
+const SidebarWrapper = styled.div`
+  font-size: 12px;
+`;
 
 const ListWrapper = styled.div`
   width: 250px;
   height: 70px;
   float: right;
+  
+  @media (max-width: 1064px) {
+    display: none;
+  }
 `;
 
 const RightList = styled.ul`
@@ -60,6 +92,11 @@ const NoStyleA = styled.a`
   &:hover {
     color: #d0d0d0;
   }
+`;
+
+const Icon2 = styled(FontAwesomeIcon)`
+  font-size: 10px;
+  height: 20px;
 `;
 
 const Icon = styled(FontAwesomeIcon)`

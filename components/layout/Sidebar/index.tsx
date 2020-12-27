@@ -35,34 +35,38 @@ const Wrapper = styled.div`
   bottom: 0;
   right: 0;
   left: 0;
+  @media (max-width: 1064px) {
+    display: none;
+  }
 `;
 
 const Category = styled.div`
   width: 100%;
   background-color: #fff;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
   padding: 7px 0px;
-  
+
   & > ul {
     list-style: none;
   }
-  
+
   & > ul > li {
-    height: 45px;
-    line-height: 45px;
+    height: 40px;
+    line-height: 40px;
     margin: 4px 0px 4px 15px;
     padding-left: 15px;
     cursor: pointer;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
+    color: #616161;
     font-size: 14px;
-    color: #1e2022;
-    
+    font-weight: bold;
+
     &:hover {
       background-color: #e6e6e6;
       transition: all 0.3s;
     }
-    
+
     &.active {
       color: #fff;
       background-color: #2d79c7;

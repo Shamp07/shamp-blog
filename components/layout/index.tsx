@@ -9,7 +9,7 @@ const Layout: React.FC = ({ children }: any) => (
   <Wrapper>
     <GlobalStyle />
     <Header />
-    <CenterContent maxWidth="lg">
+    <CenterContent>
       <SideBar />
       <Content />
     </CenterContent>
@@ -22,10 +22,17 @@ const Wrapper = styled.div`
   min-height: 100vh;
 `;
 
-const CenterContent = styled(Container)`
-  margin-top: -200px;
+const CenterContent = styled.div`
+  margin: -200px auto 0 auto;
   height: 100vh;
   position: relative;
+  max-width: 1044px;
+  
+  @media (max-width: 1064px) {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    margin-top: 10px;
+  }
 `;
 
 const GlobalStyle = createGlobalStyle`
