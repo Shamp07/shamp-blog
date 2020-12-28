@@ -1,28 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
+import useStores from '../../../stores/useStores';
+import CategoryList from './CategoryList';
 
-const Sidebar: React.FC = () => (
-  <Wrapper>
-    <TopCategory>
-      <ul>
-        <li className="active">홈</li>
-        <li>프로필</li>
-        <li>일상</li>
-      </ul>
-    </TopCategory>
-    <BottomCategory>
-      <ul>
-        <li>전체 글</li>
-        <li>인기 글</li>
-        <li>JavaScript</li>
-        <li>TypeScript</li>
-        <li>React</li>
-        <li>React Native</li>
-        <li>NodeJS</li>
-      </ul>
-    </BottomCategory>
-  </Wrapper>
-);
+const Sidebar: React.FC = () => {
+  const { SidebarStore } = useStores();
+  const { topCategoryList, bottomCategoryList } = SidebarStore;
+  return (
+    <Wrapper>
+      <TopCategory>
+        <ul>
+          <CategoryList array={topCategoryList} />
+        </ul>
+      </TopCategory>
+      <BottomCategory>
+        <ul>
+          <CategoryList array={bottomCategoryList} />
+        </ul>
+      </BottomCategory>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.div`
   display: block;
@@ -44,7 +42,7 @@ const Category = styled.div`
   width: 100%;
   background-color: #fff;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
-  padding: 7px 0px;
+  padding: 7px 0;
 
   & > ul {
     list-style: none;
@@ -52,8 +50,8 @@ const Category = styled.div`
 
   & > ul > li {
     height: 40px;
-    line-height: 40px;
-    margin: 4px 0px 4px 15px;
+    line-height: 41px;
+    margin: 4px 0 4px 15px;
     padding-left: 15px;
     cursor: pointer;
     border-top-left-radius: 10px;
@@ -68,10 +66,22 @@ const Category = styled.div`
     }
 
     &.active {
-      color: #fff;
       background-color: #2d79c7;
       transition: all 0.3s;
+      
+      & > a {
+        color: #fff;
+      }
     }
+    
+    & > a {
+      display: inline-block;
+      color: #616161;
+      text-decoration: none;
+      width: 100%;
+      height: 100%;
+    }
+
   }
 `;
 

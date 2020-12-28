@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Content: React.FC = () => (
+const Content: React.FC = ({ children }: any) => (
   <Wrapper>
-    컨텐츠
+    {children}
   </Wrapper>
 );
 

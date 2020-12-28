@@ -1,6 +1,5 @@
 import React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import { Container } from '@material-ui/core';
 import Header from './Header';
 import SideBar from './Sidebar';
 import Content from './Content';
@@ -11,9 +10,10 @@ const Layout: React.FC = ({ children }: any) => (
     <Header />
     <CenterContent>
       <SideBar />
-      <Content />
+      <Content>
+        {children}
+      </Content>
     </CenterContent>
-    {/* {children} */}
   </Wrapper>
 );
 
@@ -29,8 +29,8 @@ const CenterContent = styled.div`
   max-width: 1044px;
   
   @media (max-width: 1064px) {
-    padding-left: 0px !important;
-    padding-right: 0px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
     margin-top: 10px;
   }
 `;

@@ -1,10 +1,10 @@
-import TestStore from './TestStore';
+import SidebarStore from './SidebarStore';
 
 class RootStore {
-  TestStore: TestStore;
+  SidebarStore: SidebarStore;
 
   constructor() {
-    this.TestStore = new TestStore(this);
+    this.SidebarStore = new SidebarStore(this);
   }
 }
 
