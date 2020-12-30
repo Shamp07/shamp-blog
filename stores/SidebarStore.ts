@@ -1,3 +1,5 @@
+import { action, observable } from 'mobx';
+
 class SidebarStore {
   root: any;
 
@@ -35,9 +37,15 @@ class SidebarStore {
     path: '/category/nodejs',
   }];
 
+  @observable count = 0;
+
   constructor(root: any) {
     this.root = root;
   }
+
+  @action plusCount = () => {
+    this.count += 1;
+  };
 }
 
 export default SidebarStore;

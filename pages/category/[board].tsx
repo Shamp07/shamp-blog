@@ -1,13 +1,15 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { observer } from 'mobx-react';
+import useStores from '../../stores/useStores';
 
 const Board: React.FC = () => {
-  const router = useRouter();
+  const { SidebarStore } = useStores();
+
   return (
     <div>
-      {router.query.board}
-      &nbsp;
-      게시판입니다.
+      <button type="button" onClick={SidebarStore.plusCount}>+</button>
+      {SidebarStore.count}
     </div>
   );
 };

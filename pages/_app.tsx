@@ -2,7 +2,9 @@ import React from 'react';
 import { Provider } from 'mobx-react';
 import Head from 'next/head';
 import stores from '../stores';
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
+
+React.useLayoutEffect = React.useEffect;
 
 const MyApp = ({ Component, pageProps }: any) => (
   <Provider {...stores}>

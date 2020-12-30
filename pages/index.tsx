@@ -1,10 +1,15 @@
 import React from 'react';
-import Link from 'next/Link';
+import { observer } from 'mobx-react';
+import useStores from '../stores/useStores';
 
-const Index: React.FC = () => (
-  <Link href="/test">
-    <span>Link (test)</span>
-  </Link>
-);
+const CountPage = observer(() => {
+  const { SidebarStore } = useStores();
+  return (
+    <div>
+      <button type="button" onClick={SidebarStore.plusCount}>+</button>
+      {SidebarStore.count}
+    </div>
+  );
+});
 
-export default Index;
+export default CountPage;
