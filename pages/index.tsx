@@ -1,15 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import useStores from '../stores/useStores';
 
-const CountPage = observer(() => {
-  const { SidebarStore } = useStores();
-  return (
-    <div>
-      <button type="button" onClick={SidebarStore.plusCount}>+</button>
-      {SidebarStore.count}
-    </div>
-  );
-});
+const Pages = () => (
+  <div>
+    홈 페이지 입니다.
+  </div>
+);
 
-export default CountPage;
+export default observer(Pages);

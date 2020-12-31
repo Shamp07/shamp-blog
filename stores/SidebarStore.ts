@@ -37,14 +37,14 @@ class SidebarStore {
     path: '/category/nodejs',
   }];
 
-  @observable count = 0;
+  @observable isOpenSidebar = false;
 
   constructor(root: any) {
     this.root = root;
   }
 
-  @action plusCount = () => {
-    this.count += 1;
+  @action toggleSidebar = () => {
+    this.isOpenSidebar = !this.isOpenSidebar;
   };
 }
 

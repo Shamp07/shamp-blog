@@ -3,11 +3,13 @@ import styled, { createGlobalStyle } from 'styled-components';
 import Header from './Header';
 import SideBar from './Sidebar';
 import Content from './Content';
+import Backdrop from './Sidebar/Backdrop';
 
 const Layout: React.FC = ({ children }: any) => (
   <Wrapper>
     <GlobalStyle />
     <Header />
+    <Backdrop />
     <CenterContent>
       <SideBar />
       <Content>

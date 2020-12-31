@@ -1,18 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
+import { observer } from 'mobx-react';
 import useStores from '../../../stores/useStores';
 import CategoryList from './CategoryList';
 
 const Sidebar: React.FC = () => {
   const { SidebarStore } = useStores();
-  const { topCategoryList, bottomCategoryList } = SidebarStore;
+  const { topCategoryList, bottomCategoryList, isOpenSidebar } = SidebarStore;
   return (
-    <Wrapper>
-      <TopCategory>
+    <Wrapper isOpenSidebar={isOpenSidebar}>
+      <Category>
         <ul>
           <CategoryList array={topCategoryList} />
         </ul>
-      </TopCategory>
+      </Category>
       <BottomCategory>
         <ul>
           <CategoryList array={bottomCategoryList} />
@@ -22,19 +23,24 @@ const Sidebar: React.FC = () => {
   );
 };
 
-const Wrapper = styled.div`
+interface Container {
+  isOpenSidebar: boolean;
+}
+
+const Wrapper = styled.div<Container>`
   display: block;
-  width: 300px;
+  width: 250px;
   height: 300px;
   float: left;
   z-index: 1000;
   will-change: min-height;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
   @media (max-width: 1064px) {
-    display: none;
+    background-color: #fff;
+    display: ${(props) => (props.isOpenSidebar ? 'block' : 'none')};
+    position: fixed;
+    height: 100vh;
+    top: 0;
+    right: 0;
   }
 `;
 
@@ -43,7 +49,11 @@ const Category = styled.div`
   background-color: #fff;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
   padding: 7px 0;
-
+  
+  @media (max-width: 1064px) {
+    box-shadow: none !important;
+  }
+  
   & > ul {
     list-style: none;
   }
@@ -81,16 +91,14 @@ const Category = styled.div`
       width: 100%;
       height: 100%;
     }
-
   }
-`;
-
-const TopCategory = styled(Category)`
-  
 `;
 
 const BottomCategory = styled(Category)`
   margin-top: 10px;
+  @media (max-width: 1064px) {
+    margin-top: 0px;
+  }
 `;
 
-export default Sidebar;
+export default observer(Sidebar);

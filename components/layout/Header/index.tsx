@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import HeaderLeftLogo from './HeaderLeftLogo';
 import HeaderRightList from './HeaderRightList';
+import SignModal from '../../util/SignModal';
 
 const Header: React.FC = () => (
   <div>
@@ -12,6 +13,7 @@ const Header: React.FC = () => (
       </ResponsiveContainer>
     </HeaderTopBar>
     <BackgroundImage />
+    <SignModal />
   </div>
 );
 

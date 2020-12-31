@@ -3,36 +3,41 @@ import styled from 'styled-components';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button } from '@material-ui/core';
+import useStores from '../../../stores/useStores';
 
-const HeaderRightList: React.FC = () => (
-  <>
-    <ListWrapper>
-      <RightList>
-        <li>
-          <NoStyleA>
-            로그인
-          </NoStyleA>
-        </li>
-        <li>
-          <NoStyleA>
-            회원가입
-          </NoStyleA>
-        </li>
-        <GithubList>
-          <NoStyleA href="https://github.com/Shamp07">
-            <Icon icon={faGithub} />
-          </NoStyleA>
-        </GithubList>
-      </RightList>
-    </ListWrapper>
-    <SidebarWrapper>
-      <SidebarButton>
-        <Icon2 icon={faBars} />
-      </SidebarButton>
-    </SidebarWrapper>
-  </>
-);
+const HeaderRightList: React.FC = () => {
+  const { SignStore, SidebarStore } = useStores();
+  const { openSignModal } = SignStore;
+  const { toggleSidebar } = SidebarStore;
+  return (
+    <>
+      <ListWrapper>
+        <RightList>
+          <li>
+            <NoStyleA onClick={openSignModal}>
+              로그인
+            </NoStyleA>
+          </li>
+          <li>
+            <NoStyleA>
+              회원가입
+            </NoStyleA>
+          </li>
+          <GithubList>
+            <NoStyleA href="https://github.com/Shamp07">
+              <Icon icon={faGithub} />
+            </NoStyleA>
+          </GithubList>
+        </RightList>
+      </ListWrapper>
+      <SidebarWrapper>
+        <SidebarButton onClick={toggleSidebar}>
+          <Icon2 icon={faBars} />
+        </SidebarButton>
+      </SidebarWrapper>
+    </>
+  );
+};
 
 const SidebarButton = styled.div`
   display: none;
