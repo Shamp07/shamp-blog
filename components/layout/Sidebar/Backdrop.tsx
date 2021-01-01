@@ -5,9 +5,9 @@ import useStores from '../../../stores/useStores';
 
 const Backdrop: React.FC = () => {
   const { SidebarStore } = useStores();
-  const { isOpenSidebar } = SidebarStore;
+  const { isOpenSidebar, toggleSidebar } = SidebarStore;
   return (
-    <SidebarBackdrop isOpenSidebar={isOpenSidebar} />
+    <SidebarBackdrop isOpenSidebar={isOpenSidebar} onClick={toggleSidebar} />
   );
 };
 

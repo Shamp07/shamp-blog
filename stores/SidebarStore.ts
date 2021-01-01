@@ -37,6 +37,16 @@ class SidebarStore {
     path: '/category/nodejs',
   }];
 
+  bottomCategoryName: object = {
+    all: '전체 글',
+    best: '인기 글',
+    javascript: 'JavaScript',
+    typescript: 'TypeScript',
+    react: 'React',
+    rn: 'React Native',
+    nodejs: 'NodeJS',
+  };
+
   @observable isOpenSidebar = false;
 
   constructor(root: any) {

@@ -36,9 +36,9 @@ const SignModal: React.FC = () => {
           <Button variant="contained" color="primary">
             회원가입
           </Button>
-          <Button variant="contained" color="primary">
+          <RightButton variant="contained" color="primary">
             로그인
-          </Button>
+          </RightButton>
         </Paper>
       </Fade>
     </CustomModal>
@@ -52,10 +52,20 @@ const CustomModal = styled(Modal)`
 `;
 
 const Paper = styled.div`
+  margin: 0 20px;
+  
   max-width: 100%;
   background-color: #fff;
   border: 2px solid #000;
   padding: 10px;
+  
+  &:focus {
+    outline: 0;
+  }
+`;
+
+const RightButton = styled(Button)`
+  float: right;
 `;
 
 export default observer(SignModal);

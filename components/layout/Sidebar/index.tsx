@@ -1,14 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
 import { observer } from 'mobx-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import useStores from '../../../stores/useStores';
 import CategoryList from './CategoryList';
 
 const Sidebar: React.FC = () => {
-  const { SidebarStore } = useStores();
-  const { topCategoryList, bottomCategoryList, isOpenSidebar } = SidebarStore;
+  const { SidebarStore, SignStore } = useStores();
+  const {
+    topCategoryList, bottomCategoryList, isOpenSidebar, toggleSidebar,
+  } = SidebarStore;
+  const { openSignModal } = SignStore;
   return (
     <Wrapper isOpenSidebar={isOpenSidebar}>
+      <MobileMenu>
+        <CloseIcon icon={faTimes} onClick={toggleSidebar} />
+      </MobileMenu>
+      <MobileMenu>
+        <TopMenu onClick={openSignModal}>로그인</TopMenu>
+        <TopMenu>회원가입</TopMenu>
+      </MobileMenu>
       <Category>
         <ul>
           <CategoryList array={topCategoryList} />
@@ -29,19 +41,48 @@ interface Container {
 
 const Wrapper = styled.div<Container>`
   display: block;
-  width: 250px;
+  width: 300px;
   height: 300px;
   float: left;
   z-index: 1000;
   will-change: min-height;
+  
   @media (max-width: 1064px) {
     background-color: #fff;
     display: ${(props) => (props.isOpenSidebar ? 'block' : 'none')};
     position: fixed;
     height: 100vh;
+    width: 250px;
     top: 0;
     right: 0;
   }
+`;
+
+const MobileMenu = styled.div`
+  display: none;
+  -webkit-tap-highlight-color: transparent;
+  height: 40px;
+  @media (max-width: 1064px) {
+    display: block;
+  }
+`;
+
+const TopMenu = styled.div`
+  width: 40%;
+  padding: 10px;
+  display: inline-block;
+  text-align: center;
+  color: #616161;
+  font-weight: bold;
+`;
+
+const CloseIcon = styled(FontAwesomeIcon)`
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  height: 20px;
+  color: #616161;
+  
 `;
 
 const Category = styled.div`
@@ -52,6 +93,7 @@ const Category = styled.div`
   
   @media (max-width: 1064px) {
     box-shadow: none !important;
+    border-top: 1px solid #e6e6e6;
   }
   
   & > ul {
@@ -62,17 +104,20 @@ const Category = styled.div`
     height: 40px;
     line-height: 41px;
     margin: 4px 0 4px 15px;
-    padding-left: 15px;
     cursor: pointer;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     color: #616161;
     font-size: 14px;
     font-weight: bold;
-
+    
     &:hover {
       background-color: #e6e6e6;
       transition: all 0.3s;
+    }
+
+    @media (max-width: 1064px) {
+      outline: none;
     }
 
     &.active {
@@ -87,6 +132,7 @@ const Category = styled.div`
     & > a {
       display: inline-block;
       color: #616161;
+      padding-left: 14px;
       text-decoration: none;
       width: 100%;
       height: 100%;
@@ -97,7 +143,7 @@ const Category = styled.div`
 const BottomCategory = styled(Category)`
   margin-top: 10px;
   @media (max-width: 1064px) {
-    margin-top: 0px;
+    margin-top: 0;
   }
 `;
 
