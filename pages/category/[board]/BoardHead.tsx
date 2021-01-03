@@ -5,11 +5,11 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { observer } from 'mobx-react';
-import useStores from '../../stores/useStores';
+import useStores from '../../../stores/useStores';
 
 const BoardHead: React.FC = () => {
   const router = useRouter();
-  const { SidebarStore } = useStores();
+  const { SidebarStore, AlertStore } = useStores();
   const { bottomCategoryName } = SidebarStore;
   const { board } = router.query;
 
@@ -18,12 +18,14 @@ const BoardHead: React.FC = () => {
       <HeadSection>
         <SubTitle>
           <h2>
-            {bottomCategoryName[board]}
+            {bottomCategoryName[board.toString()]}
           </h2>
           <AbsoluteUl>
             <li>
-              <Link href="/post">
-                <CustomIcon icon={faPen} />
+              <Link href="post">
+                <span>
+                  <CustomIcon icon={faPen} />
+                </span>
               </Link>
             </li>
           </AbsoluteUl>
@@ -32,28 +34,28 @@ const BoardHead: React.FC = () => {
       <HeadSection>
         <BoardTag>
           <li>
-            <Link href="best">
+            <Link href="/">
               인기글
             </Link>
           </li>
           <li>
-            <Link href="best">
+            <Link href="/">
               전체
             </Link>
           </li>
           <li>
-            <Link href="best">
-              전체
+            <Link href="/">
+              Redux
             </Link>
           </li>
           <li>
-            <Link href="best">
-              전체
+            <Link href="/">
+              Reducer
             </Link>
           </li>
           <li>
-            <Link href="best">
-              전체
+            <Link href="/">
+              MobX
             </Link>
           </li>
         </BoardTag>
@@ -79,6 +81,12 @@ const BoardTag = styled.ul`
     width: 75px;
   }
 
+  & > li:first-child > a {
+    border: #CCCC00 1.5px solid;
+    background-color: white;
+    color: #CCCC00;
+  }
+
   & > li:last-child {
     padding-right: 10px;
   }
@@ -86,12 +94,13 @@ const BoardTag = styled.ul`
   & > li > a {
     display: inline-block;
     width: 65px;
-    padding: 5px 5px;
+    padding: 3px 5px;
     text-align: center;
     text-decoration: none;
-    color: #000;
     background-color: #e6e6e6;
     border-radius: 12px;
+    font-weight: bold;
+    color: #616161;
   }
 `;
 
@@ -111,6 +120,10 @@ const SubTitle = styled.div`
   
   & > li {
     cursor: pointer;
+    
+    & > {
+      
+    }
   }
 `;
 

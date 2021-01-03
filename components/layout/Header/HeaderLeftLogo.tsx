@@ -24,7 +24,7 @@ const HeaderLeftLogo: React.FC = () => (
 );
 
 const ResponsiveLogo = styled.span`
-  background-image: url("./logo.png");
+  background-image: url("/logo.png");
   @media (max-width: 1064px) {
     background-image: url("/logo_54x54.png");
     width: 56px !important;

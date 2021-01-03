@@ -66,8 +66,6 @@ const Vote = styled.div`
     width: 48px;
   }
     
-  }
-  
   & > div:last-child {
     margin-top: 5px;
     line-height: 17px;

@@ -47,7 +47,7 @@ class SidebarStore {
     nodejs: 'NodeJS',
   };
 
-  @observable isOpenSidebar = false;
+  @observable isOpenSidebar: boolean = false;
 
   constructor(root: any) {
     this.root = root;

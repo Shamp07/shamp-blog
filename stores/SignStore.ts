@@ -14,7 +14,7 @@ class SignStore {
     password: '',
   };
 
-  @observable isOpenSignModal = false;
+  @observable isOpenSignModal: boolean = false;
 
   constructor(root: any) {
     this.root = root;
