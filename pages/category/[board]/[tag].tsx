@@ -1,16 +1,8 @@
 import React from 'react';
-import { useRouter } from 'next/router';
-import BoardHead from './BoardHead';
-import BoardContent from './BoardContent';
+import Board from '.';
 
-const BoardTag: React.FC = () => {
-  const router = useRouter();
-  return (
-    <div>
-      <BoardHead />
-      <BoardContent />
-    </div>
-  );
-};
+const BoardTag: React.FC = () => (
+  <Board />
+);
 
 export default BoardTag;

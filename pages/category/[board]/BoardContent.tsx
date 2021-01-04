@@ -14,7 +14,8 @@ const BoardContent: React.FC = () => (
       </Vote>
       <ArticleContent>
         <PostTitle>
-          으 장염걸림
+          <span>으 장염걸림</span>
+          <span>[10]</span>
         </PostTitle>
         <PostInfo>
           <PostInfoUl>
@@ -54,6 +55,9 @@ const Article = styled.article`
   border-top: 1px solid #ebeef1;
   background-color: #fff;
   padding: 8px 0;
+  &:hover {
+    background-color: #f8f9fa;
+  }
 `;
 
 const Vote = styled.div`
@@ -77,10 +81,17 @@ const Vote = styled.div`
 const ArticleContent = styled.div`
   vertical-align: middle;
   display: table-cell;
+
 `;
 
 const PostTitle = styled.div`
-
+  & > span:first-child {
+    padding-right: 5px;
+  }
+  
+  & > span:last-child {
+    color: #2d79c7;    
+  }
 `;
 
 const PostInfo = styled.div`

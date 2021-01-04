@@ -26,10 +26,12 @@ const AlertModal: React.FC = () => {
       <Fade in={isOpenAlertModal}>
         <Paper>
           <h2 id="transition-modal-title">알림</h2>
-          {text}
-          <RightButton variant="contained" color="primary">
-            닫기
-          </RightButton>
+          <TextDiv>{text}</TextDiv>
+          <div>
+            <RightButton variant="contained" color="primary" onClick={() => toggleAlertModal('')}>
+              닫기
+            </RightButton>
+          </div>
         </Paper>
       </Fade>
     </CustomModal>
@@ -57,6 +59,10 @@ const Paper = styled.div`
 
 const RightButton = styled(Button)`
   float: right;
+`;
+
+const TextDiv = styled.div`
+  margin: 10px 0;
 `;
 
 export default observer(AlertModal);

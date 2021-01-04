@@ -4,6 +4,7 @@ class AlertStore {
   root: any;
 
   @observable isOpenAlertModal: boolean = false;
+
   @observable text: string = '';
 
   constructor(root: any) {

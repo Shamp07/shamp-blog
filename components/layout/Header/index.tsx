@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import HeaderLeftLogo from './HeaderLeftLogo';
 import HeaderRightList from './HeaderRightList';
 import SignModal from '../../util/SignModal';
+import AlertModal from '../../util/AlertModal';
 
 const Header: React.FC = () => (
   <div>
@@ -14,6 +15,7 @@ const Header: React.FC = () => (
     </HeaderTopBar>
     <BackgroundImage />
     <SignModal />
+    <AlertModal />
   </div>
 );
 

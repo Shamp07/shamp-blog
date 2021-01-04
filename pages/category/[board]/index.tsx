@@ -16,11 +16,10 @@ const Board: React.FC = () => {
   }
 
   if (!bottomCategoryName[board.toString()]) {
-    toggleAlertModal('존재하지 않는 게시판입니다.');
-    return (<>으악!</>);
-    // router.push('/').then(() => {
-    //
-    // });
+    router.push('/').then(() => {
+      toggleAlertModal('존재하지 않는 게시판입니다.');
+    });
+    return (<></>);
   }
 
   return (

@@ -8,7 +8,6 @@ const Content: React.FC = ({ children }: any) => (
 );
 
 const Wrapper = styled.div`
-
   float: right;
   box-sizing: border-box;
   width: 728px;

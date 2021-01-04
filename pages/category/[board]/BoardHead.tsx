@@ -9,16 +9,19 @@ import useStores from '../../../stores/useStores';
 
 const BoardHead: React.FC = () => {
   const router = useRouter();
-  const { SidebarStore, AlertStore } = useStores();
+  const { SidebarStore } = useStores();
   const { bottomCategoryName } = SidebarStore;
-  const { board } = router.query;
+  const boardValue = router.query.board as string;
+  const boardTag = router.query.tag as string;
+  console.log(boardValue);
+  console.log(router.query);
 
   return (
     <Wrapper>
       <HeadSection>
         <SubTitle>
           <h2>
-            {bottomCategoryName[board.toString()]}
+            {bottomCategoryName[boardValue]}
           </h2>
           <AbsoluteUl>
             <li>
@@ -33,31 +36,31 @@ const BoardHead: React.FC = () => {
       </HeadSection>
       <HeadSection>
         <BoardTag>
-          <li>
-            <Link href="/">
+          <BoardTagList active={boardTag === 'best'}>
+            <Link href={boardValue.concat('/best')}>
               인기글
             </Link>
-          </li>
-          <li>
-            <Link href="/">
+          </BoardTagList>
+          <BoardTagList active={boardTag === undefined}>
+            <Link href={`./${boardValue}`}>
               전체
             </Link>
-          </li>
-          <li>
-            <Link href="/">
+          </BoardTagList>
+          <BoardTagList active={boardTag === 'redux'}>
+            <Link href={boardValue.concat('/redux')}>
               Redux
             </Link>
-          </li>
-          <li>
-            <Link href="/">
+          </BoardTagList>
+          <BoardTagList active={boardTag === 'reducer'}>
+            <Link href={boardValue.concat('/reducer')}>
               Reducer
             </Link>
-          </li>
-          <li>
-            <Link href="/">
+          </BoardTagList>
+          <BoardTagList active={boardTag === 'mobx'}>
+            <Link href={boardValue.concat('/mobx')}>
               MobX
             </Link>
-          </li>
+          </BoardTagList>
         </BoardTag>
       </HeadSection>
     </Wrapper>
@@ -74,7 +77,7 @@ const BoardTag = styled.ul`
   height: 48px;
   overflow: auto;
   white-space:nowrap;
-  
+
   & > li {
     display: inline-block;
     padding: 10px 0 10px 12px;
@@ -94,13 +97,24 @@ const BoardTag = styled.ul`
   & > li > a {
     display: inline-block;
     width: 65px;
-    padding: 3px 5px;
+    padding: 4px 5px;
     text-align: center;
     text-decoration: none;
     background-color: #e6e6e6;
     border-radius: 12px;
+    font-size: 15px;
     font-weight: bold;
     color: #616161;
+`;
+
+interface TagInterface {
+  active: boolean;
+}
+
+const BoardTagList = styled.li<TagInterface>`
+  & > a {
+    ${(props) => (props.active ? 'background-color: #2d79c7 !important;' : null)}
+    ${(props) => (props.active ? 'color: #fff !important;' : null)}
   }
 `;
 
@@ -120,10 +134,6 @@ const SubTitle = styled.div`
   
   & > li {
     cursor: pointer;
-    
-    & > {
-      
-    }
   }
 `;
 
