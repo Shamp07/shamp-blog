@@ -14,30 +14,30 @@ class SidebarStore {
     path: '/life',
   }];
 
-  bottomCategoryList: Array<object> = [{
+  boardCategoryList: Array<object> = [{
     name: '전체 글',
-    path: '/category/all',
+    path: 'all',
   }, {
     name: '인기 글',
-    path: '/category/best',
+    path: 'best',
   }, {
     name: 'JavaScript',
-    path: '/category/javascript',
+    path: 'javascript',
   }, {
     name: 'TypeScript',
-    path: '/category/typescript',
+    path: 'typescript',
   }, {
     name: 'React',
-    path: '/category/react',
+    path: 'react',
   }, {
     name: 'React Native',
-    path: '/category/rn',
+    path: 'rn',
   }, {
     name: 'NodeJS',
-    path: '/category/nodejs',
+    path: 'nodejs',
   }];
 
-  bottomCategoryName: object = {
+  boardCategoryName: object = {
     all: '전체 글',
     best: '인기 글',
     javascript: 'JavaScript',

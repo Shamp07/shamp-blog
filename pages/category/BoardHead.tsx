@@ -5,23 +5,22 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { observer } from 'mobx-react';
-import useStores from '../../../stores/useStores';
+import useStores from '../../stores/useStores';
 
 const BoardHead: React.FC = () => {
   const router = useRouter();
   const { SidebarStore } = useStores();
-  const { bottomCategoryName } = SidebarStore;
-  const boardValue = router.query.board as string;
-  const boardTag = router.query.tag as string;
-  console.log(boardValue);
-  console.log(router.query);
+  const { boardCategoryName } = SidebarStore;
+  const boardParams = router.query.board as Array<string>;
+  const boardPath = boardParams[0];
+  const boardTag = boardParams[1];
 
   return (
     <Wrapper>
       <HeadSection>
         <SubTitle>
           <h2>
-            {bottomCategoryName[boardValue]}
+            {boardCategoryName[boardPath]}
           </h2>
           <AbsoluteUl>
             <li>
@@ -36,28 +35,28 @@ const BoardHead: React.FC = () => {
       </HeadSection>
       <HeadSection>
         <BoardTag>
-          <BoardTagList active={boardTag === 'best'}>
-            <Link href={boardValue.concat('/best')}>
+          <BoardTagBest active={boardTag === 'best'}>
+            <Link href={`/category/${boardPath}/best`}>
               인기글
             </Link>
-          </BoardTagList>
+          </BoardTagBest>
           <BoardTagList active={boardTag === undefined}>
-            <Link href={`./${boardValue}`}>
+            <Link href={`/category/${boardPath}/`}>
               전체
             </Link>
           </BoardTagList>
           <BoardTagList active={boardTag === 'redux'}>
-            <Link href={boardValue.concat('/redux')}>
+            <Link href={`/category/${boardPath}/redux`}>
               Redux
             </Link>
           </BoardTagList>
           <BoardTagList active={boardTag === 'reducer'}>
-            <Link href={boardValue.concat('/reducer')}>
+            <Link href={`/category/${boardPath}/reducer`}>
               Reducer
             </Link>
           </BoardTagList>
           <BoardTagList active={boardTag === 'mobx'}>
-            <Link href={boardValue.concat('/mobx')}>
+            <Link href={`/category/${boardPath}/mobx`}>
               MobX
             </Link>
           </BoardTagList>
@@ -84,12 +83,6 @@ const BoardTag = styled.ul`
     width: 75px;
   }
 
-  & > li:first-child > a {
-    border: #CCCC00 1.5px solid;
-    background-color: white;
-    color: #CCCC00;
-  }
-
   & > li:last-child {
     padding-right: 10px;
   }
@@ -105,6 +98,8 @@ const BoardTag = styled.ul`
     font-size: 15px;
     font-weight: bold;
     color: #616161;
+    transition: all 0.2s;
+  }
 `;
 
 interface TagInterface {
@@ -113,8 +108,19 @@ interface TagInterface {
 
 const BoardTagList = styled.li<TagInterface>`
   & > a {
-    ${(props) => (props.active ? 'background-color: #2d79c7 !important;' : null)}
     ${(props) => (props.active ? 'color: #fff !important;' : null)}
+    ${(props) => (props.active ? 'background-color: #2d79c7 !important;' : null)}
+  }
+`;
+
+const BoardTagBest = styled.li<TagInterface>`
+  & > a {
+    border: #cccc00 1.5px solid;
+    background-color: white !important;
+    color: #cccc00 !important;
+    
+    ${(props) => (props.active ? 'color: #fff !important;' : null)}
+    ${(props) => (props.active ? 'background-color: #cccc00 !important;' : null)}
   }
 `;
 

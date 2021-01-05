@@ -9,7 +9,7 @@ import CategoryList from './CategoryList';
 const Sidebar: React.FC = () => {
   const { SidebarStore, SignStore } = useStores();
   const {
-    topCategoryList, bottomCategoryList, isOpenSidebar, toggleSidebar,
+    topCategoryList, boardCategoryList, isOpenSidebar, toggleSidebar,
   } = SidebarStore;
   const { openSignModal } = SignStore;
   return (
@@ -28,7 +28,7 @@ const Sidebar: React.FC = () => {
       </Category>
       <BottomCategory>
         <ul>
-          <CategoryList array={bottomCategoryList} />
+          <CategoryList array={boardCategoryList} />
         </ul>
       </BottomCategory>
     </Wrapper>

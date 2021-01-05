@@ -9,9 +9,12 @@ interface CategoryProps {
 
 const Category: React.FC<CategoryProps> = ({ path, name }: CategoryProps) => {
   const router = useRouter();
+  const boardParams = router.query.board as Array<string>;
+  const boardPath = boardParams ? boardParams[0] : '';
+
   return (
-    <li className={router.asPath === path ? 'active' : ''}>
-      <Link href={path}>{name}</Link>
+    <li className={boardPath === path ? 'active' : ''}>
+      <Link href={`/category/${path}`}>{name}</Link>
     </li>
   );
 };
