@@ -4,7 +4,12 @@ import { observer } from 'mobx-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import useStores from '../../../stores/useStores';
-import CategoryList from './CategoryList';
+import Category from './Category';
+
+interface CategoryProps {
+  path: string,
+  name: string,
+}
 
 const Sidebar: React.FC = () => {
   const { SidebarStore, SignStore } = useStores();
@@ -21,14 +26,18 @@ const Sidebar: React.FC = () => {
         <TopMenu onClick={openSignModal}>로그인</TopMenu>
         <TopMenu>회원가입</TopMenu>
       </MobileMenu>
-      <Category>
+      <CategoryWrapper>
         <ul>
-          <CategoryList array={topCategoryList} />
+          {topCategoryList.map(
+            (data: CategoryProps) => <Category path={data.path} name={data.name} key={data.path} />,
+          )}
         </ul>
-      </Category>
+      </CategoryWrapper>
       <BottomCategory>
         <ul>
-          <CategoryList array={boardCategoryList} />
+          {boardCategoryList.map(
+            (data: CategoryProps) => <Category path={data.path} name={data.name} key={data.path} />,
+          )}
         </ul>
       </BottomCategory>
     </Wrapper>
@@ -85,7 +94,7 @@ const CloseIcon = styled(FontAwesomeIcon)`
   
 `;
 
-const Category = styled.div`
+const CategoryWrapper = styled.div`
   width: 100%;
   background-color: #fff;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
@@ -140,7 +149,7 @@ const Category = styled.div`
   }
 `;
 
-const BottomCategory = styled(Category)`
+const BottomCategory = styled(CategoryWrapper)`
   margin-top: 10px;
   @media (max-width: 1064px) {
     margin-top: 0;

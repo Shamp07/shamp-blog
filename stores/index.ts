@@ -1,6 +1,7 @@
 import SidebarStore from './SidebarStore';
 import SignStore from './SignStore';
 import AlertStore from './AlertStore';
+import PostStore from './PostStore';
 
 class RootStore {
   SidebarStore: SidebarStore;
@@ -9,10 +10,13 @@ class RootStore {
 
   AlertStore: AlertStore;
 
+  PostStore: PostStore;
+
   constructor() {
     this.SidebarStore = new SidebarStore(this);
     this.SignStore = new SignStore(this);
     this.AlertStore = new AlertStore(this);
+    this.PostStore = new PostStore(this);
   }
 }
 

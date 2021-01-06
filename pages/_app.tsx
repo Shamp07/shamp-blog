@@ -3,6 +3,7 @@ import { Provider } from 'mobx-react';
 import Head from 'next/head';
 import stores from '../stores';
 import Layout from '../components/Layout';
+import 'react-quill/dist/quill.snow.css';
 
 React.useLayoutEffect = React.useEffect;
 

@@ -24,7 +24,7 @@ const BoardHead: React.FC = () => {
           </h2>
           <AbsoluteUl>
             <li>
-              <Link href="post">
+              <Link href="../post">
                 <span>
                   <CustomIcon icon={faPen} />
                 </span>
@@ -115,12 +115,12 @@ const BoardTagList = styled.li<TagInterface>`
 
 const BoardTagBest = styled.li<TagInterface>`
   & > a {
-    border: #cccc00 1.5px solid;
+    border: #eeee00 1.5px solid;
     background-color: white !important;
-    color: #cccc00 !important;
+    color: #eeee00 !important;
     
     ${(props) => (props.active ? 'color: #fff !important;' : null)}
-    ${(props) => (props.active ? 'background-color: #cccc00 !important;' : null)}
+    ${(props) => (props.active ? 'background-color: #eeee00 !important;' : null)}
   }
 `;
 
