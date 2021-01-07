@@ -4,10 +4,11 @@ import Head from 'next/head';
 import stores from '../stores';
 import Layout from '../components/Layout';
 import 'react-quill/dist/quill.snow.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 React.useLayoutEffect = React.useEffect;
 
-const MyApp = ({ Component, pageProps }: any) => (
+const MyApp : React.FC = ({ Component, pageProps }: any) => (
   <Provider {...stores}>
     <Head>
       <title>Shamp Blog</title>

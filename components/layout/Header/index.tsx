@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ToastContainer } from 'react-toastify';
 import HeaderLeftLogo from './HeaderLeftLogo';
 import HeaderRightList from './HeaderRightList';
 import SignModal from '../../util/SignModal';
@@ -16,6 +17,17 @@ const Header: React.FC = () => (
     <BackgroundImage />
     <SignModal />
     <AlertModal />
+    <ToastContainerCustom
+      position="bottom-left"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+    />
   </div>
 );
 
@@ -46,6 +58,12 @@ const HeaderTopBar = styled.div`
   color: #FFFFFF;
   @media (max-width: 1064px) {
     height: 56px !important;
+  }
+`;
+
+const ToastContainerCustom = styled(ToastContainer)`
+  & .Toastify__toast-body {
+    font-family: inherit;
   }
 `;
 

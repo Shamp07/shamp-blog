@@ -1,6 +1,7 @@
 import React from 'react';
 import { action, observable } from 'mobx';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 interface PostInterface {
   category: string,
@@ -37,13 +38,19 @@ class PostStore {
     }
   };
 
-  @action addPost = (): void => {
-    axios.post('/api/board/post', this.post)
+  @action addPost = async (): Promise<void> => {
+    console.log(this.post);
+    await axios.post('/api/post', this.post)
       .then((response) => {
-        console.log(response);
+        const { data } = response;
+        if (data.success) {
+          toast.success(data.message);
+        } else {
+          toast.error(data.message);
+        }
       })
       .catch((response) => {
-        console.error(response);
+        toast.error(response);
       });
   };
 }

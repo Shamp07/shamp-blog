@@ -5,12 +5,15 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { observer } from 'mobx-react';
+import { NextPage } from 'next';
 import useStores from '../../stores/useStores';
+import BoardTag from './BoardTag';
 
-const BoardHead: React.FC = () => {
+const BoardHead: NextPage = () => {
   const router = useRouter();
-  const { SidebarStore } = useStores();
+  const { SidebarStore, CategoryStore } = useStores();
   const { boardCategoryName } = SidebarStore;
+  const { categoryTags } = CategoryStore;
   const boardParams = router.query.board as Array<string>;
   const boardPath = boardParams[0];
   const boardTag = boardParams[1];
@@ -34,44 +37,34 @@ const BoardHead: React.FC = () => {
         </SubTitle>
       </HeadSection>
       <HeadSection>
-        <BoardTag>
-          <BoardTagBest active={boardTag === 'best'}>
+        <CategoryTag>
+          <CategoryTagBest active={boardTag === 'best'}>
             <Link href={`/category/${boardPath}/best`}>
               인기글
             </Link>
-          </BoardTagBest>
-          <BoardTagList active={boardTag === undefined}>
+          </CategoryTagBest>
+          <CategoryTagList active={boardTag === undefined}>
             <Link href={`/category/${boardPath}/`}>
               전체
             </Link>
-          </BoardTagList>
-          <BoardTagList active={boardTag === 'redux'}>
-            <Link href={`/category/${boardPath}/redux`}>
-              Redux
-            </Link>
-          </BoardTagList>
-          <BoardTagList active={boardTag === 'reducer'}>
-            <Link href={`/category/${boardPath}/reducer`}>
-              Reducer
-            </Link>
-          </BoardTagList>
-          <BoardTagList active={boardTag === 'mobx'}>
-            <Link href={`/category/${boardPath}/mobx`}>
-              MobX
-            </Link>
-          </BoardTagList>
-        </BoardTag>
+          </CategoryTagList>
+          {categoryTags.map(
+            (data: string) => <BoardTag category={data} />,
+          )}
+        </CategoryTag>
       </HeadSection>
     </Wrapper>
   );
 };
+
+
 
 const Wrapper = styled.header`
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
   margin-bottom: 8px;
 `;
 
-const BoardTag = styled.ul`
+const CategoryTag = styled.ul`
   list-style: none;
   height: 48px;
   overflow: auto;
@@ -106,14 +99,14 @@ interface TagInterface {
   active: boolean;
 }
 
-const BoardTagList = styled.li<TagInterface>`
+const CategoryTagList = styled.li<TagInterface>`
   & > a {
     ${(props) => (props.active ? 'color: #fff !important;' : null)}
     ${(props) => (props.active ? 'background-color: #2d79c7 !important;' : null)}
   }
 `;
 
-const BoardTagBest = styled.li<TagInterface>`
+const CategoryTagBest = styled.li<TagInterface>`
   & > a {
     border: #eeee00 1.5px solid;
     background-color: white !important;

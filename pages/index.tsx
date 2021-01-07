@@ -7,4 +7,7 @@ const Pages = () => (
   </div>
 );
 
+
+
+
 export default observer(Pages);

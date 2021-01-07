@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { observer } from 'mobx-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import Link from 'next/Link';
+import { useRouter } from 'next/router';
 import useStores from '../../../stores/useStores';
 import Category from './Category';
 
@@ -12,11 +14,18 @@ interface CategoryProps {
 }
 
 const Sidebar: React.FC = () => {
+  const router = useRouter();
+  console.log('hi');
+  if (router.query.board) {
+    return (<></>);
+  }
+  const boardParams = router.query.board as Array<string>;
+  const boardPath = boardParams ? boardParams[0] : '';
+
   const { SidebarStore, SignStore } = useStores();
-  const {
-    topCategoryList, boardCategoryList, isOpenSidebar, toggleSidebar,
-  } = SidebarStore;
+  const { boardCategoryList, isOpenSidebar, toggleSidebar } = SidebarStore;
   const { openSignModal } = SignStore;
+
   return (
     <Wrapper isOpenSidebar={isOpenSidebar}>
       <MobileMenu>
@@ -28,9 +37,12 @@ const Sidebar: React.FC = () => {
       </MobileMenu>
       <CategoryWrapper>
         <ul>
-          {topCategoryList.map(
-            (data: CategoryProps) => <Category path={data.path} name={data.name} key={data.path} />,
-          )}
+          <li className={boardPath === 'profile' ? 'active' : ''}>
+            <Link href="/profile" />
+          </li>
+          <li className={boardPath === 'life' ? 'active' : ''}>
+            <Link href="/life" />
+          </li>
         </ul>
       </CategoryWrapper>
       <BottomCategory>
