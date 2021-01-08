@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import { observer } from 'mobx-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import Link from 'next/Link';
-import { useRouter } from 'next/router';
 import useStores from '../../../stores/useStores';
 import Category from './Category';
 
@@ -14,16 +12,11 @@ interface CategoryProps {
 }
 
 const Sidebar: React.FC = () => {
-  const router = useRouter();
-  console.log('hi');
-  if (router.query.board) {
-    return (<></>);
-  }
-  const boardParams = router.query.board as Array<string>;
-  const boardPath = boardParams ? boardParams[0] : '';
-
   const { SidebarStore, SignStore } = useStores();
-  const { boardCategoryList, isOpenSidebar, toggleSidebar } = SidebarStore;
+  const {
+    boardCategoryList, topCategoryList,
+    isOpenSidebar, toggleSidebar,
+  } = SidebarStore;
   const { openSignModal } = SignStore;
 
   return (
@@ -37,18 +30,19 @@ const Sidebar: React.FC = () => {
       </MobileMenu>
       <CategoryWrapper>
         <ul>
-          <li className={boardPath === 'profile' ? 'active' : ''}>
-            <Link href="/profile" />
-          </li>
-          <li className={boardPath === 'life' ? 'active' : ''}>
-            <Link href="/life" />
-          </li>
+          {topCategoryList.map(
+            (data: CategoryProps) => (
+              <Category isBoard={false} path={data.path} name={data.name} key={data.path} />
+            ),
+          )}
         </ul>
       </CategoryWrapper>
       <BottomCategory>
         <ul>
           {boardCategoryList.map(
-            (data: CategoryProps) => <Category path={data.path} name={data.name} key={data.path} />,
+            (data: CategoryProps) => (
+              <Category isBoard path={data.path} name={data.name} key={data.path} />
+            ),
           )}
         </ul>
       </BottomCategory>
@@ -81,7 +75,6 @@ const Wrapper = styled.div<Container>`
 
 const MobileMenu = styled.div`
   display: none;
-  -webkit-tap-highlight-color: transparent;
   height: 40px;
   @media (max-width: 1064px) {
     display: block;
@@ -131,23 +124,15 @@ const CategoryWrapper = styled.div`
     color: #616161;
     font-size: 14px;
     font-weight: bold;
-    
-    &:hover {
-      background-color: #e6e6e6;
-      transition: all 0.3s;
-    }
+    transition: all 0.3s;
 
     @media (max-width: 1064px) {
       outline: none;
     }
 
-    &.active {
-      background-color: #2d79c7;
+    &:hover {
+      background-color: #e6e6e6;
       transition: all 0.3s;
-      
-      & > a {
-        color: #fff;
-      }
     }
     
     & > a {

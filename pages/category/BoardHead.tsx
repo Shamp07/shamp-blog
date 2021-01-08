@@ -5,11 +5,10 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { observer } from 'mobx-react';
-import { NextPage } from 'next';
 import useStores from '../../stores/useStores';
 import BoardTag from './BoardTag';
 
-const BoardHead: NextPage = () => {
+const BoardHead: React.FC = () => {
   const router = useRouter();
   const { SidebarStore, CategoryStore } = useStores();
   const { boardCategoryName } = SidebarStore;
@@ -56,8 +55,6 @@ const BoardHead: NextPage = () => {
     </Wrapper>
   );
 };
-
-
 
 const Wrapper = styled.header`
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);

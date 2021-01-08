@@ -17,4 +17,8 @@ class AlertStore {
   };
 }
 
+export const initialAlert = {
+
+};
+
 export default AlertStore;

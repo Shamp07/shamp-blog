@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 interface BoardTagInterface {
-  category: string
+  category: string;
 }
 
 const BoardTag: React.FC<BoardTagInterface> = ({ category }: BoardTagInterface) => {

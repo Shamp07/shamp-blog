@@ -1,16 +1,17 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { NextPage } from 'next';
 import BoardHead from './BoardHead';
 import BoardContent from './BoardContent';
 import useStores from '../../stores/useStores';
 
-const Board: React.FC = () => {
+const Board: NextPage = () => {
   const router = useRouter();
   const { AlertStore, SidebarStore } = useStores();
   const { toggleAlertModal } = AlertStore;
   const { boardCategoryName } = SidebarStore;
   const boardParams = router.query.board as Array<string>;
-
+  console.log('Board - Rendering');
   if (!boardParams) {
     return (<></>);
   }
@@ -30,6 +31,13 @@ const Board: React.FC = () => {
       <BoardContent />
     </div>
   );
+};
+
+Board.getInitialProps = async ({ rootStore, query }) => {
+  const boardParams = query.board as Array<string>;
+  const boardPath = boardParams[0] as string;
+  await rootStore.getCategoryTags(boardPath);
+  return {};
 };
 
 export default Board;

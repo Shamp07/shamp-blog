@@ -17,6 +17,7 @@ class CategoryStore {
         const { data } = response;
         if (data.success) {
           const { result } = data;
+          console.log(result);
           this.categoryTags = result;
         } else {
           toast.error(data.message);
@@ -27,5 +28,9 @@ class CategoryStore {
       });
   };
 }
+
+export const initialCategory = {
+
+};
 
 export default CategoryStore;

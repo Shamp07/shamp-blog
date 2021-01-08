@@ -55,4 +55,8 @@ class PostStore {
   };
 }
 
+export const initialPost = {
+
+};
+
 export default PostStore;

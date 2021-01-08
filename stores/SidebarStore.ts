@@ -5,13 +5,13 @@ class SidebarStore {
 
   topCategoryList: Array<object> = [{
     name: 'Home',
-    path: '/',
+    path: '',
   }, {
     name: '프로필',
-    path: '/profile',
+    path: 'profile',
   }, {
     name: '일상',
-    path: '/life',
+    path: 'life',
   }];
 
   boardCategoryList: Array<object> = [{
@@ -57,5 +57,9 @@ class SidebarStore {
     this.isOpenSidebar = !this.isOpenSidebar;
   };
 }
+
+export const initialSidebar = {
+
+};
 
 export default SidebarStore;
