@@ -29,8 +29,4 @@ class CategoryStore {
   };
 }
 
-export const initialCategory = {
-
-};
-
 export default CategoryStore;

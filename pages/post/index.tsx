@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { Button, TextField } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import Editor from './Editor';
-import useStores from '../../stores/useStores';
+import { useStores } from '../../components/StoreProvider';
 
 const Post = () => {
   const router = useRouter();

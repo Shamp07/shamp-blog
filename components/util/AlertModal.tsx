@@ -2,10 +2,10 @@ import React from 'react';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
-import useStores from '../../stores/useStores';
+import { useStores } from '../StoreProvider';
 
 const AlertModal: React.FC = () => {
   const { AlertStore } = useStores();

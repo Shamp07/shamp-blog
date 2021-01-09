@@ -2,11 +2,11 @@ import React from 'react';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
 import { Button, TextField } from '@material-ui/core';
 import PasswordInput from './PasswordInput';
-import useStores from '../../stores/useStores';
+import { useStores } from '../StoreProvider';
 
 const SignModal: React.FC = () => {
   const { SignStore } = useStores();

@@ -32,8 +32,4 @@ class SignStore {
   };
 }
 
-export const initialSign = {
-
-};
-
 export default SignStore;

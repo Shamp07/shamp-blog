@@ -1,5 +1,5 @@
 import React from 'react';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
 
 const Pages = () => (

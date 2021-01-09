@@ -1,7 +1,6 @@
 import React from 'react';
-import { Provider } from 'mobx-react';
 import Head from 'next/head';
-import stores from '../stores';
+import { StoreProvider } from '../components/StoreProvider';
 import Layout from '../components/Layout';
 import 'react-quill/dist/quill.snow.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 React.useLayoutEffect = React.useEffect;
 
 const MyApp : React.FC = ({ Component, pageProps }: any) => (
-  <Provider {...stores}>
+  <StoreProvider {...pageProps}>
     <Head>
       <title>Shamp Blog</title>
       <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -19,7 +18,7 @@ const MyApp : React.FC = ({ Component, pageProps }: any) => (
     <Layout>
       <Component {...pageProps} />
     </Layout>
-  </Provider>
+  </StoreProvider>
 );
 
 export default MyApp;

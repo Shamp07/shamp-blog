@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import useStores from '../../../stores/useStores';
+import { useStores } from '../../StoreProvider';
 
 const HeaderRightList: React.FC = () => {
   const { SignStore, SidebarStore } = useStores();
+  console.log(useStores());
   const { openSignModal } = SignStore;
   const { toggleSidebar } = SidebarStore;
   return (

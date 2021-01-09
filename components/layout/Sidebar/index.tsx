@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import useStores from '../../../stores/useStores';
+import { useStores } from '../../StoreProvider';
 import Category from './Category';
 
 interface CategoryProps {

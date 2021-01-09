@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { NextPage } from 'next';
 import BoardHead from './BoardHead';
 import BoardContent from './BoardContent';
-import useStores from '../../stores/useStores';
+import { useStores } from '../../components/StoreProvider';
 
 const Board: NextPage = () => {
   const router = useRouter();
@@ -33,10 +33,10 @@ const Board: NextPage = () => {
   );
 };
 
-Board.getInitialProps = async ({ rootStore, query }) => {
+Board.getInitialProps = async ({ query }) => {
   const boardParams = query.board as Array<string>;
   const boardPath = boardParams[0] as string;
-  await rootStore.getCategoryTags(boardPath);
+  console.log(boardPath);
   return {};
 };
 

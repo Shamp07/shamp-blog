@@ -4,8 +4,8 @@ import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { observer } from 'mobx-react';
-import useStores from '../../stores/useStores';
+import { observer } from 'mobx-react-lite';
+import { useStores } from '../../components/StoreProvider';
 import BoardTag from './BoardTag';
 
 const BoardHead: React.FC = () => {
