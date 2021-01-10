@@ -1,4 +1,4 @@
-import { action, observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 
 class AlertStore {
   root: any;
@@ -8,7 +8,7 @@ class AlertStore {
   @observable text: string = '';
 
   constructor(root: any) {
-    this.root = root;
+    makeObservable(this);
   }
 
   @action toggleAlertModal = (text: string) => {

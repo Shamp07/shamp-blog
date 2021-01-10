@@ -1,5 +1,5 @@
 import React from 'react';
-import { action, observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
@@ -21,7 +21,7 @@ class PostStore {
   };
 
   constructor(root: any) {
-    this.root = root;
+    makeObservable(this);
   }
 
   @action postHandleChange = (event: string | React.ChangeEvent<HTMLInputElement>): void => {
@@ -39,7 +39,6 @@ class PostStore {
   };
 
   @action addPost = async (): Promise<void> => {
-    console.log(this.post);
     await axios.post('/api/post', this.post)
       .then((response) => {
         const { data } = response;

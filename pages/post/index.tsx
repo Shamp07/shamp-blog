@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import Editor from './Editor';
-import { useStores } from '../../components/StoreProvider';
+import useStores from '../../stores/useStores';
 
 const Post = () => {
   const router = useRouter();

@@ -5,7 +5,7 @@ import Fade from '@material-ui/core/Fade';
 import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
-import { useStores } from '../StoreProvider';
+import useStores from '../../stores/useStores';
 
 const AlertModal: React.FC = () => {
   const { AlertStore } = useStores();

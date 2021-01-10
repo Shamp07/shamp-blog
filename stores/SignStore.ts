@@ -1,5 +1,5 @@
 import React from 'react';
-import { action, observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 
 class SignStore {
   root: any;
@@ -17,7 +17,7 @@ class SignStore {
   @observable isOpenSignModal: boolean = false;
 
   constructor(root: any) {
-    this.root = root;
+    makeObservable(this);
   }
 
   @action openSignModal = () => {

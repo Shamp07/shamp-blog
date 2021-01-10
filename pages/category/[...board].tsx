@@ -3,15 +3,17 @@ import { useRouter } from 'next/router';
 import { NextPage } from 'next';
 import BoardHead from './BoardHead';
 import BoardContent from './BoardContent';
-import { useStores } from '../../components/StoreProvider';
+import useStores from '../../stores/useStores';
+import axios from "axios";
+import {toast} from "react-toastify";
 
-const Board: NextPage = () => {
+const Board: NextPage = ({ render }) => {
+  console.log(render);
   const router = useRouter();
   const { AlertStore, SidebarStore } = useStores();
   const { toggleAlertModal } = AlertStore;
   const { boardCategoryName } = SidebarStore;
   const boardParams = router.query.board as Array<string>;
-  console.log('Board - Rendering');
   if (!boardParams) {
     return (<></>);
   }
@@ -33,11 +35,20 @@ const Board: NextPage = () => {
   );
 };
 
-Board.getInitialProps = async ({ query }) => {
+Board.getInitialProps = async ({ mobxStore, query }: any) => {
+  const { PostStore } = mobxStore;
+  const { addPost } = PostStore;
+
   const boardParams = query.board as Array<string>;
   const boardPath = boardParams[0] as string;
-  console.log(boardPath);
-  return {};
+
+  const res = await axios.post('/api/post');
+
+  console.log('end!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+  console.log(res);
+  console.log('end!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+
+  return { render: true };
 };
 
 export default Board;

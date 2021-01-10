@@ -1,6 +1,7 @@
 import client from '../../database/db-connection';
 
 const handler = (request: any, response: any) => {
+  console.log('!!');
   if (request.method === 'POST') {
     const {
       category, tags, title, content,

@@ -1,4 +1,4 @@
-import { action, observable } from 'mobx';
+import {action, makeObservable, observable} from 'mobx';
 
 class SidebarStore {
   root: any;
@@ -50,16 +50,12 @@ class SidebarStore {
   @observable isOpenSidebar: boolean = false;
 
   constructor(root: any) {
-    this.root = root;
+    makeObservable(this);
   }
 
   @action toggleSidebar = () => {
     this.isOpenSidebar = !this.isOpenSidebar;
   };
 }
-
-export const initialSidebar = {
-
-};
 
 export default SidebarStore;

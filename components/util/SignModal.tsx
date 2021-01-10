@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
 import { Button, TextField } from '@material-ui/core';
 import PasswordInput from './PasswordInput';
-import { useStores } from '../StoreProvider';
+import useStores from '../../stores/useStores';
 
 const SignModal: React.FC = () => {
   const { SignStore } = useStores();

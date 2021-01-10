@@ -3,11 +3,18 @@ import SidebarStore from './SidebarStore';
 import SignStore from './SignStore';
 import AlertStore from './AlertStore';
 import PostStore from './PostStore';
-import CategoryStore from './CategoryStore';
+import CategoryStore, { initialCategory } from './CategoryStore';
 
-enableStaticRendering(typeof window === 'undefined');
+const isServer = typeof window === 'undefined';
+enableStaticRendering(isServer);
 
-class RootStore {
+let store: any = null;
+
+const initialRoot = {
+  categoryStore: initialCategory,
+};
+
+export class RootStore {
   SidebarStore: SidebarStore;
 
   SignStore: SignStore;
@@ -18,13 +25,20 @@ class RootStore {
 
   CategoryStore: CategoryStore;
 
-  constructor() {
+  constructor(initialData: any) {
     this.SidebarStore = new SidebarStore(this);
     this.SignStore = new SignStore(this);
     this.AlertStore = new AlertStore(this);
     this.PostStore = new PostStore(this);
-    this.CategoryStore = new CategoryStore(this);
+    this.CategoryStore = new CategoryStore(initialData.categoryStore, this);
   }
 }
-
-export default RootStore;
+export default function initializeStore(initialData = initialRoot) {
+  if (isServer) {
+    return new RootStore(initialData);
+  }
+  if (store === null) {
+    store = new RootStore(initialData);
+  }
+  return store;
+}

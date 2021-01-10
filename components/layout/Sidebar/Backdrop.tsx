@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
-import { useStores } from '../../StoreProvider';
+import useStores from '../../../stores/useStores';
 
 const Backdrop: React.FC = () => {
   const { SidebarStore } = useStores();

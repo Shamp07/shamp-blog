@@ -1,8 +1,10 @@
-import client from '../../../database/db-connection';
+import client from '../../database/db-connection';
 
-const handler = (request: any, response: any) => {
-  if (request.method === 'POST') {
+const handler1 = (request: any, response: any) => {
+  console.log(request.method);
+  if (request.method === 'GET') {
     const { category } = request.query;
+    console.log(category);
 
     const values: Array<string> = [category];
     client.connect();
@@ -22,4 +24,4 @@ const SELECT_CATEGORY_TAGS = `
   WHERE category = $1
 `;
 
-export default handler;
+export default handler1;
