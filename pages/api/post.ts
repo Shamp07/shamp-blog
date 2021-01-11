@@ -1,7 +1,6 @@
 import client from '../../database/db-connection';
 
 const handler = (request: any, response: any) => {
-  console.log('!!');
   if (request.method === 'POST') {
     const {
       category, tags, title, content,
@@ -10,9 +9,7 @@ const handler = (request: any, response: any) => {
     const values: Array<string> = [category, tags, title, content];
     client.connect();
     client.query(INSERT_POST, values, (err: any) => {
-      if (err) {
-        console.log(err);
-      }
+      if (err) console.log(err);
       client.end();
       response.json({
         success: true,

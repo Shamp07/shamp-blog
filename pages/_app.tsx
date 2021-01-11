@@ -12,10 +12,10 @@ React.useLayoutEffect = React.useEffect;
 class CustomApp extends App {
   mobxStore: any;
 
-  static async getInitialProps(appContext: any) {
+  static async getInitialProps(context: any) {
     const mobxStore = initializeStore();
-    appContext.ctx.mobxStore = mobxStore;
-    const appProps = await App.getInitialProps(appContext);
+    context.ctx.store = mobxStore;
+    const appProps = await App.getInitialProps(context);
 
     return {
       ...appProps,

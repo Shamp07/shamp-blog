@@ -1,14 +1,11 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { NextPage } from 'next';
 import BoardHead from './BoardHead';
 import BoardContent from './BoardContent';
 import useStores from '../../stores/useStores';
-import axios from "axios";
-import {toast} from "react-toastify";
+import { NextPage } from 'next';
 
-const Board: NextPage = ({ render }) => {
-  console.log(render);
+const Board: NextPage = () => {
   const router = useRouter();
   const { AlertStore, SidebarStore } = useStores();
   const { toggleAlertModal } = AlertStore;
@@ -35,20 +32,33 @@ const Board: NextPage = ({ render }) => {
   );
 };
 
-Board.getInitialProps = async ({ mobxStore, query }: any) => {
-  const { PostStore } = mobxStore;
-  const { addPost } = PostStore;
+// export async function getStaticPaths(context) {
+//   console.log(context);
+//   return {
+//     paths: [
+//       { params: { board: ['react'] } },
+//     ],
+//     fallback: false,
+//   };
+// }
+//
+// export async function getStaticProps({ params }) {
+//   console.log(params);
+//
+//   return { props: {} };
+// }
 
-  const boardParams = query.board as Array<string>;
-  const boardPath = boardParams[0] as string;
+Board.getInitialProps = async ({ query, store }: any) => {
+  const { CategoryStore } = store;
+  const { getCategoryTags } = CategoryStore;
+  const categoryParams = query.board as Array<string>;
+  const category = categoryParams[0] as string;
 
-  const res = await axios.post('/api/post');
+  await getCategoryTags(category);
 
-  console.log('end!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-  console.log(res);
-  console.log('end!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-
-  return { render: true };
+  return {
+    props: {}, // will be passed to the page component as props
+  };
 };
 
 export default Board;

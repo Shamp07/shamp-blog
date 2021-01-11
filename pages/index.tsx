@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
 
 const Pages = () => {
+  console.log('MainPage Rendering');
   return (
     <Wrapper>
       홈 페이지 입니다.

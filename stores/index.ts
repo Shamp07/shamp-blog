@@ -30,7 +30,7 @@ export class RootStore {
     this.SignStore = new SignStore(this);
     this.AlertStore = new AlertStore(this);
     this.PostStore = new PostStore(this);
-    this.CategoryStore = new CategoryStore(initialData.categoryStore, this);
+    this.CategoryStore = new CategoryStore(initialData.categoryStore);
   }
 }
 export default function initializeStore(initialData = initialRoot) {

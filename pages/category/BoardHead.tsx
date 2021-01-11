@@ -16,7 +16,8 @@ const BoardHead: React.FC = () => {
   const boardParams = router.query.board as Array<string>;
   const boardPath = boardParams[0];
   const boardTag = boardParams[1];
-
+  console.log('BoardHead Rendering!');
+  console.log({...categoryTags});
   return (
     <Wrapper>
       <HeadSection>
@@ -48,7 +49,7 @@ const BoardHead: React.FC = () => {
             </Link>
           </CategoryTagList>
           {categoryTags.map(
-            (data: string) => <BoardTag category={data} />,
+            ({ tags }: any) => <BoardTag key={tags} category={tags} />,
           )}
         </CategoryTag>
       </HeadSection>
