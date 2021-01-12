@@ -1,4 +1,4 @@
-import pool from '../../../database/db-connection';
+import Database from '../../../database/Database';
 
 const handler = (request: any, response: any) => {
   if (request.method === 'GET') {
@@ -7,22 +7,32 @@ const handler = (request: any, response: any) => {
     response.setHeader('Access-Control-Allow-Credentials', 'true');
     const values: Array<string> = [category];
 
-    pool.connect()
-      .then((client) => {
-        client.query(SELECT_CATEGORY_TAGS, values)
-          .then((res) => {
-            response.json({
-              success: true,
-              result: res.rows,
-            });
-          })
-          .catch(err => {
-            console.error(err);
+    // Database
+    //   .query(SELECT_CATEGORY_TAGS, values)
+    //   .then(({ rows }: any) => {
+    //     console.log('row');
+    //     console.log(rows);
+    //     response.json({
+    //       success: true,
+    //       result: rows,
+    //     });
+    //   });
+
+    Database.execute(
+      (database) => database.query(
+        SELECT_CATEGORY_TAGS,
+        values,
+      )
+        .then((rows: any) => {
+          console.log(rows.rows);
+          response.json({
+            success: true,
+            result: rows.rows,
           });
-      })
-      .catch(err2 => {
-        console.error(err2);
-      });
+        }),
+    ).then(() => {
+      console.log('[SELECT, GET /api/category/api] 현재 게시판 조회');
+    });
   }
 };
 

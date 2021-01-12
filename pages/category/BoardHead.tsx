@@ -12,17 +12,15 @@ const BoardHead: React.FC = () => {
   const router = useRouter();
   const { SidebarStore, CategoryStore } = useStores();
   const { boardCategoryName } = SidebarStore;
-  const { categoryTags } = CategoryStore;
+  const { categoryTags, getCategoryTags } = CategoryStore;
   const boardParams = router.query.board as Array<string>;
   const boardPath = boardParams[0];
   const boardTag = boardParams[1];
-  console.log('BoardHead Rendering!');
-  console.log({...categoryTags});
   return (
     <Wrapper>
       <HeadSection>
         <SubTitle>
-          <h2>
+          <h2 onClick={() => getCategoryTags('')}>
             {boardCategoryName[boardPath]}
           </h2>
           <AbsoluteUl>

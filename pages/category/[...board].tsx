@@ -1,9 +1,10 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { NextPage } from 'next';
+import axios from 'axios';
 import BoardHead from './BoardHead';
 import BoardContent from './BoardContent';
 import useStores from '../../stores/useStores';
-import { NextPage } from 'next';
 
 const Board: NextPage = () => {
   const router = useRouter();
@@ -49,12 +50,12 @@ const Board: NextPage = () => {
 // }
 
 Board.getInitialProps = async ({ query, store }: any) => {
+  console.log('getInitialProps');
   const { CategoryStore } = store;
   const { getCategoryTags } = CategoryStore;
   const categoryParams = query.board as Array<string>;
   const category = categoryParams[0] as string;
-
-  await getCategoryTags(category);
+  // await getCategoryTags(category);
 
   return {
     props: {}, // will be passed to the page component as props
