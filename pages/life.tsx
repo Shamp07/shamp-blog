@@ -1,14 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Life: React.FC = () => {
-  console.log('Life Rendering');
-  return (
-    <Wrapper>
-      일상 페이지(준비중)
-    </Wrapper>
-  );
-};
+const Life: React.FC = () => (
+  <Wrapper>
+    일상 페이지(준비중)
+  </Wrapper>
+);
 
 const Wrapper = styled.div`
   background-color: #fff;

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
-import axios from 'axios';
 import BoardHead from './BoardHead';
 import BoardContent from './BoardContent';
 import useStores from '../../stores/useStores';
@@ -33,32 +32,18 @@ const Board: NextPage = () => {
   );
 };
 
-// export async function getStaticPaths(context) {
-//   console.log(context);
-//   return {
-//     paths: [
-//       { params: { board: ['react'] } },
-//     ],
-//     fallback: false,
-//   };
-// }
-//
-// export async function getStaticProps({ params }) {
-//   console.log(params);
-//
-//   return { props: {} };
-// }
-
 Board.getInitialProps = async ({ query, store }: any) => {
-  console.log('getInitialProps');
-  const { CategoryStore } = store;
+  const { CategoryStore, PostStore } = store;
   const { getCategoryTags } = CategoryStore;
+  const { getPostList } = PostStore;
   const categoryParams = query.board as Array<string>;
   const category = categoryParams[0] as string;
-  // await getCategoryTags(category);
+  const tag = categoryParams[1] as string;
+  await getCategoryTags(category);
+  await getPostList(category, tag);
 
   return {
-    props: {}, // will be passed to the page component as props
+    props: {},
   };
 };
 

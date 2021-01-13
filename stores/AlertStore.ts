@@ -7,7 +7,7 @@ class AlertStore {
 
   @observable text: string = '';
 
-  constructor(root: any) {
+  constructor() {
     makeObservable(this);
   }
 

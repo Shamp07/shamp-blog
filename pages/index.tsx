@@ -2,14 +2,11 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
 
-const Pages = () => {
-  console.log('MainPage Rendering');
-  return (
-    <Wrapper>
-      홈 페이지 입니다.
-    </Wrapper>
-  );
-};
+const Pages = () => (
+  <Wrapper>
+    홈 페이지 입니다.
+  </Wrapper>
+);
 
 const Wrapper = styled.div`
   background-color: #fff;

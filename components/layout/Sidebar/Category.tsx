@@ -3,12 +3,6 @@ import { useRouter } from 'next/router';
 import Link from 'next/Link';
 import styled from 'styled-components';
 
-interface CategoryProps {
-  path: string;
-  name: string;
-  isBoard: boolean;
-}
-
 const Category: React.FC<CategoryProps> = ({ path, name, isBoard }: CategoryProps) => {
   const router = useRouter();
   let baseUrl: string = '';
@@ -30,6 +24,12 @@ const Category: React.FC<CategoryProps> = ({ path, name, isBoard }: CategoryProp
     </CategoryList>
   );
 };
+
+export interface CategoryProps {
+  path: string;
+  name: string;
+  isBoard: boolean;
+}
 
 interface CategoryInterface {
   active: boolean;

@@ -49,7 +49,7 @@ class SidebarStore {
 
   @observable isOpenSidebar: boolean = false;
 
-  constructor(root: any) {
+  constructor() {
     makeObservable(this);
   }
 

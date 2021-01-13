@@ -20,8 +20,11 @@ class PostStore {
     content: '',
   };
 
-  constructor(root: any) {
+  @observable postList = {};
+
+  constructor(initialData = initialPost) {
     makeObservable(this);
+    this.postList = initialData.postList;
   }
 
   @action postHandleChange = (event: string | React.ChangeEvent<HTMLInputElement>): void => {
@@ -38,12 +41,33 @@ class PostStore {
     }
   };
 
-  @action addPost = async (): Promise<void> => {
-    await axios.post('/api/post', this.post)
+  @action addPost = (router: { back: () => void }): void => {
+    axios.post('/api/post', this.post)
       .then((response) => {
         const { data } = response;
         if (data.success) {
           toast.success(data.message);
+          router.back();
+        } else {
+          toast.error(data.message);
+        }
+      })
+      .catch((response) => {
+        toast.error(response);
+      });
+  };
+
+  @action getPostList = async (category: string, tag: string | undefined): Promise<any> => {
+    await axios.get('http://localhost:3000/api/post/list', {
+      params: {
+        category,
+        tag,
+      },
+    })
+      .then((response) => {
+        const { data } = response;
+        if (data.success) {
+          this.postList = data.result;
         } else {
           toast.error(data.message);
         }
@@ -53,5 +77,9 @@ class PostStore {
       });
   };
 }
+
+export const initialPost = {
+  postList: [],
+};
 
 export default PostStore;

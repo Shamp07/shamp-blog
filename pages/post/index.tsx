@@ -50,7 +50,7 @@ const Post = () => {
         <Button variant="contained" color="primary" onClick={() => router.back()}>
           취소
         </Button>
-        <Button variant="contained" color="primary" onClick={addPost}>
+        <Button variant="contained" color="primary" onClick={() => addPost(router)}>
           등록
         </Button>
       </Footer>

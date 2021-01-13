@@ -6,21 +6,16 @@ class Database {
 
   constructor() {
     this.connection = new Client(config);
+    this.connection.connect();
   }
 
   query(sql: string, args: Array<any>) {
     return new Promise((resolve, reject) => {
-      console.log(this.connection);
-      if (this.connection._connected) {
-        console.log('이미 연결되어있습니다.');
-      } else {
-        this.connection.connect();
-        console.log('최초 연결!');
-      }
-
       this.connection.query(sql, args, (err, result) => {
-        this.connection.end();
+        console.log(err);
+        console.log(result);
         if (err) {
+          console.log(err);
           // 트랜잭션 중 에러가 났을때 처리.
           console.log(err.message);
 

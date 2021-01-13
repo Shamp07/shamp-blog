@@ -4,12 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import useStores from '../../../stores/useStores';
-import Category from './Category';
-
-interface CategoryProps {
-  path: string,
-  name: string,
-}
+import Category, { CategoryProps } from './Category';
 
 const Sidebar: React.FC = () => {
   const { SidebarStore, SignStore } = useStores();

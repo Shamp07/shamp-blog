@@ -13,7 +13,6 @@ class CategoryStore {
   }
 
   @action getCategoryTags = async (category: string) => {
-    console.log('통신시작');
     await axios.get('http://localhost:3000/api/category/tag', {
       params: {
         category,
@@ -23,7 +22,6 @@ class CategoryStore {
         const { data } = response;
         if (data.success) {
           const { result } = data;
-          console.log('통신끝');
           this.categoryTags = result;
         } else {
           toast.error(data.message);

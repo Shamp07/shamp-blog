@@ -1,3 +1,4 @@
+import { Client } from 'pg';
 import Database from '../../../database/Database';
 
 const handler = (request: any, response: any) => {
@@ -7,31 +8,19 @@ const handler = (request: any, response: any) => {
     response.setHeader('Access-Control-Allow-Credentials', 'true');
     const values: Array<string> = [category];
 
-    // Database
-    //   .query(SELECT_CATEGORY_TAGS, values)
-    //   .then(({ rows }: any) => {
-    //     console.log('row');
-    //     console.log(rows);
-    //     response.json({
-    //       success: true,
-    //       result: rows,
-    //     });
-    //   });
-
     Database.execute(
-      (database) => database.query(
+      (database: Client) => database.query(
         SELECT_CATEGORY_TAGS,
         values,
       )
-        .then((rows: any) => {
-          console.log(rows.rows);
+        .then((result: { rows: Array<object>}) => {
           response.json({
             success: true,
-            result: rows.rows,
+            result: result.rows,
           });
         }),
     ).then(() => {
-      console.log('[SELECT, GET /api/category/api] 현재 게시판 조회');
+      console.log('[SELECT, GET /api/category] 현재 카테고리의 태그 조회');
     });
   }
 };

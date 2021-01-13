@@ -12,7 +12,7 @@ const BoardHead: React.FC = () => {
   const router = useRouter();
   const { SidebarStore, CategoryStore } = useStores();
   const { boardCategoryName } = SidebarStore;
-  const { categoryTags, getCategoryTags } = CategoryStore;
+  const { categoryTags } = CategoryStore;
   const boardParams = router.query.board as Array<string>;
   const boardPath = boardParams[0];
   const boardTag = boardParams[1];
@@ -20,7 +20,7 @@ const BoardHead: React.FC = () => {
     <Wrapper>
       <HeadSection>
         <SubTitle>
-          <h2 onClick={() => getCategoryTags('')}>
+          <h2>
             {boardCategoryName[boardPath]}
           </h2>
           <AbsoluteUl>

@@ -2,7 +2,7 @@ import { enableStaticRendering } from 'mobx-react-lite';
 import SidebarStore from './SidebarStore';
 import SignStore from './SignStore';
 import AlertStore from './AlertStore';
-import PostStore from './PostStore';
+import PostStore, { initialPost } from './PostStore';
 import CategoryStore, { initialCategory } from './CategoryStore';
 
 const isServer = typeof window === 'undefined';
@@ -11,7 +11,8 @@ enableStaticRendering(isServer);
 let store: any = null;
 
 const initialRoot = {
-  categoryStore: initialCategory,
+  CategoryStore: initialCategory,
+  PostStore: initialPost,
 };
 
 export class RootStore {
@@ -26,11 +27,11 @@ export class RootStore {
   CategoryStore: CategoryStore;
 
   constructor(initialData: any) {
-    this.SidebarStore = new SidebarStore(this);
-    this.SignStore = new SignStore(this);
-    this.AlertStore = new AlertStore(this);
-    this.PostStore = new PostStore(this);
-    this.CategoryStore = new CategoryStore(initialData.categoryStore);
+    this.SidebarStore = new SidebarStore();
+    this.SignStore = new SignStore();
+    this.AlertStore = new AlertStore();
+    this.PostStore = new PostStore(initialData.PostStore);
+    this.CategoryStore = new CategoryStore(initialData.CategoryStore);
   }
 }
 export default function initializeStore(initialData = initialRoot) {

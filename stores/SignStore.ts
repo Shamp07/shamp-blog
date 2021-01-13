@@ -16,7 +16,7 @@ class SignStore {
 
   @observable isOpenSignModal: boolean = false;
 
-  constructor(root: any) {
+  constructor() {
     makeObservable(this);
   }
 
