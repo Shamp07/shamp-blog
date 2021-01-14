@@ -20,11 +20,14 @@ class PostStore {
     content: '',
   };
 
-  @observable postList = {};
+  @observable postView;
+
+  @observable postList;
 
   constructor(initialData = initialPost) {
     makeObservable(this);
     this.postList = initialData.postList;
+    this.postView = initialData.postView;
   }
 
   @action postHandleChange = (event: string | React.ChangeEvent<HTMLInputElement>): void => {
@@ -76,10 +79,30 @@ class PostStore {
         toast.error(response);
       });
   };
+
+  @action getPost = async (id: number): Promise<any> => {
+    await axios.get('http://localhost:3000/api/post', {
+      params: {
+        id,
+      },
+    })
+      .then((response) => {
+        const { data } = response;
+        if (data.success) {
+          this.postView = data.result;
+        } else {
+          toast.error(data.message);
+        }
+      })
+      .catch((response) => {
+        toast.error(response);
+      });
+  };
 }
 
 export const initialPost = {
   postList: [],
+  postView: {},
 };
 
 export default PostStore;

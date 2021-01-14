@@ -49,6 +49,7 @@ const SELECT_POST_LIST = `
   WHERE
     category = $1
     AND tags LIKE '%' || $2 || '%'
+  ORDER BY crt_dttm DESC
 `;
 
 export default handler;

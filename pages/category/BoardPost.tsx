@@ -2,11 +2,15 @@ import React from 'react';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Link from 'next/Link';
+import useStores from '../../stores/useStores';
 
 const BoardPost = ({ data }: { data: BoardPostProps }) => {
+  const { SidebarStore } = useStores();
+  const { boardCategoryName } = SidebarStore;
   const {
-    title, commentCnt, tags, time,
-    likeCnt,
+    id, title, category,
+    commentCnt, tags, time, likeCnt,
   } = data;
 
   return (
@@ -19,25 +23,27 @@ const BoardPost = ({ data }: { data: BoardPostProps }) => {
       </Vote>
       <ArticleContent>
         <PostTitle>
-          <span>{title}</span>
-          <span>
-            [
-            {commentCnt}
-            ]
-          </span>
+          <Link href={`/post/${id}`}>
+            <PostLinkSpan>
+              <span>{title}</span>
+              <span>
+                [
+                {commentCnt}
+                ]
+              </span>
+            </PostLinkSpan>
+          </Link>
         </PostTitle>
         <PostInfo>
           <PostInfoUl>
             <li>
-              <span>
-                {tags}
-              </span>
+              <span>{boardCategoryName[category]}</span>
+            </li>
+            <li>
+              <span>{tags}</span>
             </li>
             <li>
               <span>{time}</span>
-            </li>
-            <li>
-              <span>Shamp</span>
             </li>
           </PostInfoUl>
         </PostInfo>
@@ -45,6 +51,16 @@ const BoardPost = ({ data }: { data: BoardPostProps }) => {
     </Article>
   );
 };
+
+const PostLinkSpan = styled.span`
+  cursor: pointer;
+  display: inline-block;
+
+  & > span:first-child {
+    color: #000;
+    margin-right: 5px;
+  }
+`;
 
 const Article = styled.article`
   position: relative;
@@ -113,6 +129,7 @@ const PostInfoUl = styled.ul`
     &:first-child {
       border: none;
       padding-left: 0;
+      color: #2d79c7;
     }
   }
 `;
@@ -124,6 +141,7 @@ const ThumbsUp = styled(FontAwesomeIcon)`
 export interface BoardPostProps {
   id: number,
   title: string,
+  category: string,
   commentCnt: number,
   tags: string,
   time: string,

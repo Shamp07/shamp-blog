@@ -69,7 +69,6 @@ const CategoryTag = styled.ul`
   & > li {
     display: inline-block;
     padding: 10px 0 10px 12px;
-    width: 75px;
   }
 
   & > li:last-child {
@@ -78,8 +77,8 @@ const CategoryTag = styled.ul`
 
   & > li > a {
     display: inline-block;
-    width: 65px;
-    padding: 4px 5px;
+    min-width: 45px;
+    padding: 4px 15px;
     text-align: center;
     text-decoration: none;
     background-color: #e6e6e6;
