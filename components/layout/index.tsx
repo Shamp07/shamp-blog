@@ -24,12 +24,19 @@ const Layout: React.FC = ({ children }: any) => (
 const Wrapper = styled.div`
   background-color: #ebeef1;
   min-height: 100vh;
+  max-height: 100%;
 `;
 
 const CenterContent = styled.div`
   margin: -200px auto 0 auto;
   position: relative;
   max-width: 1044px;
+  
+  &:after {
+    content: "";
+    display: block;
+    clear: both;  
+  }
   
   @media (max-width: 1064px) {
     padding-left: 0 !important;
@@ -43,6 +50,10 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Roboto', 'Noto Sans KR', serif;
     margin: 0;
     padding: 0;
+  }
+  
+  body {
+    overflow-x: hidden;
   }
   
   a, span, div {

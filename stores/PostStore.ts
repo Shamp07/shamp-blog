@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 interface PostInterface {
+  id: number,
   category: string,
   tags: string
   title: string,
@@ -11,9 +12,8 @@ interface PostInterface {
 }
 
 class PostStore {
-  root: any;
-
   @observable post: PostInterface = {
+    id: 0,
     category: '',
     tags: '',
     title: '',
@@ -90,6 +90,41 @@ class PostStore {
         const { data } = response;
         if (data.success) {
           this.postView = data.result;
+        } else {
+          toast.error(data.message);
+        }
+      })
+      .catch((response) => {
+        toast.error(response);
+      });
+  };
+
+  @action modifyPost = (): void => {
+    axios.put('/api/post', this.post)
+      .then((response) => {
+        const { data } = response;
+        if (data.success) {
+          toast.success(data.message);
+        } else {
+          toast.error(data.message);
+        }
+      })
+      .catch((response) => {
+        toast.error(response);
+      });
+  };
+
+  @action deletePost = (id: number, router: { back: () => void }): void => {
+    axios.delete('/api/post', {
+      params: {
+        id,
+      },
+    })
+      .then((response) => {
+        const { data } = response;
+        if (data.success) {
+          toast.success(data.message);
+          router.back();
         } else {
           toast.error(data.message);
         }

@@ -52,7 +52,6 @@ interface Container {
 const Wrapper = styled.div<Container>`
   display: block;
   width: 300px;
-  height: 300px;
   float: left;
   z-index: 1000;
   will-change: min-height;

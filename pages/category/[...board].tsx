@@ -1,8 +1,8 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
-import BoardHead from './BoardHead';
-import BoardContent from './BoardContent';
+import BoardHead from '../../components/board/BoardHead';
+import BoardContent from '../../components/board/BoardContent';
 import useStores from '../../stores/useStores';
 
 const Board: NextPage = () => {

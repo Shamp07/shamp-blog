@@ -5,14 +5,16 @@ import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRouter } from 'next/router';
 import useStores from '../../stores/useStores';
 
 const PostView: NextPage = () => {
   const { PostStore, SidebarStore } = useStores();
   const { boardCategoryName } = SidebarStore;
-  const { postView } = PostStore;
+  const { postView, deletePost } = PostStore;
+  const router = useRouter();
   const {
-    title, category, tags, time,
+    id, title, category, tags, time,
     commentCnt, likeCnt, viewCnt,
     content,
   } = postView;
@@ -62,6 +64,14 @@ const PostView: NextPage = () => {
             </span>
           </Button>
         </ArticleBox>
+        <ArticleFooter>
+          <Button variant="outlined" color="secondary" onClick={() => deletePost(id, router)}>
+            삭제
+          </Button>
+          <Button variant="outlined">
+            수정
+          </Button>
+        </ArticleFooter>
       </article>
     </Wrapper>
   );
@@ -177,6 +187,16 @@ const ThumbsUpIcon = styled(FontAwesomeIcon)`
   vertical-align: middle;
   margin-bottom: 3px;
   margin-right: 5px;
+`;
+
+const ArticleFooter = styled.div`
+  background: #f8f9fa;
+  padding: 16px;
+  text-align: right;
+  
+  & > button {
+    margin-left: 5px;
+  }
 `;
 
 export default observer(PostView);
