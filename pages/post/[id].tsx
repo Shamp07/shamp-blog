@@ -7,6 +7,7 @@ import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/router';
 import useStores from '../../stores/useStores';
+import CommentSection from '../../components/postView/Comment';
 
 const PostView: NextPage = () => {
   const { PostStore, SidebarStore } = useStores();
@@ -20,68 +21,73 @@ const PostView: NextPage = () => {
   } = postView;
 
   return (
-    <Wrapper>
-      <article>
-        <ArticleHeader>
-          <ArticleTitle>
-            {title}
-          </ArticleTitle>
-          <ArticleMeta>
-            <ArticleMetaLeft>
-              <li>{boardCategoryName[category]}</li>
-              <li>{tags}</li>
-              <li>{time}</li>
-            </ArticleMetaLeft>
-            <ArticleMetaRight>
-              <li>
-                조회
-                {' '}
-                {viewCnt}
-              </li>
-              <li>
-                댓글
-                {' '}
-                {commentCnt}
-              </li>
-              <li>
-                좋아요
-                {' '}
+    <>
+      <Wrapper>
+        <article>
+          <ArticleHeader>
+            <ArticleTitle>
+              {title}
+            </ArticleTitle>
+            <ArticleMeta>
+              <ArticleMetaLeft>
+                <li>{boardCategoryName[category]}</li>
+                <li>{tags}</li>
+                <li>{time}</li>
+              </ArticleMetaLeft>
+              <ArticleMetaRight>
+                <li>
+                  조회
+                  {' '}
+                  {viewCnt}
+                </li>
+                <li>
+                  댓글
+                  {' '}
+                  {commentCnt}
+                </li>
+                <li>
+                  좋아요
+                  {' '}
+                  {likeCnt}
+                </li>
+              </ArticleMetaRight>
+            </ArticleMeta>
+          </ArticleHeader>
+          <ArticleContent>
+            <div dangerouslySetInnerHTML={{ __html: content }} />
+          </ArticleContent>
+          <ArticleBox>
+            <Button size="small" color="primary" variant="outlined">
+              <ThumbsUpIcon icon={faThumbsUp} />
+              <span>
+                좋아요 (
                 {likeCnt}
-              </li>
-            </ArticleMetaRight>
-          </ArticleMeta>
-        </ArticleHeader>
-        <ArticleContent>
-          <div dangerouslySetInnerHTML={{ __html: content }} />
-        </ArticleContent>
-        <ArticleBox>
-          <Button color="primary" variant="outlined">
-            <ThumbsUpIcon icon={faThumbsUp} />
-            <span>
-              좋아요 (
-              {likeCnt}
-              )
-            </span>
-          </Button>
-        </ArticleBox>
-        <ArticleFooter>
-          <Button variant="outlined" color="secondary" onClick={() => deletePost(id, router)}>
-            삭제
-          </Button>
-          <Button variant="outlined">
-            수정
-          </Button>
-        </ArticleFooter>
-      </article>
-    </Wrapper>
+                )
+              </span>
+            </Button>
+          </ArticleBox>
+          <ArticleFooter>
+            <Button size="small" variant="outlined" color="secondary" onClick={() => deletePost(id, router)}>
+              삭제
+            </Button>
+            <Button size="small" variant="outlined">
+              수정
+            </Button>
+          </ArticleFooter>
+        </article>
+      </Wrapper>
+      <CommentSection />
+    </>
   );
 };
 
 PostView.getInitialProps = async ({ query, store }: any) => {
-  const { PostStore } = store;
+  const { PostStore, CommentStore } = store;
   const { getPost } = PostStore;
+  const { getComment } = CommentStore;
   const id = query.id as string;
-  await getPost(id);
+
+  await Promise.all([getPost(id), getComment(id)]);
 
   return {
     props: {},
@@ -191,7 +197,7 @@ const ThumbsUpIcon = styled(FontAwesomeIcon)`
 
 const ArticleFooter = styled.div`
   background: #f8f9fa;
-  padding: 16px;
+  padding: 12px;
   text-align: right;
   
   & > button {

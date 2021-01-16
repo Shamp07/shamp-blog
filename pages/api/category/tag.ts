@@ -28,6 +28,7 @@ const handler = (request: any, response: any) => {
 const SELECT_CATEGORY_TAGS = `
   SELECT DISTINCT tags FROM post
   WHERE category = $1
+  AND delete_fl = false
 `;
 
 export default handler;

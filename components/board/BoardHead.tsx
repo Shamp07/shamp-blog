@@ -62,9 +62,30 @@ const Wrapper = styled.header`
 
 const CategoryTag = styled.ul`
   list-style: none;
-  height: 48px;
-  overflow: auto;
+  overflow-x: visible;
+  overflow-y: hidden;
   white-space:nowrap;
+
+  @media (min-width: 1064px) {
+
+  }
+
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 8px;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #2d79c7;
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #ebeef1;;
+  }
+
+
 
   & > li {
     display: inline-block;
