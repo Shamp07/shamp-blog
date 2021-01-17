@@ -70,7 +70,8 @@ const INSERT_COMMENT = `
 const SELECT_COMMENT = `
   SELECT
     id,
-    user_id AS userId,
+    user_id AS "userId",
+    comment_id AS "commentId",
     content,
     CASE WHEN (CAST(TO_CHAR(NOW() - crt_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 100)
       THEN (CAST(TO_CHAR(NOW() - crt_dttm, 'SS') AS INTEGER)) || ' 초 전'

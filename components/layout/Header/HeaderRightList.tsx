@@ -3,27 +3,48 @@ import styled from 'styled-components';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { observer } from 'mobx-react-lite';
 import useStores from '../../../stores/useStores';
 
 const HeaderRightList: React.FC = () => {
   const { SignStore, SidebarStore } = useStores();
-  const { openSignModal } = SignStore;
+  const { userData, openSignModal } = SignStore;
   const { toggleSidebar } = SidebarStore;
+
+  const loggedIn = !!userData;
+  console.log(userData);
 
   return (
     <>
       <ListWrapper>
         <RightList>
-          <li>
-            <NoStyleA onClick={openSignModal}>
-              로그인
-            </NoStyleA>
-          </li>
-          <li>
-            <NoStyleA>
-              회원가입
-            </NoStyleA>
-          </li>
+          {loggedIn ? (
+            <>
+              <li>
+                <NoStyleA>
+                  ㅎㄷㅇ
+                </NoStyleA>
+              </li>
+              <li>
+                <NoStyleA>
+                  로그아웃
+                </NoStyleA>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <NoStyleA onClick={openSignModal}>
+                  로그인
+                </NoStyleA>
+              </li>
+              <li>
+                <NoStyleA>
+                  회원가입
+                </NoStyleA>
+              </li>
+            </>
+          )}
           <GithubList>
             <NoStyleA href="https://github.com/Shamp07">
               <Icon icon={faGithub} />
@@ -109,4 +130,4 @@ const Icon = styled(FontAwesomeIcon)`
   margin: 15px;
 `;
 
-export default HeaderRightList;
+export default observer(HeaderRightList);

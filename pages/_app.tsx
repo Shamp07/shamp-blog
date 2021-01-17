@@ -15,6 +15,9 @@ class CustomApp extends App {
   static async getInitialProps(context: any) {
     const mobxStore = initializeStore();
     context.ctx.store = mobxStore;
+    const { SignStore } = mobxStore;
+    const { cookieCheck } = SignStore;
+    await cookieCheck();
     const appProps = await App.getInitialProps(context);
 
     return {

@@ -64,7 +64,8 @@
     "./pages/",
     "./stores/",
     "./components",
-    "./database"
+    "./database",
+    "./middleware"
   ],
   "exclude": [
     "node_modules",

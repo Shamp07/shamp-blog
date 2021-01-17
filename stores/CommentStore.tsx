@@ -2,9 +2,11 @@ import React from 'react';
 import { action, makeObservable, observable } from 'mobx';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import {initialPost} from "./PostStore";
 
 interface CommentInterface {
   id: number,
+  commentId: number,
   userId: number,
   content: string,
   time: string,
@@ -15,8 +17,9 @@ class CommentStore {
 
   @observable commentList: Array<CommentInterface> = [];
 
-  constructor() {
+  constructor(initialData = initialComment) {
     makeObservable(this);
+    this.commentList = initialData.commentList;
   }
 
   @action commentHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -52,7 +55,6 @@ class CommentStore {
         const { data } = response;
         if (data.success) {
           const { result } = data;
-          console.log(result);
           this.commentList = result;
         } else {
           toast.error(data.message);
@@ -63,5 +65,9 @@ class CommentStore {
       });
   };
 }
+
+export const initialComment = {
+  commentList: [],
+};
 
 export default CommentStore;

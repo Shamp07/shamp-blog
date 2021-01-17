@@ -1,7 +1,8 @@
 import { Client } from 'pg';
+import { NextApiRequest, NextApiResponse } from 'next';
 import Database from '../../../database/Database';
 
-const handler = (request: any, response: any) => {
+const handler = (request: NextApiRequest, response: NextApiResponse) => {
   if (request.method === 'GET') {
     const { category } = request.query;
     response.setHeader('Access-Control-Allow-Origin', 'localhost:3000');

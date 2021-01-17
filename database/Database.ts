@@ -1,5 +1,5 @@
 import { Client } from 'pg';
-import config from './db.config.json';
+import config from '../config/db.config.json';
 
 class Database {
   connection: Client;

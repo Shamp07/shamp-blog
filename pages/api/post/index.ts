@@ -120,29 +120,29 @@ const INSERT_POST = `
 
 const SELECT_POST = `
   SELECT
-    id,
-    category,
-    tags,
-    title,
-    content,
-    like_cnt AS "likeCnt",
-    view_cnt AS "viewCnt",
-    (SELECT COUNT(*) FROM comment WHERE post_id = id) AS "commentCnt",
-    CASE WHEN (CAST(TO_CHAR(NOW() - crt_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 100)
-        THEN (CAST(TO_CHAR(NOW() - crt_dttm, 'SS') AS INTEGER)) || ' 초 전'
-      WHEN (CAST(TO_CHAR(NOW() - crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 10000)
-        THEN (CAST(TO_CHAR(NOW() - crt_dttm, 'MI') AS INTEGER)) || ' 분 전'
-      WHEN (CAST(TO_CHAR(NOW() - crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000)
-        THEN (CAST(TO_CHAR(NOW() - crt_dttm, 'HH24') AS INTEGER)) || ' 시간 전'
-      WHEN (CAST(TO_CHAR(NOW() - crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 100000000)
-        THEN (CAST(TO_CHAR(NOW() - crt_dttm, 'DD') AS INTEGER)) || ' 일 전'
-      WHEN (CAST(TO_CHAR(NOW() - crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 10000000000)
-        THEN (CAST(TO_CHAR(NOW() - crt_dttm, 'MM') AS INTEGER)) || ' 달 전'
-      WHEN (CAST(TO_CHAR(NOW() - crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000000000)
-        THEN (CAST(TO_CHAR(NOW() - crt_dttm, 'YYYY') AS INTEGER)) || ' 년 전'
+    p.id,
+    p.category,
+    p.tags,
+    p.title,
+    p.content,
+    p.like_cnt AS "likeCnt",
+    p.view_cnt AS "viewCnt",
+    (SELECT COUNT(*) FROM comment WHERE post_id = p.id AND delete_fl = false) AS "commentCnt",
+    CASE WHEN (CAST(TO_CHAR(NOW() - p.crt_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 100)
+        THEN (CAST(TO_CHAR(NOW() - p.crt_dttm, 'SS') AS INTEGER)) || ' 초 전'
+      WHEN (CAST(TO_CHAR(NOW() - p.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 10000)
+        THEN (CAST(TO_CHAR(NOW() - p.crt_dttm, 'MI') AS INTEGER)) || ' 분 전'
+      WHEN (CAST(TO_CHAR(NOW() - p.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000)
+        THEN (CAST(TO_CHAR(NOW() - p.crt_dttm, 'HH24') AS INTEGER)) || ' 시간 전'
+      WHEN (CAST(TO_CHAR(NOW() - p.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 100000000)
+        THEN (CAST(TO_CHAR(NOW() - p.crt_dttm, 'DD') AS INTEGER)) || ' 일 전'
+      WHEN (CAST(TO_CHAR(NOW() - p.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 10000000000)
+        THEN (CAST(TO_CHAR(NOW() - p.crt_dttm, 'MM') AS INTEGER)) || ' 달 전'
+      WHEN (CAST(TO_CHAR(NOW() - p.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000000000)
+        THEN (CAST(TO_CHAR(NOW() - p.crt_dttm, 'YYYY') AS INTEGER)) || ' 년 전'
     END AS time
-  FROM post
-  WHERE id = $1
+  FROM post p
+  WHERE p.id = $1
 `;
 
 const UPDATE_POST_VIEW_CNT = `

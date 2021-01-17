@@ -7,10 +7,14 @@ import styled from 'styled-components';
 import { Button, TextField } from '@material-ui/core';
 import PasswordInput from './PasswordInput';
 import useStores from '../../stores/useStores';
+import { useRouter } from 'next/router';
 
 const SignModal: React.FC = () => {
   const { SignStore } = useStores();
   const { isOpenSignModal, openSignModal } = SignStore;
+  const { loginInfo, loginHandleChange, login } = SignStore;
+  const { email } = loginInfo;
+  const router = useRouter();
 
   return (
     <CustomModal
@@ -27,7 +31,7 @@ const SignModal: React.FC = () => {
       <Fade in={isOpenSignModal}>
         <Paper>
           <h2 id="transition-modal-title">로그인</h2>
-          <TextField id="standard-basic" label="ID" />
+          <TextField label="e-mail" name="email" onChange={loginHandleChange} value={email} />
           <br />
           <br />
           <PasswordInput />
@@ -36,7 +40,7 @@ const SignModal: React.FC = () => {
           <Button variant="contained" color="primary">
             회원가입
           </Button>
-          <RightButton variant="contained" color="primary">
+          <RightButton variant="contained" color="primary" onClick={() => login(router)}>
             로그인
           </RightButton>
         </Paper>

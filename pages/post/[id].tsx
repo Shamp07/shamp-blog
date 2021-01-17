@@ -7,7 +7,7 @@ import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/router';
 import useStores from '../../stores/useStores';
-import CommentSection from '../../components/postView/Comment';
+import CommentSection from '../../components/postView/CommentSection';
 
 const PostView: NextPage = () => {
   const { PostStore, SidebarStore } = useStores();
