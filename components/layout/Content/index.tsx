@@ -1,11 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
+import { observer } from 'mobx-react-lite';
+import useStores from '../../../stores/useStores';
 
-const Content: React.FC = ({ children }: any) => (
-  <Wrapper>
-    {children}
-  </Wrapper>
-);
+const Content: React.FC = ({ children }: any) => {
+  const { SignStore } = useStores();
+  const { cookieChecked } = SignStore;
+
+  // 쿠키 내의 토큰 체크가 되기 전
+  if (!cookieChecked) {
+    return (<></>);
+  }
+
+  return (
+    <Wrapper>
+      {children}
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.div`
   float: right;
@@ -17,4 +29,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default Content;
+export default observer(Content);

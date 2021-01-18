@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 import cookie from 'js-cookie';
 
 class SignStore {
+  @observable cookieChecked: boolean = false;
+
   @observable userData: object | undefined;
 
   @observable loginInfo = {
@@ -19,9 +21,8 @@ class SignStore {
 
   @observable isOpenSignModal: boolean = false;
 
-  constructor(initialData = initialSign) {
+  constructor() {
     makeObservable(this);
-    this.userData = initialData.userData;
   }
 
   @action openSignModal = () => {
@@ -36,7 +37,7 @@ class SignStore {
   };
 
   @action cookieCheck = async () => {
-    await axios.get('http://localhost:3000/api/user/cookie')
+    await axios.get('/api/user/cookie')
       .then((response) => {
         const { data } = response;
         if (data.success) {
@@ -44,6 +45,8 @@ class SignStore {
         } else {
           toast.error(data.message);
         }
+
+        this.cookieChecked = true;
       })
       .catch((response) => {
         toast.error(response);
@@ -68,9 +71,5 @@ class SignStore {
       });
   };
 }
-
-export const initialSign = {
-  userData: undefined,
-};
 
 export default SignStore;

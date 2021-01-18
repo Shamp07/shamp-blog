@@ -1,84 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { observer } from 'mobx-react-lite';
-import useStores from '../../../stores/useStores';
+import HeaderSidebarButton from './HeaderSidebarButton';
+import HeaderTokenMenu from './HeaderTokenMenu';
 
-const HeaderRightList: React.FC = () => {
-  const { SignStore, SidebarStore } = useStores();
-  const { userData, openSignModal } = SignStore;
-  const { toggleSidebar } = SidebarStore;
-
-  const loggedIn = !!userData;
-  console.log(userData);
-
-  return (
-    <>
-      <ListWrapper>
-        <RightList>
-          {loggedIn ? (
-            <>
-              <li>
-                <NoStyleA>
-                  ㅎㄷㅇ
-                </NoStyleA>
-              </li>
-              <li>
-                <NoStyleA>
-                  로그아웃
-                </NoStyleA>
-              </li>
-            </>
-          ) : (
-            <>
-              <li>
-                <NoStyleA onClick={openSignModal}>
-                  로그인
-                </NoStyleA>
-              </li>
-              <li>
-                <NoStyleA>
-                  회원가입
-                </NoStyleA>
-              </li>
-            </>
-          )}
-          <GithubList>
-            <NoStyleA href="https://github.com/Shamp07">
-              <Icon icon={faGithub} />
-            </NoStyleA>
-          </GithubList>
-        </RightList>
-      </ListWrapper>
-      <SidebarWrapper>
-        <SidebarButton onClick={toggleSidebar}>
-          <Icon2 icon={faBars} />
-        </SidebarButton>
-      </SidebarWrapper>
-    </>
-  );
-};
-
-const SidebarButton = styled.div`
-  display: none;
-  padding: 7px 10px 5px 10px;
-  border: #ffffff solid 1px;
-  border-radius: 5px;
-  margin: 9px;
-  cursor: pointer;
-  float: right;
-  transition: all 0.2s;
-  
-  @media (max-width: 1064px) {
-    display: inline-block;
-  }
-`;
-
-const SidebarWrapper = styled.div`
-  font-size: 12px;
-`;
+const HeaderRightList: React.FC = () => (
+  <>
+    <ListWrapper>
+      <RightList>
+        <HeaderTokenMenu />
+        <GithubList>
+          <NoStyleA href="https://github.com/Shamp07">
+            <Icon icon={faGithub} />
+          </NoStyleA>
+        </GithubList>
+      </RightList>
+    </ListWrapper>
+    <HeaderSidebarButton />
+  </>
+);
 
 const ListWrapper = styled.div`
   width: 250px;
@@ -121,13 +62,8 @@ const NoStyleA = styled.a`
   }
 `;
 
-const Icon2 = styled(FontAwesomeIcon)`
-  font-size: 10px;
-  height: 20px;
-`;
-
 const Icon = styled(FontAwesomeIcon)`
   margin: 15px;
 `;
 
-export default observer(HeaderRightList);
+export default HeaderRightList;

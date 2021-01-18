@@ -16,6 +16,7 @@ const BoardHead: React.FC = () => {
   const boardParams = router.query.board as Array<string>;
   const boardPath = boardParams[0];
   const boardTag = boardParams[1];
+
   return (
     <Wrapper>
       <HeadSection>

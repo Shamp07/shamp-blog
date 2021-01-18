@@ -15,9 +15,6 @@ class CustomApp extends App {
   static async getInitialProps(context: any) {
     const mobxStore = initializeStore();
     context.ctx.store = mobxStore;
-    const { SignStore } = mobxStore;
-    const { cookieCheck } = SignStore;
-    await cookieCheck();
     const appProps = await App.getInitialProps(context);
 
     return {
@@ -30,9 +27,15 @@ class CustomApp extends App {
     super(props);
     const isServer = typeof window === 'undefined';
     this.mobxStore = isServer ? props.initialMobxState : initializeStore(props.initialMobxState);
+    const { SignStore } = this.mobxStore;
+    const { cookieCheck } = SignStore;
+    console.log('cookie - check start');
+    cookieCheck();
+    console.log('cookie - check end');
   }
 
   render() {
+    console.log('app.js')
     const { Component, pageProps } = this.props;
     return (
       <Provider {...this.mobxStore}>
