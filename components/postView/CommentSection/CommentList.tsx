@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../../stores/useStores';
 import CommentRow, { CommentRowInterface } from './CommentRow';
+import CommentNone from './CommentNone';
 
 const CommentList: React.FC = () => {
   const { CommentStore } = useStores();
@@ -11,9 +12,9 @@ const CommentList: React.FC = () => {
   return (
     <CommentListWrapper>
       <ul>
-        {commentList.map(
+        {commentList.length ? commentList.map(
           (data: CommentRowInterface) => <CommentRow data={data} key={data.id} />,
-        )}
+        ) : <CommentNone />}
       </ul>
     </CommentListWrapper>
   );

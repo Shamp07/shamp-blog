@@ -4,7 +4,6 @@ import config from '../../../config/jwt.config.json';
 
 const handler = (request: NextApiRequest, response: NextApiResponse) => {
   if (request.method === 'GET') {
-    console.log(request.cookies);
     if (!('token' in request.cookies)) {
       response.status(200).json({ success: false });
       return;
@@ -16,7 +15,7 @@ const handler = (request: NextApiRequest, response: NextApiResponse) => {
       try {
         decoded = jwt.verify(token, config.secret);
       } catch (e) {
-        console.error(e);
+        response.status(200).json({ success: false });
       }
     }
 

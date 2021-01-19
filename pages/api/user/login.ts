@@ -43,7 +43,8 @@ const handler = (request: NextApiRequest, response: NextApiResponse) => {
 
 const SELECT_USER = `
   SELECT
-    *
+    id,
+    name
   FROM "user"
   WHERE
     email = $1

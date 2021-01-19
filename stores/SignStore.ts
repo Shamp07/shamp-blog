@@ -70,6 +70,11 @@ class SignStore {
         toast.error(response);
       });
   };
+
+  @action logout = () => {
+    cookie.remove('token');
+    this.userData = undefined;
+  };
 }
 
 export default SignStore;

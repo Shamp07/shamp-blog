@@ -6,9 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useStores from '../../../stores/useStores';
 
 const CommentHeader: React.FC = () => {
-  const { PostStore } = useStores();
+  const { PostStore, CommentStore } = useStores();
   const { postView } = PostStore;
-  const { commentCnt } = postView;
+  const { getComment } = CommentStore;
+  const { id, commentCnt } = postView;
+
   return (
     <CommentHeaderWrapper>
       <h2>댓글</h2>
@@ -21,7 +23,7 @@ const CommentHeader: React.FC = () => {
         {' '}
         개
       </span>
-      <RightButton size="small" variant="outlined">
+      <RightButton size="small" variant="outlined" onClick={() => getComment(id)}>
         <span>
           <ReloadICon icon={faSync} />
           {' '}
@@ -36,6 +38,7 @@ const CommentHeaderWrapper = styled.div`
   z-index: 1000;
   position: relative;
   padding: 16px;
+  border-bottom: 1px solid #e6e6e6; 
   
   & > h2 {
     display: inline;

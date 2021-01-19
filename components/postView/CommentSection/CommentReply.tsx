@@ -1,25 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
+import { observer } from 'mobx-react-lite';
 
-const CommentReply: React.FC = () => {
-  return (
-    <CommentWriteWrapper>
-      <ReplyBorder />
-      <CommentWriterInner>
-        <CustomTextField
-          multiline
-          rows={3}
-        />
-        <CommentWriteFooter>
-          <CommentWriteButton>
-            작성
-          </CommentWriteButton>
-        </CommentWriteFooter>
-      </CommentWriterInner>
-    </CommentWriteWrapper>
-  );
-};
+const CommentReply: React.FC = () => (
+  <CommentWriteWrapper>
+    <ReplyBorder />
+    <CommentWriterInner>
+      <CustomTextField
+        multiline
+        rows={3}
+        placeholder="포스팅에 관련된 의견이나 질문을 자유롭게 남겨주세요!"
+      />
+      <CommentWriteFooter>
+        <CommentWriteButton>
+          작성
+        </CommentWriteButton>
+      </CommentWriteFooter>
+    </CommentWriterInner>
+  </CommentWriteWrapper>
+);
 
 const CommentWriteWrapper = styled.div`
   padding: 12px 12px 12px 64px;
@@ -80,4 +80,4 @@ const CustomTextField = styled(TextField)`
   }
 `;
 
-export default CommentReply;
+export default observer(CommentReply);

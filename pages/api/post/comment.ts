@@ -7,15 +7,15 @@ const handler = (request: any, response: any) => {
   } else if (request.method === 'GET') {
     getComment(request, response);
   } else if (request.method === 'PUT') {
-    // modifyPost(request, response);
+    modifyComment(request, response);
   } else if (request.method === 'DELETE') {
-    // deletePost(request, response);
+    deleteComment(request, response);
   }
 };
 
 const addComment = (request: any, response: any) => {
-  const { postId, comment } = request.body;
-  const values: Array<string> = [postId, null, 0, comment];
+  const { postId, userId, comment } = request.body;
+  const values: Array<string> = [postId, null, userId, comment];
 
   Database.execute(
     (database: Client) => database.query(
@@ -25,7 +25,7 @@ const addComment = (request: any, response: any) => {
       .then(() => {
         response.json({
           success: true,
-          message: '😀  정상적으로 댓글이 등록 되었어요!',
+          message: '😀 정상적으로 댓글이 등록 되었어요!',
         });
       }),
   ).then(() => {
@@ -53,6 +53,46 @@ const getComment = (request: any, response: any) => {
   });
 };
 
+const modifyComment = (request: any, response: any) => {
+  const { commentId, comment } = request.body;
+  const values: Array<string> = [comment, commentId];
+
+  Database.execute(
+    (database: Client) => database.query(
+      UPDATE_COMMENT,
+      values,
+    )
+      .then(() => {
+        response.json({
+          success: true,
+          message: '😀 정상적으로 댓글이 수정 되었어요!',
+        });
+      }),
+  ).then(() => {
+    console.log('[UPDATE, PUT /api/post/comment] 댓글 수정');
+  });
+};
+
+const deleteComment = (request: any, response: any) => {
+  const { commentId } = request.query;
+  const values: Array<string> = [commentId];
+
+  Database.execute(
+    (database: Client) => database.query(
+      DELETE_COMMENT,
+      values,
+    )
+      .then(() => {
+        response.json({
+          success: true,
+          message: '😀 정상적으로 댓글이 삭제 되었어요!',
+        });
+      }),
+  ).then(() => {
+    console.log('[UPDATE, DELETE /api/post/comment] 댓글 삭제');
+  });
+};
+
 const INSERT_COMMENT = `
   INSERT INTO COMMENT (
     post_id,
@@ -72,6 +112,7 @@ const SELECT_COMMENT = `
     id,
     user_id AS "userId",
     comment_id AS "commentId",
+    (SELECT NAME FROM "user" WHERE id = user_id) AS "userName",
     content,
     CASE WHEN (CAST(TO_CHAR(NOW() - crt_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 100)
       THEN (CAST(TO_CHAR(NOW() - crt_dttm, 'SS') AS INTEGER)) || ' 초 전'
@@ -90,6 +131,20 @@ const SELECT_COMMENT = `
   WHERE 
     post_id = $1  
     AND delete_fl = false
+`;
+
+const UPDATE_COMMENT = `
+  UPDATE comment
+  SET
+    content = $1,
+    mfy_dttm = NOW(),
+  WHERE id = $2
+`;
+
+const DELETE_COMMENT = `
+  UPDATE comment
+  SET delete_fl = true
+  WHERE id = $1
 `;
 
 export default handler;

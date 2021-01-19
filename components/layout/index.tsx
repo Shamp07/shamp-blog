@@ -46,10 +46,11 @@ const CenterContent = styled.div`
 `;
 
 const GlobalStyle = createGlobalStyle`
-  header, body, div, nav, ul, li, h1, h2, h3, h4 {
+  header, body, span, div, nav, ul, li, h1, h2, h3, h4 {
     font-family: 'Roboto', 'Noto Sans KR', serif;
     margin: 0;
     padding: 0;
+    outline: 0;
   }
   
   body {

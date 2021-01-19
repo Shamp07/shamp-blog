@@ -4,7 +4,7 @@ import useStores from '../../../stores/useStores';
 
 const HeaderTokenList: React.FC = () => {
   const { SignStore } = useStores();
-  const { userData } = SignStore;
+  const { userData, logout } = SignStore;
   const { name } = userData;
 
   return (
@@ -17,7 +17,7 @@ const HeaderTokenList: React.FC = () => {
         </NoStyleA>
       </li>
       <li>
-        <NoStyleA>
+        <NoStyleA onClick={logout}>
           로그아웃
         </NoStyleA>
       </li>

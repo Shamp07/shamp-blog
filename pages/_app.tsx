@@ -29,13 +29,10 @@ class CustomApp extends App {
     this.mobxStore = isServer ? props.initialMobxState : initializeStore(props.initialMobxState);
     const { SignStore } = this.mobxStore;
     const { cookieCheck } = SignStore;
-    console.log('cookie - check start');
     cookieCheck();
-    console.log('cookie - check end');
   }
 
   render() {
-    console.log('app.js')
     const { Component, pageProps } = this.props;
     return (
       <Provider {...this.mobxStore}>
