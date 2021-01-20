@@ -14,6 +14,8 @@ interface CommentInterface {
 class CommentStore {
   @observable comment: string = '';
 
+  @observable replyComment: string = '';
+
   @observable commentList: Array<CommentInterface> = [];
 
   @observable modifyCommentId: number = 0;
@@ -31,19 +33,30 @@ class CommentStore {
     }
   };
 
+  @action replyCommentHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    if (event.target.value.length <= 1000) {
+      this.replyComment = event.target.value;
+    }
+  };
+
   @action setModifyCommentId = (id: number) => {
     this.modifyCommentId = id;
   };
 
   @action setReplyCommentId = (id: number) => {
     this.replyCommentId = id;
+    this.replyComment = '';
   };
 
-  @action addComment = (postId: number, userId: number): void => {
+  @action addComment = (
+    postId: number, userId: number,
+    commentId: number, isReply: boolean,
+  ): void => {
     axios.post('/api/post/comment', {
       postId,
       userId,
-      comment: this.comment,
+      commentId: isReply ? commentId : null,
+      comment: isReply ? this.replyComment : this.comment,
     })
       .then((response) => {
         const { data } = response;
@@ -51,6 +64,7 @@ class CommentStore {
           toast.success(data.message);
           this.comment = '';
           this.getComment(postId);
+          this.setReplyCommentId(0);
         } else {
           toast.error(data.message);
         }

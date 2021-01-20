@@ -12,7 +12,11 @@ const CommentWrite: React.FC<CommentProp> = ({ isReply }: CommentProp) => {
   const { PostStore, CommentStore, SignStore } = useStores();
   const { postView } = PostStore;
   const { id } = postView;
-  const { comment, addComment, commentHandleChange } = CommentStore;
+  const {
+    comment, replyComment,
+    addComment, commentHandleChange, replyCommentHandleChange,
+    replyCommentId,
+  } = CommentStore;
   const { userData } = SignStore;
   const { id: userId } = userData;
 
@@ -24,17 +28,17 @@ const CommentWrite: React.FC<CommentProp> = ({ isReply }: CommentProp) => {
           type="text"
           multiline
           rows={3}
-          onChange={commentHandleChange}
-          value={comment}
+          onChange={isReply ? replyCommentHandleChange : commentHandleChange}
+          value={isReply ? replyComment : comment}
           placeholder="포스팅에 관련된 의견이나 질문을 자유롭게 남겨주세요!"
         />
         <CommentWriteFooter>
-          <CommentWriteButton onClick={() => addComment(id, userId)}>
+          <CommentWriteButton onClick={() => addComment(id, userId, replyCommentId, isReply)}>
             작성
           </CommentWriteButton>
           <span>
             (
-            {comment.length}
+            {isReply ? replyComment.length : comment.length}
             /1000)
           </span>
         </CommentWriteFooter>
