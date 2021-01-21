@@ -133,6 +133,29 @@ class PostStore {
         toast.error(response);
       });
   };
+
+  @action addPostLike = (postId: number, userId: number): void => {
+    axios.post('/api/post/like', {
+      postId,
+      userId,
+    })
+      .then((response) => {
+        const { data } = response;
+        if (data.success) {
+          if (data.code === 1) {
+            toast.success(data.message);
+          } else if (data.code === 2) {
+            toast.warning(data.message);
+          }
+          this.getPost(postId);
+        } else {
+          toast.error(data.message);
+        }
+      })
+      .catch((response) => {
+        toast.error(response);
+      });
+  };
 }
 
 export const initialPost = {

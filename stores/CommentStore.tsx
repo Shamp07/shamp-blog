@@ -2,6 +2,7 @@ import React from 'react';
 import { action, makeObservable, observable } from 'mobx';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import PostStore from './PostStore';
 
 interface CommentInterface {
   id: number,
@@ -12,18 +13,23 @@ interface CommentInterface {
 }
 
 class CommentStore {
+  PostStore: PostStore;
+
   @observable comment: string = '';
 
   @observable replyComment: string = '';
 
+  @observable modifierComment: string = '';
+
   @observable commentList: Array<CommentInterface> = [];
 
-  @observable modifyCommentId: number = 0;
+  @observable modifierCommentId: number = 0;
 
   @observable replyCommentId: number = 0;
 
-  constructor(initialData = initialComment) {
+  constructor(initialData = initialComment, root: any) {
     makeObservable(this);
+    this.PostStore = root.PostStore;
     this.commentList = initialData.commentList;
   }
 
@@ -39,8 +45,15 @@ class CommentStore {
     }
   };
 
-  @action setModifyCommentId = (id: number) => {
-    this.modifyCommentId = id;
+  @action modifierCommentHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    if (event.target.value.length <= 1000) {
+      this.modifierComment = event.target.value;
+    }
+  };
+
+  @action setModifierCommentId = (id: number, content: string) => {
+    this.modifierCommentId = id;
+    this.modifierComment = content;
   };
 
   @action setReplyCommentId = (id: number) => {
@@ -63,8 +76,9 @@ class CommentStore {
         if (data.success) {
           toast.success(data.message);
           this.comment = '';
-          this.getComment(postId);
           this.setReplyCommentId(0);
+          this.getComment(postId);
+          this.PostStore.getPost(postId);
         } else {
           toast.error(data.message);
         }
@@ -101,6 +115,7 @@ class CommentStore {
         if (data.success) {
           toast.success(data.message);
           this.getComment(postId);
+          this.PostStore.getPost(postId);
         } else {
           toast.error(data.message);
         }
@@ -121,6 +136,7 @@ class CommentStore {
         if (data.success) {
           toast.success(data.message);
           this.getComment(postId);
+          this.PostStore.getPost(postId);
         } else {
           toast.error(data.message);
         }

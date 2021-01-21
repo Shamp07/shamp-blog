@@ -10,9 +10,11 @@ import useStores from '../../stores/useStores';
 import CommentSection from '../../components/postView/CommentSection';
 
 const PostView: NextPage = () => {
-  const { PostStore, SidebarStore } = useStores();
+  const { PostStore, SidebarStore, SignStore } = useStores();
   const { boardCategoryName } = SidebarStore;
-  const { postView, deletePost } = PostStore;
+  const { postView, deletePost, addPostLike } = PostStore;
+  const { userData } = SignStore;
+  const { id: userId } = userData;
   const router = useRouter();
   const {
     id, title, category, tags, time,
@@ -57,7 +59,7 @@ const PostView: NextPage = () => {
             <div dangerouslySetInnerHTML={{ __html: content }} />
           </ArticleContent>
           <ArticleBox>
-            <Button size="small" color="primary" variant="outlined">
+            <Button size="small" color="primary" variant="outlined" onClick={() => addPostLike(id, userId)}>
               <ThumbsUpIcon icon={faThumbsUp} />
               <span>
                 좋아요 (

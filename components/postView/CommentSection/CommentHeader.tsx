@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useStores from '../../../stores/useStores';
+import { observer } from 'mobx-react-lite';
 
 const CommentHeader: React.FC = () => {
   const { PostStore, CommentStore } = useStores();
@@ -35,10 +36,9 @@ const CommentHeader: React.FC = () => {
 };
 
 const CommentHeaderWrapper = styled.div`
-  z-index: 1000;
+  z-index: 100;
   position: relative;
   padding: 16px;
-  border-bottom: 1px solid #e6e6e6; 
   
   & > h2 {
     display: inline;
@@ -67,4 +67,4 @@ const ReloadICon = styled(FontAwesomeIcon)`
   height: 12px;
 `;
 
-export default CommentHeader;
+export default observer(CommentHeader);

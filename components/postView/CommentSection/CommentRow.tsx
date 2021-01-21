@@ -1,42 +1,34 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faReply } from '@fortawesome/free-solid-svg-icons';
 import { observer } from 'mobx-react-lite';
+import { TextField } from '@material-ui/core';
 import useStores from '../../../stores/useStores';
 import CommentWrite from './CommentWrite';
+import CommentMenu from './CommentMenu';
 
 export interface CommentRowInterface {
   id: number,
   commentId: number,
   userId: number,
   userName: string,
+  commentUserName: string,
   content: string,
   time: string,
+  isTag: boolean,
 }
 
 const CommentRow = ({ data }: { data: CommentRowInterface }) => {
-  const { PostStore, CommentStore, SignStore } = useStores();
-  const { postView } = PostStore;
-  const { id: postId } = postView;
+  const { CommentStore } = useStores();
   const {
-    replyCommentId, setReplyCommentId,
-    setModifyCommentId, deleteComment,
+    replyCommentId, modifierComment,
+    modifierCommentId, modifierCommentHandleChange,
   } = CommentStore;
-  const { userData } = SignStore;
 
   const {
     id, commentId, userName,
-    userId, content, time,
+    content, time,
+    isTag, commentUserName,
   } = data;
-
-  let isMine: boolean = false;
-  const loggedIn = !!userData;
-
-  if (loggedIn) {
-    const { id: userIdToken } = userData;
-    isMine = userId === userIdToken;
-  }
 
   return (
     <>
@@ -47,40 +39,24 @@ const CommentRow = ({ data }: { data: CommentRowInterface }) => {
             <span>{userName}</span>
             <span>{time}</span>
           </CommentWriter>
-          <CommentContent>{content}</CommentContent>
-          <CommentMenu>
-            {isMine && (
+          <CommentContent>
+            {modifierCommentId === id ? (
+              <CustomTextField
+                type="text"
+                multiline
+                rows={3}
+                onChange={modifierCommentHandleChange}
+                value={modifierComment}
+                placeholder="포스팅에 관련된 의견이나 질문을 자유롭게 남겨주세요!"
+              />
+            ) : (
               <>
-                <span
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => deleteComment(id, postId)}
-                  onKeyDown={() => deleteComment(id, postId)}
-                >
-                  삭제
-                </span>
-                <span
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => setModifyCommentId(id, postId)}
-                  onKeyDown={() => setModifyCommentId(id, postId)}
-                >
-                  수정
-                </span>
+                {isTag && (<NameTag>{commentUserName}</NameTag>)}
+                {content}
               </>
             )}
-            {loggedIn && (
-              <span
-                role="button"
-                tabIndex={0}
-                onClick={() => setReplyCommentId(id)}
-                onKeyDown={() => setReplyCommentId(id)}
-              >
-                <ReplyIcon icon={faReply} />
-                답글 쓰기
-              </span>
-            )}
-          </CommentMenu>
+          </CommentContent>
+          <CommentMenu />
         </CommentWrapper>
       </li>
       {id === replyCommentId && <CommentWrite isReply />}
@@ -119,39 +95,13 @@ const CommentWriter = styled.div`
   }
 `;
 
-const CommentContent = styled.div`
+const CommentContent = styled.pre`
   margin-top: 8px;
   line-height: 20px;
   font-size: 14px;
   color: #1e2022;
   word-wrap: break-word;
   word-break: break-all;
-`;
-
-const CommentMenu = styled.div`
-  margin-top: 8px;
-  font-size: 14px;
-  
-  & > span {
-    margin-right: 10px;
-    cursor: pointer;
-  }
-  
-  & > span:first-child {
-    color: #dc143c;
-    margin-right: 10px;
-  }
-  
-  & > span:last-child {
-    color: #7b858e;
-  }
-`;
-
-const ReplyIcon = styled(FontAwesomeIcon)`
-  width: 14px;
-  height: 14px;
-  margin-right: 5px;
-  vertical-align: middle;
 `;
 
 const ReplyBorder = styled.div`
@@ -164,6 +114,28 @@ const ReplyBorder = styled.div`
   z-index: 1000;
   border-left: 1px solid #c5cbd0;
   border-bottom: 1px solid #c5cbd0;
+`;
+
+const NameTag = styled.span`
+  color: #1e73c9;
+  margin-right: 5px;
+`;
+
+const CustomTextField = styled(TextField)`
+  display: block !important;
+  background-color: #fff;
+  
+  & .MuiInputBase-multiline {
+    display: block !important;
+    width: 100%;
+    padding-left:10px;
+    padding-right: 10px;
+    max-width: 100%;
+  }
+  
+  & textarea {
+    font-size: 14px;
+  }
 `;
 
 export default observer(CommentRow);

@@ -18,7 +18,6 @@ const addComment = (request: any, response: any) => {
     postId, userId, commentId, comment,
   } = request.body;
   const values: Array<string> = [postId, commentId, userId, comment];
-  console.log(values);
 
   Database.execute(
     (database: Client) => database.query(
@@ -107,10 +106,10 @@ const INSERT_COMMENT = `
   ) VALUES (
     NEXTVAL('seq_comment'),
     $1,
-    CASE WHEN $2 IS NULL
-      THEN CURRVAL('seq_comment'),
-    ELSE (SELECT UPPER_ID FROM comment WHERE id = $2)
-    END,
+    (SELECT CASE WHEN $2::integer IS NULL
+      THEN CURRVAL('seq_comment')
+      ELSE (SELECT UPPER_ID FROM comment WHERE id = $2::integer)
+    END),
     $2,
     $3,
     $4
@@ -121,15 +120,14 @@ const SELECT_COMMENT = `
   SELECT
     c.id,
     c.user_id AS "userId",
+    c.upper_id AS "upperId",
     c.comment_id AS "commentId",
-    CASE WHEN c.comment_id IS NULL
-      THEN c.id
-    WHEN ((SELECT comment_id FROM comment WHERE id = c.comment_id) IS NOT NULL)
-      THEN (SELECT comment_id FROM comment WHERE id = c.comment_id)
-    ELSE c.comment_id
-    END AS upper_id,
+    (SELECT NAME FROM "user" WHERE id = (SELECT user_id FROM comment WHERE id = c.comment_id)) AS "commentUserName",
     (SELECT NAME FROM "user" WHERE id = c.user_id) AS "userName",
     content,
+    CASE WHEN (comment_id IS NOT NULL AND comment_id != upper_id)
+      THEN true ELSE false
+    END AS "isTag",
     CASE WHEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 100)
       THEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'SS') AS INTEGER)) || ' 초 전'
     WHEN (CAST(TO_CHAR(NOW() - c.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 10000)
@@ -147,7 +145,7 @@ const SELECT_COMMENT = `
   WHERE
     c.post_id = $1
     AND c.delete_fl = false
-  ORDER BY upper_id, c.id
+  ORDER BY c.upper_id, c.id
 `;
 
 const UPDATE_COMMENT = `

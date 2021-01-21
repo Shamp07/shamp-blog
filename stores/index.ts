@@ -36,7 +36,7 @@ export class RootStore {
     this.AlertStore = new AlertStore();
     this.PostStore = new PostStore(initialData.PostStore);
     this.CategoryStore = new CategoryStore(initialData.CategoryStore);
-    this.CommentStore = new CommentStore(initialData.CommentStore);
+    this.CommentStore = new CommentStore(initialData.CommentStore, this);
   }
 }
 

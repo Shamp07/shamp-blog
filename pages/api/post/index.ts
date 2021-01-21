@@ -27,7 +27,7 @@ const addPost = (request: any, response: any) => {
       .then(() => {
         response.json({
           success: true,
-          message: '😀  정상적으로 글이 등록 되었어요!',
+          message: '😀 정상적으로 글이 등록 되었어요!',
         });
       }),
   ).then(() => {
@@ -127,6 +127,7 @@ const SELECT_POST = `
     p.content,
     p.like_cnt AS "likeCnt",
     p.view_cnt AS "viewCnt",
+    (SELECT COUNT(*) FROM post_like WHERE post_id = p.id) AS "likeCnt",
     (SELECT COUNT(*) FROM comment WHERE post_id = p.id AND delete_fl = false) AS "commentCnt",
     CASE WHEN (CAST(TO_CHAR(NOW() - p.crt_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 100)
         THEN (CAST(TO_CHAR(NOW() - p.crt_dttm, 'SS') AS INTEGER)) || ' 초 전'
