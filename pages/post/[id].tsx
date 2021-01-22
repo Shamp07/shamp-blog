@@ -14,13 +14,17 @@ const PostView: NextPage = () => {
   const { boardCategoryName } = SidebarStore;
   const { postView, deletePost, addPostLike } = PostStore;
   const { userData } = SignStore;
-  const { id: userId } = userData;
   const router = useRouter();
   const {
     id, title, category, tags, time,
     commentCnt, likeCnt, viewCnt,
     content,
   } = postView;
+
+  let userId: number | undefined;
+  if (userData) {
+    userId = userData.id;
+  }
 
   return (
     <>
@@ -72,7 +76,7 @@ const PostView: NextPage = () => {
             <Button size="small" variant="outlined" color="secondary" onClick={() => deletePost(id, router)}>
               삭제
             </Button>
-            <Button size="small" variant="outlined">
+            <Button size="small" variant="outlined" onClick={() => router.push('/post/modify/24', undefined, { shallow: false })}>
               수정
             </Button>
           </ArticleFooter>

@@ -109,13 +109,17 @@ class CommentStore {
   };
 
   @action modifyComment = (commentId: number, postId: number): void => {
-    axios.put('/api/post/comment', { commentId })
+    axios.put('/api/post/comment', {
+      commentId,
+      comment: this.modifierComment,
+    })
       .then((response) => {
         const { data } = response;
         if (data.success) {
           toast.success(data.message);
-          this.getComment(postId);
+          this.setModifierCommentId(0, '');
           this.PostStore.getPost(postId);
+          this.getComment(postId);
         } else {
           toast.error(data.message);
         }

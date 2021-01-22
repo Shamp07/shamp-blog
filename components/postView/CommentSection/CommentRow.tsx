@@ -6,7 +6,7 @@ import useStores from '../../../stores/useStores';
 import CommentWrite from './CommentWrite';
 import CommentMenu from './CommentMenu';
 
-export interface CommentRowInterface {
+interface CommentRowInterface {
   id: number,
   commentId: number,
   userId: number,
@@ -56,7 +56,7 @@ const CommentRow = ({ data }: { data: CommentRowInterface }) => {
               </>
             )}
           </CommentContent>
-          <CommentMenu />
+          <CommentMenu data={data} />
         </CommentWrapper>
       </li>
       {id === replyCommentId && <CommentWrite isReply />}

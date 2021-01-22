@@ -152,7 +152,7 @@ const UPDATE_COMMENT = `
   UPDATE comment
   SET
     content = $1,
-    mfy_dttm = NOW(),
+    mfy_dttm = NOW()
   WHERE id = $2
 `;
 

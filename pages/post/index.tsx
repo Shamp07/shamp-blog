@@ -4,10 +4,11 @@ import { Button, TextField } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
+import { NextPage } from 'next/types';
 import Editor from '../../components/posting/Editor';
 import useStores from '../../stores/useStores';
 
-const Post = () => {
+const Post: NextPage = () => {
   const router = useRouter();
   const { SidebarStore, PostStore } = useStores();
   const { boardCategoryList } = SidebarStore;
@@ -56,6 +57,14 @@ const Post = () => {
       </Footer>
     </Wrapper>
   );
+};
+
+Post.getInitialProps = async (ctx: any) => {
+  console.log(ctx);
+
+  return {
+    props: {},
+  };
 };
 
 const Wrapper = styled.div`

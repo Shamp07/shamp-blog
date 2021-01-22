@@ -2,9 +2,16 @@ import React from 'react';
 import { faReply } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { observer } from 'mobx-react-lite';
 import useStores from '../../../../stores/useStores';
 
-const CommentNormalMenu: React.FC = () => {
+interface CommentNormalMenuProps {
+  id: number;
+  userId: number;
+  content: string;
+}
+
+const CommentNormalMenu = ({ data }: { data: CommentNormalMenuProps }) => {
   const { PostStore, CommentStore, SignStore } = useStores();
   const { postView } = PostStore;
   const { id: postId } = postView;
@@ -84,4 +91,4 @@ const ReplyIcon = styled(FontAwesomeIcon)`
   vertical-align: middle;
 `;
 
-export default CommentNormalMenu;
+export default observer(CommentNormalMenu);
