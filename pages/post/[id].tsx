@@ -18,7 +18,7 @@ const PostView: NextPage = () => {
   const {
     id, title, category, tags, time,
     commentCnt, likeCnt, viewCnt,
-    content,
+    content, modifiedTime,
   } = postView;
 
   let userId: number | undefined;
@@ -38,7 +38,9 @@ const PostView: NextPage = () => {
               <ArticleMetaLeft>
                 <li>{boardCategoryName[category]}</li>
                 <li>{tags}</li>
-                <li>{time}</li>
+                <li>
+                  {modifiedTime || time}
+                </li>
               </ArticleMetaLeft>
               <ArticleMetaRight>
                 <li>

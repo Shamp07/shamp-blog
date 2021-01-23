@@ -4,19 +4,18 @@ import { Button, TextField } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
-import { NextPage } from 'next/types';
 import Editor from '../../components/posting/Editor';
 import useStores from '../../stores/useStores';
 
-const Post: NextPage = () => {
+const Post = ({ isModify }: { isModify: boolean }) => {
   const router = useRouter();
   const { SidebarStore, PostStore } = useStores();
   const { boardCategoryList } = SidebarStore;
-  const { post, postHandleChange, addPost } = PostStore;
-
   const {
-    category, tags, title,
-  } = post;
+    post, postHandleChange, addPost, modifyPost,
+  } = PostStore;
+
+  const { category, tags, title } = post;
 
   return (
     <Wrapper>
@@ -51,20 +50,18 @@ const Post: NextPage = () => {
         <Button variant="contained" color="primary" onClick={() => router.back()}>
           취소
         </Button>
-        <Button variant="contained" color="primary" onClick={() => addPost(router)}>
-          등록
-        </Button>
+        { isModify ? (
+          <Button variant="contained" color="primary" onClick={() => modifyPost(router)}>
+            수정
+          </Button>
+        ) : (
+          <Button variant="contained" color="primary" onClick={() => addPost(router)}>
+            등록
+          </Button>
+        )}
       </Footer>
     </Wrapper>
   );
-};
-
-Post.getInitialProps = async (ctx: any) => {
-  console.log(ctx);
-
-  return {
-    props: {},
-  };
 };
 
 const Wrapper = styled.div`

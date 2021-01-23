@@ -14,6 +14,7 @@ interface CommentRowInterface {
   commentUserName: string,
   content: string,
   time: string,
+  modifiedTime: string,
   isTag: boolean,
 }
 
@@ -26,7 +27,7 @@ const CommentRow = ({ data }: { data: CommentRowInterface }) => {
 
   const {
     id, commentId, userName,
-    content, time,
+    content, time, modifiedTime,
     isTag, commentUserName,
   } = data;
 
@@ -37,7 +38,7 @@ const CommentRow = ({ data }: { data: CommentRowInterface }) => {
           {!!commentId && (<ReplyBorder />)}
           <CommentWriter>
             <span>{userName}</span>
-            <span>{time}</span>
+            <span>{modifiedTime || time}</span>
           </CommentWriter>
           <CommentContent>
             {modifierCommentId === id ? (

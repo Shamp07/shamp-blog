@@ -12,13 +12,7 @@ interface PostInterface {
 }
 
 class PostStore {
-  @observable post: PostInterface = {
-    id: 0,
-    category: '',
-    tags: '',
-    title: '',
-    content: '',
-  };
+  @observable post: PostInterface;
 
   @observable postView;
 
@@ -28,6 +22,7 @@ class PostStore {
     makeObservable(this);
     this.postList = initialData.postList;
     this.postView = initialData.postView;
+    this.post = initialData.post;
   }
 
   @action postHandleChange = (event: string | React.ChangeEvent<HTMLInputElement>): void => {
@@ -80,7 +75,7 @@ class PostStore {
       });
   };
 
-  @action getPost = async (id: number): Promise<any> => {
+  @action getPost = async (id: number, isModify: boolean): Promise<any> => {
     await axios.get('http://localhost:3000/api/post', {
       params: {
         id,
@@ -89,7 +84,8 @@ class PostStore {
       .then((response) => {
         const { data } = response;
         if (data.success) {
-          this.postView = data.result;
+          if (isModify) this.post = data.result;
+          else this.postView = data.result;
         } else {
           toast.error(data.message);
         }
@@ -99,12 +95,13 @@ class PostStore {
       });
   };
 
-  @action modifyPost = (): void => {
+  @action modifyPost = (router: { back: () => void }): void => {
     axios.put('/api/post', this.post)
       .then((response) => {
         const { data } = response;
         if (data.success) {
           toast.success(data.message);
+          router.back();
         } else {
           toast.error(data.message);
         }
@@ -147,7 +144,7 @@ class PostStore {
           } else if (data.code === 2) {
             toast.warning(data.message);
           }
-          this.getPost(postId);
+          this.getPost(postId, false);
         } else {
           toast.error(data.message);
         }
@@ -161,6 +158,13 @@ class PostStore {
 export const initialPost = {
   postList: [],
   postView: {},
+  post: {
+    id: 0,
+    category: '',
+    tags: '',
+    title: '',
+    content: '',
+  },
 };
 
 export default PostStore;
