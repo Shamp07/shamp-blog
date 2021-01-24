@@ -44,7 +44,8 @@ const handler = (request: NextApiRequest, response: NextApiResponse) => {
 const SELECT_USER = `
   SELECT
     id,
-    name
+    name,
+    admin_fl AS "adminFl"
   FROM "user"
   WHERE
     email = $1

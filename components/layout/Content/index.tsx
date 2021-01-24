@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../../stores/useStores';
+import AnimationWrapper from './AnimationWrapper';
 
 const Content: React.FC = ({ children }: any) => {
   const { SignStore } = useStores();
@@ -14,7 +15,9 @@ const Content: React.FC = ({ children }: any) => {
 
   return (
     <Wrapper>
-      {children}
+      <AnimationWrapper>
+        {children}
+      </AnimationWrapper>
     </Wrapper>
   );
 };

@@ -5,16 +5,15 @@ import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useRouter } from 'next/router';
 import useStores from '../../stores/useStores';
 import CommentSection from '../../components/postView/CommentSection';
+import ArticleFooter from '../../components/postView/ArticleFooter';
 
 const PostView: NextPage = () => {
   const { PostStore, SidebarStore, SignStore } = useStores();
   const { boardCategoryName } = SidebarStore;
-  const { postView, deletePost, addPostLike } = PostStore;
+  const { postView, addPostLike } = PostStore;
   const { userData } = SignStore;
-  const router = useRouter();
   const {
     id, title, category, tags, time,
     commentCnt, likeCnt, viewCnt,
@@ -22,8 +21,10 @@ const PostView: NextPage = () => {
   } = postView;
 
   let userId: number | undefined;
+  let isAdmin: boolean = false;
   if (userData) {
     userId = userData.id;
+    isAdmin = userData.adminFl;
   }
 
   return (
@@ -74,14 +75,7 @@ const PostView: NextPage = () => {
               </span>
             </Button>
           </ArticleBox>
-          <ArticleFooter>
-            <Button size="small" variant="outlined" color="secondary" onClick={() => deletePost(id, router)}>
-              삭제
-            </Button>
-            <Button size="small" variant="outlined" onClick={() => router.push('/post/modify/24', undefined, { shallow: false })}>
-              수정
-            </Button>
-          </ArticleFooter>
+          {isAdmin && <ArticleFooter />}
         </article>
       </Wrapper>
       <CommentSection />
@@ -203,14 +197,6 @@ const ThumbsUpIcon = styled(FontAwesomeIcon)`
   margin-right: 5px;
 `;
 
-const ArticleFooter = styled.div`
-  background: #f8f9fa;
-  padding: 12px;
-  text-align: right;
-  
-  & > button {
-    margin-left: 5px;
-  }
-`;
+
 
 export default observer(PostView);

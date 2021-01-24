@@ -128,7 +128,6 @@ const SELECT_POST = `
     p.tags,
     p.title,
     p.content,
-    p.like_cnt AS "likeCnt",
     p.view_cnt AS "viewCnt",
     (SELECT COUNT(*) FROM post_like WHERE post_id = p.id) AS "likeCnt",
     (SELECT COUNT(*) FROM comment WHERE post_id = p.id AND delete_fl = false) AS "commentCnt",

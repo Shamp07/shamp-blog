@@ -30,7 +30,7 @@ const SELECT_POST_LIST = `
     p.tags,
     p.title,
     p.content,
-    p.like_cnt AS "likeCnt",
+    (SELECT COUNT(*) FROM post_like WHERE post_id = p.id) AS "likeCnt",
     (SELECT COUNT(*) FROM comment WHERE post_id = p.id AND delete_fl = false) AS "commentCnt",
     CASE WHEN (CAST(TO_CHAR(NOW() - p.crt_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 100)
         THEN (CAST(TO_CHAR(NOW() - p.crt_dttm, 'SS') AS INTEGER)) || ' 초 전'

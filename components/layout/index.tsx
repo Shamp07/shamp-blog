@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Normalize } from 'styled-normalize';
 import Header from './Header';
@@ -6,7 +6,11 @@ import SideBar from './Sidebar';
 import Content from './Content';
 import Backdrop from './Sidebar/Backdrop';
 
-const Layout: React.FC = ({ children }: any) => (
+interface Props {
+  children: ReactNode;
+}
+
+const Layout: React.FC<Props> = ({ children }: Props) => (
   <Wrapper>
     <GlobalStyle />
     <Normalize />
