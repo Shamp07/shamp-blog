@@ -26,11 +26,13 @@ const BoardPost = ({ data }: { data: BoardPostProps }) => {
           <Link href={`/post/${id}`}>
             <PostLinkSpan>
               <span>{title}</span>
-              <span>
-                [
-                {commentCnt}
-                ]
-              </span>
+              {commentCnt > 0 && (
+                <span>
+                  [
+                  {commentCnt}
+                  ]
+                </span>
+              )}
             </PostLinkSpan>
           </Link>
         </PostTitle>

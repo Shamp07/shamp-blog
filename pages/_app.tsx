@@ -1,5 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
+import Router from 'next/router';
+import NProgress from 'nprogress';
 import { Provider } from 'mobx-react';
 import App from 'next/app';
 import Layout from '../components/Layout';
@@ -8,6 +10,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import initializeStore from '../stores';
 
 React.useLayoutEffect = React.useEffect;
+
+Router.events.on('routeChangeStart', (url) => NProgress.start());
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());
 
 class CustomApp extends App {
   mobxStore: any;

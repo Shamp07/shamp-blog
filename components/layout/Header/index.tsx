@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ToastContainer } from 'react-toastify';
+import NextNprogress from 'nextjs-progressbar';
 import HeaderLeftLogo from './HeaderLeftLogo';
 import HeaderRightList from './HeaderRightList';
 import SignModal from '../../util/SignModal';
@@ -17,6 +18,13 @@ const Header: React.FC = () => (
     <BackgroundImage />
     <SignModal />
     <AlertModal />
+    <NextNprogress
+      color="#3f51b5"
+      startPosition={0.3}
+      stopDelayMs={200}
+      height={5}
+      options={{ showSpinner: false }}
+    />
     <ToastContainer
       position="bottom-left"
       autoClose={3000}

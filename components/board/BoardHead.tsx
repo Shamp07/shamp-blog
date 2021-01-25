@@ -10,12 +10,18 @@ import BoardTag from './BoardTag';
 
 const BoardHead: React.FC = () => {
   const router = useRouter();
-  const { SidebarStore, CategoryStore } = useStores();
+  const { SidebarStore, CategoryStore, SignStore } = useStores();
   const { boardCategoryName } = SidebarStore;
   const { categoryTags } = CategoryStore;
+  const { userData } = SignStore;
   const boardParams = router.query.board as Array<string>;
   const boardPath = boardParams[0];
   const boardTag = boardParams[1];
+
+  let isAdmin = false;
+  if (userData) {
+    isAdmin = userData.adminFl;
+  }
 
   return (
     <Wrapper>
@@ -24,15 +30,17 @@ const BoardHead: React.FC = () => {
           <h2>
             {boardCategoryName[boardPath]}
           </h2>
-          <AbsoluteUl>
-            <li>
-              <Link href="../post">
-                <span>
-                  <CustomIcon icon={faPen} />
-                </span>
-              </Link>
-            </li>
-          </AbsoluteUl>
+          { isAdmin && (
+            <AbsoluteUl>
+              <li>
+                <Link href="../post">
+                  <span>
+                    <CustomIcon icon={faPen} />
+                  </span>
+                </Link>
+              </li>
+            </AbsoluteUl>
+          )}
         </SubTitle>
       </HeadSection>
       <HeadSection>
@@ -58,6 +66,7 @@ const BoardHead: React.FC = () => {
 
 const Wrapper = styled.header`
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
+  
   margin-bottom: 8px;
 `;
 
@@ -67,26 +76,24 @@ const CategoryTag = styled.ul`
   overflow-y: hidden;
   white-space:nowrap;
 
-  @media (min-width: 1064px) {
-
-  }
-
   &::-webkit-scrollbar {
     width: 10px;
     height: 8px;
     background: transparent;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
   }
 
   &::-webkit-scrollbar-thumb {
     background-color: #2d79c7;
-    border-radius: 5px;
+    border-radius: 4px;
   }
 
   &::-webkit-scrollbar-track {
     background-color: #ebeef1;;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
   }
-
-
 
   & > li {
     display: inline-block;
@@ -135,6 +142,15 @@ const CategoryTagBest = styled.li<TagInterface>`
 `;
 
 const HeadSection = styled.div`
+  &:first-child {
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+  }
+  
+  &:last-child {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
   background-color: #fff;
 `;
 

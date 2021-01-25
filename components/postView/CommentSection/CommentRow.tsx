@@ -112,7 +112,7 @@ const ReplyBorder = styled.div`
   content: "";
   width: 12px;
   height: 12px;
-  z-index: 1000;
+  z-index: 0;
   border-left: 1px solid #c5cbd0;
   border-bottom: 1px solid #c5cbd0;
 `;

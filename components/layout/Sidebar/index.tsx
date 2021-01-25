@@ -5,24 +5,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import useStores from '../../../stores/useStores';
 import Category, { CategoryProps } from './Category';
+import SideTokenMenu from './SideTokenMenu';
 
 const Sidebar: React.FC = () => {
-  const { SidebarStore, SignStore } = useStores();
+  const { SidebarStore } = useStores();
   const {
     boardCategoryList, topCategoryList,
     isOpenSidebar, toggleSidebar,
   } = SidebarStore;
-  const { openSignModal } = SignStore;
 
   return (
     <Wrapper isOpenSidebar={isOpenSidebar}>
       <MobileMenu>
         <CloseIcon icon={faTimes} onClick={toggleSidebar} />
       </MobileMenu>
-      <MobileMenu>
-        <TopMenu onClick={openSignModal}>로그인</TopMenu>
-        <TopMenu>회원가입</TopMenu>
-      </MobileMenu>
+      <SideTokenMenu />
       <CategoryWrapper>
         <ul>
           {topCategoryList.map(
@@ -75,15 +72,6 @@ const MobileMenu = styled.div`
   }
 `;
 
-const TopMenu = styled.div`
-  width: 40%;
-  padding: 10px;
-  display: inline-block;
-  text-align: center;
-  color: #616161;
-  font-weight: bold;
-`;
-
 const CloseIcon = styled(FontAwesomeIcon)`
   position: absolute;
   top: 8px;
@@ -96,6 +84,7 @@ const CloseIcon = styled(FontAwesomeIcon)`
 const CategoryWrapper = styled.div`
   width: 100%;
   background-color: #fff;
+  border-radius: 4px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
   padding: 7px 0;
   
