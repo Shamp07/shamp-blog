@@ -65,6 +65,16 @@ const GlobalStyle = createGlobalStyle`
     -webkit-tap-highlight-color: transparent;
   }
 
+  .MuiButton-outlinedPrimary {
+    color: #2d79c7 !important;
+    border: 1px solid rgba(45, 121, 199, 0.5) !important;  
+  }
+
+  .MuiPaginationItem-textPrimary.Mui-selected {
+    background-color: #2d79c7 !important;
+  }
+  
+  
   @font-face {
     font-family: 'Roboto';
     font-style: normal;

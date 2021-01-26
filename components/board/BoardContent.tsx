@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import useStores from '../../stores/useStores';
 import BoardPost, { BoardPostProps } from './BoardPost';
+import BoardPostNone from './BoardPostNone';
 
 const BoardContent: React.FC = () => {
   const { PostStore } = useStores();
@@ -9,11 +10,11 @@ const BoardContent: React.FC = () => {
 
   return (
     <ArticleWrapper>
-      {postList.map(
+      {postList.length > 0 ? postList.map(
         (data: BoardPostProps) => (
           <BoardPost data={data} key={data.id} />
         ),
-      )}
+      ) : <BoardPostNone />}
     </ArticleWrapper>
   );
 };

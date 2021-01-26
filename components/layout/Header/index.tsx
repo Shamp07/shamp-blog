@@ -19,11 +19,19 @@ const Header: React.FC = () => (
     <SignModal />
     <AlertModal />
     <NextNprogress
-      color="#3f51b5"
       startPosition={0.3}
       stopDelayMs={200}
-      height={5}
-      options={{ showSpinner: false }}
+      height={10}
+      options={{
+        showSpinner: false,
+        template: `
+            <div style="background-color: white !important;">
+              <div style="background-color: black !important;" class="bar" role="bar">
+                  <div style="background-color: black !important;" class="peg"></div>
+              </div>
+            </div>
+        `,
+      }}
     />
     <ToastContainer
       position="bottom-left"

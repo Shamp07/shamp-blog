@@ -4,6 +4,7 @@ import { NextPage } from 'next';
 import BoardHead from '../../components/board/BoardHead';
 import BoardContent from '../../components/board/BoardContent';
 import useStores from '../../stores/useStores';
+import BoardPagination from '../../components/board/BoardPagination';
 
 const Board: NextPage = () => {
   const router = useRouter();
@@ -28,6 +29,7 @@ const Board: NextPage = () => {
     <div>
       <BoardHead />
       <BoardContent />
+      <BoardPagination />
     </div>
   );
 };

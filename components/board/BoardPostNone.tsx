@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import { faPencilRuler } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBusinessTime } from '@fortawesome/free-solid-svg-icons';
 
-const PrepareCategory: React.FC = () => (
+const BoardPostNone: React.FC = () => (
   <Wrapper>
     <div>
       <div>
-        <Icon icon={faBusinessTime} />
+        <Icon icon={faPencilRuler} />
       </div>
       <div>
-        준비중입니다. 기대해주세요!
+        아직 작성된 게시글이 없습니다.
       </div>
     </div>
   </Wrapper>
@@ -20,9 +20,9 @@ const Wrapper = styled.div`
   background-color: #fff;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
   height: 100px;
-  padding: 240px 0;
+  padding: 180px 0;
   border-radius: 4px;
-  
+
   & > div {
     text-align: center;
     color: #7b858e;
@@ -31,8 +31,9 @@ const Wrapper = styled.div`
 
 const Icon = styled(FontAwesomeIcon)`
   color: #e6e6e6;
+  margin-bottom: 10px;
   width: 50px;
   height: 50px;
 `;
 
-export default PrepareCategory;
+export default BoardPostNone;

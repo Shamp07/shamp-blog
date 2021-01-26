@@ -66,7 +66,6 @@ const BoardHead: React.FC = () => {
 
 const Wrapper = styled.header`
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
-  
   margin-bottom: 8px;
 `;
 
@@ -78,7 +77,7 @@ const CategoryTag = styled.ul`
 
   &::-webkit-scrollbar {
     width: 10px;
-    height: 8px;
+    height: 6px;
     background: transparent;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
