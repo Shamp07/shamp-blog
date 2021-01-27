@@ -1,12 +1,46 @@
 import React from 'react';
 import Pagination from '@material-ui/lab/Pagination';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
-const BoardPagination: React.FC = () => (
-  <PaginationWrapper>
-    <CustomPagination count={0} color="primary" />
-  </PaginationWrapper>
-);
+import PaginationItem from '@material-ui/lab/PaginationItem';
+// import Link from 'next/Link';
+import useStores from '../../stores/useStores';
+// import BoardLink from './BoardLink';
+
+const BoardPagination: React.FC = () => {
+  const router = useRouter();
+
+  let pageCount = 1;
+  if (router.query.page) {
+    pageCount = Number(router.query.page);
+  }
+
+  const { PostStore } = useStores();
+  const { postList, movePage } = PostStore;
+
+  let count: number = 0;
+  if (postList.length > 0) {
+    count = Number(postList[0].page);
+  }
+
+  return (
+    <PaginationWrapper>
+      <CustomPagination
+        page={pageCount}
+        count={count}
+        color="primary"
+        renderItem={(item) => (
+          <PaginationItem
+            component="span"
+            onClick={() => movePage(router, item.page)}
+            {...item}
+          />
+        )}
+      />
+    </PaginationWrapper>
+  );
+};
 
 const PaginationWrapper = styled.div`
   margin-top: 15px;

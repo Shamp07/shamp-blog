@@ -3,8 +3,8 @@ import Database from '../../../database/Database';
 
 const handler = (request: any, response: any) => {
   if (request.method === 'GET') {
-    const { category, tag } = request.query;
-    const values: Array<string> = [category, tag || ''];
+    const { category, tag, page } = request.query;
+    const values: Array<string> = [category, tag || '', page];
 
     Database.execute(
       (database: Client) => database.query(

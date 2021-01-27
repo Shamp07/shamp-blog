@@ -2,6 +2,7 @@ import React from 'react';
 import { action, makeObservable, observable } from 'mobx';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import Router from 'next/dist/next-server/lib/router/router';
 
 interface PostInterface {
   id: number,
@@ -9,6 +10,8 @@ interface PostInterface {
   tags: string
   title: string,
   content: string,
+  count: number,
+  page: number,
 }
 
 class PostStore {
@@ -39,6 +42,21 @@ class PostStore {
     }
   };
 
+  @action movePage = (router: Router, page: number) => {
+    const boardParams = router.query.board as Array<string>;
+    let pathUrl = `/category/${boardParams[0]}`;
+
+    // url 에 태그가 존재할시
+    if (boardParams.length > 1) {
+      pathUrl = pathUrl.concat(`/${boardParams[1]}`);
+    }
+
+    router.push({
+      pathname: pathUrl,
+      query: { page },
+    });
+  };
+
   @action addPost = (router: { back: () => void }): void => {
     axios.post('/api/post', this.post)
       .then((response) => {
@@ -55,11 +73,14 @@ class PostStore {
       });
   };
 
-  @action getPostList = async (category: string, tag: string | undefined): Promise<any> => {
+  @action getPostList = async (
+    category: string, tag: string | undefined, page: number = 1,
+  ): Promise<any> => {
     await axios.get('http://localhost:3000/api/post/list', {
       params: {
         category,
         tag,
+        page,
       },
     })
       .then((response) => {
@@ -164,6 +185,8 @@ export const initialPost = {
     tags: '',
     title: '',
     content: '',
+    count: 0,
+    page: 0,
   },
 };
 

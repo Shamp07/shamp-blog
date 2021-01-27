@@ -15,6 +15,9 @@ class SidebarStore {
   }];
 
   boardCategoryList: Array<object> = [{
+    name: '공지사항',
+    path: 'notice',
+  },{
     name: '전체 글',
     path: 'all',
   }, {
@@ -38,6 +41,7 @@ class SidebarStore {
   }];
 
   boardCategoryName: object = {
+    notice: '공지사항',
     all: '전체 글',
     best: '인기 글',
     javascript: 'JavaScript',

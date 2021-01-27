@@ -41,8 +41,9 @@ Board.getInitialProps = async ({ query, store }: any) => {
   const categoryParams = query.board as Array<string>;
   const category = categoryParams[0] as string;
   const tag = categoryParams[1] as string;
+  const { page } = query;
 
-  await Promise.all([getPostList(category, tag), getCategoryTags(category)]);
+  await Promise.all([getPostList(category, tag, page), getCategoryTags(category)]);
 
   return {
     props: {},
