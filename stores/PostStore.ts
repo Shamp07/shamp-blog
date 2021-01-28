@@ -57,6 +57,18 @@ class PostStore {
     });
   };
 
+  @action clearPost = () => {
+    this.post = {
+      id: 0,
+      category: '',
+      tags: '',
+      title: '',
+      content: '',
+      count: 0,
+      page: 0,
+    };
+  };
+
   @action addPost = (router: { back: () => void }): void => {
     axios.post('/api/post', this.post)
       .then((response) => {

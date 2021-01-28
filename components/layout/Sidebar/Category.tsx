@@ -2,8 +2,11 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/Link';
 import styled from 'styled-components';
+import useStores from '../../../stores/useStores';
 
 const Category: React.FC<CategoryProps> = ({ path, name, isBoard }: CategoryProps) => {
+  const { SidebarStore } = useStores();
+  const { toggleSidebar } = SidebarStore;
   const router = useRouter();
   let baseUrl: string = '';
   let currentPath: string;
@@ -19,7 +22,7 @@ const Category: React.FC<CategoryProps> = ({ path, name, isBoard }: CategoryProp
   }
 
   return (
-    <CategoryList active={currentPath === path}>
+    <CategoryList active={currentPath === path} onClick={toggleSidebar}>
       <Link href={`${baseUrl}/${path}`}>{name}</Link>
     </CategoryList>
   );

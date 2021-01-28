@@ -4,12 +4,12 @@ import useStores from '../../../stores/useStores';
 
 const HeaderNoTokenList: React.FC = () => {
   const { SignStore } = useStores();
-  const { openSignModal } = SignStore;
+  const { toggleSignModal } = SignStore;
 
   return (
     <>
       <li>
-        <NoStyleA onClick={openSignModal}>
+        <NoStyleA onClick={toggleSignModal}>
           로그인
         </NoStyleA>
       </li>

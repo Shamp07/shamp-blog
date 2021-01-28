@@ -5,15 +5,20 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { observer } from 'mobx-react-lite';
+import { Button } from '@material-ui/core';
 import useStores from '../../stores/useStores';
 import BoardTag from './BoardTag';
 
 const BoardHead: React.FC = () => {
   const router = useRouter();
-  const { SidebarStore, CategoryStore, SignStore } = useStores();
+  const {
+    SidebarStore, CategoryStore, SignStore,
+    PostStore,
+  } = useStores();
   const { boardCategoryName } = SidebarStore;
   const { categoryTags } = CategoryStore;
   const { userData } = SignStore;
+  const { clearPost } = PostStore;
   const boardParams = router.query.board as Array<string>;
   const boardPath = boardParams[0];
   const boardTag = boardParams[1];
@@ -33,11 +38,11 @@ const BoardHead: React.FC = () => {
           { isAdmin && (
             <AbsoluteUl>
               <li>
-                <Link href="../post">
+                <Button variant="contained" color="primary" onClick={() => router.push('/post').then(clearPost)}>
                   <span>
                     <CustomIcon icon={faPen} />
                   </span>
-                </Link>
+                </Button>
               </li>
             </AbsoluteUl>
           )}
@@ -45,11 +50,13 @@ const BoardHead: React.FC = () => {
       </HeadSection>
       <HeadSection>
         <CategoryTag>
-          <CategoryTagBest active={boardTag === 'best'}>
-            <Link href={`/category/${boardPath}/best`}>
-              인기글
-            </Link>
-          </CategoryTagBest>
+          {((boardPath !== 'best') && (boardPath !== 'all')) && (
+            <CategoryTagBest active={boardTag === 'best'}>
+              <Link href={`/category/${boardPath}/best`}>
+                인기글
+              </Link>
+            </CategoryTagBest>
+          )}
           <CategoryTagList active={boardTag === undefined}>
             <Link href={`/category/${boardPath}/`}>
               전체
@@ -169,15 +176,17 @@ const SubTitle = styled.div`
 `;
 
 const CustomIcon = styled(FontAwesomeIcon)`
-  height: 20px;
+  width: 18px;
+  height: 18px;
+  vertical-align: text-bottom;
 `;
 
 const AbsoluteUl = styled.ul`
   position: absolute;
   top: 0;
   right: 0;
-  margin-top: 16px;
-  margin-right: 16px;
+  margin-top: 9px;
+  margin-right: 10px;
   list-style: none;
   
   & > li {

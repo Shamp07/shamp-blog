@@ -1,8 +1,6 @@
 import { action, makeObservable, observable } from 'mobx';
 
 class SidebarStore {
-  root: any;
-
   topCategoryList: Array<object> = [{
     name: 'Home',
     path: '',

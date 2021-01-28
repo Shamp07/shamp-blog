@@ -30,6 +30,7 @@ const TopMenu = styled.div`
   text-align: center;
   color: #616161;
   font-weight: bold;
+  cursor: pointer;
 `;
 
 export default SideTokenList;

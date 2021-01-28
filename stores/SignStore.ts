@@ -25,7 +25,7 @@ class SignStore {
     makeObservable(this);
   }
 
-  @action openSignModal = () => {
+  @action toggleSignModal = () => {
     this.isOpenSignModal = !this.isOpenSignModal;
   };
 

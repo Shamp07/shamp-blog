@@ -17,6 +17,4 @@ const SideTokenMenu: React.FC = () => {
   return loggedIn ? <SideTokenList /> : <SideNoTokenList />;
 };
 
-
-
 export default observer(SideTokenMenu);

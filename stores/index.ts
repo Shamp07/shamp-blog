@@ -5,11 +5,12 @@ import AlertStore from './AlertStore';
 import PostStore, { initialPost } from './PostStore';
 import CategoryStore, { initialCategory } from './CategoryStore';
 import CommentStore, { initialComment } from './CommentStore';
+import UtilStore from './UtilStore';
 
 const isServer = typeof window === 'undefined';
 enableStaticRendering(isServer);
 
-let store: any = null;
+let store: RootStore | null = null;
 
 const initialRoot = {
   CategoryStore: initialCategory,
@@ -30,6 +31,8 @@ export class RootStore {
 
   CommentStore: CommentStore;
 
+  UtilStore: UtilStore;
+
   constructor(initialData: any) {
     this.SidebarStore = new SidebarStore();
     this.SignStore = new SignStore();
@@ -37,6 +40,7 @@ export class RootStore {
     this.PostStore = new PostStore(initialData.PostStore);
     this.CategoryStore = new CategoryStore(initialData.CategoryStore);
     this.CommentStore = new CommentStore(initialData.CommentStore, this);
+    this.UtilStore = new UtilStore();
   }
 }
 

@@ -4,11 +4,11 @@ import useStores from '../../../stores/useStores';
 
 const SideNoTokenList: React.FC = () => {
   const { SignStore } = useStores();
-  const { openSignModal } = SignStore;
+  const { toggleSignModal } = SignStore;
 
   return (
     <MobileMenu>
-      <TopMenu onClick={openSignModal}>로그인</TopMenu>
+      <TopMenu onClick={toggleSignModal}>로그인</TopMenu>
       <TopMenu>회원가입</TopMenu>
     </MobileMenu>
   );
@@ -29,6 +29,7 @@ const TopMenu = styled.div`
   text-align: center;
   color: #616161;
   font-weight: bold;
+  cursor: pointer;
 `;
 
 export default SideNoTokenList;

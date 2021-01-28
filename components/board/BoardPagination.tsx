@@ -2,11 +2,8 @@ import React from 'react';
 import Pagination from '@material-ui/lab/Pagination';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
-
 import PaginationItem from '@material-ui/lab/PaginationItem';
-// import Link from 'next/Link';
 import useStores from '../../stores/useStores';
-// import BoardLink from './BoardLink';
 
 const BoardPagination: React.FC = () => {
   const router = useRouter();
@@ -32,9 +29,9 @@ const BoardPagination: React.FC = () => {
         color="primary"
         renderItem={(item) => (
           <PaginationItem
-            component="span"
-            onClick={() => movePage(router, item.page)}
             {...item}
+            component="div"
+            onClick={() => movePage(router, item.page)}
           />
         )}
       />

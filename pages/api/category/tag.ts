@@ -27,9 +27,15 @@ const handler = (request: NextApiRequest, response: NextApiResponse) => {
 };
 
 const SELECT_CATEGORY_TAGS = `
-  SELECT DISTINCT tags FROM post
-  WHERE category = $1
-  AND delete_fl = false
+  SELECT DISTINCT a.tags FROM (
+    SELECT
+      tags,
+      (SELECT COUNT(*) FROM post_like WHERE post_id = p.id) AS like_cnt
+    FROM post p
+    WHERE (($1 IN ('all', 'best')) OR (p.category = $1))
+    AND p.delete_fl = false
+  ) a
+  WHERE ((a.like_cnt > 0) OR ($1 != 'best'))
 `;
 
 export default handler;
