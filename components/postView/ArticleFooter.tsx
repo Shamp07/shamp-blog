@@ -6,13 +6,22 @@ import useStores from '../../stores/useStores';
 
 const ArticleFooter: React.FC = () => {
   const router = useRouter();
-  const { PostStore } = useStores();
+  const { PostStore, UtilStore } = useStores();
   const { postView, deletePost } = PostStore;
   const { id } = postView;
+  const { toggleConfirmModal } = UtilStore;
 
   return (
     <ArticleFooterWrapper>
-      <Button size="small" variant="outlined" color="secondary" onClick={() => deletePost(id, router)}>
+      <Button
+        size="small"
+        variant="outlined"
+        color="secondary"
+        onClick={() => toggleConfirmModal(
+          '해당 게시글을 삭제하시겠습니까?',
+          () => deletePost(id, router),
+        )}
+      >
         삭제
       </Button>
       <Button size="small" variant="outlined" onClick={() => router.push('/post/modify/24', undefined, { shallow: false })}>

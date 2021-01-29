@@ -23,6 +23,8 @@ class CommentStore {
 
   @observable commentList: Array<CommentInterface> = [];
 
+  @observable commentSize = 15;
+
   @observable modifierCommentId: number = 0;
 
   @observable replyCommentId: number = 0;
@@ -78,7 +80,7 @@ class CommentStore {
           this.comment = '';
           this.setReplyCommentId(0);
           this.getComment(postId);
-          this.PostStore.getPost(postId);
+          this.PostStore.getPost(postId, false);
         } else {
           toast.error(data.message);
         }
@@ -88,10 +90,16 @@ class CommentStore {
       });
   };
 
+  @action moreComment = (postId: number): void => {
+    this.commentSize += 15;
+    this.getComment(postId);
+  };
+
   @action getComment = async (postId: number): Promise<any> => {
     await axios.get('http://localhost:3000/api/post/comment', {
       params: {
         postId,
+        commentSize: this.commentSize,
       },
     })
       .then((response) => {
@@ -118,7 +126,7 @@ class CommentStore {
         if (data.success) {
           toast.success(data.message);
           this.setModifierCommentId(0, '');
-          this.PostStore.getPost(postId);
+          this.PostStore.getPost(postId, false);
           this.getComment(postId);
         } else {
           toast.error(data.message);
@@ -140,7 +148,7 @@ class CommentStore {
         if (data.success) {
           toast.success(data.message);
           this.getComment(postId);
-          this.PostStore.getPost(postId);
+          this.PostStore.getPost(postId, false);
         } else {
           toast.error(data.message);
         }

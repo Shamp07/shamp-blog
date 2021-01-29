@@ -12,11 +12,15 @@ interface CommentNormalMenuProps {
 }
 
 const CommentNormalMenu = ({ data }: { data: CommentNormalMenuProps }) => {
-  const { PostStore, CommentStore, SignStore } = useStores();
+  const {
+    PostStore, CommentStore, SignStore,
+    UtilStore,
+  } = useStores();
   const { postView } = PostStore;
   const { id: postId } = postView;
   const { setReplyCommentId, setModifierCommentId, deleteComment } = CommentStore;
   const { userData } = SignStore;
+  const { toggleConfirmModal } = UtilStore;
 
   const { id, userId, content } = data;
 
@@ -35,7 +39,10 @@ const CommentNormalMenu = ({ data }: { data: CommentNormalMenuProps }) => {
           <span
             role="button"
             tabIndex={0}
-            onClick={() => deleteComment(id, postId)}
+            onClick={() => toggleConfirmModal(
+              '해당 댓글을 삭제하시겠습니까?',
+              () => deleteComment(id, postId),
+            )}
             onKeyDown={() => deleteComment(id, postId)}
           >
             삭제

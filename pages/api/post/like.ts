@@ -36,7 +36,7 @@ const addLike = (request: any, response: any) => {
         response.json({
           success: true,
           code: 2,
-          message: '😳 이미 좋아요를 눌러주셨어요ㅠ',
+          message: '😳 이미 좋아요를 눌러주셨어요ㅠㅜ',
         });
       }),
   ).then(() => {

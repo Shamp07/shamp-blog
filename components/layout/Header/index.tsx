@@ -6,6 +6,7 @@ import HeaderLeftLogo from './HeaderLeftLogo';
 import HeaderRightList from './HeaderRightList';
 import SignModal from '../../util/SignModal';
 import AlertModal from '../../util/AlertModal';
+import ConfirmModal from '../../util/ConfirmModal';
 
 const Header: React.FC = () => (
   <div>
@@ -18,6 +19,7 @@ const Header: React.FC = () => (
     <BackgroundImage />
     <SignModal />
     <AlertModal />
+    <ConfirmModal />
     <NextNprogress
       color="#fff"
       startPosition={0.3}

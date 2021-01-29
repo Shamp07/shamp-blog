@@ -36,8 +36,8 @@ const addComment = (request: any, response: any) => {
 };
 
 const getComment = (request: any, response: any) => {
-  const { postId } = request.query;
-  const values: Array<string> = [postId];
+  const { postId, commentSize } = request.query;
+  const values: Array<string> = [postId, commentSize];
 
   Database.execute(
     (database: Client) => database.query(
@@ -81,13 +81,30 @@ const deleteComment = (request: any, response: any) => {
 
   Database.execute(
     (database: Client) => database.query(
-      DELETE_COMMENT,
+      SELECT_COMMENT_NO_REPLY,
       values,
     )
+      .then((result) => {
+        if (result.rows[0].count > 0) {
+          return Promise.reject();
+        }
+
+        return (database.query(
+          DELETE_COMMENT,
+          values,
+        ));
+      })
       .then(() => {
         response.json({
           success: true,
+          code: 1,
           message: '😀 정상적으로 댓글이 삭제 되었어요!',
+        });
+      }, () => {
+        response.json({
+          success: true,
+          code: 2,
+          message: '😳 해당 댓글에 답글이 달려있어서 삭제가 불가능해요!ㅠㅜ',
         });
       }),
   ).then(() => {
@@ -117,48 +134,53 @@ const INSERT_COMMENT = `
 `;
 
 const SELECT_COMMENT = `
-  SELECT
-    c.id,
-    c.user_id AS "userId",
-    c.upper_id AS "upperId",
-    c.comment_id AS "commentId",
-    (SELECT NAME FROM "user" WHERE id = (SELECT user_id FROM comment WHERE id = c.comment_id)) AS "commentUserName",
-    (SELECT NAME FROM "user" WHERE id = c.user_id) AS "userName",
-    content,
-    CASE WHEN (comment_id IS NOT NULL AND comment_id != upper_id)
-      THEN true ELSE false
-    END AS "isTag",
-    CASE WHEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 100)
-      THEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'SS') AS INTEGER)) || ' 초 전'
-    WHEN (CAST(TO_CHAR(NOW() - c.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 10000)
-      THEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'MI') AS INTEGER)) || ' 분 전'
-    WHEN (CAST(TO_CHAR(NOW() - c.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000)
-      THEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'HH24') AS INTEGER)) || ' 시간 전'
-    WHEN (CAST(TO_CHAR(NOW() - c.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 100000000)
-      THEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'DD') AS INTEGER)) || ' 일 전'
-    WHEN (CAST(TO_CHAR(NOW() - c.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 10000000000)
-      THEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'MM') AS INTEGER)) || ' 달 전'
-    WHEN (CAST(TO_CHAR(NOW() - c.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000000000)
-      THEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'YYYY') AS INTEGER)) || ' 년 전'
-    END AS time,
-    CASE WHEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 100)
-      THEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'SS') AS INTEGER)) || ' 초 전 수정'
-    WHEN (CAST(TO_CHAR(NOW() - c.mfy_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 10000)
-      THEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'MI') AS INTEGER)) || ' 분 전 수정' 
-    WHEN (CAST(TO_CHAR(NOW() - c.mfy_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000)
-      THEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'HH24') AS INTEGER)) || ' 시간 전 수정'
-    WHEN (CAST(TO_CHAR(NOW() - c.mfy_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 100000000)
-      THEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'DD') AS INTEGER)) || ' 일 전 수정'
-    WHEN (CAST(TO_CHAR(NOW() - c.mfy_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 10000000000)
-      THEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'MM') AS INTEGER)) || ' 달 전 수정'
-    WHEN (CAST(TO_CHAR(NOW() - c.mfy_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000000000)
-      THEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'YYYY') AS INTEGER)) || ' 년 전 수정'
-    END AS "modifiedTime"
-  FROM comment c
-  WHERE
-    c.post_id = $1
-    AND c.delete_fl = false
-  ORDER BY c.upper_id, c.id
+  SELECT * FROM (
+    SELECT
+      ROW_NUMBER() OVER(ORDER BY c.upper_id, c.id) AS rownum,
+      COUNT(*) OVER() AS total,
+      c.id,
+      c.user_id AS "userId",
+      c.upper_id AS "upperId",
+      c.comment_id AS "commentId",
+      (SELECT NAME FROM "user" WHERE id = (SELECT user_id FROM comment WHERE id = c.comment_id)) AS "commentUserName",
+      (SELECT NAME FROM "user" WHERE id = c.user_id) AS "userName",
+      content,
+      CASE WHEN (comment_id IS NOT NULL AND comment_id != upper_id)
+        THEN true ELSE false
+      END AS "isTag",
+      CASE WHEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 100)
+        THEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'SS') AS INTEGER)) || ' 초 전'
+      WHEN (CAST(TO_CHAR(NOW() - c.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 10000)
+        THEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'MI') AS INTEGER)) || ' 분 전'
+      WHEN (CAST(TO_CHAR(NOW() - c.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000)
+        THEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'HH24') AS INTEGER)) || ' 시간 전'
+      WHEN (CAST(TO_CHAR(NOW() - c.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 100000000)
+        THEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'DD') AS INTEGER)) || ' 일 전'
+      WHEN (CAST(TO_CHAR(NOW() - c.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 10000000000)
+        THEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'MM') AS INTEGER)) || ' 달 전'
+      WHEN (CAST(TO_CHAR(NOW() - c.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000000000)
+        THEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'YYYY') AS INTEGER)) || ' 년 전'
+      END AS time,
+      CASE WHEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 100)
+        THEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'SS') AS INTEGER)) || ' 초 전 수정'
+      WHEN (CAST(TO_CHAR(NOW() - c.mfy_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 10000)
+        THEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'MI') AS INTEGER)) || ' 분 전 수정'
+      WHEN (CAST(TO_CHAR(NOW() - c.mfy_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000)
+        THEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'HH24') AS INTEGER)) || ' 시간 전 수정'
+      WHEN (CAST(TO_CHAR(NOW() - c.mfy_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 100000000)
+        THEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'DD') AS INTEGER)) || ' 일 전 수정'
+      WHEN (CAST(TO_CHAR(NOW() - c.mfy_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 10000000000)
+        THEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'MM') AS INTEGER)) || ' 달 전 수정'
+      WHEN (CAST(TO_CHAR(NOW() - c.mfy_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000000000)
+        THEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'YYYY') AS INTEGER)) || ' 년 전 수정'
+      END AS "modifiedTime"
+    FROM comment c
+    WHERE
+      c.post_id = $1
+      AND c.delete_fl = false
+    ORDER BY c.upper_id, c.id
+  ) a
+  where a.rownum <= $2
 `;
 
 const UPDATE_COMMENT = `
@@ -173,6 +195,14 @@ const DELETE_COMMENT = `
   UPDATE comment
   SET delete_fl = true
   WHERE id = $1
+`;
+
+const SELECT_COMMENT_NO_REPLY = `
+  SELECT COUNT(*) FROM comment
+  WHERE
+    id != $1
+    AND upper_id = $1 
+    AND delete_fl = false
 `;
 
 export default handler;

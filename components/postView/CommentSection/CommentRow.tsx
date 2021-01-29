@@ -6,7 +6,7 @@ import useStores from '../../../stores/useStores';
 import CommentWrite from './CommentWrite';
 import CommentMenu from './CommentMenu';
 
-interface CommentRowInterface {
+export interface CommentRowInterface {
   id: number,
   commentId: number,
   userId: number,

@@ -44,7 +44,6 @@ Board.getInitialProps = async ({ query, store }: any) => {
   const { page } = query;
 
   await Promise.all([getPostList(category, tag, page), getCategoryTags(category)]);
-
   return {
     props: {},
   };
