@@ -1,7 +1,6 @@
 import React from 'react';
 import { action, makeObservable, observable } from 'mobx';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 import Router from 'next/dist/next-server/lib/router/router';
 
 interface PostInterface {
@@ -74,14 +73,13 @@ class PostStore {
       .then((response) => {
         const { data } = response;
         if (data.success) {
-          toast.success(data.message);
           router.back();
         } else {
-          toast.error(data.message);
+          console.warn(data.message);
         }
       })
       .catch((response) => {
-        toast.error(response);
+        console.error(response);
       });
   };
 
@@ -100,11 +98,11 @@ class PostStore {
         if (data.success) {
           this.postList = data.result;
         } else {
-          toast.error(data.message);
+          console.warn(data.message);
         }
       })
       .catch((response) => {
-        toast.error(response);
+        console.error(response);
       });
   };
 
@@ -120,11 +118,11 @@ class PostStore {
           if (isModify) this.post = data.result;
           else this.postView = data.result;
         } else {
-          toast.error(data.message);
+          console.warn(data.message);
         }
       })
       .catch((response) => {
-        toast.error(response);
+        console.error(response);
       });
   };
 
@@ -133,14 +131,13 @@ class PostStore {
       .then((response) => {
         const { data } = response;
         if (data.success) {
-          toast.success(data.message);
           router.back();
         } else {
-          toast.error(data.message);
+          console.warn(data.message);
         }
       })
       .catch((response) => {
-        toast.error(response);
+        console.error(response);
       });
   };
 
@@ -153,14 +150,13 @@ class PostStore {
       .then((response) => {
         const { data } = response;
         if (data.success) {
-          toast.success(data.message);
           router.back();
         } else {
-          toast.error(data.message);
+          console.warn(data.message);
         }
       })
       .catch((response) => {
-        toast.error(response);
+        console.error(response);
       });
   };
 
@@ -172,18 +168,16 @@ class PostStore {
       .then((response) => {
         const { data } = response;
         if (data.success) {
-          if (data.code === 1) {
-            toast.success(data.message);
-          } else if (data.code === 2) {
-            toast.warning(data.message);
+          if (data.code === 2) {
+            console.warn(data.message);
           }
           this.getPost(postId, false);
         } else {
-          toast.error(data.message);
+          console.warn(data.message);
         }
       })
       .catch((response) => {
-        toast.error(response);
+        console.error(response);
       });
   };
 }

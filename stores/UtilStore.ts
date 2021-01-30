@@ -22,7 +22,7 @@ class UtilStore {
     this.closeConfirmModal();
   };
 
-  @action closeConfirmModal = ():void => {
+  @action closeConfirmModal = (): void => {
     this.isOpenConfirmModal = false;
   };
 }

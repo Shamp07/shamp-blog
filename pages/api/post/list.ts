@@ -1,12 +1,18 @@
 import { Client } from 'pg';
+import { NextApiRequest, NextApiResponse } from 'next';
 import Database from '../../../database/Database';
+import logger from '../../../config/log.config';
 
-const handler = (request: any, response: any) => {
+interface Interface {
+  [key: string]: string | string[] | null;
+}
+
+const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   if (request.method === 'GET') {
-    const { category, tag, page } = request.query;
-    const values: Array<string> = [category, tag || null, page];
+    const { category, tag, page }: Interface = request.query;
+    const values: (string | string[])[] = [category, tag, page];
 
-    Database.execute(
+    await Database.execute(
       (database: Client) => database.query(
         SELECT_POST_LIST,
         values,
@@ -18,7 +24,7 @@ const handler = (request: any, response: any) => {
           });
         }),
     ).then(() => {
-      console.log('[SELECT, GET /api/post/list] 카테고리 게시글 조회');
+      logger.info('[SELECT, GET /api/post/list] 카테고리 게시글 조회');
     });
   }
 };

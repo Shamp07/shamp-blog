@@ -3,13 +3,18 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
 import Database from '../../../database/Database';
 import config from '../../../config/jwt.config.json';
+import logger from '../../../config/log.config';
 
-const handler = (request: NextApiRequest, response: NextApiResponse) => {
+interface Interface {
+  [key: string]: string | string[];
+}
+
+const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   if (request.method === 'POST') {
-    const { email, password } = request.body;
-    const values: Array<string> = [email, password];
+    const { email, password }: Interface = request.body;
+    const values: (string | string[])[] = [email, password];
 
-    Database.execute(
+    await Database.execute(
       (database: Client) => database.query(
         SELECT_USER,
         values,
@@ -36,7 +41,7 @@ const handler = (request: NextApiRequest, response: NextApiResponse) => {
           }
         }),
     ).then(() => {
-      console.log('[SELECT, GET /api/user/login] 로그인');
+      logger.info('[SELECT, GET /api/user/login] 로그인');
     });
   }
 };

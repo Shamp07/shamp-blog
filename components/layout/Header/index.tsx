@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ToastContainer } from 'react-toastify';
 import NextNprogress from 'nextjs-progressbar';
 import HeaderLeftLogo from './HeaderLeftLogo';
 import HeaderRightList from './HeaderRightList';
@@ -28,17 +27,6 @@ const Header: React.FC = () => (
       options={{
         showSpinner: false,
       }}
-    />
-    <ToastContainer
-      position="bottom-left"
-      autoClose={3000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
     />
   </div>
 );

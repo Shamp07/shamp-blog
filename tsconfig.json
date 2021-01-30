@@ -65,7 +65,8 @@
     "./stores/",
     "./components",
     "./database",
-    "./middleware"
+    "./middleware",
+    "./config"
   ],
   "exclude": [
     "node_modules",

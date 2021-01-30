@@ -1,17 +1,23 @@
 import { Client } from 'pg';
+import { NextApiRequest, NextApiResponse } from 'next';
 import Database from '../../../database/Database';
+import logger from '../../../config/log.config';
 
-const handler = (request: any, response: any) => {
+interface Interface {
+  [key: string]: string | string[];
+}
+
+const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   if (request.method === 'POST') {
-    addLike(request, response);
+    await addLike(request, response);
   }
 };
 
-const addLike = (request: any, response: any) => {
-  const { postId, userId } = request.body;
-  const values: Array<string> = [postId, userId];
+const addLike = async (request: NextApiRequest, response: NextApiResponse) => {
+  const { postId, userId }: Interface = request.body;
+  const values: (string | string[])[] = [postId, userId];
 
-  Database.execute(
+  await Database.execute(
     (database: Client) => database.query(
       SELECT_POST_LIKE,
       values,
@@ -40,7 +46,7 @@ const addLike = (request: any, response: any) => {
         });
       }),
   ).then(() => {
-    console.log('[INSERT, POST /api/post/like] 게시글 좋아요');
+    logger.info('[INSERT, POST /api/post/like] 게시글 좋아요');
   });
 };
 

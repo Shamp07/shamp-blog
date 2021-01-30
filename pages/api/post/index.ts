@@ -1,25 +1,31 @@
 import { Client } from 'pg';
+import { NextApiRequest, NextApiResponse } from 'next';
 import Database from '../../../database/Database';
+import logger from '../../../config/log.config';
 
-const handler = (request: any, response: any) => {
+interface Interface {
+  [key: string]: string | string[];
+}
+
+const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   if (request.method === 'POST') {
-    addPost(request, response);
+    await addPost(request, response);
   } else if (request.method === 'GET') {
-    getPost(request, response);
+    await getPost(request, response);
   } else if (request.method === 'PUT') {
-    modifyPost(request, response);
+    await modifyPost(request, response);
   } else if (request.method === 'DELETE') {
-    deletePost(request, response);
+    await deletePost(request, response);
   }
 };
 
-const addPost = (request: any, response: any) => {
+const addPost = async (request: NextApiRequest, response: NextApiResponse) => {
   const {
     category, tags, title, content,
-  } = request.body;
-  const values: Array<string> = [category, tags, title, content];
+  }: Interface = request.body;
+  const values: (string | string[])[] = [category, tags, title, content];
 
-  Database.execute(
+  await Database.execute(
     (database: Client) => database.query(
       INSERT_POST,
       values,
@@ -31,17 +37,17 @@ const addPost = (request: any, response: any) => {
         });
       }),
   ).then(() => {
-    console.log('[INSERT, POST /api/post] 게시글 작성');
+    logger.info('[INSERT, POST /api/post] 게시글 작성');
   });
 };
 
-const getPost = (request: any, response: any) => {
-  const { id } = request.query;
-  const values: Array<string> = [id];
+const getPost = async (request: NextApiRequest, response: NextApiResponse) => {
+  const { id }: Interface = request.query;
+  const values: (string | string[])[] = [id];
 
   let post: object;
 
-  Database.execute(
+  await Database.execute(
     (database: Client) => database.query(
       SELECT_POST,
       values,
@@ -60,18 +66,18 @@ const getPost = (request: any, response: any) => {
         });
       }),
   ).then(() => {
-    console.log('[SELECT, GET /api/post] 게시글 조회');
+    logger.info('[SELECT, GET /api/post] 게시글 조회');
   });
 };
 
-const modifyPost = (request: any, response: any) => {
+const modifyPost = async (request: NextApiRequest, response: NextApiResponse) => {
   const {
     id,
     category, tags, title, content,
-  } = request.body;
-  const values: Array<string> = [category, tags, title, content, id];
+  }: Interface = request.body;
+  const values: (string | string[])[] = [category, tags, title, content, id];
 
-  Database.execute(
+  await Database.execute(
     (database: Client) => database.query(
       UPDATE_POST,
       values,
@@ -83,15 +89,15 @@ const modifyPost = (request: any, response: any) => {
         });
       }),
   ).then(() => {
-    console.log('[UPDATE, PUT /api/post] 게시글 수정');
+    logger.info('[UPDATE, PUT /api/post] 게시글 수정');
   });
 };
 
-const deletePost = (request: any, response: any) => {
-  const { id } = request.query;
-  const values: Array<string> = [id];
+const deletePost = async (request: NextApiRequest, response: NextApiResponse) => {
+  const { id }: Interface = request.query;
+  const values: (string | string[])[] = [id];
 
-  Database.execute(
+  await Database.execute(
     (database: Client) => database.query(
       DELETE_POST,
       values,
@@ -103,7 +109,7 @@ const deletePost = (request: any, response: any) => {
         });
       }),
   ).then(() => {
-    console.log('[UPDATE, PUT /api/post] 게시글 삭제');
+    logger.info('[UPDATE, PUT /api/post] 게시글 삭제');
   });
 };
 

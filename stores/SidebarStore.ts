@@ -15,7 +15,7 @@ class SidebarStore {
   boardCategoryList: Array<object> = [{
     name: '공지사항',
     path: 'notice',
-  },{
+  }, {
     name: '전체 글',
     path: 'all',
   }, {

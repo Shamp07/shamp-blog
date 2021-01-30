@@ -1,7 +1,6 @@
 import React from 'react';
 import { action, makeObservable, observable } from 'mobx';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 import cookie from 'js-cookie';
 
 class SignStore {
@@ -37,19 +36,16 @@ class SignStore {
   };
 
   @action cookieCheck = async () => {
-    await axios.get('/api/user/cookie')
+    await axios.get('http://localhost:3000/api/user/cookie')
       .then((response) => {
         const { data } = response;
         if (data.success) {
-          this.userData = response.data.result;
-        } else {
-          toast.error(data.message);
+          this.userData = data.result;
         }
-
         this.cookieChecked = true;
       })
       .catch((response) => {
-        toast.error(response);
+        console.error(response);
       });
   };
 
@@ -58,16 +54,15 @@ class SignStore {
       .then((response) => {
         const { data } = response;
         if (data && data.error) {
-          toast.error(data.message);
+          console.error(data.message);
         }
         if (data && data.result) {
-          toast.success(data.message);
           cookie.set('token', data.result, { expires: 2 });
           this.cookieCheck();
         }
       })
       .catch((response) => {
-        toast.error(response);
+        console.error(response);
       });
   };
 

@@ -1,11 +1,8 @@
 import { action, makeObservable, observable } from 'mobx';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 
 class CategoryStore {
-  root: any;
-
-  @observable categoryTags = [];
+  @observable categoryTags: Array<String> = [];
 
   constructor(initialData = initialCategory) {
     makeObservable(this);
@@ -24,11 +21,11 @@ class CategoryStore {
           const { result } = data;
           this.categoryTags = result;
         } else {
-          toast.error(data.message);
+          console.warn(data.message);
         }
       })
       .catch((response) => {
-        toast.error(response);
+        console.error(response);
       });
   };
 }

@@ -1,8 +1,6 @@
 import { action, makeObservable, observable } from 'mobx';
 
 class AlertStore {
-  root: any;
-
   @observable isOpenAlertModal: boolean = false;
 
   @observable text: string = '';

@@ -17,8 +17,19 @@ const Editor = () => {
     <QuillNoSSRWRapper
       onChange={postHandleChange}
       value={content}
+      modules={Editor.modules}
     />
   );
+};
+
+const toolbarOptions = [
+  ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+  ['blockquote', 'code-block'],
+  [{ header: 1 }, { header: 2 }],
+];
+
+Editor.modules = {
+  toolbar: toolbarOptions,
 };
 
 export default observer(Editor);

@@ -1,25 +1,31 @@
 import { Client } from 'pg';
+import { NextApiRequest, NextApiResponse } from 'next';
 import Database from '../../../database/Database';
+import logger from '../../../config/log.config';
 
-const handler = (request: any, response: any) => {
+interface Interface {
+  [key: string]: string | string[];
+}
+
+const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   if (request.method === 'POST') {
-    addComment(request, response);
+    await addComment(request, response);
   } else if (request.method === 'GET') {
-    getComment(request, response);
+    await getComment(request, response);
   } else if (request.method === 'PUT') {
-    modifyComment(request, response);
+    await modifyComment(request, response);
   } else if (request.method === 'DELETE') {
-    deleteComment(request, response);
+    await deleteComment(request, response);
   }
 };
 
-const addComment = (request: any, response: any) => {
+const addComment = async (request: NextApiRequest, response: NextApiResponse) => {
   const {
     postId, userId, commentId, comment,
-  } = request.body;
-  const values: Array<string> = [postId, commentId, userId, comment];
+  }: Interface = request.body;
+  const values: (string | string[])[] = [postId, commentId, userId, comment];
 
-  Database.execute(
+  await Database.execute(
     (database: Client) => database.query(
       INSERT_COMMENT,
       values,
@@ -31,15 +37,15 @@ const addComment = (request: any, response: any) => {
         });
       }),
   ).then(() => {
-    console.log('[INSERT, POST /api/post/comment] 댓글 작성');
+    logger.info('[INSERT, POST /api/post/comment] 댓글 작성');
   });
 };
 
-const getComment = (request: any, response: any) => {
-  const { postId, commentSize } = request.query;
-  const values: Array<string> = [postId, commentSize];
+const getComment = async (request: NextApiRequest, response: NextApiResponse) => {
+  const { postId, commentSize }: Interface = request.query;
+  const values: (string | string[])[] = [postId, commentSize];
 
-  Database.execute(
+  await Database.execute(
     (database: Client) => database.query(
       SELECT_COMMENT,
       values,
@@ -51,15 +57,15 @@ const getComment = (request: any, response: any) => {
         });
       }),
   ).then(() => {
-    console.log('[SELECT, GET /api/post/comment] 댓글 조회');
+    logger.info('[SELECT, GET /api/post/comment] 댓글 조회');
   });
 };
 
-const modifyComment = (request: any, response: any) => {
-  const { commentId, comment } = request.body;
-  const values: Array<string> = [comment, commentId];
+const modifyComment = async (request: NextApiRequest, response: NextApiResponse) => {
+  const { commentId, comment }: Interface = request.body;
+  const values: (string | string[])[] = [comment, commentId];
 
-  Database.execute(
+  await Database.execute(
     (database: Client) => database.query(
       UPDATE_COMMENT,
       values,
@@ -71,15 +77,15 @@ const modifyComment = (request: any, response: any) => {
         });
       }),
   ).then(() => {
-    console.log('[UPDATE, PUT /api/post/comment] 댓글 수정');
+    logger.info('[UPDATE, PUT /api/post/comment] 댓글 수정');
   });
 };
 
-const deleteComment = (request: any, response: any) => {
-  const { commentId } = request.query;
-  const values: Array<string> = [commentId];
+const deleteComment = async (request: NextApiRequest, response: NextApiResponse) => {
+  const { commentId }: Interface = request.query;
+  const values: (string | string[])[] = [commentId];
 
-  Database.execute(
+  await Database.execute(
     (database: Client) => database.query(
       SELECT_COMMENT_NO_REPLY,
       values,
@@ -108,7 +114,7 @@ const deleteComment = (request: any, response: any) => {
         });
       }),
   ).then(() => {
-    console.log('[UPDATE, DELETE /api/post/comment] 댓글 삭제');
+    logger.info('[UPDATE, DELETE /api/post/comment] 댓글 삭제');
   });
 };
 

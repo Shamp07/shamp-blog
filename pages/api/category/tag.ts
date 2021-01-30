@@ -1,27 +1,30 @@
 import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
 import Database from '../../../database/Database';
+import logger from '../../../config/log.config';
 
-const handler = (request: NextApiRequest, response: NextApiResponse) => {
+interface Interface {
+  [key: string]: string | string[];
+}
+
+const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   if (request.method === 'GET') {
-    const { category } = request.query;
-    response.setHeader('Access-Control-Allow-Origin', 'localhost:3000');
-    response.setHeader('Access-Control-Allow-Credentials', 'true');
-    const values: Array<string> = [category];
+    const { category }: Interface = request.query;
+    const values: (string | string[])[] = [category];
 
-    Database.execute(
+    await Database.execute(
       (database: Client) => database.query(
         SELECT_CATEGORY_TAGS,
         values,
       )
-        .then((result: { rows: Array<object>}) => {
+        .then((result) => {
           response.json({
             success: true,
             result: result.rows,
           });
         }),
     ).then(() => {
-      console.log('[SELECT, GET /api/category] 현재 카테고리의 태그 조회');
+      logger.info('[SELECT, GET /api/category] 현재 카테고리의 태그 조회');
     });
   }
 };

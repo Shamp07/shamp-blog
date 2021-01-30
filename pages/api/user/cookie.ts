@@ -16,6 +16,7 @@ const handler = (request: NextApiRequest, response: NextApiResponse) => {
         decoded = jwt.verify(token, config.secret);
       } catch (e) {
         response.status(200).json({ success: false });
+        return;
       }
     }
 
