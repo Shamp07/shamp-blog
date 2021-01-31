@@ -3,9 +3,12 @@ import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/Link';
+import { useRouter } from 'next/router';
 import useStores from '../../stores/useStores';
 
 const BoardPost = ({ data }: { data: BoardPostProps }) => {
+  const router = useRouter();
+  const routerParams = router.query.board as Array<string>;
   const { SidebarStore } = useStores();
   const { boardCategoryName } = SidebarStore;
   const {
@@ -23,7 +26,7 @@ const BoardPost = ({ data }: { data: BoardPostProps }) => {
       </Vote>
       <ArticleContent>
         <PostTitle>
-          <Link href={`/post/${id}`}>
+          <Link href={`/category/${routerParams[0]}/post/${id}`}>
             <PostLinkSpan>
               <span>{title}</span>
               {commentCnt > 0 && (
@@ -56,11 +59,16 @@ const BoardPost = ({ data }: { data: BoardPostProps }) => {
 
 const PostLinkSpan = styled.span`
   cursor: pointer;
-  display: inline-block;
+  display: flex;
 
   & > span:first-child {
     color: #000;
     margin-right: 5px;
+    max-width: 80%;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 `;
 
@@ -104,6 +112,7 @@ const ArticleContent = styled.div`
 `;
 
 const PostTitle = styled.div`
+  
   & > span:first-child {
     padding-right: 5px;
   }
@@ -120,6 +129,9 @@ const PostInfo = styled.div`
 const PostInfoUl = styled.ul`
   list-style: none;
   margin-top: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   
   & > li { 
     display: inline-block;

@@ -13,6 +13,10 @@ class AlertStore {
     this.text = text;
     this.isOpenAlertModal = !this.isOpenAlertModal;
   };
+
+  @action closeAlertModal = () => {
+    this.isOpenAlertModal = false;
+  };
 }
 
 export default AlertStore;

@@ -5,9 +5,9 @@ import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import useStores from '../../stores/useStores';
-import CommentSection from '../../components/postView/CommentSection';
-import ArticleFooter from '../../components/postView/ArticleFooter';
+import useStores from '../../../../stores/useStores';
+import CommentSection from '../../../../components/postView/CommentSection';
+import ArticleFooter from '../../../../components/postView/ArticleFooter';
 
 const PostView: NextPage = () => {
   const { PostStore, SidebarStore, SignStore } = useStores();
@@ -173,13 +173,56 @@ const ArticleContent = styled.div`
   width: 100%;
   box-sizing: border-box;
   padding: 24px 16px;
-  line-height: 24px;
+  line-height: 1.42;
   font-size: 16px;
   color: #1e2022;
   
   @media (min-width: 1064px) {
     padding-right: 24px;
     padding-left: 24px;
+  }
+
+  & p {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+  }
+  
+  & ul {
+    padding-left: 1.5em;
+  }
+  
+  & img {
+    max-width: 100%;
+  }
+  
+  & pre.ql-syntax {
+    background-color: #23241f;
+    color: #f8f8f2;
+    overflow: auto;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 14px;
+    font-family: 'JetBrains Mono', 'Noto Sans KR', serif !important;
+    line-height: 1.5;
+    
+    & * {
+      font-family: 'JetBrains Mono', 'Noto Sans KR', serif !important;  
+    }
+  }
+
+  & .ql-indent-1:not(.ql-direction-rtl) {
+    padding-left: 1em;
+  }
+  
+  & .ql-indent-2:not(.ql-direction-rtl) {
+    padding-left: 2em;
+  }
+
+  & .ql-indent-3:not(.ql-direction-rtl) {
+    padding-left: 3em;
   }
 `;
 
@@ -196,7 +239,5 @@ const ThumbsUpIcon = styled(FontAwesomeIcon)`
   margin-bottom: 3px;
   margin-right: 5px;
 `;
-
-
 
 export default observer(PostView);

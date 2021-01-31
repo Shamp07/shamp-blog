@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 
 const SignModal: React.FC = () => {
   const { SignStore } = useStores();
-  const { isOpenSignModal, openSignModal } = SignStore;
+  const { isOpenSignModal, toggleSignModal } = SignStore;
   const { loginInfo, loginHandleChange, login } = SignStore;
   const { email } = loginInfo;
   const router = useRouter();
@@ -21,7 +21,7 @@ const SignModal: React.FC = () => {
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
       open={isOpenSignModal}
-      onClose={openSignModal}
+      onClose={toggleSignModal}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
@@ -31,12 +31,14 @@ const SignModal: React.FC = () => {
       <Fade in={isOpenSignModal}>
         <Paper>
           <h2 id="transition-modal-title">로그인</h2>
-          <TextField label="e-mail" name="email" onChange={loginHandleChange} value={email} />
-          <br />
-          <br />
-          <PasswordInput />
-          <br />
-          <br />
+          <div>
+            <CustomTextField label="e-mail" name="email" onChange={loginHandleChange} value={email} />
+            <br />
+            <br />
+            <PasswordInput />
+            <br />
+            <br />
+          </div>
           <Button variant="contained" color="primary">
             회원가입
           </Button>
@@ -56,20 +58,39 @@ const CustomModal = styled(Modal)`
 `;
 
 const Paper = styled.div`
-  margin: 0 20px;
-  
+  margin: 0 40px;
+  width: 300px;
   max-width: 100%;
   background-color: #fff;
-  border: 2px solid #000;
-  padding: 10px;
-  
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
+  padding: 15px;
+
   &:focus {
     outline: 0;
+  }
+
+  & > h2 {
+    margin-bottom: 10px;
+    padding: 10px 0;
+  }
+
+  & > div {
+    padding: 20px 0;
+    border-bottom: 1px solid #e6e6e6;
+    border-top: 1px solid #e6e6e6;
+    margin-bottom: 10px;
   }
 `;
 
 const RightButton = styled(Button)`
   float: right;
+  margin-left: 5px !important;
+`;
+
+const CustomTextField = styled(TextField)`
+  width: 100%;
 `;
 
 export default observer(SignModal);

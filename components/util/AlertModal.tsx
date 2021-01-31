@@ -7,16 +7,16 @@ import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import useStores from '../../stores/useStores';
 
-const AlertModal: React.FC = () => {
+const ConfirmModal: React.FC = () => {
   const { AlertStore } = useStores();
-  const { isOpenAlertModal, toggleAlertModal, text } = AlertStore;
+  const { isOpenAlertModal, text, closeAlertModal } = AlertStore;
 
   return (
     <CustomModal
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
       open={isOpenAlertModal}
-      onClose={toggleAlertModal}
+      onClose={closeAlertModal}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
@@ -26,12 +26,10 @@ const AlertModal: React.FC = () => {
       <Fade in={isOpenAlertModal}>
         <Paper>
           <h2 id="transition-modal-title">알림</h2>
-          <TextDiv>{text}</TextDiv>
           <div>
-            <RightButton variant="contained" color="primary" onClick={() => toggleAlertModal('')}>
-              닫기
-            </RightButton>
+            {text}
           </div>
+          <RightButton variant="contained" color="primary" onClick={closeAlertModal}>확인</RightButton>
         </Paper>
       </Fade>
     </CustomModal>
@@ -45,24 +43,35 @@ const CustomModal = styled(Modal)`
 `;
 
 const Paper = styled.div`
-  margin: 0 20px;
-  
+  margin: 0 40px;
+  width: 300px;
   max-width: 100%;
   background-color: #fff;
-  border: 2px solid #000;
-  padding: 10px;
-  
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
+  padding: 15px;
+
   &:focus {
     outline: 0;
+  }
+
+  & > h2 {
+    margin-bottom: 10px;
+    padding: 10px 0;
+  }
+
+  & > div {
+    padding: 20px 0;
+    border-bottom: 1px solid #e6e6e6;
+    border-top: 1px solid #e6e6e6;
+    margin-bottom: 10px;
   }
 `;
 
 const RightButton = styled(Button)`
   float: right;
+  margin-left: 5px !important;
 `;
 
-const TextDiv = styled.div`
-  margin: 10px 0;
-`;
-
-export default observer(AlertModal);
+export default observer(ConfirmModal);

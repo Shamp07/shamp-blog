@@ -2,6 +2,7 @@ import React from 'react';
 import { action, makeObservable, observable } from 'mobx';
 import axios from 'axios';
 import Router from 'next/dist/next-server/lib/router/router';
+import AlertStore from './AlertStore';
 
 interface PostInterface {
   id: number,
@@ -14,17 +15,20 @@ interface PostInterface {
 }
 
 class PostStore {
+  AlertStore: AlertStore;
+
   @observable post: PostInterface;
 
   @observable postView;
 
   @observable postList;
 
-  constructor(initialData = initialPost) {
+  constructor(initialData = initialPost, root: any) {
     makeObservable(this);
     this.postList = initialData.postList;
     this.postView = initialData.postView;
     this.post = initialData.post;
+    this.AlertStore = root.AlertStore;
   }
 
   @action postHandleChange = (event: string | React.ChangeEvent<HTMLInputElement>): void => {
@@ -169,7 +173,7 @@ class PostStore {
         const { data } = response;
         if (data.success) {
           if (data.code === 2) {
-            console.warn(data.message);
+            this.AlertStore.toggleAlertModal(data.message);
           }
           this.getPost(postId, false);
         } else {

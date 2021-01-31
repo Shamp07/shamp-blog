@@ -2,6 +2,7 @@ import React from 'react';
 import { action, makeObservable, observable } from 'mobx';
 import axios from 'axios';
 import PostStore from './PostStore';
+import AlertStore from './AlertStore';
 
 interface CommentInterface {
   id: number,
@@ -13,6 +14,8 @@ interface CommentInterface {
 
 class CommentStore {
   PostStore: PostStore;
+
+  AlertStore: AlertStore;
 
   @observable comment: string = '';
 
@@ -31,6 +34,7 @@ class CommentStore {
   constructor(initialData = initialComment, root: any) {
     makeObservable(this);
     this.PostStore = root.PostStore;
+    this.AlertStore = root.AlertStore;
     this.commentList = initialData.commentList;
   }
 
@@ -66,6 +70,11 @@ class CommentStore {
     postId: number, userId: number,
     commentId: number, isReply: boolean,
   ): void => {
+    if (!this.comment.trim()) {
+      this.AlertStore.toggleAlertModal('댓글 내용을 입력해주세요!');
+      return;
+    }
+
     axios.post('/api/post/comment', {
       postId,
       userId,

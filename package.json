@@ -67,6 +67,7 @@
     "app-root-path": "^3.0.0",
     "axios": "^0.21.1",
     "babel-preset-react-app": "^10.0.0",
+    "highlight.js": "^10.5.0",
     "js-cookie": "^2.2.1",
     "jsonwebtoken": "^8.5.1",
     "mobx": "^6.1.4",

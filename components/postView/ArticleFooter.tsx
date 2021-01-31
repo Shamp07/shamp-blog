@@ -24,7 +24,7 @@ const ArticleFooter: React.FC = () => {
       >
         삭제
       </Button>
-      <Button size="small" variant="outlined" onClick={() => router.push('/post/modify/24', undefined, { shallow: false })}>
+      <Button size="small" variant="outlined" onClick={() => router.push(`/post/modify/${id}`, undefined, { shallow: false })}>
         수정
       </Button>
     </ArticleFooterWrapper>

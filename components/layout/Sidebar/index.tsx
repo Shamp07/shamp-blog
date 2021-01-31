@@ -123,7 +123,7 @@ const CategoryWrapper = styled.div`
       color: #616161;
       padding-left: 14px;
       text-decoration: none;
-      width: 100%;
+      width: 270px;
       height: 100%;
     }
   }

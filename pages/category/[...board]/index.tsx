@@ -1,12 +1,12 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
-import BoardHead from '../../components/board/BoardHead';
-import BoardContent from '../../components/board/BoardContent';
-import useStores from '../../stores/useStores';
-import BoardPagination from '../../components/board/BoardPagination';
+import BoardHead from '../../../components/board/BoardHead';
+import BoardContent from '../../../components/board/BoardContent';
+import useStores from '../../../stores/useStores';
+import BoardPagination from '../../../components/board/BoardPagination';
 
-const Board: NextPage = () => {
+const Index: NextPage = () => {
   const router = useRouter();
   const { AlertStore, SidebarStore } = useStores();
   const { toggleAlertModal } = AlertStore;
@@ -34,7 +34,7 @@ const Board: NextPage = () => {
   );
 };
 
-Board.getInitialProps = async ({ query, store }: any) => {
+Index.getInitialProps = async ({ query, store }: any) => {
   const { CategoryStore, PostStore } = store;
   const { getCategoryTags } = CategoryStore;
   const { getPostList } = PostStore;
@@ -49,4 +49,4 @@ Board.getInitialProps = async ({ query, store }: any) => {
   };
 };
 
-export default Board;
+export default Index;

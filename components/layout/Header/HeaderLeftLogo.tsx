@@ -38,6 +38,7 @@ const ListWrapper = styled.div`
   float: left;
   @media (max-width: 1064px) {
     height: 56px !important;
+    width: 200px;
   }
 `;
 
@@ -90,6 +91,7 @@ const NoStyleLogo = styled(NoStyleSpan)`
     font-size: 25px;
     line-height: 56px !important;
     height: 56px !important;
+    width: 140px;
   }
 `;
 

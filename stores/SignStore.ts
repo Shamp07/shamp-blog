@@ -36,7 +36,7 @@ class SignStore {
   };
 
   @action cookieCheck = async () => {
-    await axios.get('http://localhost:3000/api/user/cookie')
+    await axios.get('/api/user/cookie')
       .then((response) => {
         const { data } = response;
         if (data.success) {

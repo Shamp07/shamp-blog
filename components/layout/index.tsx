@@ -27,8 +27,7 @@ const Layout: React.FC<Props> = ({ children }: Props) => (
 
 const Wrapper = styled.div`
   background-color: #ebeef1;
-  min-height: 100vh;
-  max-height: 100%;
+  height: 100vh;
 `;
 
 const CenterContent = styled.div`
@@ -58,14 +57,15 @@ const GlobalStyle = createGlobalStyle`
   }
   
   body {
-    overflow-x: hidden;
+    min-width: 320px;
+    min-height: 100%;
+    -webkit-overflow-scrolling: touch;
   }
   
   a, span, div {
     -webkit-tap-highlight-color: transparent;
   }
 
-  
   .MuiButton-outlinedPrimary {
     color: #2d79c7 !important;
     border: 1px solid rgba(45, 121, 199, 0.5) !important;  

@@ -3,6 +3,7 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { observer } from 'mobx-react-lite';
+import styled from 'styled-components';
 import useStores from '../../stores/useStores';
 
 const PasswordInput: React.FC = () => {
@@ -11,7 +12,7 @@ const PasswordInput: React.FC = () => {
   const { password } = loginInfo;
 
   return (
-    <FormControl>
+    <CustomFormControl>
       <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
       <Input
         id="standard-adornment-password"
@@ -20,8 +21,12 @@ const PasswordInput: React.FC = () => {
         name="password"
         onChange={loginHandleChange}
       />
-    </FormControl>
+    </CustomFormControl>
   );
 };
+
+const CustomFormControl = styled(FormControl)`
+  width: 100%;
+`;
 
 export default observer(PasswordInput);
