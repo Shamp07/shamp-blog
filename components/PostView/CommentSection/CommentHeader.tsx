@@ -3,8 +3,8 @@ import { faSync } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import useStores from '../../../stores/useStores';
 import { observer } from 'mobx-react-lite';
+import useStores from '../../../stores/useStores';
 
 const CommentHeader: React.FC = () => {
   const { PostStore, CommentStore } = useStores();

@@ -27,7 +27,7 @@ const Layout: React.FC<Props> = ({ children }: Props) => (
 
 const Wrapper = styled.div`
   background-color: #ebeef1;
-  height: 100vh;
+  min-height: 100vh;
 `;
 
 const CenterContent = styled.div`

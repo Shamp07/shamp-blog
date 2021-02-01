@@ -42,8 +42,8 @@ const Post = ({ isModify }: { isModify: boolean }) => {
             </MenuItem>
           ))}
         </TitleInput>
-        <TitleInput name="tags" value={tags} onChange={postHandleChange} label="태그" variant="outlined" size="small" />
-        <TitleInput name="title" value={title} onChange={postHandleChange} label="제목" variant="outlined" size="small" />
+        <TitleInput name="tags" value={tags} onChange={postHandleChange} label="태그" variant="outlined" size="small" inputProps={{ maxLength: 33 }} />
+        <TitleInput name="title" value={title} onChange={postHandleChange} label="제목" variant="outlined" size="small" inputProps={{ maxLength: 100 }} />
         <Editor />
       </Article>
       <Footer>

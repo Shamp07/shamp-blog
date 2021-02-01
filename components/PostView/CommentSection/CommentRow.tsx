@@ -101,8 +101,8 @@ const CommentContent = styled.pre`
   line-height: 20px;
   font-size: 14px;
   color: #1e2022;
+  white-space: pre-wrap;
   word-wrap: break-word;
-  word-break: break-all;
 `;
 
 const ReplyBorder = styled.div`

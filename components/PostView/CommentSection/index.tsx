@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import CommentHeader from './CommentHeader';
-import CommentWrite from './CommentWrite';
 import CommentList from './CommentList';
+import CommentWrite from './CommentWrite';
 import useStores from '../../../stores/useStores';
 
 const CommentSection: React.FC = () => {

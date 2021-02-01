@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
+import CommentMore from './CommentMore';
 import useStores from '../../../stores/useStores';
 import CommentRow, { CommentRowInterface } from './CommentRow';
 import CommentNone from './CommentNone';
-import CommentMore from './CommentMore';
 
 const CommentList: React.FC = () => {
   const { CommentStore } = useStores();

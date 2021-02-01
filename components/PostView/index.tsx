@@ -5,9 +5,9 @@ import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import useStores from '../../../../stores/useStores';
-import CommentSection from '../../../../components/postView/CommentSection';
-import ArticleFooter from '../../../../components/postView/ArticleFooter';
+import useStores from '../../stores/useStores';
+import CommentSection from './CommentSection';
+import ArticleFooter from './ArticleFooter';
 
 const PostView: NextPage = () => {
   const { PostStore, SidebarStore, SignStore } = useStores();
@@ -83,19 +83,6 @@ const PostView: NextPage = () => {
   );
 };
 
-PostView.getInitialProps = async ({ query, store }: any) => {
-  const { PostStore, CommentStore } = store;
-  const { getPost } = PostStore;
-  const { getComment } = CommentStore;
-  const id = query.id as string;
-
-  await Promise.all([getPost(id), getComment(id)]);
-
-  return {
-    props: {},
-  };
-};
-
 const Wrapper = styled.div`
   background-color: #fff;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
@@ -117,20 +104,26 @@ const ArticleTitle = styled.div`
 
 const ArticleMeta = styled.div`
   margin-top: 9px;
-  line-height: 17px;
+  line-height: 20px;
   font-size: 14px;
   color: #7b858e;
-  height: 24px;
+  
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
 `;
 
 const ArticleMetaUl = styled.ul`
   list-style: none;
-  height: 24px;
   
   & > li {
     display: inline-block;
+    vertical-align: middle;
     padding: 0 10px;
     color: #98a0a7;
+    word-break: break-all;
   }
 `;
 
@@ -176,6 +169,7 @@ const ArticleContent = styled.div`
   line-height: 1.42;
   font-size: 16px;
   color: #1e2022;
+  word-break: break-all;
   
   @media (min-width: 1064px) {
     padding-right: 24px;

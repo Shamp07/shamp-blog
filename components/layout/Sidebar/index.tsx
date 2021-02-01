@@ -52,6 +52,8 @@ const Wrapper = styled.div<Container>`
   float: left;
   z-index: 1000;
   will-change: min-height;
+  overflow-y: auto;
+  overflow-x: hidden;
   
   @media (max-width: 1064px) {
     background-color: #fff;
