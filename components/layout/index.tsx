@@ -67,9 +67,19 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .MuiButton-outlinedPrimary {
-    color: #2d79c7 !important;
+    color: #2d79c7 !important;  
     border: 1px solid rgba(45, 121, 199, 0.5) !important;  
   }
+
+  .MuiButton-outlined.Mui-disabled  {
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  }
+  
+  .MuiButton-root.Mui-disabled {
+    color: rgba(0, 0, 0, 0.26) !important;
+  }
+  
+  
 
   .MuiPaginationItem-textPrimary.Mui-selected,
   .MuiButton-containedPrimary {

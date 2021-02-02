@@ -66,7 +66,7 @@ const PostView: NextPage = () => {
             <div dangerouslySetInnerHTML={{ __html: content }} />
           </ArticleContent>
           <ArticleBox>
-            <Button size="small" color="primary" variant="outlined" onClick={() => addPostLike(id, userId)}>
+            <Button size="small" color="primary" variant="outlined" onClick={() => addPostLike(id, userId)} disabled={!userId}>
               <ThumbsUpIcon icon={faThumbsUp} />
               <span>
                 좋아요 (

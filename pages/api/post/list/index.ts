@@ -1,7 +1,7 @@
 import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
-import Database from '../../../database/Database';
-import logger from '../../../config/log.config';
+import Database from '../../../../database/Database';
+import logger from '../../../../config/log.config';
 
 interface Interface {
   [key: string]: string | string[] | null;

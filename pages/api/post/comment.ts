@@ -186,7 +186,7 @@ const SELECT_COMMENT = `
       AND c.delete_fl = false
     ORDER BY c.upper_id, c.id
   ) a
-  where a.rownum <= $2
+  WHERE a.rownum <= $2
 `;
 
 const UPDATE_COMMENT = `

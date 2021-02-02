@@ -5,6 +5,7 @@ import AlertStore from './AlertStore';
 import PostStore, { initialPost } from './PostStore';
 import CategoryStore, { initialCategory } from './CategoryStore';
 import CommentStore, { initialComment } from './CommentStore';
+import HomeStore, { initialHome } from './HomeStore';
 import UtilStore from './UtilStore';
 
 const isServer = typeof window === 'undefined';
@@ -16,6 +17,7 @@ const initialRoot = {
   CategoryStore: initialCategory,
   PostStore: initialPost,
   CommentStore: initialComment,
+  HomeStore: initialHome,
 };
 
 export class RootStore {
@@ -31,6 +33,8 @@ export class RootStore {
 
   CommentStore: CommentStore;
 
+  HomeStore: HomeStore;
+
   UtilStore: UtilStore;
 
   constructor(initialData: any) {
@@ -40,6 +44,7 @@ export class RootStore {
     this.PostStore = new PostStore(initialData.PostStore, this);
     this.CategoryStore = new CategoryStore(initialData.CategoryStore);
     this.CommentStore = new CommentStore(initialData.CommentStore, this);
+    this.HomeStore = new HomeStore(initialData.HomeStore, this);
     this.UtilStore = new UtilStore();
   }
 }
