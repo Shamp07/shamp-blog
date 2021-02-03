@@ -1,7 +1,7 @@
+import React from 'react';
 import { action, makeObservable, observable } from 'mobx';
 import axios from 'axios';
 import AlertStore from './AlertStore';
-import React from "react";
 
 class HomeStore {
   AlertStore: AlertStore;
@@ -28,7 +28,7 @@ class HomeStore {
     this.AlertStore = root.AlertStore;
   }
 
-  @action setModifierCommentId = (id: number, content: string) => {
+  @action setModifierFootprintId = (id: number, content: string) => {
     this.modifierFootprintId = id;
     this.modifierFootprintText = content;
   };
@@ -129,12 +129,13 @@ class HomeStore {
   @action modifyFootprint = (id: number): void => {
     axios.put('/api/footprint', {
       id,
-      content: this.footprintText,
+      content: this.modifierFootprintText,
     })
       .then((response) => {
         const { data } = response;
         if (data.success) {
           this.getFootprint();
+          this.setModifierFootprintId(0, '');
         } else {
           console.warn(data.message);
         }

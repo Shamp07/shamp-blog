@@ -4,12 +4,12 @@ import useStores from '../../../stores/useStores';
 
 const SideNoTokenList: React.FC = () => {
   const { SignStore } = useStores();
-  const { toggleSignModal } = SignStore;
+  const { toggleSignModal, toggleRegisterModal } = SignStore;
 
   return (
     <MobileMenu>
       <TopMenu onClick={toggleSignModal}>로그인</TopMenu>
-      <TopMenu>회원가입</TopMenu>
+      <TopMenu onClick={toggleRegisterModal}>회원가입</TopMenu>
     </MobileMenu>
   );
 };

@@ -2,12 +2,16 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
 import { NextPage } from 'next';
+import { faSync } from '@fortawesome/free-solid-svg-icons';
+import { Button } from '@material-ui/core';
 import useStores from '../stores/useStores';
 import HomePostList from '../components/home/HomePostList';
+import Footprint from '../components/home/Footprint';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const Home: NextPage = () => {
   const { HomeStore } = useStores();
-  const { noticePostList, popularPostList } = HomeStore;
+  const { noticePostList, popularPostList, getFootprint } = HomeStore;
 
   return (
     <GridWrapper>
@@ -20,9 +24,17 @@ const Home: NextPage = () => {
           <h2>인기 글</h2>
           <HomePostList array={popularPostList} />
         </Grid>
-        <Grid item xs={12}>
-          <h2>방명록</h2>
-        </Grid>
+        <RelativeGrid item xs={12}>
+          <h2>발자취</h2>
+          <RightButton size="small" variant="outlined" onClick={getFootprint}>
+            <span>
+              <ReloadICon icon={faSync} />
+              {' '}
+              새로고침
+            </span>
+          </RightButton>
+          <Footprint />
+        </RelativeGrid>
       </CustomGrid>
     </GridWrapper>
   );
@@ -30,8 +42,8 @@ const Home: NextPage = () => {
 
 Home.getInitialProps = async ({ store }: any) => {
   const { HomeStore } = store;
-  const { getPopularPostList, getNoticePostList } = HomeStore;
-  await Promise.all([getPopularPostList(), getNoticePostList()]);
+  const { getPopularPostList, getNoticePostList, getFootprint } = HomeStore;
+  await Promise.all([getPopularPostList(), getNoticePostList(), getFootprint()]);
 
   return {
     props: {},
@@ -51,6 +63,10 @@ const CustomGrid = styled(Grid)`
   
   & > div {
     padding: 20px !important;
+    
+    @media (max-width: 1064px) {
+      padding: 15px !important;
+    }
   }
   
   & > div > h2 {
@@ -58,6 +74,22 @@ const CustomGrid = styled(Grid)`
     margin-bottom: 15px;
     border-bottom: 1px solid #e6e6e6;
   }
+`;
+
+const RelativeGrid = styled(Grid)`
+  position: relative;
+`;
+
+const RightButton = styled(Button)`
+  position: absolute !important;
+  top: 20px;
+  right: 20px;
+`;
+
+const ReloadICon = styled(FontAwesomeIcon)`
+  vertical-align: baseline;
+  width: 12px;
+  height: 12px;
 `;
 
 export default Home;

@@ -24,9 +24,13 @@ const HeaderLeftLogo: React.FC = () => (
 );
 
 const ResponsiveLogo = styled.span`
-  background-image: url("/logo.png");
+  display: inline-block;
+  width: 70px;
+  height: 70px;
+  background-image: url("./logo.png");
+  background-size: 70px;
   @media (max-width: 1064px) {
-    background-image: url("/logo_54x54.png");
+    background-size: 56px;
     width: 56px !important;
     height: 56px !important;
   }
@@ -69,11 +73,6 @@ const NoStyleSpan = styled.span`
   height: 70px;
   font-weight: 500;
   text-align: center;
-  & > span {
-    display: inline-block;
-    height: 70px;
-    width: 70px;
-  }
   
   @media (max-width: 1064px) {
     height: 56px !important;

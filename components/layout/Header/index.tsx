@@ -6,6 +6,7 @@ import HeaderRightList from './HeaderRightList';
 import SignModal from '../../util/SignModal';
 import AlertModal from '../../util/AlertModal';
 import ConfirmModal from '../../util/ConfirmModal';
+import RegisterModal from '../../util/RegisterModal';
 
 const Header: React.FC = () => (
   <div>
@@ -17,6 +18,7 @@ const Header: React.FC = () => (
     </HeaderTopBar>
     <BackgroundImage />
     <SignModal />
+    <RegisterModal />
     <AlertModal />
     <ConfirmModal />
     <NextNprogress

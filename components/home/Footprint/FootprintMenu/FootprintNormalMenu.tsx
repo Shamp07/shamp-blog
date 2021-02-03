@@ -26,7 +26,7 @@ const FootprintNormalMenu = ({ data }: { data: FootprintNormalMenuProps }) => {
   }
 
   return (
-    <CommentMenu>
+    <FootprintMenu>
       {isMine && (
         <>
           <span
@@ -50,11 +50,11 @@ const FootprintNormalMenu = ({ data }: { data: FootprintNormalMenuProps }) => {
           </span>
         </>
       )}
-    </CommentMenu>
+    </FootprintMenu>
   );
 };
 
-const CommentMenu = styled.div`
+const FootprintMenu = styled.div`
   margin-top: 8px;
   font-size: 14px;
   

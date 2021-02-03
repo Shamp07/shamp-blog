@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
-import FootprintMenu from './FoontprintMenu';
+import FootprintMenu from './FootprintMenu';
 import useStores from '../../../stores/useStores';
+import { observer } from 'mobx-react-lite';
 
 interface FootprintRowProp {
   data: FootprintRowInterface;
@@ -15,7 +16,6 @@ export interface FootprintRowInterface {
   content: string,
   time: string,
   modifiedTime: string,
-  isTag: boolean,
 }
 
 const FootprintRow: React.FC<FootprintRowProp> = ({ data }: FootprintRowProp) => {
@@ -35,7 +35,7 @@ const FootprintRow: React.FC<FootprintRowProp> = ({ data }: FootprintRowProp) =>
       <FootprintWrapper>
         <FootprintWriter>
           <span>{userName}</span>
-          <span>{modifiedTime || time}</span>
+          <RightTime>{modifiedTime || time}</RightTime>
         </FootprintWriter>
         <FootprintContent>
           {modifierFootprintId === id ? (
@@ -69,19 +69,25 @@ const FootprintWriter = styled.div`
   }
 
   & > span:first-child {
-    padding-left: 0;
+    display: inline-block;
+    color: #fff;
+    background-color: #2d79c7;
+    border-radius: 10px;
+    font-size: 14px;
+    text-align: center;
+    padding: 4px 12px;
   }
   
   & > span:last-child {
     font-size: 14px;
     color: #7b858e;
     font-weight: normal;
-    border-left: 1px solid #e6e6e6;
   }
 `;
 
 const FootprintContent = styled.pre`
   margin-top: 8px;
+  padding: 0 2px;
   line-height: 20px;
   font-size: 14px;
   color: #1e2022;
@@ -106,4 +112,8 @@ const CustomTextField = styled(TextField)`
   }
 `;
 
-export default FootprintRow;
+const RightTime = styled.span`
+  float: right;
+`;
+
+export default observer(FootprintRow);

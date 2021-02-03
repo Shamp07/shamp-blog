@@ -6,44 +6,43 @@ import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
 import { Button, TextField } from '@material-ui/core';
 import { useRouter } from 'next/router';
-import PasswordInput from './PasswordInput';
 import useStores from '../../stores/useStores';
 
-const SignModal: React.FC = () => {
+const RegisterModal: React.FC = () => {
   const { SignStore } = useStores();
   const {
-    isOpenSignModal, toggleSignModal,
-    loginInfo, loginHandleChange, login,
+    isOpenRegisterModal, toggleRegisterModal,
+    registerInfo, registerHandleChange, register,
   } = SignStore;
-  const { email, password } = loginInfo;
+  const {
+    email, name, password, passwordCheck,
+  } = registerInfo;
   const router = useRouter();
 
   return (
     <CustomModal
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
-      open={isOpenSignModal}
-      onClose={toggleSignModal}
+      open={isOpenRegisterModal}
+      onClose={toggleRegisterModal}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
         timeout: 500,
       }}
     >
-      <Fade in={isOpenSignModal}>
+      <Fade in={isOpenRegisterModal}>
         <Paper>
-          <h2 id="transition-modal-title">로그인</h2>
+          <h2 id="transition-modal-title">회원가입</h2>
           <div>
-            <CustomTextField label="e-mail" name="email" onChange={loginHandleChange} value={email} />
-            <br />
-            <CustomTextField label="비밀번호" name="password" onChange={loginHandleChange} value={password} type="password" />
+            <CustomTextField label="e-mail" name="email" type="email" onChange={registerHandleChange} value={email} helperText="이메일로 인증을 진행하니 사용 중인 이메일을 적어주세요!" />
+            <CustomTextField label="이름" name="name" onChange={registerHandleChange} value={name} helperText="블로그에서 사용할 이름을 적어주세요." />
+            <CustomTextField label="비밀번호" name="password" type="password" value={password} onChange={registerHandleChange} helperText="8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요." />
+            <CustomTextField label="비밀번호 확인" name="passwordCheck" type="password" value={passwordCheck} onChange={registerHandleChange} helperText="비밀번호와 동일하게 입력해주세요." />
             <br />
           </div>
-          <Button variant="contained" color="primary">
-            회원가입
-          </Button>
-          <RightButton variant="contained" color="primary" onClick={() => login(router)}>
-            로그인
+          <RightButton variant="contained" color="primary" onClick={() => register(router)}>
+            가입하기
           </RightButton>
         </Paper>
       </Fade>
@@ -59,7 +58,7 @@ const CustomModal = styled(Modal)`
 
 const Paper = styled.div`
   margin: 0 40px;
-  width: 300px;
+  width: 400px;
   max-width: 100%;
   background-color: #fff;
   border: 1px solid #e6e6e6;
@@ -91,7 +90,7 @@ const RightButton = styled(Button)`
 
 const CustomTextField = styled(TextField)`
   width: 100%;
-  margin-bottom: 15px !important;
+  margin-bottom: 10px !important;
 `;
 
-export default observer(SignModal);
+export default observer(RegisterModal);

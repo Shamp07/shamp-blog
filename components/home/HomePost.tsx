@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Link from 'next/Link';
 
 export interface HomePostProp {
   data: PostInterface;
@@ -12,13 +13,15 @@ export interface PostInterface {
 }
 
 const HomePost: React.FC<HomePostProp> = ({ data }: HomePostProp) => {
-  const { title } = data;
+  const { id, title } = data;
   return (
-    <Wrapper>
-      <div>
-        {title}
-      </div>
-    </Wrapper>
+    <Link href={`/post/${id}`}>
+      <Wrapper>
+        <div>
+          {title}
+        </div>
+      </Wrapper>
+    </Link>
   );
 };
 
@@ -31,6 +34,7 @@ const Wrapper = styled.div`
   cursor: pointer;
   transition: background-color 0.2s;
   border-radius: 4px;
+  font-weight: 500;
   
   & > div {
     white-space: nowrap;

@@ -21,7 +21,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 
 const addFootprint = async (request: NextApiRequest, response: NextApiResponse) => {
   const { content, userId }: Interface = request.body;
-  const values: (string | string[])[] = [content, userId];
+  const values: (string | string[])[] = [userId, content];
 
   await Database.execute(
     (database: Client) => database.query(
@@ -112,7 +112,8 @@ const INSERT_FOOTPRINT = `
 const SELECT_FOOTPRINT = `
   SELECT * FROM (
     SELECT
-      ROW_NUMBER() OVER(ORDER BY crt_dttm) AS rownum,
+      ROW_NUMBER() OVER(ORDER BY crt_dttm DESC) AS rownum,
+      COUNT(*) OVER() AS total,
       f.id,
       f.user_id AS "userId",
       (SELECT NAME FROM "user" WHERE id = f.user_id) AS "userName",
@@ -145,9 +146,9 @@ const SELECT_FOOTPRINT = `
       END AS "modifiedTime"
     FROM footprint f
     WHERE f.delete_fl = false
-    ORDER BY crt_dttm
+    ORDER BY crt_dttm DESC
   ) a
-  WHERE a.rownum <= $2
+  WHERE a.rownum <= $1
 `;
 
 const UPDATE_FOOTPRINT = `

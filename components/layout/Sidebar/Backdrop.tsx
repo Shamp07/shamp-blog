@@ -18,7 +18,7 @@ interface BackdropInterface {
 const SidebarBackdrop = styled.div<BackdropInterface>`
   height: 100vh;
   width: 100vw;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: -1;

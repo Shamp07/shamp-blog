@@ -4,7 +4,7 @@ import useStores from '../../../stores/useStores';
 
 const HeaderNoTokenList: React.FC = () => {
   const { SignStore } = useStores();
-  const { toggleSignModal } = SignStore;
+  const { toggleSignModal, toggleRegisterModal } = SignStore;
 
   return (
     <>
@@ -14,7 +14,7 @@ const HeaderNoTokenList: React.FC = () => {
         </NoStyleA>
       </li>
       <li>
-        <NoStyleA>
+        <NoStyleA onClick={toggleRegisterModal}>
           회원가입
         </NoStyleA>
       </li>

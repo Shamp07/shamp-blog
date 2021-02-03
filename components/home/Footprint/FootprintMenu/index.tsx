@@ -1,8 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import CommentNormalMenu from './FootprintNormalMenu';
+import FootprintNormalMenu from './FootprintNormalMenu';
 import FootprintModifyMenu from './FootprintModifyMenu';
 import useStores from '../../../../stores/useStores';
+
+interface FootprintMenuProp {
+  data: FootprintRowInterface;
+}
 
 export interface FootprintRowInterface {
   id: number,
@@ -11,16 +15,15 @@ export interface FootprintRowInterface {
   content: string,
   time: string,
   modifiedTime: string,
-  isTag: boolean,
 }
 
-const FootprintMenu = ({ data }: { data: FootprintRowInterface }) => {
+const FootprintMenu: React.FC<FootprintMenuProp> = ({ data }: FootprintMenuProp) => {
   const { HomeStore } = useStores();
   const { modifierFootprintId } = HomeStore;
   const { id } = data;
 
   return id === modifierFootprintId
-    ? <FootprintModifyMenu data={data} /> : <CommentNormalMenu data={data} />;
+    ? <FootprintModifyMenu /> : <FootprintNormalMenu data={data} />;
 };
 
 export default observer(FootprintMenu);
