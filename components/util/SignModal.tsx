@@ -6,7 +6,6 @@ import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
 import { Button, TextField } from '@material-ui/core';
 import { useRouter } from 'next/router';
-import PasswordInput from './PasswordInput';
 import useStores from '../../stores/useStores';
 
 const SignModal: React.FC = () => {
@@ -14,6 +13,7 @@ const SignModal: React.FC = () => {
   const {
     isOpenSignModal, toggleSignModal,
     loginInfo, loginHandleChange, login,
+    changeRegister,
   } = SignStore;
   const { email, password } = loginInfo;
   const router = useRouter();
@@ -39,7 +39,7 @@ const SignModal: React.FC = () => {
             <CustomTextField label="비밀번호" name="password" onChange={loginHandleChange} value={password} type="password" />
             <br />
           </div>
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" onClick={changeRegister}>
             회원가입
           </Button>
           <RightButton variant="contained" color="primary" onClick={() => login(router)}>

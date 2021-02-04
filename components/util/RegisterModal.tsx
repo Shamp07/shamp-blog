@@ -42,7 +42,7 @@ const RegisterModal: React.FC = () => {
             <br />
           </div>
           <RightButton variant="contained" color="primary" onClick={() => register(router)}>
-            가입하기
+            가입
           </RightButton>
         </Paper>
       </Fade>

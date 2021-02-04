@@ -38,9 +38,9 @@ export class RootStore {
   UtilStore: UtilStore;
 
   constructor(initialData: any) {
+    this.AlertStore = new AlertStore();
     this.SidebarStore = new SidebarStore();
     this.SignStore = new SignStore(this);
-    this.AlertStore = new AlertStore();
     this.PostStore = new PostStore(initialData.PostStore, this);
     this.CategoryStore = new CategoryStore(initialData.CategoryStore);
     this.CommentStore = new CommentStore(initialData.CommentStore, this);

@@ -32,6 +32,10 @@ class SignStore {
     this.AlertStore = root.AlertStore;
   }
 
+  @action changeRegister = () => {
+    this.toggleRegisterModal();
+  };
+
   @action toggleSignModal = () => {
     this.isOpenSignModal = !this.isOpenSignModal;
   };
@@ -78,6 +82,7 @@ class SignStore {
         if (data && data.result) {
           cookie.set('token', data.result, { expires: 2 });
           this.cookieCheck();
+          this.toggleSignModal();
         }
       })
       .catch((response) => {
@@ -96,7 +101,7 @@ class SignStore {
         if (data.success) {
           if (data.code === 1) {
             this.AlertStore.toggleAlertModal('회원가입이 완료되었습니다!');
-          } else {
+          } else if (data.code === 2) {
             this.AlertStore.toggleAlertModal('입력하신 이메일이 이미 사용중입니다ㅠㅡ');
           }
         }
@@ -109,14 +114,32 @@ class SignStore {
   registerValidationCheck = () => {
     if (!this.registerInfo.email.trim()) {
       this.AlertStore.toggleAlertModal('이메일을 제대로 입력해주세요.');
+      return false;
     }
 
     if (!this.registerInfo.name.trim()) {
       this.AlertStore.toggleAlertModal('이름을 제대로 입력해주세요.');
+      return false;
     }
 
     if (!this.registerInfo.password.trim()) {
       this.AlertStore.toggleAlertModal('패스워드를 제대로 입력해주세요.');
+      return false;
+    }
+
+    const num = this.registerInfo.password.search(/[0-9]/g);
+    const eng = this.registerInfo.password.search(/[a-z]/ig);
+    const spe = this.registerInfo.password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+
+    if (this.registerInfo.password.length < 8 || this.registerInfo.password.length > 20) {
+      this.AlertStore.toggleAlertModal('비밀번호는 8자리 ~ 20자리 이내로 입력해주세요.');
+      return false;
+    } if (this.registerInfo.password.search(/\s/) !== -1) {
+      this.AlertStore.toggleAlertModal('비밀번호는 공백 없이 입력해주세요.');
+      return false;
+    } if (num < 0 || eng < 0 || spe < 0) {
+      this.AlertStore.toggleAlertModal('비밀번호는 영문, 숫자, 특수문자를 혼합하여 입력해주세요.');
+      return false;
     }
 
     if (this.registerInfo.password !== this.registerInfo.passwordCheck) {
@@ -129,6 +152,7 @@ class SignStore {
   @action logout = () => {
     cookie.remove('token');
     this.userData = undefined;
+    this.AlertStore.toggleAlertModal('로그아웃 되었습니다.');
   };
 }
 
