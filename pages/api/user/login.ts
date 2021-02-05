@@ -1,6 +1,7 @@
 import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 import Database from '../../../database/Database';
 import config from '../../../config/jwt.config.json';
 import logger from '../../../config/log.config';
@@ -12,33 +13,54 @@ interface Interface {
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   if (request.method === 'POST') {
     const { email, password }: Interface = request.body;
-    const values: (string | string[])[] = [email, password];
+    const values: (string | string[])[] = [email];
 
     await Database.execute(
       (database: Client) => database.query(
-        SELECT_USER,
+        SELECT_USER_SALT,
         values,
       )
-        .then((result: { rows: Array<object>}) => {
-          if (result.rows.length >= 1) {
-            const token = jwt.sign(
-              result.rows[0],
-              config.secret,
-              {
-                expiresIn: 30000,
-              },
-            );
-            response.json({
+        .then((result) => {
+          if (result.rows.length <= 0) {
+            return Promise.reject();
+          }
+
+          const { salt } = result.rows[0];
+          const hashPassword = crypto.createHash('sha512').update(password + salt).digest('hex');
+          const values2: (string | string[])[] = [email, hashPassword];
+
+          return database.query(
+            SELECT_USER,
+            values2,
+          );
+        })
+        .then((result) => {
+          if (result.rows.length <= 0) {
+            return response.json({
               success: true,
-              message: '😀  정상적으로 로그인 되었어요!',
-              result: token,
-            });
-          } else {
-            response.json({
-              success: true,
-              message: '😅  ID가 존재하지 않거나 비밀번호가 일치하지 않습니다. 다시 시도해주세요.',
+              code: 2,
+              message: '😅 ID가 존재하지 않거나 비밀번호가 일치하지 않습니다.',
             });
           }
+          const token = jwt.sign(
+            result.rows[0],
+            config.secret,
+            {
+              expiresIn: 30000,
+            },
+          );
+          return response.json({
+            success: true,
+            message: '😀 정상적으로 로그인 되었어요!',
+            code: 1,
+            result: token,
+          });
+        }, () => {
+          response.json({
+            success: true,
+            code: 2,
+            message: '😅 ID가 존재하지 않거나 비밀번호가 일치하지 않습니다.',
+          });
         }),
     ).then(() => {
       logger.info('[SELECT, GET /api/user/login] 로그인');
@@ -55,6 +77,14 @@ const SELECT_USER = `
   WHERE
     email = $1
     AND password = $2
+    AND verify_fl = true
+`;
+
+const SELECT_USER_SALT = `
+  SELECT salt FROM "user"
+  WHERE
+    email = $1
+    AND verify_fl = true
 `;
 
 export default handler;

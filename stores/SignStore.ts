@@ -23,9 +23,15 @@ class SignStore {
     name: '',
   };
 
+  @observable emailVerifyCode: string = '';
+
+  @observable inputEmailVerifyCode: string = '';
+
   @observable isOpenSignModal: boolean = false;
 
   @observable isOpenRegisterModal: boolean = false;
+
+  @observable isOpenEmailModal: boolean = false;
 
   constructor(root: any) {
     makeObservable(this);
@@ -38,10 +44,26 @@ class SignStore {
 
   @action toggleSignModal = () => {
     this.isOpenSignModal = !this.isOpenSignModal;
+    this.loginInfo = {
+      email: '',
+      password: '',
+    };
   };
 
   @action toggleRegisterModal = () => {
     this.isOpenRegisterModal = !this.isOpenRegisterModal;
+    this.registerInfo = {
+      email: '',
+      password: '',
+      passwordCheck: '',
+      name: '',
+    };
+  };
+
+  @action toggleEmailModal = () => {
+    this.isOpenEmailModal = !this.isOpenEmailModal;
+    this.emailVerifyCode = '';
+    this.inputEmailVerifyCode = '';
   };
 
   @action loginHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,6 +78,10 @@ class SignStore {
       ...this.registerInfo,
       [event.target.name]: event.target.value,
     };
+  };
+
+  @action verifyHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.inputEmailVerifyCode = event.target.value;
   };
 
   @action cookieCheck = async () => {
@@ -76,13 +102,13 @@ class SignStore {
     axios.post('/api/user/login', this.loginInfo)
       .then((response) => {
         const { data } = response;
-        if (data && data.error) {
-          console.error(data.message);
-        }
-        if (data && data.result) {
-          cookie.set('token', data.result, { expires: 2 });
-          this.cookieCheck();
-          this.toggleSignModal();
+        if (data.success) {
+          if (data.code === 1) {
+            cookie.set('token', data.result, { expires: 2 });
+            this.cookieCheck();
+            this.toggleSignModal();
+          }
+          this.AlertStore.toggleAlertModal(data.message);
         }
       })
       .catch((response) => {
@@ -100,9 +126,9 @@ class SignStore {
         const { data } = response;
         if (data.success) {
           if (data.code === 1) {
-            this.AlertStore.toggleAlertModal('회원가입이 완료되었습니다!');
-          } else if (data.code === 2) {
-            this.AlertStore.toggleAlertModal('입력하신 이메일이 이미 사용중입니다ㅠㅡ');
+            this.verifyEmail(this.registerInfo.email);
+          } else {
+            this.AlertStore.toggleAlertModal(data.message);
           }
         }
       })
@@ -111,8 +137,26 @@ class SignStore {
       });
   };
 
-  registerValidationCheck = () => {
-    if (!this.registerInfo.email.trim()) {
+  @action verifyEmail = (email: string): void => {
+    axios.put('/api/user/verify', {
+      email,
+    })
+      .then((response) => {
+        const { data } = response;
+        if (data.success) {
+          this.toggleRegisterModal();
+          this.toggleEmailModal();
+        } else {
+          this.AlertStore.toggleAlertModal(data.message);
+        }
+      })
+      .catch((response) => {
+        console.error(response);
+      });
+  };
+
+  registerValidationCheck = (): boolean => {
+    if (!this.isEmail()) {
       this.AlertStore.toggleAlertModal('이메일을 제대로 입력해주세요.');
       return false;
     }
@@ -144,12 +188,18 @@ class SignStore {
 
     if (this.registerInfo.password !== this.registerInfo.passwordCheck) {
       this.AlertStore.toggleAlertModal('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+      return false;
     }
 
     return true;
   };
 
-  @action logout = () => {
+  isEmail = (): boolean => {
+    const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    return regExp.test(this.registerInfo.email);
+  };
+
+  @action logout = (): void => {
     cookie.remove('token');
     this.userData = undefined;
     this.AlertStore.toggleAlertModal('로그아웃 되었습니다.');

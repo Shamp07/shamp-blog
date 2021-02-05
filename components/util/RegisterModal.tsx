@@ -37,7 +37,7 @@ const RegisterModal: React.FC = () => {
           <div>
             <CustomTextField label="e-mail" name="email" type="email" onChange={registerHandleChange} value={email} helperText="이메일로 인증을 진행하니 사용 중인 이메일을 적어주세요!" />
             <CustomTextField label="이름" name="name" onChange={registerHandleChange} value={name} helperText="블로그에서 사용할 이름을 적어주세요." />
-            <CustomTextField label="비밀번호" name="password" type="password" value={password} onChange={registerHandleChange} helperText="8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요." />
+            <CustomTextField label="비밀번호" name="password" type="password" value={password} onChange={registerHandleChange} helperText="8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요. 비밀번호는 블로그 주인도 알 방법이 없으니 안심하세요!" />
             <CustomTextField label="비밀번호 확인" name="passwordCheck" type="password" value={passwordCheck} onChange={registerHandleChange} helperText="비밀번호와 동일하게 입력해주세요." />
             <br />
           </div>
@@ -81,6 +81,9 @@ const Paper = styled.div`
     border-top: 1px solid #e6e6e6;
     margin-bottom: 10px;
   }
+  
+
+  
 `;
 
 const RightButton = styled(Button)`
@@ -91,6 +94,10 @@ const RightButton = styled(Button)`
 const CustomTextField = styled(TextField)`
   width: 100%;
   margin-bottom: 10px !important;
+  
+  &:nth-child(3) > .MuiFormHelperText-root {
+    color: #dc143c;
+  }
 `;
 
 export default observer(RegisterModal);

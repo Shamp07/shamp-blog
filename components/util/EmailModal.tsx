@@ -4,30 +4,42 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 import useStores from '../../stores/useStores';
 
-const ConfirmModal: React.FC = () => {
-  const { AlertStore } = useStores();
-  const { isOpenAlertModal, text, closeAlertModal } = AlertStore;
+const EmailModal: React.FC = () => {
+  const { SignStore } = useStores();
+  const {
+    isOpenEmailModal, toggleEmailModal, inputEmailVerifyCode,
+    verifyHandleChange,
+  } = SignStore;
 
   return (
     <CustomModal
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
-      open={isOpenAlertModal}
-      onClose={closeAlertModal}
+      open={isOpenEmailModal}
+      onClose={toggleEmailModal}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
         timeout: 500,
       }}
     >
-      <Fade in={isOpenAlertModal}>
+      <Fade in={isOpenEmailModal}>
         <Paper>
-          <h2 id="transition-modal-title">알림</h2>
-          <div dangerouslySetInnerHTML={{ __html: text }} />
-          <RightButton variant="contained" color="primary" onClick={closeAlertModal}>확인</RightButton>
+          <h2 id="transition-modal-title">이메일 인증 코드 입력</h2>
+          <div>
+            입력하신 이메일로 인증번호가 전송되었습니다.
+            <br />
+            메일에서 인증번호를 조회하여 아래 입력해주세요.
+            <br />
+            <br />
+            <TextField label="인증번호" variant="outlined" value={inputEmailVerifyCode} onChange={verifyHandleChange} size="small" />
+          </div>
+          <RightButton variant="contained" color="primary">
+            완료
+          </RightButton>
         </Paper>
       </Fade>
     </CustomModal>
@@ -73,4 +85,4 @@ const RightButton = styled(Button)`
   margin-left: 5px !important;
 `;
 
-export default observer(ConfirmModal);
+export default observer(EmailModal);

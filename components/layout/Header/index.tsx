@@ -7,6 +7,7 @@ import SignModal from '../../util/SignModal';
 import AlertModal from '../../util/AlertModal';
 import ConfirmModal from '../../util/ConfirmModal';
 import RegisterModal from '../../util/RegisterModal';
+import EmailModal from '../../util/EmailModal';
 
 const Header: React.FC = () => (
   <div>
@@ -21,6 +22,7 @@ const Header: React.FC = () => (
     <RegisterModal />
     <AlertModal />
     <ConfirmModal />
+    <EmailModal />
     <NextNprogress
       color="#fff"
       startPosition={0.3}
@@ -47,7 +49,7 @@ const ResponsiveContainer = styled.div`
 const BackgroundImage = styled.div`
   width: 100%;
   height: 250px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),url(/background.jpg);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),url(./background.jpg);
   background-position: center 60%;
   @media (max-width: 1064px) {
     display: none;
