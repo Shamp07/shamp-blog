@@ -30,7 +30,11 @@ const addUser = async (request: NextApiRequest, response: NextApiResponse) => {
     )
       .then((result) => {
         if (result.rows.length) {
-          message = `😳 동일한 ${result.rows[0].duplicate}를 사용하는 유저가 이미 있습니다 ㅠㅜ.`;
+          if (!result.rows[0].verifyFl) {
+            message = '😳 해당 이메일은 인증이 완료되지 않은 계정입니다.<br /> 로그인을 하신 뒤, 인증을 진행하여 회원가입을 완료하세요!';
+          } else {
+            message = `😳 동일한 ${result.rows[0].duplicate}를 사용하는 유저가 이미 있습니다 ㅠㅜ.`;
+          }
           return Promise.reject();
         }
 
@@ -76,7 +80,8 @@ const SELECT_USER_DUPLICATE = `
     CASE
       WHEN ($1 = email) THEN '이메일'
       WHEN ($2 = name) THEN '이름'
-    END AS duplicate
+    END AS duplicate,
+    verify_fl AS "verifyFl"
   FROM "user"
   WHERE
     email = $1

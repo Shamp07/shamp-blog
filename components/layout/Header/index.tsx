@@ -49,7 +49,7 @@ const ResponsiveContainer = styled.div`
 const BackgroundImage = styled.div`
   width: 100%;
   height: 250px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),url(./background.jpg);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),url(/background.jpg);
   background-position: center 60%;
   @media (max-width: 1064px) {
     display: none;

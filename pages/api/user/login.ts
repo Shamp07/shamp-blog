@@ -42,6 +42,14 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
               message: '😅 ID가 존재하지 않거나 비밀번호가 일치하지 않습니다.',
             });
           }
+
+          if (!result.rows[0].verifyFl) {
+            return response.json({
+              success: true,
+              code: 3,
+            });
+          }
+
           const token = jwt.sign(
             result.rows[0],
             config.secret,
@@ -72,19 +80,18 @@ const SELECT_USER = `
   SELECT
     id,
     name,
-    admin_fl AS "adminFl"
+    admin_fl AS "adminFl",
+    verify_fl AS "verifyFl"
   FROM "user"
   WHERE
     email = $1
     AND password = $2
-    AND verify_fl = true
 `;
 
 const SELECT_USER_SALT = `
   SELECT salt FROM "user"
   WHERE
     email = $1
-    AND verify_fl = true
 `;
 
 export default handler;

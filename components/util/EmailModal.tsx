@@ -10,8 +10,8 @@ import useStores from '../../stores/useStores';
 const EmailModal: React.FC = () => {
   const { SignStore } = useStores();
   const {
-    isOpenEmailModal, toggleEmailModal, inputEmailVerifyCode,
-    verifyHandleChange,
+    isOpenEmailModal, toggleEmailModal, emailVerifyCode,
+    verifyHandleChange, verifyCode,
   } = SignStore;
 
   return (
@@ -22,6 +22,7 @@ const EmailModal: React.FC = () => {
       onClose={toggleEmailModal}
       closeAfterTransition
       BackdropComponent={Backdrop}
+      disableBackdropClick
       BackdropProps={{
         timeout: 500,
       }}
@@ -35,9 +36,9 @@ const EmailModal: React.FC = () => {
             메일에서 인증번호를 조회하여 아래 입력해주세요.
             <br />
             <br />
-            <TextField label="인증번호" variant="outlined" value={inputEmailVerifyCode} onChange={verifyHandleChange} size="small" />
+            <TextField label="인증번호" variant="outlined" value={emailVerifyCode} onChange={verifyHandleChange} size="small" />
           </div>
-          <RightButton variant="contained" color="primary">
+          <RightButton variant="contained" color="primary" onClick={verifyCode}>
             완료
           </RightButton>
         </Paper>

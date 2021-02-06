@@ -42,7 +42,6 @@ const CustomModal = styled(Modal)`
 
 const Paper = styled.div`
   margin: 0 40px;
-  width: 500px;
   max-width: 100%;
   background-color: #fff;
   border: 1px solid #e6e6e6;
@@ -61,7 +60,7 @@ const Paper = styled.div`
   }
 
   & > div {
-    padding: 20px 0;
+    padding: 20px 15px 20px 0;
     border-bottom: 1px solid #e6e6e6;
     border-top: 1px solid #e6e6e6;
     margin-bottom: 10px;

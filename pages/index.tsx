@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import { NextPage } from 'next';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@material-ui/core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useStores from '../stores/useStores';
 import HomePostList from '../components/home/HomePostList';
 import Footprint from '../components/home/Footprint';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const Home: NextPage = () => {
   const { HomeStore } = useStores();
