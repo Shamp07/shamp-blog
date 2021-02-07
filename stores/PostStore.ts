@@ -90,7 +90,7 @@ class PostStore {
   @action getPostList = async (
     category: string, tag: string | undefined, page: number = 1,
   ): Promise<any> => {
-    await axios.get('http://localhost:3000/api/post/list', {
+    await axios.get('http://localhost/api/post/list', {
       params: {
         category,
         tag,
@@ -111,7 +111,7 @@ class PostStore {
   };
 
   @action getPost = async (id: number, isModify: boolean): Promise<any> => {
-    await axios.get('http://localhost:3000/api/post', {
+    await axios.get('http://localhost/api/post', {
       params: {
         id,
       },

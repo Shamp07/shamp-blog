@@ -46,7 +46,7 @@ class HomeStore {
   };
 
   @action getPopularPostList = async () => {
-    await axios.get('http://localhost:3000/api/post/list/popular')
+    await axios.get('http://localhost/api/post/list/popular')
       .then((response) => {
         const { data } = response;
         if (data.success) {
@@ -62,7 +62,7 @@ class HomeStore {
   };
 
   @action getNoticePostList = async () => {
-    await axios.get('http://localhost:3000/api/post/list/notice')
+    await axios.get('http://localhost/api/post/list/notice')
       .then((response) => {
         const { data } = response;
         if (data.success) {
@@ -107,7 +107,7 @@ class HomeStore {
   };
 
   @action getFootprint = async (): Promise<any> => {
-    await axios.get('http://localhost:3000/api/footprint', {
+    await axios.get('http://localhost/api/footprint', {
       params: {
         size: this.footprintSize,
       },

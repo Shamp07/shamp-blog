@@ -108,7 +108,7 @@ class CommentStore {
   };
 
   @action getComment = async (postId: number): Promise<any> => {
-    await axios.get('http://localhost:3000/api/post/comment', {
+    await axios.get('http://localhost/api/post/comment', {
       params: {
         postId,
         commentSize: this.commentSize,
