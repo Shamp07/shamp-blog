@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/Link';
+import Link from 'next/link';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';

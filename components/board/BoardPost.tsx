@@ -2,7 +2,7 @@ import React from 'react';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Link from 'next/Link';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import useStores from '../../stores/useStores';
 
