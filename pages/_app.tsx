@@ -36,11 +36,8 @@ class CustomApp extends App {
         <Head>
           <title>Shamp Blog</title>
           <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-          <meta property="og:title" content="test" />
-          <meta property="og:type" content="article" />
-          <meta property="og:url" content="http://rootree.net" />
-          <meta property="og:description" content="This is a description." />
-          <meta property="og:image" content="http://img.jpg" />
+          <meta property="og:title" content="Shamp Blog" />
+          <meta property="og:image" content="http://localhost/logo_meta.png" />
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="627" />
           <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" />

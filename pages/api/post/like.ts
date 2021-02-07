@@ -3,12 +3,14 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import Database from '../../../database/Database';
 import logger from '../../../config/log.config';
 import authMiddleware from '../../../middleware/auth';
+import cors from '../../../middleware/cors';
 
 interface Interface {
   [key: string]: string | string[];
 }
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
+  await cors(request, response);
   if (request.method === 'POST') {
     await addLike(request, response);
   }

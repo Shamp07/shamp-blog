@@ -3,12 +3,14 @@ import { Client } from 'pg';
 import smtpTransport from '../../../../config/email.config';
 import Database from '../../../../database/Database';
 import logger from '../../../../config/log.config';
+import cors from '../../../../middleware/cors';
 
 interface Interface {
   [key: string]: string | string[];
 }
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
+  await cors(request, response);
   if (request.method === 'PUT') {
     const { email }: Interface = request.body;
     const code = generateRandom(111111, 999999);
