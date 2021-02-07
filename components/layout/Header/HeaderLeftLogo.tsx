@@ -27,7 +27,7 @@ const ResponsiveLogo = styled.span`
   display: inline-block;
   width: 70px;
   height: 70px;
-  background-image: url("./logo.png");
+  background-image: url("/logo.png");
   background-size: 70px;
   @media (max-width: 1064px) {
     background-size: 56px;

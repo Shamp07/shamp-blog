@@ -1,29 +1,38 @@
-import React, { ReactNode } from 'react';
+import React, {ReactNode, useEffect} from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Normalize } from 'styled-normalize';
 import Header from './Header';
 import SideBar from './Sidebar';
 import Content from './Content';
 import Backdrop from './Sidebar/Backdrop';
+import useStores from '../../stores/useStores';
 
 interface Props {
   children: ReactNode;
 }
 
-const Layout: React.FC<Props> = ({ children }: Props) => (
-  <Wrapper>
-    <GlobalStyle />
-    <Normalize />
-    <Header />
-    <Backdrop />
-    <CenterContent>
-      <SideBar />
-      <Content>
-        {children}
-      </Content>
-    </CenterContent>
-  </Wrapper>
-);
+const Layout: React.FC<Props> = ({ children }: Props) => {
+  const { SignStore } = useStores();
+  const { cookieCheck } = SignStore;
+  useEffect(() => {
+    cookieCheck();
+  }, [cookieCheck]);
+
+  return (
+    <Wrapper>
+      <GlobalStyle />
+      <Normalize />
+      <Header />
+      <Backdrop />
+      <CenterContent>
+        <SideBar />
+        <Content>
+          {children}
+        </Content>
+      </CenterContent>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.div`
   background-color: #ebeef1;

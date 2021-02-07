@@ -93,7 +93,7 @@ class HomeStore {
           this.footprintText = '';
           this.getFootprint();
         } else {
-          console.warn(data.message);
+          this.AlertStore.toggleAlertModal(data.message);
         }
       })
       .catch((response) => {
@@ -137,7 +137,7 @@ class HomeStore {
           this.getFootprint();
           this.setModifierFootprintId(0, '');
         } else {
-          console.warn(data.message);
+          this.AlertStore.toggleAlertModal(data.message);
         }
       })
       .catch((response) => {
@@ -156,7 +156,7 @@ class HomeStore {
         if (data.success) {
           this.getFootprint();
         } else {
-          console.warn(data.message);
+          this.AlertStore.toggleAlertModal(data.message);
         }
       })
       .catch((response) => {

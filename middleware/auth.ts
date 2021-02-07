@@ -1,45 +1,60 @@
 import jwt from 'jsonwebtoken';
+import { NextApiRequest, NextApiResponse } from 'next';
+import config from '../config/jwt.config.json';
 
-const authMiddleware = (req, res, next) => {
-  // read the token from header or url
-  const { authToken } = req.cookies;
-  const token = authToken;
+export interface NextApiRequestToken extends NextApiRequest {
+  decodedToken: Token;
+}
 
-  // token does not exist
-  if (!token) {
-    return res.json({
-      success: true,
-      code: 0,
-      message: '로그인 정보가 알맞지 않습니다.',
+export interface Token {
+  id: number;
+  name: string;
+  adminFl: boolean;
+  verifyFl: boolean;
+  iat: number;
+  exp: number;
+}
+
+// type
+// 0: user
+// 1: admin
+const authMiddleware = (
+  handler: any, type: number,
+) => async (request: NextApiRequestToken, response: NextApiResponse) => {
+  if (!('token' in request.cookies)) {
+    response.status(200).json({
+      success: false,
+      message: '로그인 해주세요.',
     });
   }
 
-  // create a promise that decodes the token
-  const p = new Promise(
-    (resolve, reject) => {
-      jwt.verify(token, req.app.get('jwt-secret'), (err, decoded) => {
-        if (err) reject(err);
-        resolve(decoded);
+  let decodedToken: Token | undefined;
+  const { token } = request.cookies;
+  if (token) {
+    try {
+      decodedToken = jwt.verify(token, config.secret) as Token;
+    } catch (e) {
+      response.status(200).json({
+        success: false,
       });
-    },
-  );
+    }
+  }
 
-  // if it has failed to verify, it will return an error message
-  const onError = (error) => {
-    res.json({
-      success: true,
-      code: 0,
-      message: error.message,
-    });
-  };
-
-  // process the promise
-  p.then((decoded) => {
-    req.decoded = decoded;
-    next();
-  }).catch(onError);
-
-  return true;
+  if (decodedToken) {
+    request.decodedToken = decodedToken;
+    if (type === 1) {
+      if (decodedToken.adminFl) {
+        await handler(request, response);
+      } else {
+        response.status(200).json({
+          success: false,
+          message: '권한이 없습니다.',
+        });
+      }
+    } else {
+      await handler(request, response);
+    }
+  }
 };
 
 export default authMiddleware;

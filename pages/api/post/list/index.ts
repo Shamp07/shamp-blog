@@ -17,7 +17,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         SELECT_POST_LIST,
         values,
       )
-        .then((result: { rows: Array<object>}) => {
+        .then((result) => {
           response.json({
             success: true,
             result: result.rows,

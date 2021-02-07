@@ -2,20 +2,21 @@ import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
 import Database from '../../database/Database';
 import logger from '../../config/log.config';
+import authMiddleware, { NextApiRequestToken } from '../../middleware/auth';
 
 interface Interface {
   [key: string]: string | string[];
 }
 
-const handler = async (request: NextApiRequest, response: NextApiResponse) => {
+const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
   if (request.method === 'POST') {
-    await addFootprint(request, response);
+    await authMiddleware(addFootprint, 0)(request, response);
   } else if (request.method === 'GET') {
     await getFootprint(request, response);
   } else if (request.method === 'PUT') {
-    await modifyFootprint(request, response);
+    await authMiddleware(modifyFootprint, 0)(request, response);
   } else if (request.method === 'DELETE') {
-    await deleteFootprint(request, response);
+    await authMiddleware(deleteFootprint, 0)(request, response);
   }
 };
 
@@ -42,7 +43,6 @@ const addFootprint = async (request: NextApiRequest, response: NextApiResponse) 
 const getFootprint = async (request: NextApiRequest, response: NextApiResponse) => {
   const { size }: Interface = request.query;
   const values: (string | string[])[] = [size];
-
   await Database.execute(
     (database: Client) => database.query(
       SELECT_FOOTPRINT,

@@ -83,8 +83,8 @@ class SignStore {
     this.emailVerifyCode = event.target.value;
   };
 
-  @action cookieCheck = async () => {
-    await axios.get('/api/user/cookie')
+  @action cookieCheck = () => {
+    axios.get('/api/user/cookie')
       .then((response) => {
         const { data } = response;
         if (data.success) {
@@ -93,8 +93,7 @@ class SignStore {
         this.cookieChecked = true;
       })
       .catch((response) => {
-        alert(response.to)
-        console.log(response);
+        console.error(response);
       });
   };
 

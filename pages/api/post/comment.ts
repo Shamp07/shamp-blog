@@ -2,28 +2,28 @@ import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
 import Database from '../../../database/Database';
 import logger from '../../../config/log.config';
+import authMiddleware, { NextApiRequestToken } from '../../../middleware/auth';
 
 interface Interface {
   [key: string]: string | string[];
 }
 
-const handler = async (request: NextApiRequest, response: NextApiResponse) => {
+const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
   if (request.method === 'POST') {
-    await addComment(request, response);
+    await authMiddleware(addComment, 0)(request, response);
   } else if (request.method === 'GET') {
     await getComment(request, response);
   } else if (request.method === 'PUT') {
-    await modifyComment(request, response);
+    await authMiddleware(modifyComment, 0)(request, response);
   } else if (request.method === 'DELETE') {
-    await deleteComment(request, response);
+    await authMiddleware(deleteComment, 0)(request, response);
   }
 };
 
-const addComment = async (request: NextApiRequest, response: NextApiResponse) => {
-  const {
-    postId, userId, commentId, comment,
-  }: Interface = request.body;
-  const values: (string | string[])[] = [postId, commentId, userId, comment];
+const addComment = async (request: NextApiRequestToken, response: NextApiResponse) => {
+  const { postId, commentId, comment }: Interface = request.body;
+  const { id } = request.decodedToken;
+  const values: (number | string | string[])[] = [postId, commentId, id, comment];
 
   await Database.execute(
     (database: Client) => database.query(
@@ -31,7 +31,7 @@ const addComment = async (request: NextApiRequest, response: NextApiResponse) =>
       values,
     )
       .then(() => {
-        response.json({
+        response.status(200).json({
           success: true,
           message: '😀 정상적으로 댓글이 등록 되었어요!',
         });
@@ -50,7 +50,7 @@ const getComment = async (request: NextApiRequest, response: NextApiResponse) =>
       SELECT_COMMENT,
       values,
     )
-      .then((result: { rows: Array<object> }) => {
+      .then((result) => {
         response.json({
           success: true,
           result: result.rows,
@@ -61,9 +61,10 @@ const getComment = async (request: NextApiRequest, response: NextApiResponse) =>
   });
 };
 
-const modifyComment = async (request: NextApiRequest, response: NextApiResponse) => {
+const modifyComment = async (request: NextApiRequestToken, response: NextApiResponse) => {
   const { commentId, comment }: Interface = request.body;
-  const values: (string | string[])[] = [comment, commentId];
+  const { id } = request.decodedToken;
+  const values: (number | string | string[])[] = [comment, commentId, id];
 
   await Database.execute(
     (database: Client) => database.query(
@@ -81,9 +82,10 @@ const modifyComment = async (request: NextApiRequest, response: NextApiResponse)
   });
 };
 
-const deleteComment = async (request: NextApiRequest, response: NextApiResponse) => {
+const deleteComment = async (request: NextApiRequestToken, response: NextApiResponse) => {
   const { commentId }: Interface = request.query;
-  const values: (string | string[])[] = [commentId];
+  const { id } = request.decodedToken;
+  const values: (number | string | string[])[] = [commentId, id];
 
   await Database.execute(
     (database: Client) => database.query(
@@ -194,20 +196,25 @@ const UPDATE_COMMENT = `
   SET
     content = $1,
     mfy_dttm = NOW()
-  WHERE id = $2
+  WHERE
+    id = $2
+    AND user_id = $3
 `;
 
 const DELETE_COMMENT = `
   UPDATE comment
   SET delete_fl = true
-  WHERE id = $1
+  WHERE 
+    id = $1
+    AND user_id = $2
 `;
 
 const SELECT_COMMENT_NO_REPLY = `
   SELECT COUNT(*) FROM comment
   WHERE
     id != $1
-    AND upper_id = $1 
+    AND upper_id = $1
+    AND user_id = $2 
     AND delete_fl = false
 `;
 

@@ -9,7 +9,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
       (database: Client) => database.query(
         SELECT_POST_LIST_NOTICE,
       )
-        .then((result: { rows: Array<object>}) => {
+        .then((result) => {
           response.json({
             success: true,
             result: result.rows,

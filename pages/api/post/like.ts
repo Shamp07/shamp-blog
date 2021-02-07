@@ -2,6 +2,7 @@ import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
 import Database from '../../../database/Database';
 import logger from '../../../config/log.config';
+import authMiddleware from '../../../middleware/auth';
 
 interface Interface {
   [key: string]: string | string[];
@@ -67,4 +68,4 @@ const SELECT_POST_LIKE = `
     AND user_id = $2
 `;
 
-export default handler;
+export default authMiddleware(handler, 0);

@@ -9,13 +9,24 @@ import useStores from '../../stores/useStores';
 
 const Post = ({ isModify }: { isModify: boolean }) => {
   const router = useRouter();
-  const { SidebarStore, PostStore } = useStores();
+  const {
+    SidebarStore, PostStore,
+    SignStore, AlertStore,
+  } = useStores();
   const { boardCategoryList } = SidebarStore;
   const {
     post, postHandleChange, addPost, modifyPost,
   } = PostStore;
-
+  const { userData } = SignStore;
+  const { toggleAlertModal } = AlertStore;
   const { category, tags, title } = post;
+
+  if (!userData || !userData.adminFl) {
+    router.push('/').then(() => {
+      toggleAlertModal('글 작성 권한이 없습니다.');
+    });
+    return (<></>);
+  }
 
   return (
     <Wrapper>

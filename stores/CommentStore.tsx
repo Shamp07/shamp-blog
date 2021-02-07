@@ -70,8 +70,13 @@ class CommentStore {
     postId: number, userId: number,
     commentId: number, isReply: boolean,
   ): void => {
-    if (!this.comment.trim()) {
+    if (!isReply && !this.comment.trim()) {
       this.AlertStore.toggleAlertModal('댓글 내용을 입력해주세요!');
+      return;
+    }
+
+    if (isReply && !this.replyComment.trim()) {
+      this.AlertStore.toggleAlertModal('답글 내용을 입력해주세요!');
       return;
     }
 
@@ -89,7 +94,7 @@ class CommentStore {
           this.getComment(postId);
           this.PostStore.getPost(postId, false);
         } else {
-          console.warn(data.message);
+          this.AlertStore.toggleAlertModal(data.message);
         }
       })
       .catch((response) => {
@@ -135,7 +140,7 @@ class CommentStore {
           this.PostStore.getPost(postId, false);
           this.getComment(postId);
         } else {
-          console.warn(data.message);
+          this.AlertStore.toggleAlertModal(data.message);
         }
       })
       .catch((response) => {
@@ -155,7 +160,7 @@ class CommentStore {
           this.getComment(postId);
           this.PostStore.getPost(postId, false);
         } else {
-          console.warn(data.message);
+          this.AlertStore.toggleAlertModal(data.message);
         }
       })
       .catch((response) => {

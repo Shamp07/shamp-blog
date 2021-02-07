@@ -21,7 +21,7 @@ const CommentMenu = ({ data }: { data: CommentRowInterface }) => {
   const { id } = data;
 
   return id === modifierCommentId
-    ? <CommentModifyMenu data={data} /> : <CommentNormalMenu data={data} />;
+    ? <CommentModifyMenu /> : <CommentNormalMenu data={data} />;
 };
 
 export default observer(CommentMenu);

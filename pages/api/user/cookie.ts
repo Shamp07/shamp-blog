@@ -1,34 +1,18 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import jwt from 'jsonwebtoken';
-import config from '../../../config/jwt.config.json';
+import authMiddleware, { Token } from '../../../middleware/auth';
 
-const handler = (request: NextApiRequest, response: NextApiResponse) => {
+interface NextApiRequestToken extends NextApiRequest {
+  decodedToken: Token;
+}
+
+const handler = (request: NextApiRequestToken, response: NextApiResponse) => {
   if (request.method === 'GET') {
-    if (!('token' in request.cookies)) {
-      response.status(200).json({ success: false });
-      return;
-    }
-
-    let decoded;
-    const { token } = request.cookies;
-    if (token) {
-      try {
-        decoded = jwt.verify(token, config.secret);
-      } catch (e) {
-        response.status(200).json({ success: false });
-        return;
-      }
-    }
-
-    if (decoded) {
-      response.json({
-        success: true,
-        result: decoded,
-      });
-    } else {
-      response.status(401).json({ message: 'Unable to auth' });
-    }
+    const { decodedToken } = request;
+    response.status(200).json({
+      success: true,
+      result: decodedToken,
+    });
   }
 };
 
-export default handler;
+export default authMiddleware(handler, 0);

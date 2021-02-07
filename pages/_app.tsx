@@ -27,9 +27,6 @@ class CustomApp extends App {
     super(props);
     const isServer = typeof window === 'undefined';
     this.mobxStore = isServer ? props.initialMobxState : initializeStore(props.initialMobxState);
-    const { SignStore } = this.mobxStore;
-    const { cookieCheck } = SignStore;
-    cookieCheck();
   }
 
   render() {

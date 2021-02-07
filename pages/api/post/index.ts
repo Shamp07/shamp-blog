@@ -2,20 +2,21 @@ import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
 import Database from '../../../database/Database';
 import logger from '../../../config/log.config';
+import authMiddleware, { NextApiRequestToken } from '../../../middleware/auth';
 
 interface Interface {
   [key: string]: string | string[];
 }
 
-const handler = async (request: NextApiRequest, response: NextApiResponse) => {
+const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
   if (request.method === 'POST') {
-    await addPost(request, response);
+    await authMiddleware(addPost, 1)(request, response);
   } else if (request.method === 'GET') {
     await getPost(request, response);
   } else if (request.method === 'PUT') {
-    await modifyPost(request, response);
+    await authMiddleware(modifyPost, 1)(request, response);
   } else if (request.method === 'DELETE') {
-    await deletePost(request, response);
+    await authMiddleware(deletePost, 1)(request, response);
   }
 };
 
@@ -52,7 +53,7 @@ const getPost = async (request: NextApiRequest, response: NextApiResponse) => {
       SELECT_POST,
       values,
     )
-      .then((result: { rows: Array<object> }) => {
+      .then((result) => {
         [post] = result.rows;
         return database.query(
           UPDATE_POST_VIEW_CNT,

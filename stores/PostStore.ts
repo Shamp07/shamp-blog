@@ -79,7 +79,7 @@ class PostStore {
         if (data.success) {
           router.back();
         } else {
-          console.warn(data.message);
+          this.AlertStore.toggleAlertModal(data.message);
         }
       })
       .catch((response) => {
@@ -137,7 +137,7 @@ class PostStore {
         if (data.success) {
           router.back();
         } else {
-          console.warn(data.message);
+          this.AlertStore.toggleAlertModal(data.message);
         }
       })
       .catch((response) => {
@@ -156,7 +156,7 @@ class PostStore {
         if (data.success) {
           router.back();
         } else {
-          console.warn(data.message);
+          this.AlertStore.toggleAlertModal(data.message);
         }
       })
       .catch((response) => {
@@ -177,7 +177,7 @@ class PostStore {
           }
           this.getPost(postId, false);
         } else {
-          console.warn(data.message);
+          this.AlertStore.toggleAlertModal(data.message);
         }
       })
       .catch((response) => {
