@@ -10,7 +10,7 @@ class CategoryStore {
   }
 
   @action getCategoryTags = async (category: string) => {
-    await axios.get('http://localhost/api/category/tag', {
+    await axios.get(`${process.env.BASE_PATH}/api/category/tag`, {
       params: {
         category,
       },

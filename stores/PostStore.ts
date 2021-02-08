@@ -90,7 +90,7 @@ class PostStore {
   @action getPostList = async (
     category: string, tag: string | undefined, page: number = 1,
   ): Promise<any> => {
-    await axios.get('http://localhost/api/post/list', {
+    await axios.get(`${process.env.BASE_PATH}/api/post/list`, {
       params: {
         category,
         tag,
@@ -111,7 +111,7 @@ class PostStore {
   };
 
   @action getPost = async (id: number, isModify: boolean): Promise<any> => {
-    await axios.get('http://localhost/api/post', {
+    await axios.get(`${process.env.BASE_PATH}/api/post`, {
       params: {
         id,
       },
