@@ -209,14 +209,18 @@ const ArticleContent = styled.div`
 
   & .ql-indent-1:not(.ql-direction-rtl) {
     padding-left: 1em;
+    list-style: none;
   }
+  
   
   & .ql-indent-2:not(.ql-direction-rtl) {
     padding-left: 2em;
+    list-style: none;
   }
 
   & .ql-indent-3:not(.ql-direction-rtl) {
     padding-left: 3em;
+    list-style: none;
   }
 `;
 
