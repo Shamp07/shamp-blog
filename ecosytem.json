@@ -1,0 +1,9 @@
+{
+  "apps": [
+    {
+      "name": "shamp-blog",
+      "script": "npm",
+      "args": "start"
+    }
+  ]
+}
