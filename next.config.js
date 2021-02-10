@@ -5,7 +5,7 @@ module.exports = (phase) => {
   const env = {
     BASE_PATH: (() => {
       if (isDev) return 'http://localhost';
-      return 'http://shamp.kr';
+      return 'https://shamp.kr';
     })(),
   };
 

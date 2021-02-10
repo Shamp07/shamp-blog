@@ -67,7 +67,8 @@
     "./database",
     "./middleware",
     "./config",
-    "./next.config.js"
+    "./next.config.js",
+    "./server.js"
   ],
   "exclude": [
     "node_modules",

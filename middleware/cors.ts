@@ -16,7 +16,7 @@ const initMiddleware = (
 
 const cors = initMiddleware(
   Cors({
-    origin: 'http://shamp.kr',
+    origin: 'https://shamp.kr',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
   }),
 );
