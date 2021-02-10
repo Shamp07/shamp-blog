@@ -206,21 +206,55 @@ const ArticleContent = styled.div`
       font-family: 'JetBrains Mono', 'Noto Sans KR', serif !important;  
     }
   }
-
-  & .ql-indent-1:not(.ql-direction-rtl) {
-    padding-left: 1em;
-    list-style: none;
-  }
   
-  
-  & .ql-indent-2:not(.ql-direction-rtl) {
-    padding-left: 2em;
-    list-style: none;
+  & ol, & ul {
+    padding-left: 1.5em;
+    counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
   }
 
-  & .ql-indent-3:not(.ql-direction-rtl) {
-    padding-left: 3em;
-    list-style: none;
+  & ol > li, & ul > li {
+    list-style-type: none;
+  }
+
+  & ol li:not(.ql-direction-rtl), & ul li:not(.ql-direction-rtl) {
+    padding-left: 1.5em;
+  }
+
+  & ol li {
+    counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+    counter-increment: list-0;
+  }
+
+  & li:not(.ql-direction-rtl):before {
+    margin-left: -1.5em;
+    margin-right: .3em;
+    text-align: right;
+  }
+
+  & ol li:before {
+    content: counter(list-0,decimal) ". ";
+  }
+
+  & li:before {
+    display: inline-block;
+    white-space: nowrap;
+    width: 1.2em;
+  }
+
+  & li.ql-indent-1:not(.ql-direction-rtl) {
+    padding-left: 4.5em;
+  }
+
+  & ol li.ql-indent-1 {
+    counter-reset: list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+  }
+
+  & ol li.ql-indent-1 {
+    counter-increment: list-1;
+  }
+  
+  & ol li.ql-indent-1:before {
+    content: counter(list-1,lower-alpha) ". ";
   }
 `;
 
