@@ -72,6 +72,10 @@ class PostStore {
     };
   };
 
+  @action clearPostView = () => {
+    this.postView = {};
+  };
+
   @action addPost = (router: { back: () => void }): void => {
     axios.post('/api/post', this.post)
       .then((response) => {

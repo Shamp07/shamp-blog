@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { NextPage } from 'next';
 import styled from 'styled-components';
@@ -12,13 +12,17 @@ import ArticleFooter from './ArticleFooter';
 const PostView: NextPage = () => {
   const { PostStore, SidebarStore, SignStore } = useStores();
   const { boardCategoryName } = SidebarStore;
-  const { postView, addPostLike } = PostStore;
+  const { postView, addPostLike, clearPostView } = PostStore;
   const { userData } = SignStore;
   const {
     id, title, category, tags, time,
     commentCnt, likeCnt, viewCnt,
     content, modifiedTime,
   } = postView;
+
+  useEffect(() => () => {
+    clearPostView();
+  });
 
   let userId: number | undefined;
   let isAdmin: boolean = false;
@@ -96,6 +100,7 @@ const ArticleHeader = styled.div`
 const ArticleTitle = styled.div`
   line-height: 36px;
   font-size: 24px;
+  font-weight: bold;
   color: #1e2022;
   word-wrap: break-word;
   word-break: break-all;
