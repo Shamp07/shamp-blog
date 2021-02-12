@@ -36,6 +36,9 @@ class SidebarStore {
   }, {
     name: 'NodeJS',
     path: 'nodejs',
+  }, {
+    name: 'etc',
+    path: 'etc',
   }];
 
   boardCategoryName: object = {
@@ -47,6 +50,7 @@ class SidebarStore {
     react: 'React',
     rn: 'React Native',
     nodejs: 'NodeJS',
+    etc: 'etc',
   };
 
   @observable isOpenSidebar: boolean = false;
