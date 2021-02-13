@@ -9,12 +9,12 @@ class AlertStore {
     makeObservable(this);
   }
 
-  @action toggleAlertModal = (text: string) => {
+  @action toggleAlertModal = (text: string): void => {
     this.text = text;
     this.isOpenAlertModal = !this.isOpenAlertModal;
   };
 
-  @action closeAlertModal = () => {
+  @action closeAlertModal = (): void => {
     this.isOpenAlertModal = false;
   };
 }

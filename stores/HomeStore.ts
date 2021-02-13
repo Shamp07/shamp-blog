@@ -28,7 +28,7 @@ class HomeStore {
     this.AlertStore = root.AlertStore;
   }
 
-  @action setModifierFootprintId = (id: number, content: string) => {
+  @action setModifierFootprintId = (id: number, content: string): void => {
     this.modifierFootprintId = id;
     this.modifierFootprintText = content;
   };
@@ -45,7 +45,7 @@ class HomeStore {
     }
   };
 
-  @action getPopularPostList = async () => {
+  @action getPopularPostList = async (): Promise<void> => {
     await axios.get(`${process.env.BASE_PATH}/api/post/list/popular`)
       .then((response) => {
         const { data } = response;
@@ -61,7 +61,7 @@ class HomeStore {
       });
   };
 
-  @action getNoticePostList = async () => {
+  @action getNoticePostList = async (): Promise<void> => {
     await axios.get(`${process.env.BASE_PATH}/api/post/list/notice`)
       .then((response) => {
         const { data } = response;
@@ -101,12 +101,12 @@ class HomeStore {
       });
   };
 
-  @action moreFootprint = () => {
+  @action moreFootprint = (): void => {
     this.footprintSize += 20;
     this.getFootprint();
   };
 
-  @action getFootprint = async (): Promise<any> => {
+  @action getFootprint = async (): Promise<void> => {
     await axios.get(`${process.env.BASE_PATH}/api/footprint`, {
       params: {
         size: this.footprintSize,

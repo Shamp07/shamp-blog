@@ -1,7 +1,7 @@
 import { action, makeObservable, observable } from 'mobx';
 
 class SidebarStore {
-  topCategoryList: Array<object> = [{
+  topCategoryList = [{
     name: 'Home',
     path: '',
   }, {
@@ -12,7 +12,7 @@ class SidebarStore {
     path: 'life',
   }];
 
-  boardCategoryList: Array<object> = [{
+  boardCategoryList = [{
     name: '공지사항',
     path: 'notice',
   }, {
@@ -41,7 +41,7 @@ class SidebarStore {
     path: 'etc',
   }];
 
-  boardCategoryName: object = {
+  boardCategoryName = {
     notice: '공지사항',
     all: '전체 글',
     best: '인기 글',
@@ -59,7 +59,7 @@ class SidebarStore {
     makeObservable(this);
   }
 
-  @action toggleSidebar = () => {
+  @action toggleSidebar = (): void => {
     this.isOpenSidebar = !this.isOpenSidebar;
   };
 }

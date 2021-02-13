@@ -36,11 +36,11 @@ class SignStore {
     this.AlertStore = root.AlertStore;
   }
 
-  @action changeRegister = () => {
+  @action changeRegister = (): void => {
     this.toggleRegisterModal();
   };
 
-  @action toggleSignModal = () => {
+  @action toggleSignModal = (): void => {
     this.isOpenSignModal = !this.isOpenSignModal;
     this.loginInfo = {
       email: '',
@@ -48,7 +48,7 @@ class SignStore {
     };
   };
 
-  @action toggleRegisterModal = () => {
+  @action toggleRegisterModal = (): void => {
     if (!this.isOpenRegisterModal) {
       this.registerInfo = {
         email: '',
@@ -60,30 +60,30 @@ class SignStore {
     this.isOpenRegisterModal = !this.isOpenRegisterModal;
   };
 
-  @action toggleEmailModal = () => {
+  @action toggleEmailModal = (): void => {
     this.isOpenEmailModal = !this.isOpenEmailModal;
     this.emailVerifyCode = '';
   };
 
-  @action loginHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  @action loginHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.loginInfo = {
       ...this.loginInfo,
       [event.target.name]: event.target.value,
     };
   };
 
-  @action registerHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  @action registerHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.registerInfo = {
       ...this.registerInfo,
       [event.target.name]: event.target.value,
     };
   };
 
-  @action verifyHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  @action verifyHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.emailVerifyCode = event.target.value;
   };
 
-  @action cookieCheck = () => {
+  @action cookieCheck = (): void => {
     axios.get('/api/user/cookie')
       .then((response) => {
         const { data } = response;
@@ -97,7 +97,7 @@ class SignStore {
       });
   };
 
-  @action login = () => {
+  @action login = (): void => {
     axios.post('/api/user/login', this.loginInfo)
       .then((response) => {
         const { data } = response;
@@ -120,7 +120,7 @@ class SignStore {
       });
   };
 
-  @action register = () => {
+  @action register = (): void => {
     if (!this.registerValidationCheck()) {
       return;
     }

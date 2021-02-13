@@ -1,7 +1,7 @@
 import React from 'react';
 import { action, makeObservable, observable } from 'mobx';
 import axios from 'axios';
-import Router from 'next/dist/next-server/lib/router/router';
+import { NextRouter } from 'next/dist/next-server/lib/router/router';
 import AlertStore from './AlertStore';
 
 interface PostInterface {
@@ -45,7 +45,7 @@ class PostStore {
     }
   };
 
-  @action movePage = (router: Router, page: number) => {
+  @action movePage = (router: NextRouter, page: number): void => {
     const boardParams = router.query.board as Array<string>;
     let pathUrl = `/category/${boardParams[0]}`;
 
@@ -60,7 +60,7 @@ class PostStore {
     });
   };
 
-  @action clearPost = () => {
+  @action clearPost = (): void => {
     this.post = {
       id: 0,
       category: '',
@@ -72,11 +72,11 @@ class PostStore {
     };
   };
 
-  @action clearPostView = () => {
+  @action clearPostView = (): void => {
     this.postView = {};
   };
 
-  @action addPost = (router: { back: () => void }): void => {
+  @action addPost = (router: NextRouter): void => {
     axios.post('/api/post', this.post)
       .then((response) => {
         const { data } = response;
@@ -93,7 +93,7 @@ class PostStore {
 
   @action getPostList = async (
     category: string, tag: string | undefined, page: number = 1,
-  ): Promise<any> => {
+  ): Promise<void> => {
     await axios.get(`${process.env.BASE_PATH}/api/post/list`, {
       params: {
         category,
@@ -114,7 +114,7 @@ class PostStore {
       });
   };
 
-  @action getPost = async (id: number, isModify: boolean): Promise<any> => {
+  @action getPost = async (id: number, isModify: boolean): Promise<void> => {
     await axios.get(`${process.env.BASE_PATH}/api/post`, {
       params: {
         id,
@@ -134,7 +134,7 @@ class PostStore {
       });
   };
 
-  @action modifyPost = (router: { back: () => void }): void => {
+  @action modifyPost = (router: NextRouter): void => {
     axios.put('/api/post', this.post)
       .then((response) => {
         const { data } = response;
@@ -149,7 +149,7 @@ class PostStore {
       });
   };
 
-  @action deletePost = (id: number, router: { back: () => void }): void => {
+  @action deletePost = (id: number, router: NextRouter): void => {
     axios.delete('/api/post', {
       params: {
         id,

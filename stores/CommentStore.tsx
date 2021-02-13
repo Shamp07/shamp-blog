@@ -25,7 +25,7 @@ class CommentStore {
 
   @observable commentList: Array<CommentInterface> = [];
 
-  @observable commentSize = 15;
+  @observable commentSize: number = 15;
 
   @observable modifierCommentId: number = 0;
 
@@ -56,12 +56,12 @@ class CommentStore {
     }
   };
 
-  @action setModifierCommentId = (id: number, content: string) => {
+  @action setModifierCommentId = (id: number, content: string): void => {
     this.modifierCommentId = id;
     this.modifierComment = content;
   };
 
-  @action setReplyCommentId = (id: number) => {
+  @action setReplyCommentId = (id: number): void => {
     this.replyCommentId = id;
     this.replyComment = '';
   };
@@ -107,7 +107,7 @@ class CommentStore {
     this.getComment(postId);
   };
 
-  @action getComment = async (postId: number): Promise<any> => {
+  @action getComment = async (postId: number): Promise<void> => {
     await axios.get(`${process.env.BASE_PATH}/api/post/comment`, {
       params: {
         postId,

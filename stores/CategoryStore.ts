@@ -9,7 +9,7 @@ class CategoryStore {
     this.categoryTags = initialData.categoryTags;
   }
 
-  @action getCategoryTags = async (category: string) => {
+  @action getCategoryTags = async (category: string): Promise<void> => {
     await axios.get(`${process.env.BASE_PATH}/api/category/tag`, {
       params: {
         category,
