@@ -2,23 +2,24 @@ import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
 import Database from '../../../database/Database';
 import logger from '../../../config/log.config';
-import authMiddleware from '../../../middleware/auth';
+import authMiddleware, { NextApiRequestToken } from '../../../middleware/auth';
 import cors from '../../../middleware/cors';
 
 interface Interface {
   [key: string]: string | string[];
 }
 
-const handler = async (request: NextApiRequest, response: NextApiResponse) => {
+const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
   if (request.method === 'POST') {
-    await addLike(request, response);
+    await authMiddleware(addLike, 0)(request, response);
   }
 };
 
-const addLike = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { postId, userId }: Interface = request.body;
-  const values: (string | string[])[] = [postId, userId];
+const addLike = async (request: NextApiRequestToken, response: NextApiResponse) => {
+  const { postId }: Interface = request.body;
+  const { id } = request.decodedToken;
+  const values: (number | string | string[])[] = [postId, id];
 
   await Database.execute(
     (database: Client) => database.query(

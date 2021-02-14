@@ -72,10 +72,6 @@ class PostStore {
     };
   };
 
-  @action clearPostView = (): void => {
-    this.postView = {};
-  };
-
   @action addPost = (router: NextRouter): void => {
     axios.post('/api/post', this.post)
       .then((response) => {
@@ -168,10 +164,9 @@ class PostStore {
       });
   };
 
-  @action addPostLike = (postId: number, userId: number): void => {
+  @action addPostLike = (postId: number): void => {
     axios.post('/api/post/like', {
       postId,
-      userId,
     })
       .then((response) => {
         const { data } = response;

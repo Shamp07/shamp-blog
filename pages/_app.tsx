@@ -32,22 +32,12 @@ class CustomApp extends App {
 
   render() {
     const { Component, pageProps } = this.props;
-    const { PostStore } = this.mobxStore;
-    const { postView } = PostStore;
-    const { title } = postView;
-
-    let headTitle = '';
-    if (title) {
-      headTitle = title.concat(' - ');
-    }
-    headTitle = headTitle.concat('Shamp Blog');
-
     return (
       <Provider {...this.mobxStore}>
         <Head>
-          <title>{headTitle}</title>
+          <title>Shamp Blog</title>
           <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-          <meta property="og:title" content={headTitle} />
+          <meta property="og:title" content="Shamp Blog" />
           <meta property="og:image" content="https://ko.gravatar.com/userimage/201440531/c7eb1d92694dfbcf00f7a79ea61811bf.png?size=512" />
           <meta property="og:image:width" content="200" />
           <meta property="og:image:height" content="200" />

@@ -67,8 +67,8 @@ const SELECT_POST_LIST = `
         AND p.delete_fl = false
       ORDER BY p.crt_dttm DESC
     ) b
-    WHERE ((b."likeCnt" > 0) OR ($1 != 'best'))
-    AND ((b."likeCnt" > 0) OR ($2::text IS NULL OR $2 != 'best'))
+    WHERE ((b."likeCnt" > 10) OR ($1 != 'best'))
+    AND ((b."likeCnt" > 10) OR ($2::text IS NULL OR $2 != 'best'))
   ) a
   WHERE
     (a.rownum > ($3 - 1) * 10)

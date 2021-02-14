@@ -3,13 +3,20 @@ import { Button } from '@material-ui/core';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import useStores from '../../stores/useStores';
+import { observer } from 'mobx-react-lite';
 
 const ArticleFooter: React.FC = () => {
   const router = useRouter();
-  const { PostStore, UtilStore } = useStores();
+  const { PostStore, UtilStore, SignStore } = useStores();
   const { postView, deletePost } = PostStore;
   const { id } = postView;
   const { toggleConfirmModal } = UtilStore;
+  const { userData } = SignStore;
+  let isAdmin = false;
+  if (userData) {
+    isAdmin = userData.adminFl;
+  }
+  if (!isAdmin) return null;
 
   return (
     <ArticleFooterWrapper>
@@ -41,4 +48,4 @@ const ArticleFooterWrapper = styled.div`
   }
 `;
 
-export default ArticleFooter;
+export default observer(ArticleFooter);

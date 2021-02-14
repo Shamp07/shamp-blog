@@ -24,22 +24,21 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 };
 
 const SELECT_POST_LIST_POPULAR = `
-  SELECT 
+  SELECT
     a.id,
-    a.title,
-    a."commentCnt"
+    a.title
   FROM (
     SELECT
       ROW_NUMBER() OVER (ORDER BY p.crt_dttm) AS rownum,
       p.id,
       p.title,
-      (SELECT COUNT(*) FROM post_like WHERE post_id = p.id) AS "likeCnt",
-      (SELECT COUNT(*) FROM comment WHERE post_id = p.id AND delete_fl = false) AS "commentCnt"
+      p.view_cnt,
+      (SELECT COUNT(*) FROM post_like WHERE post_id = p.id) AS like_cnt
     FROM post p
   ) a
   WHERE
     a.rownum <= 5
-    AND a."likeCnt" > 0
+    ORDER BY a.like_cnt DESC, a.view_cnt DESC
 `;
 
 export default handler;
