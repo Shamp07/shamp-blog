@@ -37,6 +37,7 @@ class CustomApp extends App {
         <Head>
           <title>Shamp Blog</title>
           <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
+          <meta name="description" content="저의 개발스토리와 일상을 공유하는 블로그입니다." />
           <meta property="og:title" content="Shamp Blog" />
           <meta property="og:image" content="https://ko.gravatar.com/userimage/201440531/c7eb1d92694dfbcf00f7a79ea61811bf.png?size=512" />
           <meta property="og:image:width" content="200" />
