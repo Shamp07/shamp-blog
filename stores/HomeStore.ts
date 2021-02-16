@@ -6,7 +6,7 @@ import AlertStore from './AlertStore';
 class HomeStore {
   AlertStore: AlertStore;
 
-  @observable popularPostList = [];
+  @observable recentlyPostList = [];
 
   @observable noticePostList = [];
 
@@ -22,7 +22,7 @@ class HomeStore {
 
   constructor(initialData = initialHome, root: any) {
     makeObservable(this);
-    this.popularPostList = initialData.popularPostList;
+    this.recentlyPostList = initialData.recentlyPostList;
     this.noticePostList = initialData.noticePostList;
     this.footprintList = initialData.footprintList;
     this.AlertStore = root.AlertStore;
@@ -45,13 +45,13 @@ class HomeStore {
     }
   };
 
-  @action getPopularPostList = async (): Promise<void> => {
-    await axios.get(`${process.env.BASE_PATH}/api/post/list/popular`)
+  @action getRecentlyPostList = async (): Promise<void> => {
+    await axios.get(`${process.env.BASE_PATH}/api/post/list/recently`)
       .then((response) => {
         const { data } = response;
         if (data.success) {
           const { result } = data;
-          this.popularPostList = result;
+          this.recentlyPostList = result;
         } else {
           console.warn(data.message);
         }
@@ -166,7 +166,7 @@ class HomeStore {
 }
 
 export const initialHome = {
-  popularPostList: [],
+  recentlyPostList: [],
   noticePostList: [],
   footprintList: [],
 };

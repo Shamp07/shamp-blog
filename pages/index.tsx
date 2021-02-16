@@ -11,7 +11,7 @@ import Footprint from '../components/home/Footprint';
 
 const Home: NextPage = () => {
   const { HomeStore } = useStores();
-  const { noticePostList, popularPostList, getFootprint } = HomeStore;
+  const { noticePostList, recentlyPostList, getFootprint } = HomeStore;
 
   return (
     <GridWrapper>
@@ -21,8 +21,8 @@ const Home: NextPage = () => {
           <HomePostList array={noticePostList} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <h2>인기 글</h2>
-          <HomePostList array={popularPostList} />
+          <h2>최근 글</h2>
+          <HomePostList array={recentlyPostList} />
         </Grid>
         <RelativeGrid item xs={12}>
           <h2>발자취</h2>
@@ -42,8 +42,8 @@ const Home: NextPage = () => {
 
 Home.getInitialProps = async ({ store }: any) => {
   const { HomeStore } = store;
-  const { getPopularPostList, getNoticePostList, getFootprint } = HomeStore;
-  await Promise.all([getPopularPostList(), getNoticePostList(), getFootprint()]);
+  const { getRecentlyPostList, getNoticePostList, getFootprint } = HomeStore;
+  await Promise.all([getRecentlyPostList(), getNoticePostList(), getFootprint()]);
 
   return {
     props: {},

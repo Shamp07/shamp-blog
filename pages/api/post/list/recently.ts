@@ -9,7 +9,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   if (request.method === 'GET') {
     await Database.execute(
       (database: Client) => database.query(
-        SELECT_POST_LIST_POPULAR,
+        SELECT_POST_LIST_RECENTLY,
       )
         .then((result) => {
           response.json({
@@ -18,18 +18,18 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           });
         }),
     ).then(() => {
-      logger.info('[SELECT, GET /api/post/list/popular] 인기 게시글 조회');
+      logger.info('[SELECT, GET /api/post/list/recently] 인기 게시글 조회');
     });
   }
 };
 
-const SELECT_POST_LIST_POPULAR = `
+const SELECT_POST_LIST_RECENTLY = `
   SELECT
     a.id,
     a.title
   FROM (
     SELECT
-      ROW_NUMBER() OVER (ORDER BY p.crt_dttm) AS rownum,
+      ROW_NUMBER() OVER (ORDER BY p.crt_dttm DESC) AS rownum,
       p.id,
       p.title,
       p.view_cnt,
@@ -38,7 +38,6 @@ const SELECT_POST_LIST_POPULAR = `
   ) a
   WHERE
     a.rownum <= 5
-    ORDER BY a.like_cnt DESC, a.view_cnt DESC
 `;
 
 export default handler;
