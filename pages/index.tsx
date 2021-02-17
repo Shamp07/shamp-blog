@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { NextPage } from 'next';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@material-ui/core';

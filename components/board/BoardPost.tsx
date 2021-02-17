@@ -1,6 +1,6 @@
 import React from 'react';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -61,7 +61,7 @@ const PostLinkSpan = styled.span`
   cursor: pointer;
   display: flex;
 
-  & > span:first-child {
+  & > span:first-of-type {
     color: #000;
     margin-right: 5px;
     max-width: 80%;
@@ -113,7 +113,7 @@ const ArticleContent = styled.div`
 
 const PostTitle = styled.div`
   
-  & > span:first-child {
+  & > span:first-of-type {
     padding-right: 5px;
   }
   
@@ -140,7 +140,7 @@ const PostInfoUl = styled.ul`
     border-left: 1px solid #e6e6e6;
     font-size: 14px;
     
-    &:first-child {
+    &:first-of-type {
       border: none;
       padding-left: 0;
       color: #2d79c7;

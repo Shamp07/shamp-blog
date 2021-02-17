@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { observer } from 'mobx-react-lite';
 import { Button } from '@material-ui/core';
@@ -148,7 +148,7 @@ const CategoryTagBest = styled.li<TagInterface>`
 `;
 
 const HeadSection = styled.div`
-  &:first-child {
+  &:first-of-type {
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
   }

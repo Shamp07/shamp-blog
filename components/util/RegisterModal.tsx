@@ -3,7 +3,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { observer } from 'mobx-react-lite';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { Button, TextField } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import useStores from '../../stores/useStores';
@@ -95,7 +95,7 @@ const CustomTextField = styled(TextField)`
   width: 100%;
   margin-bottom: 10px !important;
   
-  &:nth-child(3) > .MuiFormHelperText-root {
+  &:nth-of-type(3) > .MuiFormHelperText-root {
     color: #dc143c;
   }
 `;

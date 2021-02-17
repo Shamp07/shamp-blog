@@ -1,6 +1,6 @@
 import React from 'react';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useStores from '../../../stores/useStores';
 

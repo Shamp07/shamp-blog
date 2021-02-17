@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import NextNprogress from 'nextjs-progressbar';
 import HeaderLeftLogo from './HeaderLeftLogo';
 import HeaderRightList from './HeaderRightList';

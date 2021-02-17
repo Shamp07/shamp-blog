@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import Head from 'next/head';
 import useStores from '../../stores/useStores';
 import { observer } from 'mobx-react-lite';
@@ -103,7 +103,7 @@ const ArticleMetaLeft = styled(ArticleMetaUl)`
     border-left: 1px solid #e6e6e6;
   }
 
-  & > li:first-child {
+  & > li:first-of-type {
     border-left: none;
     padding-left: 0;
     color: #2d79c7;
@@ -115,7 +115,7 @@ const ArticleMetaRight = styled(ArticleMetaUl)`
     float: right;
   }
 
-  & > li:first-child {
+  & > li:first-of-type {
     padding-left: 0;
   }
 

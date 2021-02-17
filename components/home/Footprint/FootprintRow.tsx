@@ -1,9 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { TextField } from '@material-ui/core';
+import { observer } from 'mobx-react-lite';
 import FootprintMenu from './FootprintMenu';
 import useStores from '../../../stores/useStores';
-import { observer } from 'mobx-react-lite';
 
 interface FootprintRowProp {
   data: FootprintRowInterface;
@@ -68,7 +68,7 @@ const FootprintWriter = styled.div`
     padding: 0 10px;
   }
 
-  & > span:first-child {
+  & > span:first-of-type {
     display: inline-block;
     color: #fff;
     background-color: #2d79c7;

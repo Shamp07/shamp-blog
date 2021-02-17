@@ -14,7 +14,7 @@ const ModifyPost: NextPage = () => {
     router.push('/').then(() => {
       toggleAlertModal('글 수정 권한이 없습니다.');
     });
-    return (<></>);
+    return null;
   }
 
   return (

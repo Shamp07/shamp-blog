@@ -19,7 +19,7 @@ export interface Token {
 // 0: user
 // 1: admin
 const authMiddleware = (
-  handler: any, type: number,
+  handler: Function, type: number,
 ) => async (request: NextApiRequestToken, response: NextApiResponse) => {
   if (!('token' in request.cookies)) {
     response.status(200).json({

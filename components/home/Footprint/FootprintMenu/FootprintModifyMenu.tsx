@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import useStores from '../../../../stores/useStores';
 
 const FootprintModifyMenu: React.FC = () => {
@@ -37,7 +37,7 @@ const FootprintMenu = styled.div`
     cursor: pointer;
   }
   
-  & > span:first-child {
+  & > span:first-of-type {
     color: #dc143c;
     margin-right: 10px;
   }

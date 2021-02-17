@@ -1,6 +1,6 @@
 import React from 'react';
 import Pagination from '@material-ui/lab/Pagination';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import PaginationItem from '@material-ui/lab/PaginationItem';
 import useStores from '../../stores/useStores';

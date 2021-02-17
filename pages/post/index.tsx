@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { Button, TextField } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import { observer } from 'mobx-react-lite';
@@ -25,7 +25,7 @@ const Post = ({ isModify }: { isModify: boolean }) => {
     router.push('/').then(() => {
       toggleAlertModal('글 작성 권한이 없습니다.');
     });
-    return (<></>);
+    return null;
   }
 
   return (

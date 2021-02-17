@@ -1,6 +1,6 @@
-import React, {ReactNode, useEffect} from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
-import { Normalize } from 'styled-normalize';
+import React, { ReactNode, useEffect } from 'react';
+import { css, Global } from '@emotion/react';
+import styled from '@emotion/styled';
 import Header from './Header';
 import SideBar from './Sidebar';
 import Content from './Content';
@@ -20,8 +20,7 @@ const Layout: React.FC<Props> = ({ children }: Props) => {
 
   return (
     <Wrapper>
-      <GlobalStyle />
-      <Normalize />
+      <Global styles={GlobalStyle} />
       <Header />
       <Backdrop />
       <CenterContent>
@@ -57,7 +56,7 @@ const CenterContent = styled.div`
   }
 `;
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyle = css`
   header, body, span, div, nav, ul, li, h1, h2, h3, h4, pre {
     font-family: 'Roboto', 'Noto Sans KR', serif;
     margin: 0;
@@ -88,13 +87,10 @@ const GlobalStyle = createGlobalStyle`
     color: rgba(0, 0, 0, 0.26) !important;
   }
   
-  
-
   .MuiPaginationItem-textPrimary.Mui-selected,
   .MuiButton-containedPrimary {
     background-color: #2d79c7 !important;
   }
-  
   
   @font-face {
     font-family: 'Roboto';

@@ -14,7 +14,7 @@ const Board: NextPage = () => {
   const { boardCategoryName } = SidebarStore;
   const boardParams = router.query.board as Array<string>;
   if (!boardParams) {
-    return (<></>);
+    return null;
   }
 
   const boardPath = boardParams[0] as string;
@@ -23,7 +23,7 @@ const Board: NextPage = () => {
     router.push('/').then(() => {
       toggleAlertModal('존재하지 않는 게시판입니다.');
     });
-    return (<></>);
+    return null;
   }
 
   if (boardParams[1] && boardParams[1] === 'post') {

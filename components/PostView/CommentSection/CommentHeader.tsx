@@ -1,6 +1,6 @@
 import React from 'react';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { Button } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { observer } from 'mobx-react-lite';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { faReply } from '@fortawesome/free-solid-svg-icons';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../../../stores/useStores';
@@ -81,7 +81,7 @@ const CommentMenu = styled.div`
     cursor: pointer;
   }
   
-  & > span:first-child {
+  & > span:first-of-type {
     color: #dc143c;
     margin-right: 10px;
   }

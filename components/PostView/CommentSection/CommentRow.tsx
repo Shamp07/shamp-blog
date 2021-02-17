@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 import { TextField } from '@material-ui/core';
 import useStores from '../../../stores/useStores';
@@ -84,7 +84,7 @@ const CommentWriter = styled.div`
     padding: 0 10px;
   }
 
-  & > span:first-child {
+  & > span:first-of-type {
     padding-left: 0;
   }
   

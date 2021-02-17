@@ -1,4 +1,4 @@
-import { Client } from 'pg';
+import { Client, QueryResult } from 'pg';
 import config from '../config/db.config.json';
 import logger from '../config/log.config';
 
@@ -10,7 +10,7 @@ class Database {
     this.connection.connect();
   }
 
-  query(sql: string, args: Array<any>) {
+  query(sql: string, args: (number | string | string[])[]) {
     return new Promise((resolve, reject) => {
       this.connection.query(sql, args, (err, result) => {
         if (err) {
@@ -25,8 +25,8 @@ class Database {
 
   execute(callback: Function) {
     return callback(this).then(
-      (result: any) => result,
-      (err: any) => { throw err; },
+      (result: QueryResult) => result,
+      (err: Error) => { throw err; },
     );
   }
 }

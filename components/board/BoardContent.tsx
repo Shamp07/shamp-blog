@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import useStores from '../../stores/useStores';
 import BoardPost, { BoardPostProps } from './BoardPost';
 import BoardPostNone from './BoardPostNone';
@@ -22,7 +22,7 @@ const BoardContent: React.FC = () => {
 const ArticleWrapper = styled.section`
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
   
-  & > article:first-child {
+  & > article:first-of-type {
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
   }
