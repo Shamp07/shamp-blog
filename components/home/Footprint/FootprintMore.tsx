@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import useStores from '../../../stores/useStores';
 
-const FootprintMore: React.FC = () => {
+const FootprintMore = () => {
   const { HomeStore } = useStores();
   const { moreFootprint } = HomeStore;
 

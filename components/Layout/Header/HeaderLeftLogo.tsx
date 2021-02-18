@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
-const HeaderLeftLogo: React.FC = () => (
+const HeaderLeftLogo = () => (
   <ListWrapper>
     <RightList>
       <li>

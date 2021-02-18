@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import useStores from '../../../../stores/useStores';
 
-const CommentModifyMenu: React.FC = () => {
+const CommentModifyMenu = () => {
   const { PostStore, CommentStore } = useStores();
   const { postView } = PostStore;
   const { id: postId } = postView;

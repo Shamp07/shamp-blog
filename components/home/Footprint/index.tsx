@@ -4,7 +4,7 @@ import useStores from '../../../stores/useStores';
 import FootprintWrite from './FootprintWrite';
 import FootprintList from './FootprintList';
 
-const Footprint: React.FC = () => {
+const Footprint = () => {
   const { SignStore } = useStores();
   const { userData } = SignStore;
   const loggedIn = !!userData;

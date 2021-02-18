@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import PaginationItem from '@material-ui/lab/PaginationItem';
 import useStores from '../../stores/useStores';
 
-const BoardPagination: React.FC = () => {
+const BoardPagination = () => {
   const router = useRouter();
 
   let pageCount = 1;

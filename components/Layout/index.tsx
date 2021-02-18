@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode, useEffect, FC } from 'react';
 import { css, Global } from '@emotion/react';
 import styled from '@emotion/styled';
 import Header from './Header';
@@ -11,7 +11,7 @@ interface Props {
   children: ReactNode;
 }
 
-const Layout: React.FC<Props> = ({ children }: Props) => {
+const Layout: FC<Props> = ({ children }: Props) => {
   const { SignStore } = useStores();
   const { cookieCheck } = SignStore;
   useEffect(() => {

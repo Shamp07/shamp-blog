@@ -6,7 +6,7 @@ import CommentList from './CommentList';
 import CommentWrite from './CommentWrite';
 import useStores from '../../../stores/useStores';
 
-const CommentSection: React.FC = () => {
+const CommentSection = () => {
   const { SignStore } = useStores();
   const { userData } = SignStore;
   const loggedIn = !!userData;

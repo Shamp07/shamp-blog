@@ -4,7 +4,7 @@ import useStores from '../../../stores/useStores';
 import SideTokenList from './SideTokenList';
 import SideNoTokenList from './SideNoTokenList';
 
-const SideTokenMenu: React.FC = () => {
+const SideTokenMenu = () => {
   const { SignStore } = useStores();
   const { userData, cookieChecked } = SignStore;
   const loggedIn = !!userData;

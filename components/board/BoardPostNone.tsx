@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { faPencilRuler } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const BoardPostNone: React.FC = () => (
+const BoardPostNone = () => (
   <Wrapper>
     <div>
       <div>

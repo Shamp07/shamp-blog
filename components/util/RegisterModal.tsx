@@ -8,7 +8,7 @@ import { Button, TextField } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import useStores from '../../stores/useStores';
 
-const RegisterModal: React.FC = () => {
+const RegisterModal = () => {
   const { SignStore } = useStores();
   const {
     isOpenRegisterModal, toggleRegisterModal,

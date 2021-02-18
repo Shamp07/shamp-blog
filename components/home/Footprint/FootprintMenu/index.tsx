@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { observer } from 'mobx-react-lite';
 import FootprintNormalMenu from './FootprintNormalMenu';
 import FootprintModifyMenu from './FootprintModifyMenu';
@@ -17,7 +17,7 @@ export interface FootprintRowInterface {
   modifiedTime: string,
 }
 
-const FootprintMenu: React.FC<FootprintMenuProp> = ({ data }: FootprintMenuProp) => {
+const FootprintMenu: FC<FootprintMenuProp> = ({ data }: FootprintMenuProp) => {
   const { HomeStore } = useStores();
   const { modifierFootprintId } = HomeStore;
   const { id } = data;

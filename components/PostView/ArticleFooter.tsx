@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../stores/useStores';
 
-const ArticleFooter: React.FC = () => {
+const ArticleFooter = () => {
   const router = useRouter();
   const { PostStore, UtilStore, SignStore } = useStores();
   const { postView, deletePost } = PostStore;

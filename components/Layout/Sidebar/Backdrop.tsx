@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import useStores from '../../../stores/useStores';
 
-const Backdrop: React.FC = () => {
+const Backdrop = () => {
   const { SidebarStore } = useStores();
   const { isOpenSidebar, toggleSidebar } = SidebarStore;
   return (

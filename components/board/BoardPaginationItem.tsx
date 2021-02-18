@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
@@ -6,7 +6,7 @@ interface PaginationItemProp {
   page: number;
 }
 
-const BoardPaginationItem: React.FC<PaginationItemProp> = (props: PaginationItemProp) => {
+const BoardPaginationItem: FC<PaginationItemProp> = (props: PaginationItemProp) => {
   const { page } = props;
   const router = useRouter();
 

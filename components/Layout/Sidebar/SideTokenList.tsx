@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import useStores from '../../../stores/useStores';
 
-const SideTokenList: React.FC = () => {
+const SideTokenList = () => {
   const { SignStore } = useStores();
   const { userData, logout } = SignStore;
   const { name } = userData;

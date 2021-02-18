@@ -9,7 +9,7 @@ import ConfirmModal from '../../util/ConfirmModal';
 import RegisterModal from '../../util/RegisterModal';
 import EmailModal from '../../util/EmailModal';
 
-const Header: React.FC = () => (
+const Header = () => (
   <div>
     <HeaderTopBar>
       <ResponsiveContainer>

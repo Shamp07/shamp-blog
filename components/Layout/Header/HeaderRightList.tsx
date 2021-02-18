@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import HeaderSidebarButton from './HeaderSidebarButton';
 import HeaderTokenMenu from './HeaderTokenMenu';
 
-const HeaderRightList: React.FC = () => (
+const HeaderRightList = () => (
   <>
     <ListWrapper>
       <RightList>

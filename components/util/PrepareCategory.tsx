@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBusinessTime } from '@fortawesome/free-solid-svg-icons';
 
-const PrepareCategory: React.FC = () => (
+const PrepareCategory = () => (
   <Wrapper>
     <div>
       <div>

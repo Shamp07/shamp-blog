@@ -7,7 +7,7 @@ import styled from '@emotion/styled';
 import { Button } from '@material-ui/core';
 import useStores from '../../stores/useStores';
 
-const ConfirmModal: React.FC = () => {
+const ConfirmModal = () => {
   const { UtilStore } = useStores();
   const {
     isOpenConfirmModal, callback,

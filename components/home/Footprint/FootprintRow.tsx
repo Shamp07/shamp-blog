@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from '@emotion/styled';
 import { TextField } from '@material-ui/core';
 import { observer } from 'mobx-react-lite';
@@ -18,7 +18,7 @@ export interface FootprintRowInterface {
   modifiedTime: string,
 }
 
-const FootprintRow: React.FC<FootprintRowProp> = ({ data }: FootprintRowProp) => {
+const FootprintRow: FC<FootprintRowProp> = ({ data }: FootprintRowProp) => {
   const { HomeStore } = useStores();
   const {
     modifierFootprintId, modifierFootprintText,

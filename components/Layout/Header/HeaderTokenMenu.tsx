@@ -4,7 +4,7 @@ import useStores from '../../../stores/useStores';
 import HeaderTokenList from './HeaderTokenList';
 import HeaderNoTokenList from './HeaderNoTokenList';
 
-const HeaderTokenMenu: React.FC = () => {
+const HeaderTokenMenu = () => {
   const { SignStore } = useStores();
   const { userData, cookieChecked } = SignStore;
   const loggedIn = !!userData;

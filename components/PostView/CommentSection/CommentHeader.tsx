@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../../stores/useStores';
 
-const CommentHeader: React.FC = () => {
+const CommentHeader = () => {
   const { PostStore, CommentStore } = useStores();
   const { postView } = PostStore;
   const { getComment } = CommentStore;

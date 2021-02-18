@@ -4,7 +4,7 @@ import Head from 'next/head';
 import useStores from '../../stores/useStores';
 import { observer } from 'mobx-react-lite';
 
-const ArticleHeader: React.FC = () => {
+const ArticleHeader = () => {
   const { PostStore, SidebarStore } = useStores();
   const { boardCategoryName } = SidebarStore;
   const { postView } = PostStore;

@@ -9,7 +9,7 @@ import { Button } from '@material-ui/core';
 import useStores from '../../stores/useStores';
 import BoardTag from './BoardTag';
 
-const BoardHead: React.FC = () => {
+const BoardHead = () => {
   const router = useRouter();
   const {
     SidebarStore, CategoryStore, SignStore,
@@ -63,7 +63,7 @@ const BoardHead: React.FC = () => {
             </Link>
           </CategoryTagList>
           {categoryTags.map(
-            ({ tags }: any) => <BoardTag key={tags} category={tags} />,
+            ({ tags }: any) => <BoardTag key={tags} tags={tags} />,
           )}
         </CategoryTag>
       </HeadSection>
@@ -141,7 +141,7 @@ const CategoryTagBest = styled.li<TagInterface>`
     border: #eeee00 1.5px solid;
     background-color: white !important;
     color: #eeee00 !important;
-    
+
     ${(props) => (props.active ? 'color: #fff !important;' : null)}
     ${(props) => (props.active ? 'background-color: #eeee00 !important;' : null)}
   }
@@ -152,7 +152,7 @@ const HeadSection = styled.div`
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
   }
-  
+
   &:last-child {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
@@ -164,12 +164,12 @@ const SubTitle = styled.div`
   font-size: 18px;
   padding: 18px 0;
   border-bottom: solid 1px #e6e6e6;
-  
+
   & > h2 {
     padding-left: 16px;
     font-size: 18px;
   }
-  
+
   & > li {
     cursor: pointer;
   }
@@ -188,7 +188,7 @@ const AbsoluteUl = styled.ul`
   margin-top: 9px;
   margin-right: 10px;
   list-style: none;
-  
+
   & > li {
     display: inline-block;
     color: #2d79c7;

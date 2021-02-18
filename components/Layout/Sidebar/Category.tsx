@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styled from '@emotion/styled';
 import useStores from '../../../stores/useStores';
 
-const Category: React.FC<CategoryProps> = ({ path, name, isBoard }: CategoryProps) => {
+const Category: FC<CategoryProps> = ({ path, name, isBoard }: CategoryProps) => {
   const { SidebarStore } = useStores();
   const { toggleSidebar } = SidebarStore;
   const router = useRouter();

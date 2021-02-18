@@ -4,7 +4,7 @@ import useStores from '../../stores/useStores';
 import BoardPost, { BoardPostProps } from './BoardPost';
 import BoardPostNone from './BoardPostNone';
 
-const BoardContent: React.FC = () => {
+const BoardContent = () => {
   const { PostStore } = useStores();
   const { postList } = PostStore;
 

@@ -6,7 +6,7 @@ import useStores from '../../../stores/useStores';
 import CommentRow, { CommentRowInterface } from './CommentRow';
 import CommentNone from './CommentNone';
 
-const CommentList: React.FC = () => {
+const CommentList = () => {
   const { CommentStore } = useStores();
   const { commentList, commentSize } = CommentStore;
 

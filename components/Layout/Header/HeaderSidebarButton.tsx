@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useStores from '../../../stores/useStores';
 
-const HeaderSidebarButton: React.FC = () => {
+const HeaderSidebarButton = () => {
   const { SidebarStore } = useStores();
   const { toggleSidebar } = SidebarStore;
 

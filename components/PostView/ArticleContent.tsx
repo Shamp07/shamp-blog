@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../stores/useStores';
 
-const ArticleContent: React.FC = () => {
+const ArticleContent = () => {
   const { PostStore, SignStore } = useStores();
   const { postView, addPostLike } = PostStore;
   const { id, likeCnt, content } = postView;

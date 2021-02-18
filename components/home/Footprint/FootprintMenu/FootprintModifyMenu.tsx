@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import useStores from '../../../../stores/useStores';
 
-const FootprintModifyMenu: React.FC = () => {
+const FootprintModifyMenu = () => {
   const { HomeStore } = useStores();
   const { modifierFootprintId, setModifierFootprintId, modifyFootprint } = HomeStore;
 

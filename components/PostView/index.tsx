@@ -5,7 +5,7 @@ import ArticleFooter from './ArticleFooter';
 import ArticleHeader from './ArticleHeader';
 import ArticleContent from './ArticleContent';
 
-const PostView: React.FC = () => (
+const PostView = () => (
   <div>
     <ArticleSection>
       <ArticleHeader />

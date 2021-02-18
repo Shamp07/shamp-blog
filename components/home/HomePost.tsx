@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
@@ -12,7 +12,7 @@ export interface PostInterface {
   commentCnt: number,
 }
 
-const HomePost: React.FC<HomePostProp> = ({ data }: HomePostProp) => {
+const HomePost: FC<HomePostProp> = ({ data }: HomePostProp) => {
   const { id, title } = data;
   return (
     <Link href={`/post/${id}`}>

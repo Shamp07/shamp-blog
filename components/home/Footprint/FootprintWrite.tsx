@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from '@emotion/styled';
 import { TextField } from '@material-ui/core';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../../stores/useStores';
 
-const FootprintWrite: React.FC = () => {
+const FootprintWrite = () => {
   const { HomeStore, SignStore } = useStores();
   const { footprintText, footprintHandleChange, addFootprint } = HomeStore;
   const { userData } = SignStore;

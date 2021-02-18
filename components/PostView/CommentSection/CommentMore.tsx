@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import useStores from '../../../stores/useStores';
 
-const CommentMore: React.FC = () => {
+const CommentMore = () => {
   const { CommentStore } = useStores();
   const { moreComment } = CommentStore;
   const { PostStore } = useStores();

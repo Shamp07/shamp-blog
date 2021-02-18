@@ -6,7 +6,7 @@ import useStores from '../../../stores/useStores';
 import FootPrintRow, { FootprintRowInterface } from './FootprintRow';
 import FootprintNone from './FootprintNone';
 
-const FootprintList: React.FC = () => {
+const FootprintList = () => {
   const { HomeStore } = useStores();
   const { footprintList, footprintSize } = HomeStore;
 

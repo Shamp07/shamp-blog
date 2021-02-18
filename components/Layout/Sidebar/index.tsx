@@ -7,7 +7,7 @@ import useStores from '../../../stores/useStores';
 import Category, { CategoryProps } from './Category';
 import SideTokenMenu from './SideTokenMenu';
 
-const Sidebar: React.FC = () => {
+const Sidebar = () => {
   const { SidebarStore } = useStores();
   const {
     boardCategoryList, topCategoryList,

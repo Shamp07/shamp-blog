@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from '@emotion/styled';
 import { TextField } from '@material-ui/core';
 import { observer } from 'mobx-react-lite';
@@ -8,7 +8,7 @@ interface CommentProp {
   isReply: boolean;
 }
 
-const CommentWrite: React.FC<CommentProp> = ({ isReply }: CommentProp) => {
+const CommentWrite: FC<CommentProp> = ({ isReply }: CommentProp) => {
   const { PostStore, CommentStore, SignStore } = useStores();
   const { postView } = PostStore;
   const { id } = postView;

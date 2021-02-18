@@ -7,7 +7,7 @@ import styled from '@emotion/styled';
 import { Button, TextField } from '@material-ui/core';
 import useStores from '../../stores/useStores';
 
-const EmailModal: React.FC = () => {
+const EmailModal = () => {
   const { SignStore } = useStores();
   const {
     isOpenEmailModal, toggleEmailModal, emailVerifyCode,
