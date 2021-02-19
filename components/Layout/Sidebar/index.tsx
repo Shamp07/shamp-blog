@@ -21,23 +21,27 @@ const Sidebar = () => {
       </MobileMenu>
       <SideTokenMenu />
       <CategoryWrapper>
-        <ul>
-          {topCategoryList.map(
-            (data: CategoryProps) => (
-              <Category isBoard={false} path={data.path} name={data.name} key={data.path} />
-            ),
-          )}
-        </ul>
+        <CategoryInner>
+          <ul>
+            {topCategoryList.map(
+              (data: CategoryProps) => (
+                <Category isBoard={false} path={data.path} name={data.name} key={data.path} />
+              ),
+            )}
+          </ul>
+        </CategoryInner>
       </CategoryWrapper>
-      <BottomCategory>
-        <ul>
-          {boardCategoryList.map(
-            (data: CategoryProps) => (
-              <Category isBoard path={data.path} name={data.name} key={data.path} />
-            ),
-          )}
-        </ul>
-      </BottomCategory>
+      <CategoryWrapper>
+        <BottomCategory>
+          <ul>
+            {boardCategoryList.map(
+              (data: CategoryProps) => (
+                <Category isBoard path={data.path} name={data.name} key={data.path} />
+              ),
+            )}
+          </ul>
+        </BottomCategory>
+      </CategoryWrapper>
     </Wrapper>
   );
 };
@@ -83,11 +87,11 @@ const CloseIcon = styled(FontAwesomeIcon)`
   
 `;
 
-const CategoryWrapper = styled.div`
+const CategoryInner = styled.div`
   width: 100%;
   background-color: #fff;
   border-radius: 4px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
+  
   padding: 7px 0;
   
   @media (max-width: 1064px) {
@@ -131,7 +135,11 @@ const CategoryWrapper = styled.div`
   }
 `;
 
-const BottomCategory = styled(CategoryWrapper)`
+const CategoryWrapper = styled.div`
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
+`;
+
+const BottomCategory = styled(CategoryInner)`
   margin-top: 10px;
   @media (max-width: 1064px) {
     margin-top: 0;
