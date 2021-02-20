@@ -24,7 +24,7 @@ const Content: FC<ContentProp> = ({ children }: ContentProp) => {
 };
 
 const Wrapper = styled.div`
-  float: right;
+  margin-left: auto;
   box-sizing: border-box;
   width: 728px;
   margin-bottom: 20px;

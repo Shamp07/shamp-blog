@@ -41,9 +41,11 @@ const RegisterModal = () => {
             <CustomTextField label="비밀번호 확인" name="passwordCheck" type="password" value={passwordCheck} onChange={registerHandleChange} helperText="비밀번호와 동일하게 입력해주세요." />
             <br />
           </div>
-          <RightButton variant="contained" color="primary" onClick={() => register(router)}>
-            가입
-          </RightButton>
+          <div>
+            <RightButton variant="contained" color="primary" onClick={() => register(router)}>
+              가입
+            </RightButton>
+          </div>
         </Paper>
       </Fade>
     </CustomModal>
@@ -75,20 +77,20 @@ const Paper = styled.div`
     padding: 10px 0;
   }
 
-  & > div {
+  & > div:first-of-type {
     padding: 20px 0;
     border-bottom: 1px solid #e6e6e6;
     border-top: 1px solid #e6e6e6;
     margin-bottom: 10px;
   }
   
-
-  
+  & > div:last-of-type {
+    display: flex;
+  }
 `;
 
 const RightButton = styled(Button)`
-  float: right;
-  margin-left: 5px !important;
+  margin-left: auto !important;
 `;
 
 const CustomTextField = styled(TextField)`

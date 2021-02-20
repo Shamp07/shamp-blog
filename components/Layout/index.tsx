@@ -40,8 +40,8 @@ const Wrapper = styled.div`
 
 const CenterContent = styled.div`
   margin: -200px auto 0 auto;
-  position: relative;
   max-width: 1044px;
+  display: flex;
   
   &:after {
     content: "";

@@ -38,9 +38,11 @@ const EmailModal = () => {
             <br />
             <TextField label="인증번호" variant="outlined" value={emailVerifyCode} onChange={verifyHandleChange} size="small" />
           </div>
-          <RightButton variant="contained" color="primary" onClick={verifyCode}>
-            완료
-          </RightButton>
+          <div>
+            <RightButton variant="contained" color="primary" onClick={verifyCode}>
+              완료
+            </RightButton>
+          </div>
         </Paper>
       </Fade>
     </CustomModal>
@@ -73,17 +75,20 @@ const Paper = styled.div`
     padding: 10px 0;
   }
 
-  & > div {
+  & > div:first-of-type {
     padding: 20px 0;
     border-bottom: 1px solid #e6e6e6;
     border-top: 1px solid #e6e6e6;
     margin-bottom: 10px;
   }
+  
+  & > div:last-of-type {
+    display: flex;
+  }
 `;
 
 const RightButton = styled(Button)`
-  float: right;
-  margin-left: 5px !important;
+  margin-left: auto !important;
 `;
 
 export default observer(EmailModal);

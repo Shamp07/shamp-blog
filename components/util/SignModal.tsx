@@ -39,12 +39,14 @@ const SignModal = () => {
             <CustomTextField label="비밀번호" name="password" onChange={loginHandleChange} value={password} type="password" />
             <br />
           </div>
-          <Button variant="contained" color="primary" onClick={changeRegister}>
-            회원가입
-          </Button>
-          <RightButton variant="contained" color="primary" onClick={() => login(router)}>
-            로그인
-          </RightButton>
+          <div>
+            <Button variant="contained" color="primary" onClick={changeRegister}>
+              회원가입
+            </Button>
+            <Button variant="contained" color="primary" onClick={() => login(router)}>
+              로그인
+            </Button>
+          </div>
         </Paper>
       </Fade>
     </CustomModal>
@@ -76,17 +78,20 @@ const Paper = styled.div`
     padding: 10px 0;
   }
 
-  & > div {
+  & > div:first-of-type {
     padding: 20px 0;
     border-bottom: 1px solid #e6e6e6;
     border-top: 1px solid #e6e6e6;
     margin-bottom: 10px;
   }
-`;
-
-const RightButton = styled(Button)`
-  float: right;
-  margin-left: 5px !important;
+  
+  & > div:last-of-type {
+    display: flex;
+  }
+  
+  & > div > button:last-of-type {
+    margin-left: auto;
+  }
 `;
 
 const CustomTextField = styled(TextField)`

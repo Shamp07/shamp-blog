@@ -22,13 +22,15 @@ const FootprintWrite = () => {
           placeholder="블로그에 관련된 건의사항이나 의견들을 자유롭게 작성해주세요!"
         />
         <FootprintWriteFooter>
-          <FootprintWriteButton onClick={() => addFootprint(userId)}>
-            작성
-          </FootprintWriteButton>
           <span>
-            (
-            { footprintText.length }
-            /1000)
+            <span>
+              (
+              { footprintText.length }
+              /1000)
+            </span>
+            <FootprintWriteButton onClick={() => addFootprint(userId)}>
+              작성
+            </FootprintWriteButton>
           </span>
         </FootprintWriteFooter>
       </FootprintWriterInner>
@@ -48,10 +50,14 @@ const FootprintWriterInner = styled.div`
 const FootprintWriteFooter = styled.div`
   height: 36px;
   background-color: #fff;
-  
+  display: flex;
+
   & > span {
+    margin-left: auto;
+  }
+
+  & > span > span {
     display: inline-block;
-    float: right;
     line-height: 36px;
     padding-right: 10px;
     font-size: 14px;
@@ -69,8 +75,7 @@ const FootprintWriteButton = styled.div`
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.2s;
-  float: right;
-  
+
   &:hover {
     background-color: #1e73c9;
   }
@@ -79,7 +84,7 @@ const FootprintWriteButton = styled.div`
 const CustomTextField = styled(TextField)`
   display: block !important;
   background-color: #fff;
-  
+
   & .MuiInputBase-multiline {
     display: block !important;
     width: 100%;
@@ -87,7 +92,7 @@ const CustomTextField = styled(TextField)`
     padding-right: 10px;
     max-width: 100%;
   }
-  
+
   & textarea {
     font-size: 14px;
   }

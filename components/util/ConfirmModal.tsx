@@ -32,8 +32,12 @@ const ConfirmModal = () => {
           <div>
             {text}
           </div>
-          <RightButton variant="contained" color="primary" onClick={() => callFunction(callback)}>확인</RightButton>
-          <RightButton variant="contained" onClick={closeConfirmModal}>취소</RightButton>
+          <div>
+            <span>
+              <RightButton variant="contained" color="primary" onClick={() => callFunction(callback)}>확인</RightButton>
+              <RightButton variant="contained" onClick={closeConfirmModal}>취소</RightButton>
+            </span>
+          </div>
         </Paper>
       </Fade>
     </CustomModal>
@@ -65,16 +69,22 @@ const Paper = styled.div`
     padding: 10px 0;
   }
   
-  & > div {
+  & > div:first-of-type {
     padding: 20px 0;
     border-bottom: 1px solid #e6e6e6;
     border-top: 1px solid #e6e6e6;
     margin-bottom: 10px;
   }
+   
+  & > div:last-of-type {
+    display: flex;
+    & > span {
+      margin-left: auto;
+    }
+  }
 `;
 
 const RightButton = styled(Button)`
-  float: right;
   margin-left: 5px !important;
 `;
 

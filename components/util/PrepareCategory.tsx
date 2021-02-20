@@ -19,7 +19,7 @@ const PrepareCategory = () => (
 const Wrapper = styled.div`
   background-color: #fff;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
-  height: 100px;
+  height: 94px;
   padding: 240px 0;
   border-radius: 4px;
   

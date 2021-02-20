@@ -33,13 +33,15 @@ const CommentWrite: FC<CommentProp> = ({ isReply }: CommentProp) => {
           placeholder="포스팅에 관련된 의견이나 질문을 자유롭게 남겨주세요!"
         />
         <CommentWriteFooter>
-          <CommentWriteButton onClick={() => addComment(id, userId, replyCommentId, isReply)}>
-            작성
-          </CommentWriteButton>
           <span>
-            (
-            {isReply ? replyComment.length : comment.length}
-            /1000)
+            <span>
+              (
+              {isReply ? replyComment.length : comment.length}
+              /1000)
+            </span>
+            <CommentWriteButton onClick={() => addComment(id, userId, replyCommentId, isReply)}>
+              작성
+            </CommentWriteButton>
           </span>
         </CommentWriteFooter>
       </CommentWriterInner>
@@ -60,10 +62,14 @@ const CommentWriterInner = styled.div`
 const CommentWriteFooter = styled.div`
   height: 36px;
   background-color: #fff;
+  display: flex;
   
   & > span {
+    margin-left: auto;  
+  }
+  
+  & > span > span {
     display: inline-block;
-    float: right;
     line-height: 36px;
     padding-right: 10px;
     font-size: 14px;
@@ -81,7 +87,6 @@ const CommentWriteButton = styled.div`
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.2s;
-  float: right;
   
   &:hover {
     background-color: #1e73c9;

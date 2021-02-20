@@ -21,27 +21,23 @@ const Sidebar = () => {
       </MobileMenu>
       <SideTokenMenu />
       <CategoryWrapper>
-        <CategoryInner>
-          <ul>
-            {topCategoryList.map(
-              (data: CategoryProps) => (
-                <Category isBoard={false} path={data.path} name={data.name} key={data.path} />
-              ),
-            )}
-          </ul>
-        </CategoryInner>
+        <ul>
+          {topCategoryList.map(
+            (data: CategoryProps) => (
+              <Category isBoard={false} path={data.path} name={data.name} key={data.path} />
+            ),
+          )}
+        </ul>
       </CategoryWrapper>
-      <CategoryWrapper>
-        <BottomCategory>
-          <ul>
-            {boardCategoryList.map(
-              (data: CategoryProps) => (
-                <Category isBoard path={data.path} name={data.name} key={data.path} />
-              ),
-            )}
-          </ul>
-        </BottomCategory>
-      </CategoryWrapper>
+      <BottomCategory>
+        <ul>
+          {boardCategoryList.map(
+            (data: CategoryProps) => (
+              <Category isBoard path={data.path} name={data.name} key={data.path} />
+            ),
+          )}
+        </ul>
+      </BottomCategory>
     </Wrapper>
   );
 };
@@ -53,20 +49,19 @@ interface Container {
 const Wrapper = styled.div<Container>`
   display: block;
   width: 300px;
-  float: left;
-  z-index: 1000;
   will-change: min-height;
-  overflow-y: auto;
-  overflow-x: hidden;
   
   @media (max-width: 1064px) {
     background-color: #fff;
     display: ${(props) => (props.isOpenSidebar ? 'block' : 'none')};
     position: fixed;
-    height: 100vh;
+    z-index: 1;
+    height: 100%;
     width: 250px;
     top: 0;
     right: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 `;
 
@@ -87,11 +82,11 @@ const CloseIcon = styled(FontAwesomeIcon)`
   
 `;
 
-const CategoryInner = styled.div`
+const CategoryWrapper = styled.div`
   width: 100%;
   background-color: #fff;
   border-radius: 4px;
-  
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
   padding: 7px 0;
   
   @media (max-width: 1064px) {
@@ -135,11 +130,7 @@ const CategoryInner = styled.div`
   }
 `;
 
-const CategoryWrapper = styled.div`
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
-`;
-
-const BottomCategory = styled(CategoryInner)`
+const BottomCategory = styled(CategoryWrapper)`
   margin-top: 10px;
   @media (max-width: 1064px) {
     margin-top: 0;

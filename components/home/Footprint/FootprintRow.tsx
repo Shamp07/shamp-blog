@@ -63,6 +63,7 @@ const FootprintWriter = styled.div`
   line-height: 17px;
   font-weight: 700;
   color: #1e2022;
+  display: flex;
   
   & > span {
     padding: 0 10px;
@@ -113,7 +114,7 @@ const CustomTextField = styled(TextField)`
 `;
 
 const RightTime = styled.span`
-  float: right;
+  margin-left: auto;
 `;
 
 export default observer(FootprintRow);

@@ -105,10 +105,11 @@ const Article = styled.article`
 `;
 
 const Footer = styled(Article)`
+  display: flex;
   padding-top: 0 !important;
   
   & > button:last-child {
-    float: right;
+    margin-left: auto;
   }
 `;
 

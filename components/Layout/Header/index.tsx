@@ -36,6 +36,7 @@ const Header = () => (
 );
 
 const ResponsiveContainer = styled.div`
+  display: flex;
   height: 70px;
   max-width: 1044px;
   margin: 0 auto;

@@ -37,9 +37,9 @@ const ResponsiveLogo = styled.span`
 `;
 
 const ListWrapper = styled.div`
+  display: inline-block;
   width: 250px;
   height: 70px;
-  float: left;
   @media (max-width: 1064px) {
     height: 56px !important;
     width: 200px;
@@ -47,6 +47,7 @@ const ListWrapper = styled.div`
 `;
 
 const RightList = styled.ul`
+  display: inline-flex;
   list-style: none;
   width: 100%;
   height: 70px;
@@ -57,7 +58,6 @@ const RightList = styled.ul`
   & > li {
     height: 70px;
     line-height: 70px;
-    float: left;
     @media (max-width: 1064px) {
       height: 56px !important;
       line-height: 56px !important;

@@ -27,7 +27,9 @@ const ConfirmModal = () => {
         <Paper>
           <h2 id="transition-modal-title">알림</h2>
           <div dangerouslySetInnerHTML={{ __html: text }} />
-          <RightButton variant="contained" color="primary" onClick={closeAlertModal}>확인</RightButton>
+          <div>
+            <RightButton variant="contained" color="primary" onClick={closeAlertModal}>확인</RightButton>
+          </div>
         </Paper>
       </Fade>
     </CustomModal>
@@ -59,17 +61,21 @@ const Paper = styled.div`
     padding: 10px 0;
   }
 
-  & > div {
+  & > div:first-of-type {
     padding: 20px 15px 20px 0;
     border-bottom: 1px solid #e6e6e6;
     border-top: 1px solid #e6e6e6;
     margin-bottom: 10px;
   }
+  
+  & > div:last-of-type {
+    display: flex;
+  }
+  
 `;
 
 const RightButton = styled(Button)`
-  float: right;
-  margin-left: 5px !important;
+  margin-left: auto !important;
 `;
 
 export default observer(ConfirmModal);

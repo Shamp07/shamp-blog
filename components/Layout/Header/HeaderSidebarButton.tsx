@@ -26,9 +26,8 @@ const SidebarButton = styled.div`
   padding: 7px 10px 5px 10px;
   border: #ffffff solid 1px;
   border-radius: 5px;
-  margin: 9px;
+  margin: 9px 10px 0 0;
   cursor: pointer;
-  float: right;
   transition: all 0.2s;
   
   @media (max-width: 1064px) {

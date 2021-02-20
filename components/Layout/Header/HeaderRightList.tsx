@@ -6,7 +6,7 @@ import HeaderSidebarButton from './HeaderSidebarButton';
 import HeaderTokenMenu from './HeaderTokenMenu';
 
 const HeaderRightList = () => (
-  <>
+  <Wrapper>
     <ListWrapper>
       <RightList>
         <HeaderTokenMenu />
@@ -18,13 +18,18 @@ const HeaderRightList = () => (
       </RightList>
     </ListWrapper>
     <HeaderSidebarButton />
-  </>
+  </Wrapper>
 );
 
+const Wrapper = styled.div`
+  display: inline-flex;
+  margin-left: auto;
+`;
+
 const ListWrapper = styled.div`
+  display: inline-block;
   width: 250px;
   height: 70px;
-  float: right;
   
   @media (max-width: 1064px) {
     display: none;
@@ -33,6 +38,7 @@ const ListWrapper = styled.div`
 
 const RightList = styled.ul`
   list-style: none;
+  display: inline-flex;
   width: 100%;
   height: 70px;
   
@@ -40,7 +46,8 @@ const RightList = styled.ul`
     width: 90px;
     height: 70px;
     line-height: 70px;
-    float: left;
+    display: inline-block;
+    text-align: center;
   }
 `;
 
@@ -49,7 +56,8 @@ const GithubList = styled.li`
 `;
 
 const NoStyleA = styled.a`
-  display: block;
+  display: inline;
+  width: 40px;
   color: #FFFFFF;
   transition: all 0.125s ease-in 0s;
   cursor: pointer;
@@ -63,7 +71,7 @@ const NoStyleA = styled.a`
 `;
 
 const Icon = styled(FontAwesomeIcon)`
-  margin: 15px;
+  margin: 14px;
 `;
 
 export default HeaderRightList;

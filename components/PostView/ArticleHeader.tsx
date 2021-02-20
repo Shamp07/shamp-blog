@@ -74,15 +74,16 @@ const ArticleMeta = styled.div`
   line-height: 20px;
   font-size: 14px;
   color: #7b858e;
-  
-  &:after {
-    content: "";
+  display: flex;
+  @media (max-width: 1064px) {
     display: block;
-    clear: both;
   }
 `;
 
 const ArticleMetaUl = styled.ul`
+  @media (max-width: 1064px) {
+    display: block;
+  }
   list-style: none;
   
   & > li {
@@ -95,8 +96,8 @@ const ArticleMetaUl = styled.ul`
 `;
 
 const ArticleMetaLeft = styled(ArticleMetaUl)`
-  @media (min-width: 768px) {
-    float: left;
+  @media (max-width: 1064px) {
+    margin-right: auto;
   }
 
   & > li {
@@ -112,7 +113,7 @@ const ArticleMetaLeft = styled(ArticleMetaUl)`
 
 const ArticleMetaRight = styled(ArticleMetaUl)`
   @media (min-width: 768px) {
-    float: right;
+    margin-left: auto;
   }
 
   & > li:first-of-type {
