@@ -20,7 +20,7 @@ class HomeStore {
 
   @observable modifierFootprintId: number = 0;
 
-  constructor(initialData = initialHome, root: any) {
+  constructor(initialData = initialHome, root: { AlertStore: AlertStore }) {
     makeObservable(this);
     this.recentlyPostList = initialData.recentlyPostList;
     this.noticePostList = initialData.noticePostList;

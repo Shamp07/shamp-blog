@@ -1,9 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
-import { AppContext } from 'next/dist/pages/_app';
-import { NextPageContext } from 'next';
-import { observer, Provider } from 'mobx-react';
-import App from 'next/app';
+import { Provider } from 'mobx-react';
+import App, { AppContext, AppProps } from 'next/app';
+import { NextComponentType, NextPageContext } from 'next';
 import Layout from '../components/Layout';
 import initializeStore, { RootStore } from '../stores';
 import 'react-quill/dist/quill.snow.css';
@@ -11,15 +10,19 @@ import 'highlight.js/styles/atom-one-dark.css';
 
 React.useLayoutEffect = React.useEffect;
 
-export interface AppContextStore extends AppContext {
-  ctx: NextPageContextStore;
+interface AppContextStore extends AppContext {
+  Component: NextComponentType;
+  ctx: MyNextPageContext;
 }
 
-interface NextPageContextStore extends NextPageContext {
+export interface MyNextPageContext extends NextPageContext {
   store?: RootStore;
 }
 
-@observer
+interface MyAppProps extends AppProps {
+  initialMobxState: RootStore;
+}
+
 class CustomApp extends App {
   mobxStore: RootStore;
 
@@ -34,7 +37,7 @@ class CustomApp extends App {
     };
   }
 
-  constructor(props: any) {
+  constructor(props: MyAppProps) {
     super(props);
     const isServer = typeof window === 'undefined';
     this.mobxStore = isServer ? props.initialMobxState : initializeStore(props.initialMobxState);

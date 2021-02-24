@@ -23,7 +23,7 @@ class PostStore {
 
   @observable postList;
 
-  constructor(initialData = initialPost, root: any) {
+  constructor(initialData = initialPost, root: { AlertStore: AlertStore }) {
     makeObservable(this);
     this.postList = initialData.postList;
     this.postView = initialData.postView;

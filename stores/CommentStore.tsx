@@ -4,14 +4,6 @@ import axios from 'axios';
 import PostStore from './PostStore';
 import AlertStore from './AlertStore';
 
-interface CommentInterface {
-  id: number,
-  commentId: number,
-  userId: number,
-  content: string,
-  time: string,
-}
-
 class CommentStore {
   PostStore: PostStore;
 
@@ -23,7 +15,7 @@ class CommentStore {
 
   @observable modifierComment: string = '';
 
-  @observable commentList: Array<CommentInterface> = [];
+  @observable commentList = [];
 
   @observable commentSize: number = 15;
 
@@ -31,7 +23,7 @@ class CommentStore {
 
   @observable replyCommentId: number = 0;
 
-  constructor(initialData = initialComment, root: any) {
+  constructor(initialData = initialComment, root: { PostStore: PostStore, AlertStore: AlertStore }) {
     makeObservable(this);
     this.PostStore = root.PostStore;
     this.AlertStore = root.AlertStore;

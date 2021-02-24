@@ -6,6 +6,7 @@ import BoardContent from '../../components/board/BoardContent';
 import useStores from '../../stores/useStores';
 import BoardPagination from '../../components/board/BoardPagination';
 import PostView from '../../components/PostView';
+import { MyNextPageContext } from '../_app';
 
 const Board: NextPage = () => {
   const router = useRouter();
@@ -39,26 +40,26 @@ const Board: NextPage = () => {
   );
 };
 
-Board.getInitialProps = async ({ query, store }: any) => {
+Board.getInitialProps = async ({ query, store }: MyNextPageContext) => {
   const boardParams = query.board as Array<string>;
   const category = boardParams[0] as string;
   const tag = boardParams[1] as string;
 
   // 게시글 단일 조회 화면 (PostView)
-  if (tag && tag === 'post') {
+  if (tag && tag === 'post' && store) {
     const { PostStore, CommentStore } = store;
     const { getPost } = PostStore;
     const { getComment } = CommentStore;
 
     const id = boardParams[2];
-    await Promise.all([getPost(id), getComment(id)]);
-  } else {
+    await Promise.all([getPost(Number(id), false), getComment(Number(id))]);
+  } else if (store) {
     const { CategoryStore, PostStore } = store;
     const { getCategoryTags } = CategoryStore;
     const { getPostList } = PostStore;
     const { page } = query;
 
-    await Promise.all([getPostList(category, tag, page), getCategoryTags(category)]);
+    await Promise.all([getPostList(category, tag, Number(page)), getCategoryTags(category)]);
   }
 
   return {

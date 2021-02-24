@@ -9,6 +9,10 @@ import { Button } from '@material-ui/core';
 import useStores from '../../stores/useStores';
 import BoardTag from './BoardTag';
 
+interface TagsType {
+  tags: string
+}
+
 const BoardHead = () => {
   const router = useRouter();
   const {
@@ -63,7 +67,7 @@ const BoardHead = () => {
             </Link>
           </CategoryTagList>
           {categoryTags.map(
-            ({ tags }: any) => <BoardTag key={tags} tags={tags} />,
+            (data: TagsType) => <BoardTag key={data.tags} tags={data.tags} />,
           )}
         </CategoryTag>
       </HeadSection>

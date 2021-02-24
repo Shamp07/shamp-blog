@@ -31,7 +31,7 @@ class SignStore {
 
   @observable isOpenEmailModal: boolean = false;
 
-  constructor(root: any) {
+  constructor(root: { AlertStore: AlertStore }) {
     makeObservable(this);
     this.AlertStore = root.AlertStore;
   }

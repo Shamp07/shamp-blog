@@ -3,6 +3,7 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Post from '..';
 import useStores from '../../../stores/useStores';
+import { MyNextPageContext } from '../../_app';
 
 const ModifyPost: NextPage = () => {
   const { SignStore, AlertStore } = useStores();
@@ -22,10 +23,11 @@ const ModifyPost: NextPage = () => {
   );
 };
 
-ModifyPost.getInitialProps = async ({ query, store }: any) => {
+ModifyPost.getInitialProps = async ({ query, store }: MyNextPageContext) => {
+  if (!store) return false;
   const { PostStore } = store;
   const { getPost } = PostStore;
-  await getPost(query.id, true);
+  await getPost(Number(query.id), true);
 
   return {
     props: {},

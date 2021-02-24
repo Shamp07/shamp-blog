@@ -13,7 +13,12 @@ enableStaticRendering(isServer);
 
 let store: RootStore | null = null;
 
-const initialRoot = {
+export interface RootStoreType {
+  AlertStore: AlertStore;
+  PostStore: PostStore;
+}
+
+export const initialRoot = {
   CategoryStore: initialCategory,
   PostStore: initialPost,
   CommentStore: initialComment,
@@ -37,7 +42,7 @@ export class RootStore {
 
   UtilStore: UtilStore;
 
-  constructor(initialData: any) {
+  constructor(initialData = initialRoot) {
     this.AlertStore = new AlertStore();
     this.SidebarStore = new SidebarStore();
     this.SignStore = new SignStore(this);

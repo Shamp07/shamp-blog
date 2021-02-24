@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useStores from '../stores/useStores';
 import HomePostList from '../components/home/HomePostList';
 import Footprint from '../components/home/Footprint';
+import { MyNextPageContext } from './_app';
 
 const Home: NextPage = () => {
   const { HomeStore } = useStores();
@@ -40,10 +41,12 @@ const Home: NextPage = () => {
   );
 };
 
-Home.getInitialProps = async ({ store }: any) => {
-  const { HomeStore } = store;
-  const { getRecentlyPostList, getNoticePostList, getFootprint } = HomeStore;
-  await Promise.all([getRecentlyPostList(), getNoticePostList(), getFootprint()]);
+Home.getInitialProps = async ({ store }: MyNextPageContext) => {
+  if (store) {
+    const { HomeStore } = store;
+    const { getRecentlyPostList, getNoticePostList, getFootprint } = HomeStore;
+    await Promise.all([getRecentlyPostList(), getNoticePostList(), getFootprint()]);
+  }
 
   return {
     props: {},

@@ -2,7 +2,7 @@ import { action, makeObservable, observable } from 'mobx';
 import axios from 'axios';
 
 class CategoryStore {
-  @observable categoryTags: Array<String> = [];
+  @observable categoryTags = [];
 
   constructor(initialData = initialCategory) {
     makeObservable(this);
