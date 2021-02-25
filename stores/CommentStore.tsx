@@ -23,7 +23,9 @@ class CommentStore {
 
   @observable replyCommentId: number = 0;
 
-  constructor(initialData = initialComment, root: { PostStore: PostStore, AlertStore: AlertStore }) {
+  constructor(initialData = initialComment, root: {
+    PostStore: PostStore, AlertStore: AlertStore
+  }) {
     makeObservable(this);
     this.PostStore = root.PostStore;
     this.AlertStore = root.AlertStore;
