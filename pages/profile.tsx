@@ -28,12 +28,75 @@ const Profile = () => (
       </div>
       <div>
         <h2>지금까지 이와 같은 것들을 해왔어요! 🏆</h2>
+        <h3>프로젝트</h3>
         <ul>
+          <li>개인</li>
+          <li>팀</li>
         </ul>
       </div>
       <div>
         <h2>다룰 수 있는 기술스택 👨‍💻</h2>
+        <h3>공통</h3>
         <ul>
+          <li>
+            언어 및 기술
+            <ul>
+              <li>JavaScript (ES6+)</li>
+              <li>TypeScript</li>
+              <li>Java</li>
+              <li>NodeJS</li>
+              <li>Git</li>
+              <li>ESLint (airbnb)</li>
+              <li>Babel</li>
+            </ul>
+          </li>
+        </ul>
+        <h3>프론트 엔드</h3>
+        <ul>
+          <li>
+            언어
+            <ul>
+              <li>HTML, CSS</li>
+            </ul>
+          </li>
+          <li>
+            라이브러리, 프레임워크
+            <ul>
+              <li>React</li>
+              <li>MobX</li>
+              <li>NextJS</li>
+              <li>Webpack</li>
+              <li>Emotion, styled-components</li>
+              <li>JQuery</li>
+            </ul>
+          </li>
+        </ul>
+        <h3>백 엔드</h3>
+        <ul>
+          <li>
+            라이브러리 및 프레임워크
+            <ul>
+              <li>Express</li>
+              <li>Spring</li>
+              <li>Spring Boot</li>
+            </ul>
+          </li>
+          <li>
+            RDBMS
+            <ul>
+              <li>Oracle</li>
+              <li>MariaDB</li>
+              <li>PostgreSQL</li>
+            </ul>
+          </li>
+          <li>
+            Server
+            <ul>
+              <li>AWS (EC2, RDS)</li>
+              <li>Linux</li>
+              <li>AIX</li>
+            </ul>
+          </li>
         </ul>
       </div>
     </article>
@@ -44,36 +107,41 @@ const Wrapper = styled.div`
   background-color: #fff;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
   border-radius: 4px;
-  
+
   & > h1 {
     padding: 20px;
     border-bottom: 1px solid #e6e6e6;
   }
-  
-  & h2 {
+
+  & h2, h3 {
     margin-bottom: 10px;
   }
-  
+
   & > article {
     padding: 20px;
     & > div {
       margin-bottom: 10px;
     }
-  }
-  
-  & ul {
-    margin-left: 20px;
+
+    & div > ul > li {
+      line-height: 30px;
+    }
+
+    & li {
+      list-style-type: disc;
+    }
+
+    & li li {
+      list-style-type: circle;
+    }
+
   }
 
-  & ul > li {
-    line-height: 30px;
-  }
-  
-  & ul > li:before {
-    list-style: disc;
-    display: inline-block;
-    vertical-align: middle;
-    padding: 0px 5px 15px 0px;
+  & ul {
+    margin-left: 20px;
+    & ul {
+      margin-left: 40px;
+    }
   }
 `;
 
