@@ -7,40 +7,59 @@ import AlertStore from './AlertStore';
 class SignStore {
   AlertStore: AlertStore;
 
-  @observable cookieChecked: boolean = false;
+  cookieChecked: boolean = false;
 
-  @observable userData: object | undefined;
+  userData: object | undefined;
 
-  @observable loginInfo = {
+  loginInfo = {
     email: '',
     password: '',
   };
 
-  @observable registerInfo = {
+  registerInfo = {
     email: '',
     password: '',
     passwordCheck: '',
     name: '',
   };
 
-  @observable emailVerifyCode: string = '';
+  emailVerifyCode: string = '';
 
-  @observable isOpenSignModal: boolean = false;
+  isOpenSignModal: boolean = false;
 
-  @observable isOpenRegisterModal: boolean = false;
+  isOpenRegisterModal: boolean = false;
 
-  @observable isOpenEmailModal: boolean = false;
+  isOpenEmailModal: boolean = false;
 
   constructor(root: { AlertStore: AlertStore }) {
-    makeObservable(this);
     this.AlertStore = root.AlertStore;
+
+    makeObservable(this, {
+      cookieChecked: observable,
+      userData: observable,
+      loginInfo: observable,
+      registerInfo: observable,
+      changeRegister: action,
+      toggleSignModal: action,
+      toggleRegisterModal: action,
+      toggleEmailModal: action,
+      loginHandleChange: action,
+      registerHandleChange: action,
+      verifyHandleChange: action,
+      cookieCheck: action,
+      login: action,
+      register: action,
+      verifyEmail: action,
+      verifyCode: action,
+      logout: action,
+    });
   }
 
-  @action changeRegister = (): void => {
+  changeRegister = (): void => {
     this.toggleRegisterModal();
   };
 
-  @action toggleSignModal = (): void => {
+  toggleSignModal = (): void => {
     this.isOpenSignModal = !this.isOpenSignModal;
     this.loginInfo = {
       email: '',
@@ -48,7 +67,7 @@ class SignStore {
     };
   };
 
-  @action toggleRegisterModal = (): void => {
+  toggleRegisterModal = (): void => {
     if (!this.isOpenRegisterModal) {
       this.registerInfo = {
         email: '',
@@ -60,30 +79,30 @@ class SignStore {
     this.isOpenRegisterModal = !this.isOpenRegisterModal;
   };
 
-  @action toggleEmailModal = (): void => {
+  toggleEmailModal = (): void => {
     this.isOpenEmailModal = !this.isOpenEmailModal;
     this.emailVerifyCode = '';
   };
 
-  @action loginHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  loginHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.loginInfo = {
       ...this.loginInfo,
       [event.target.name]: event.target.value,
     };
   };
 
-  @action registerHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  registerHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.registerInfo = {
       ...this.registerInfo,
       [event.target.name]: event.target.value,
     };
   };
 
-  @action verifyHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  verifyHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.emailVerifyCode = event.target.value;
   };
 
-  @action cookieCheck = (): void => {
+  cookieCheck = (): void => {
     axios.get('/api/user/cookie')
       .then((response) => {
         const { data } = response;
@@ -97,7 +116,7 @@ class SignStore {
       });
   };
 
-  @action login = (): void => {
+  login = (): void => {
     axios.post('/api/user/login', this.loginInfo)
       .then((response) => {
         const { data } = response;
@@ -120,7 +139,7 @@ class SignStore {
       });
   };
 
-  @action register = (): void => {
+  register = (): void => {
     if (!this.registerValidationCheck()) {
       return;
     }
@@ -141,7 +160,7 @@ class SignStore {
       });
   };
 
-  @action verifyEmail = (isFromRegister: boolean): void => {
+  verifyEmail = (isFromRegister: boolean): void => {
     axios.put('/api/user/verify', {
       email: this.registerInfo.email,
     })
@@ -163,7 +182,7 @@ class SignStore {
       });
   };
 
-  @action verifyCode = (): void => {
+  verifyCode = (): void => {
     axios.put('/api/user/verify/code', {
       email: this.registerInfo.email,
       code: this.emailVerifyCode,
@@ -226,7 +245,7 @@ class SignStore {
     return regExp.test(this.registerInfo.email);
   };
 
-  @action logout = (): void => {
+  logout = (): void => {
     cookie.remove('token');
     this.userData = undefined;
     this.AlertStore.toggleAlertModal('로그아웃 되었습니다.');

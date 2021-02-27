@@ -53,13 +53,16 @@ class SidebarStore {
     etc: 'etc',
   };
 
-  @observable isOpenSidebar: boolean = false;
+  isOpenSidebar: boolean = false;
 
   constructor() {
-    makeObservable(this);
+    makeObservable(this, {
+      isOpenSidebar: observable,
+      toggleSidebar: action,
+    });
   }
 
-  @action toggleSidebar = (): void => {
+  toggleSidebar = (): void => {
     this.isOpenSidebar = !this.isOpenSidebar;
   };
 }

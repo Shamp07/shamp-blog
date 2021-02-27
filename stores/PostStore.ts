@@ -17,21 +17,34 @@ interface PostInterface {
 class PostStore {
   AlertStore: AlertStore;
 
-  @observable post: PostInterface;
+  post: PostInterface;
 
-  @observable postView;
+  postView;
 
-  @observable postList;
+  postList;
 
   constructor(initialData = initialPost, root: { AlertStore: AlertStore }) {
-    makeObservable(this);
+    this.AlertStore = root.AlertStore;
     this.postList = initialData.postList;
     this.postView = initialData.postView;
     this.post = initialData.post;
-    this.AlertStore = root.AlertStore;
+
+    makeObservable(this, {
+      post: observable,
+      postView: observable,
+      postList: observable,
+      postHandleChange: action,
+      clearPost: action,
+      addPost: action,
+      getPostList: action,
+      getPost: action,
+      modifyPost: action,
+      deletePost: action,
+      addPostLike: action,
+    });
   }
 
-  @action postHandleChange = (event: string | React.ChangeEvent<HTMLInputElement>): void => {
+  postHandleChange = (event: string | React.ChangeEvent<HTMLInputElement>): void => {
     if (typeof event === 'string') {
       this.post = {
         ...this.post,
@@ -45,7 +58,7 @@ class PostStore {
     }
   };
 
-  @action movePage = (router: NextRouter, page: number): void => {
+  movePage = (router: NextRouter, page: number): void => {
     const boardParams = router.query.board as Array<string>;
     let pathUrl = `/category/${boardParams[0]}`;
 
@@ -60,19 +73,11 @@ class PostStore {
     });
   };
 
-  @action clearPost = (): void => {
-    this.post = {
-      id: 0,
-      category: '',
-      tags: '',
-      title: '',
-      content: '',
-      count: 0,
-      page: 0,
-    };
+  clearPost = (): void => {
+    this.post = initialPost.post;
   };
 
-  @action addPost = (router: NextRouter): void => {
+  addPost = (router: NextRouter): void => {
     axios.post('/api/post', this.post)
       .then((response) => {
         const { data } = response;
@@ -87,7 +92,7 @@ class PostStore {
       });
   };
 
-  @action getPostList = async (
+  getPostList = async (
     category: string, tag: string | undefined, page: number = 1,
   ): Promise<void> => {
     await axios.get(`${process.env.BASE_PATH}/api/post/list`, {
@@ -110,7 +115,7 @@ class PostStore {
       });
   };
 
-  @action getPost = async (id: number, isModify: boolean): Promise<void> => {
+  getPost = async (id: number, isModify: boolean): Promise<void> => {
     await axios.get(`${process.env.BASE_PATH}/api/post`, {
       params: {
         id,
@@ -130,7 +135,7 @@ class PostStore {
       });
   };
 
-  @action modifyPost = (router: NextRouter): void => {
+  modifyPost = (router: NextRouter): void => {
     axios.put('/api/post', this.post)
       .then((response) => {
         const { data } = response;
@@ -145,7 +150,7 @@ class PostStore {
       });
   };
 
-  @action deletePost = (id: number, router: NextRouter): void => {
+  deletePost = (id: number, router: NextRouter): void => {
     axios.delete('/api/post', {
       params: {
         id,
@@ -164,7 +169,7 @@ class PostStore {
       });
   };
 
-  @action addPostLike = (postId: number): void => {
+  addPostLike = (postId: number): void => {
     axios.post('/api/post/like', {
       postId,
     })

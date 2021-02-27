@@ -2,14 +2,17 @@ import { action, makeObservable, observable } from 'mobx';
 import axios from 'axios';
 
 class CategoryStore {
-  @observable categoryTags = [];
+  categoryTags = [];
 
   constructor(initialData = initialCategory) {
-    makeObservable(this);
     this.categoryTags = initialData.categoryTags;
+    makeObservable(this, {
+      categoryTags: observable,
+      getCategoryTags: action,
+    });
   }
 
-  @action getCategoryTags = async (category: string): Promise<void> => {
+  getCategoryTags = async (category: string): Promise<void> => {
     await axios.get(`${process.env.BASE_PATH}/api/category/tag`, {
       params: {
         category,

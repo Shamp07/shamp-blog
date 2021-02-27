@@ -1,20 +1,25 @@
 import { action, makeObservable, observable } from 'mobx';
 
 class AlertStore {
-  @observable isOpenAlertModal: boolean = false;
+  isOpenAlertModal = false;
 
-  @observable text: string = '';
+  text = '';
 
   constructor() {
-    makeObservable(this);
+    makeObservable(this, {
+      isOpenAlertModal: observable,
+      text: observable,
+      toggleAlertModal: action,
+      closeAlertModal: action,
+    });
   }
 
-  @action toggleAlertModal = (text: string): void => {
+  toggleAlertModal = (text: string): void => {
     this.text = text;
     this.isOpenAlertModal = !this.isOpenAlertModal;
   };
 
-  @action closeAlertModal = (): void => {
+  closeAlertModal = (): void => {
     this.isOpenAlertModal = false;
   };
 }

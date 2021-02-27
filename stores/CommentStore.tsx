@@ -9,58 +9,76 @@ class CommentStore {
 
   AlertStore: AlertStore;
 
-  @observable comment: string = '';
+  comment: string = '';
 
-  @observable replyComment: string = '';
+  replyComment: string = '';
 
-  @observable modifierComment: string = '';
+  modifierComment: string = '';
 
-  @observable commentList = [];
+  commentList = [];
 
-  @observable commentSize: number = 15;
+  commentSize: number = 15;
 
-  @observable modifierCommentId: number = 0;
+  modifierCommentId: number = 0;
 
-  @observable replyCommentId: number = 0;
+  replyCommentId: number = 0;
 
   constructor(initialData = initialComment, root: {
     PostStore: PostStore, AlertStore: AlertStore
   }) {
-    makeObservable(this);
     this.PostStore = root.PostStore;
     this.AlertStore = root.AlertStore;
     this.commentList = initialData.commentList;
+    makeObservable(this, {
+      comment: observable,
+      replyComment: observable,
+      modifierComment: observable,
+      commentList: observable,
+      commentSize: observable,
+      modifierCommentId: observable,
+      replyCommentId: observable,
+      commentHandleChange: action,
+      replyCommentHandleChange: action,
+      modifierCommentHandleChange: action,
+      setModifierCommentId: action,
+      setReplyCommentId: action,
+      addComment: action,
+      moreComment: action,
+      getComment: action,
+      modifyComment: action,
+      deleteComment: action,
+    });
   }
 
-  @action commentHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  commentHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.value.length <= 1000) {
       this.comment = event.target.value;
     }
   };
 
-  @action replyCommentHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  replyCommentHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.value.length <= 1000) {
       this.replyComment = event.target.value;
     }
   };
 
-  @action modifierCommentHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  modifierCommentHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.value.length <= 1000) {
       this.modifierComment = event.target.value;
     }
   };
 
-  @action setModifierCommentId = (id: number, content: string): void => {
+  setModifierCommentId = (id: number, content: string): void => {
     this.modifierCommentId = id;
     this.modifierComment = content;
   };
 
-  @action setReplyCommentId = (id: number): void => {
+  setReplyCommentId = (id: number): void => {
     this.replyCommentId = id;
     this.replyComment = '';
   };
 
-  @action addComment = (
+  addComment = (
     postId: number, userId: number,
     commentId: number, isReply: boolean,
   ): void => {
@@ -96,12 +114,12 @@ class CommentStore {
       });
   };
 
-  @action moreComment = (postId: number): void => {
+  moreComment = (postId: number): void => {
     this.commentSize += 15;
     this.getComment(postId);
   };
 
-  @action getComment = async (postId: number): Promise<void> => {
+  getComment = async (postId: number): Promise<void> => {
     await axios.get(`${process.env.BASE_PATH}/api/post/comment`, {
       params: {
         postId,
@@ -122,7 +140,7 @@ class CommentStore {
       });
   };
 
-  @action modifyComment = (commentId: number, postId: number): void => {
+ modifyComment = (commentId: number, postId: number): void => {
     axios.put('/api/post/comment', {
       commentId,
       comment: this.modifierComment,
@@ -142,7 +160,7 @@ class CommentStore {
       });
   };
 
-  @action deleteComment = (commentId: number, postId: number): void => {
+  deleteComment = (commentId: number, postId: number): void => {
     axios.delete('/api/post/comment', {
       params: {
         commentId,

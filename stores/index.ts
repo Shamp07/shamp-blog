@@ -13,11 +13,6 @@ enableStaticRendering(isServer);
 
 let store: RootStore | null = null;
 
-export interface RootStoreType {
-  AlertStore: AlertStore;
-  PostStore: PostStore;
-}
-
 export const initialRoot = {
   CategoryStore: initialCategory,
   PostStore: initialPost,

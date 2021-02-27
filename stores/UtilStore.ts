@@ -1,28 +1,35 @@
 import { action, makeObservable, observable } from 'mobx';
 
 class UtilStore {
-  @observable isOpenConfirmModal: boolean = false;
+  isOpenConfirmModal: boolean = false;
 
-  @observable callback: Function | undefined;
+  callback: Function | undefined;
 
-  @observable text: string = '';
+  text: string = '';
 
   constructor() {
-    makeObservable(this);
+    makeObservable(this, {
+      isOpenConfirmModal: observable,
+      callback: observable,
+      text: observable,
+      toggleConfirmModal: action,
+      callFunction: action,
+      closeConfirmModal: action,
+    });
   }
 
-  @action toggleConfirmModal = (text: string, callback: Function | undefined): void => {
+  toggleConfirmModal = (text: string, callback: Function | undefined): void => {
     this.isOpenConfirmModal = !this.isOpenConfirmModal;
     this.text = text;
     this.callback = callback;
   };
 
-  @action callFunction = (callback: Function): void => {
+  callFunction = (callback: Function): void => {
     callback();
     this.closeConfirmModal();
   };
 
-  @action closeConfirmModal = (): void => {
+  closeConfirmModal = (): void => {
     this.isOpenConfirmModal = false;
   };
 }

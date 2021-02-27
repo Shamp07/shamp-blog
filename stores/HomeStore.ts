@@ -6,46 +6,65 @@ import AlertStore from './AlertStore';
 class HomeStore {
   AlertStore: AlertStore;
 
-  @observable recentlyPostList = [];
+  recentlyPostList = [];
 
-  @observable noticePostList = [];
+  noticePostList = [];
 
-  @observable footprintList = [];
+  footprintList = [];
 
-  @observable footprintSize: number = 20;
+  footprintSize: number = 20;
 
-  @observable footprintText: string = '';
+  footprintText: string = '';
 
-  @observable modifierFootprintText: string = '';
+  modifierFootprintText: string = '';
 
-  @observable modifierFootprintId: number = 0;
+  modifierFootprintId: number = 0;
 
   constructor(initialData = initialHome, root: { AlertStore: AlertStore }) {
-    makeObservable(this);
+    this.AlertStore = root.AlertStore;
     this.recentlyPostList = initialData.recentlyPostList;
     this.noticePostList = initialData.noticePostList;
     this.footprintList = initialData.footprintList;
-    this.AlertStore = root.AlertStore;
+
+    makeObservable(this, {
+      recentlyPostList: observable,
+      noticePostList: observable,
+      footprintList: observable,
+      footprintSize: observable,
+      footprintText: observable,
+      modifierFootprintText: observable,
+      modifierFootprintId: observable,
+      setModifierFootprintId: action,
+      footprintHandleChange: action,
+      modifierFootprintHandleChange: action,
+      getRecentlyPostList: action,
+      getNoticePostList: action,
+      addFootprint: action,
+      moreFootprint: action,
+      getFootprint: action,
+      modifyFootprint: action,
+      deleteFootprint: action,
+    });
   }
 
-  @action setModifierFootprintId = (id: number, content: string): void => {
+  setModifierFootprintId = (id: number, content: string): void => {
     this.modifierFootprintId = id;
     this.modifierFootprintText = content;
   };
 
-  @action footprintHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  footprintHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.value.length <= 1000) {
       this.footprintText = event.target.value;
     }
   };
 
-  @action modifierFootprintHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  modifierFootprintHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.value.length <= 1000) {
       this.modifierFootprintText = event.target.value;
     }
   };
 
-  @action getRecentlyPostList = async (): Promise<void> => {
+  getRecentlyPostList = async (): Promise<void> => {
     await axios.get(`${process.env.BASE_PATH}/api/post/list/recently`)
       .then((response) => {
         const { data } = response;
@@ -61,7 +80,7 @@ class HomeStore {
       });
   };
 
-  @action getNoticePostList = async (): Promise<void> => {
+  getNoticePostList = async (): Promise<void> => {
     await axios.get(`${process.env.BASE_PATH}/api/post/list/notice`)
       .then((response) => {
         const { data } = response;
@@ -77,7 +96,7 @@ class HomeStore {
       });
   };
 
-  @action addFootprint = (userId: number): void => {
+  addFootprint = (userId: number): void => {
     if (!this.footprintText.trim()) {
       this.AlertStore.toggleAlertModal('발자취 내용을 입력해주세요!');
       return;
@@ -101,12 +120,12 @@ class HomeStore {
       });
   };
 
-  @action moreFootprint = (): void => {
+  moreFootprint = (): void => {
     this.footprintSize += 20;
     this.getFootprint();
   };
 
-  @action getFootprint = async (): Promise<void> => {
+  getFootprint = async (): Promise<void> => {
     await axios.get(`${process.env.BASE_PATH}/api/footprint`, {
       params: {
         size: this.footprintSize,
@@ -126,7 +145,7 @@ class HomeStore {
       });
   };
 
-  @action modifyFootprint = (id: number): void => {
+  modifyFootprint = (id: number): void => {
     axios.put('/api/footprint', {
       id,
       content: this.modifierFootprintText,
@@ -145,7 +164,7 @@ class HomeStore {
       });
   };
 
-  @action deleteFootprint = (id: number): void => {
+  deleteFootprint = (id: number): void => {
     axios.delete('/api/footprint', {
       params: {
         id,
