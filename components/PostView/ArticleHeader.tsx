@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import Head from 'next/head';
-import useStores from '../../stores/useStores';
 import { observer } from 'mobx-react-lite';
+import useStores from '../../stores/useStores';
 
 const ArticleHeader = () => {
   const { PostStore, SidebarStore } = useStores();

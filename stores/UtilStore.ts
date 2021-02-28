@@ -24,8 +24,10 @@ class UtilStore {
     this.callback = callback;
   };
 
-  callFunction = (callback: Function): void => {
-    callback();
+  callFunction = (callback: Function | undefined): void => {
+    if (callback) {
+      callback();
+    }
     this.closeConfirmModal();
   };
 

@@ -30,7 +30,17 @@ const Profile = () => (
         <h2>지금까지 이와 같은 것들을 해왔어요! 🏆</h2>
         <h3>프로젝트</h3>
         <ul>
-          <li>개인</li>
+          <li>
+            개인
+            <ul>
+              <li>
+                shamp-blog
+                (
+                <a href="https://github.com/Shamp07/shamp-blog">https://github.com/Shamp07/shamp-blog</a>
+                )
+              </li>
+            </ul>
+          </li>
           <li>팀</li>
         </ul>
       </div>

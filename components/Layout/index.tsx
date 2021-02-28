@@ -6,13 +6,14 @@ import SideBar from './Sidebar';
 import Content from './Content';
 import Backdrop from './Sidebar/Backdrop';
 import useStores from '../../stores/useStores';
+import { RootStore } from '../../stores';
 
 interface Props {
   children: ReactNode;
 }
 
 const Layout: FC<Props> = ({ children }: Props) => {
-  const { SignStore } = useStores();
+  const { SignStore } = useStores() as RootStore;
   const { cookieCheck } = SignStore;
   useEffect(() => {
     cookieCheck();
@@ -59,7 +60,6 @@ const CenterContent = styled.div`
 const GlobalStyle = css`
   html {
     line-height: 1.15;
-    text-size-adjust: 100%;
   }
   
   header, body, span, div, nav, ul, li, h1, h2, h3, h4, pre {

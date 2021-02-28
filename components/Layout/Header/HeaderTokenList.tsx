@@ -1,10 +1,16 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import useStores from '../../../stores/useStores';
+import { RootStore } from '../../../stores';
 
 const HeaderTokenList = () => {
-  const { SignStore } = useStores();
+  const { SignStore } = useStores() as RootStore;
   const { userData, logout } = SignStore;
+
+  if (!userData) {
+    return null;
+  }
+
   const { name } = userData;
 
   return (

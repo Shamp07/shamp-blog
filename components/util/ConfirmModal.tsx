@@ -6,9 +6,10 @@ import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { Button } from '@material-ui/core';
 import useStores from '../../stores/useStores';
+import { RootStore } from '../../stores';
 
 const ConfirmModal = () => {
-  const { UtilStore } = useStores();
+  const { UtilStore } = useStores() as RootStore;
   const {
     isOpenConfirmModal, callback,
     text, closeConfirmModal, callFunction,
@@ -34,8 +35,8 @@ const ConfirmModal = () => {
           </div>
           <div>
             <span>
-              <RightButton variant="contained" color="primary" onClick={() => callFunction(callback)}>확인</RightButton>
-              <RightButton variant="contained" onClick={closeConfirmModal}>취소</RightButton>
+              <RightButton type="button" variant="contained" color="primary" onClick={() => callFunction(callback)} href="">확인</RightButton>
+              <RightButton type="button" variant="contained" onClick={closeConfirmModal} href="">취소</RightButton>
             </span>
           </div>
         </Paper>

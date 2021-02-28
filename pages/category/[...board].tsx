@@ -7,10 +7,11 @@ import useStores from '../../stores/useStores';
 import BoardPagination from '../../components/board/BoardPagination';
 import PostView from '../../components/PostView';
 import { MyNextPageContext } from '../_app';
+import { RootStore } from '../../stores';
 
 const Board: NextPage = () => {
   const router = useRouter();
-  const { AlertStore, SidebarStore } = useStores();
+  const { AlertStore, SidebarStore } = useStores() as RootStore;
   const { toggleAlertModal } = AlertStore;
   const { boardCategoryName } = SidebarStore;
   const boardParams = router.query.board as Array<string>;

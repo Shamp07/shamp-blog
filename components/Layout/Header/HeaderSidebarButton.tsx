@@ -3,9 +3,10 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useStores from '../../../stores/useStores';
+import { RootStore } from '../../../stores';
 
 const HeaderSidebarButton = () => {
-  const { SidebarStore } = useStores();
+  const { SidebarStore } = useStores() as RootStore;
   const { toggleSidebar } = SidebarStore;
 
   return (

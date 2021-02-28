@@ -5,18 +5,17 @@ import Fade from '@material-ui/core/Fade';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { Button, TextField } from '@material-ui/core';
-import { useRouter } from 'next/router';
 import useStores from '../../stores/useStores';
+import { RootStore } from '../../stores';
 
 const SignModal = () => {
-  const { SignStore } = useStores();
+  const { SignStore } = useStores() as RootStore;
   const {
     isOpenSignModal, toggleSignModal,
     loginInfo, loginHandleChange, login,
     changeRegister,
   } = SignStore;
   const { email, password } = loginInfo;
-  const router = useRouter();
 
   return (
     <CustomModal
@@ -43,7 +42,7 @@ const SignModal = () => {
             <Button variant="contained" color="primary" onClick={changeRegister}>
               회원가입
             </Button>
-            <Button variant="contained" color="primary" onClick={() => login(router)}>
+            <Button variant="contained" color="primary" onClick={login}>
               로그인
             </Button>
           </div>

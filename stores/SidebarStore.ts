@@ -62,6 +62,8 @@ class SidebarStore {
     });
   }
 
+  getBoardCategoryName = (path: stirng) => this.boardCategoryName[path];
+
   toggleSidebar = (): void => {
     this.isOpenSidebar = !this.isOpenSidebar;
   };

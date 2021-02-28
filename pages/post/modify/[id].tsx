@@ -4,9 +4,10 @@ import { useRouter } from 'next/router';
 import Post from '..';
 import useStores from '../../../stores/useStores';
 import { MyNextPageContext } from '../../_app';
+import { RootStore } from '../../../stores';
 
 const ModifyPost: NextPage = () => {
-  const { SignStore, AlertStore } = useStores();
+  const { SignStore, AlertStore } = useStores() as RootStore;
   const { userData } = SignStore;
   const { toggleAlertModal } = AlertStore;
   const router = useRouter();

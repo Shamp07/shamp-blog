@@ -4,12 +4,21 @@ import axios from 'axios';
 import cookie from 'js-cookie';
 import AlertStore from './AlertStore';
 
+interface UserDataType {
+  id: number;
+  name: string;
+  verifyFl: boolean;
+  adminFl: boolean;
+  exp: number;
+  iat: number;
+}
+
 class SignStore {
   AlertStore: AlertStore;
 
   cookieChecked: boolean = false;
 
-  userData: object | undefined;
+  userData: UserDataType | undefined;
 
   loginInfo = {
     email: '',

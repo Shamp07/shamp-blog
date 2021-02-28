@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import hljs from 'highlight.js';
 import styled from '@emotion/styled';
 import useStores from '../../stores/useStores';
+import { RootStore } from '../../stores';
 
 hljs.configure({
   languages: ['javascript'],
@@ -15,10 +16,9 @@ const QuillNoSSRWRapper = dynamic(import('react-quill'), {
 });
 
 const Editor = () => {
-  const { PostStore } = useStores();
+  const { PostStore } = useStores() as RootStore;
   const { post, postHandleChange } = PostStore;
   const { content } = post;
-  console.log()
   return (
     <CustomQuill
       onChange={postHandleChange}

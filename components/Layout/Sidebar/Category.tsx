@@ -39,10 +39,10 @@ interface CategoryInterface {
 }
 
 const CategoryList = styled.li<CategoryInterface>`
-  ${(props) => (props.active ? 'background-color: #2d79c7 !important;' : null)}
+  ${(props) => (props.active ? 'background-color: #2d79c7 !important;' : null)};
   & > a {
-    ${(props) => (props.active ? 'transition: all 0.3s;' : null)}
-    ${(props) => (props.active ? 'color: #ffffff !important;' : null)}
+    ${(props) => (props.active ? 'transition: all 0.3s;' : null)};
+    ${(props) => (props.active ? 'color: #ffffff !important;' : null)};
   }
 `;
 

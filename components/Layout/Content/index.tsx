@@ -2,13 +2,14 @@ import React, { ReactNode, FC } from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../../stores/useStores';
+import { RootStore } from '../../../stores';
 
 interface ContentProp {
   children: ReactNode;
 }
 
 const Content: FC<ContentProp> = ({ children }: ContentProp) => {
-  const { SignStore } = useStores();
+  const { SignStore } = useStores() as RootStore;
   const { cookieChecked } = SignStore;
 
   // 쿠키 내의 토큰 체크가 되기 전
