@@ -3,9 +3,10 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styled from '@emotion/styled';
 import useStores from '../../../stores/useStores';
+import { RootStore } from '../../../stores';
 
 const Category: FC<CategoryProps> = ({ path, name, isBoard }: CategoryProps) => {
-  const { SidebarStore } = useStores();
+  const { SidebarStore } = useStores() as RootStore;
   const { toggleSidebar } = SidebarStore;
   const router = useRouter();
   let baseUrl: string = '';

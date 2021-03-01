@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import useStores from '../../../stores/useStores';
+import { RootStore } from '../../../stores';
 
 const CommentMore = () => {
-  const { CommentStore } = useStores();
+  const { CommentStore, PostStore } = useStores() as RootStore;
   const { moreComment } = CommentStore;
-  const { PostStore } = useStores();
   const { postView } = PostStore;
   const { id } = postView;
 

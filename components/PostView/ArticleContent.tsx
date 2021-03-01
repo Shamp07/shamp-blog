@@ -5,9 +5,10 @@ import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../stores/useStores';
+import { RootStore } from '../../stores';
 
 const ArticleContent = () => {
-  const { PostStore, SignStore } = useStores();
+  const { PostStore, SignStore } = useStores() as RootStore;
   const { postView, addPostLike } = PostStore;
   const { id, likeCnt, content } = postView;
   const { userData } = SignStore;
@@ -15,6 +16,7 @@ const ArticleContent = () => {
   return (
     <div>
       <ArticleText>
+        {/* eslint-disable-next-line react/no-danger */}
         <div dangerouslySetInnerHTML={{ __html: content }} />
       </ArticleText>
       <ArticleBox>

@@ -1,14 +1,13 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { TextField } from '@material-ui/core';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../../stores/useStores';
+import { RootStore } from '../../../stores';
 
 const FootprintWrite = () => {
-  const { HomeStore, SignStore } = useStores();
+  const { HomeStore } = useStores() as RootStore;
   const { footprintText, footprintHandleChange, addFootprint } = HomeStore;
-  const { userData } = SignStore;
-  const { id: userId } = userData;
 
   return (
     <FootprintWriteWrapper>
@@ -28,7 +27,7 @@ const FootprintWrite = () => {
               { footprintText.length }
               /1000)
             </span>
-            <FootprintWriteButton onClick={() => addFootprint(userId)}>
+            <FootprintWriteButton onClick={() => addFootprint()}>
               작성
             </FootprintWriteButton>
           </span>

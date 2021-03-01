@@ -5,9 +5,10 @@ import { Button } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../../stores/useStores';
+import { RootStore } from '../../../stores';
 
 const CommentHeader = () => {
-  const { PostStore, CommentStore } = useStores();
+  const { PostStore, CommentStore } = useStores() as RootStore;
   const { postView } = PostStore;
   const { getComment } = CommentStore;
   const { id, commentCnt } = postView;

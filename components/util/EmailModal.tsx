@@ -6,9 +6,10 @@ import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { Button, TextField } from '@material-ui/core';
 import useStores from '../../stores/useStores';
+import { RootStore } from '../../stores';
 
 const EmailModal = () => {
-  const { SignStore } = useStores();
+  const { SignStore } = useStores() as RootStore;
   const {
     isOpenEmailModal, toggleEmailModal, emailVerifyCode,
     verifyHandleChange, verifyCode,

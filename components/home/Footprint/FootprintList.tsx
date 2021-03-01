@@ -5,9 +5,10 @@ import FootprintMore from './FootprintMore';
 import useStores from '../../../stores/useStores';
 import FootPrintRow, { FootprintRowInterface } from './FootprintRow';
 import FootprintNone from './FootprintNone';
+import { RootStore } from '../../../stores';
 
 const FootprintList = () => {
-  const { HomeStore } = useStores();
+  const { HomeStore } = useStores() as RootStore;
   const { footprintList, footprintSize } = HomeStore;
 
   let isMoreFootprint = false;

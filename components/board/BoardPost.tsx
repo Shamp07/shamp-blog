@@ -5,11 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import useStores from '../../stores/useStores';
+import { RootStore } from '../../stores';
 
 const BoardPost = ({ data }: { data: BoardPostProps }) => {
   const router = useRouter();
   const routerParams = router.query.board as Array<string>;
-  const { SidebarStore } = useStores();
+  const { SidebarStore } = useStores() as RootStore;
   const { boardCategoryName } = SidebarStore;
   const {
     id, title, category,

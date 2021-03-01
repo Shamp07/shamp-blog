@@ -78,10 +78,7 @@ class CommentStore {
     this.replyComment = '';
   };
 
-  addComment = (
-    postId: number, userId: number,
-    commentId: number, isReply: boolean,
-  ): void => {
+  addComment = (postId: number, commentId: number, isReply: boolean): void => {
     if (!isReply && !this.comment.trim()) {
       this.AlertStore.toggleAlertModal('댓글 내용을 입력해주세요!');
       return;
@@ -94,7 +91,6 @@ class CommentStore {
 
     axios.post('/api/post/comment', {
       postId,
-      userId,
       commentId: isReply ? commentId : null,
       comment: isReply ? this.replyComment : this.comment,
     })
@@ -140,7 +136,7 @@ class CommentStore {
       });
   };
 
- modifyComment = (commentId: number, postId: number): void => {
+  modifyComment = (commentId: number, postId: number): void => {
     axios.put('/api/post/comment', {
       commentId,
       comment: this.modifierComment,

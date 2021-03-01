@@ -5,6 +5,7 @@ import { TextField } from '@material-ui/core';
 import useStores from '../../../stores/useStores';
 import CommentWrite from './CommentWrite';
 import CommentMenu from './CommentMenu';
+import { RootStore } from "../../../stores";
 
 export interface CommentRowInterface {
   id: number,
@@ -19,7 +20,7 @@ export interface CommentRowInterface {
 }
 
 const CommentRow = ({ data }: { data: CommentRowInterface }) => {
-  const { CommentStore } = useStores();
+  const { CommentStore } = useStores() as RootStore;
   const {
     replyCommentId, modifierComment,
     modifierCommentId, modifierCommentHandleChange,

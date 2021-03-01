@@ -4,7 +4,7 @@ import axios from 'axios';
 import { NextRouter } from 'next/dist/next-server/lib/router/router';
 import AlertStore from './AlertStore';
 
-interface PostInterface {
+interface PostType {
   id: number,
   category: string,
   tags: string
@@ -14,12 +14,16 @@ interface PostInterface {
   page: number,
 }
 
+interface PostViewType {
+  id: number;
+}
+
 class PostStore {
   AlertStore: AlertStore;
 
-  post: PostInterface;
+  post: PostType;
 
-  postView;
+  postView: PostViewType;
 
   postList;
 
@@ -192,7 +196,7 @@ class PostStore {
 
 export const initialPost = {
   postList: [],
-  postView: {},
+  postView: {} as PostViewType,
   post: {
     id: 0,
     category: '',

@@ -6,13 +6,14 @@ import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import Editor from '../../components/posting/Editor';
 import useStores from '../../stores/useStores';
+import { RootStore } from '../../stores';
 
 const Post = ({ isModify }: { isModify: boolean }) => {
   const router = useRouter();
   const {
     SidebarStore, PostStore,
     SignStore, AlertStore,
-  } = useStores();
+  } = useStores() as RootStore;
   const { boardCategoryList } = SidebarStore;
   const {
     post, postHandleChange, addPost, modifyPost,

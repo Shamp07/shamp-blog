@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import FootprintNormalMenu from './FootprintNormalMenu';
 import FootprintModifyMenu from './FootprintModifyMenu';
 import useStores from '../../../../stores/useStores';
+import { RootStore } from '../../../../stores';
 
 interface FootprintMenuProp {
   data: FootprintRowInterface;
@@ -18,7 +19,7 @@ export interface FootprintRowInterface {
 }
 
 const FootprintMenu: FC<FootprintMenuProp> = ({ data }: FootprintMenuProp) => {
-  const { HomeStore } = useStores();
+  const { HomeStore } = useStores() as RootStore;
   const { modifierFootprintId } = HomeStore;
   const { id } = data;
 

@@ -3,9 +3,10 @@ import styled from '@emotion/styled';
 import Head from 'next/head';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../stores/useStores';
+import { RootStore } from '../../stores';
 
 const ArticleHeader = () => {
-  const { PostStore, SidebarStore } = useStores();
+  const { PostStore, SidebarStore } = useStores() as RootStore;
   const { boardCategoryName } = SidebarStore;
   const { postView } = PostStore;
   const {

@@ -5,9 +5,10 @@ import CommentMore from './CommentMore';
 import useStores from '../../../stores/useStores';
 import CommentRow, { CommentRowInterface } from './CommentRow';
 import CommentNone from './CommentNone';
+import { RootStore } from '../../../stores';
 
 const CommentList = () => {
-  const { CommentStore } = useStores();
+  const { CommentStore } = useStores() as RootStore;
   const { commentList, commentSize } = CommentStore;
 
   let isMoreComment = false;

@@ -3,13 +3,14 @@ import styled from '@emotion/styled';
 import { TextField } from '@material-ui/core';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../../stores/useStores';
+import { RootStore } from '../../../stores';
 
 interface CommentProp {
   isReply: boolean;
 }
 
 const CommentWrite: FC<CommentProp> = ({ isReply }: CommentProp) => {
-  const { PostStore, CommentStore, SignStore } = useStores();
+  const { PostStore, CommentStore } = useStores() as RootStore;
   const { postView } = PostStore;
   const { id } = postView;
   const {
@@ -17,8 +18,6 @@ const CommentWrite: FC<CommentProp> = ({ isReply }: CommentProp) => {
     addComment, commentHandleChange, replyCommentHandleChange,
     replyCommentId,
   } = CommentStore;
-  const { userData } = SignStore;
-  const { id: userId } = userData;
 
   return (
     <CommentWriteWrapper isReply={isReply}>
@@ -39,7 +38,7 @@ const CommentWrite: FC<CommentProp> = ({ isReply }: CommentProp) => {
               {isReply ? replyComment.length : comment.length}
               /1000)
             </span>
-            <CommentWriteButton onClick={() => addComment(id, userId, replyCommentId, isReply)}>
+            <CommentWriteButton onClick={() => addComment(id, replyCommentId, isReply)}>
               작성
             </CommentWriteButton>
           </span>

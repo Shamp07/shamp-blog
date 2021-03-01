@@ -9,9 +9,10 @@ import useStores from '../stores/useStores';
 import HomePostList from '../components/home/HomePostList';
 import Footprint from '../components/home/Footprint';
 import { MyNextPageContext } from './_app';
+import { RootStore } from '../stores';
 
 const Home: NextPage = () => {
-  const { HomeStore } = useStores();
+  const { HomeStore } = useStores() as RootStore;
   const { noticePostList, recentlyPostList, getFootprint } = HomeStore;
 
   return (

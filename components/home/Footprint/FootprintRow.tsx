@@ -4,6 +4,7 @@ import { TextField } from '@material-ui/core';
 import { observer } from 'mobx-react-lite';
 import FootprintMenu from './FootprintMenu';
 import useStores from '../../../stores/useStores';
+import { RootStore } from '../../../stores';
 
 interface FootprintRowProp {
   data: FootprintRowInterface;
@@ -19,7 +20,7 @@ export interface FootprintRowInterface {
 }
 
 const FootprintRow: FC<FootprintRowProp> = ({ data }: FootprintRowProp) => {
-  const { HomeStore } = useStores();
+  const { HomeStore } = useStores() as RootStore;
   const {
     modifierFootprintId, modifierFootprintText,
     modifierFootprintHandleChange,

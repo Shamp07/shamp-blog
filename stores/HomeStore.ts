@@ -96,14 +96,13 @@ class HomeStore {
       });
   };
 
-  addFootprint = (userId: number): void => {
+  addFootprint = (): void => {
     if (!this.footprintText.trim()) {
       this.AlertStore.toggleAlertModal('발자취 내용을 입력해주세요!');
       return;
     }
 
     axios.post('/api/footprint', {
-      userId,
       content: this.footprintText,
     })
       .then((response) => {
@@ -164,12 +163,8 @@ class HomeStore {
       });
   };
 
-  deleteFootprint = (id: number): void => {
-    axios.delete('/api/footprint', {
-      params: {
-        id,
-      },
-    })
+  deleteFootprint = (): void => {
+    axios.delete('/api/footprint')
       .then((response) => {
         const { data } = response;
         if (data.success) {

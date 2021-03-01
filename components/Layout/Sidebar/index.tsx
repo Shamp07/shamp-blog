@@ -6,9 +6,10 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import useStores from '../../../stores/useStores';
 import Category, { CategoryProps } from './Category';
 import SideTokenMenu from './SideTokenMenu';
+import { RootStore } from '../../../stores';
 
 const Sidebar = () => {
-  const { SidebarStore } = useStores();
+  const { SidebarStore } = useStores() as RootStore;
   const {
     boardCategoryList, topCategoryList,
     isOpenSidebar, toggleSidebar,

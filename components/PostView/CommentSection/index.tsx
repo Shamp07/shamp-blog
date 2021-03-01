@@ -5,9 +5,10 @@ import CommentHeader from './CommentHeader';
 import CommentList from './CommentList';
 import CommentWrite from './CommentWrite';
 import useStores from '../../../stores/useStores';
+import { RootStore } from '../../../stores';
 
 const CommentSection = () => {
-  const { SignStore } = useStores();
+  const { SignStore } = useStores() as RootStore;
   const { userData } = SignStore;
   const loggedIn = !!userData;
 

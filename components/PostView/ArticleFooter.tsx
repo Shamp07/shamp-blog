@@ -4,10 +4,11 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../stores/useStores';
+import { RootStore } from '../../stores';
 
 const ArticleFooter = () => {
   const router = useRouter();
-  const { PostStore, UtilStore, SignStore } = useStores();
+  const { PostStore, UtilStore, SignStore } = useStores() as RootStore;
   const { postView, deletePost } = PostStore;
   const { id } = postView;
   const { toggleConfirmModal } = UtilStore;

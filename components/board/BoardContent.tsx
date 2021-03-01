@@ -3,9 +3,10 @@ import styled from '@emotion/styled';
 import useStores from '../../stores/useStores';
 import BoardPost, { BoardPostProps } from './BoardPost';
 import BoardPostNone from './BoardPostNone';
+import { RootStore } from '../../stores';
 
 const BoardContent = () => {
-  const { PostStore } = useStores();
+  const { PostStore } = useStores() as RootStore;
   const { postList } = PostStore;
 
   return (

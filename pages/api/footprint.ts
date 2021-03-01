@@ -22,9 +22,10 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
   }
 };
 
-const addFootprint = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { content, userId }: Interface = request.body;
-  const values: (string | string[])[] = [userId, content];
+const addFootprint = async (request: NextApiRequestToken, response: NextApiResponse) => {
+  const { content }: Interface = request.body;
+  const { id: userId } = request.decodedToken;
+  const values: (number | string | string[])[] = [userId, content];
 
   await Database.execute(
     (database: Client) => database.query(

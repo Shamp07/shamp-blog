@@ -5,11 +5,11 @@ import Fade from '@material-ui/core/Fade';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { Button, TextField } from '@material-ui/core';
-import { useRouter } from 'next/router';
 import useStores from '../../stores/useStores';
+import { RootStore } from '../../stores';
 
 const RegisterModal = () => {
-  const { SignStore } = useStores();
+  const { SignStore } = useStores() as RootStore;
   const {
     isOpenRegisterModal, toggleRegisterModal,
     registerInfo, registerHandleChange, register,
@@ -17,7 +17,6 @@ const RegisterModal = () => {
   const {
     email, name, password, passwordCheck,
   } = registerInfo;
-  const router = useRouter();
 
   return (
     <CustomModal
@@ -42,7 +41,7 @@ const RegisterModal = () => {
             <br />
           </div>
           <div>
-            <RightButton variant="contained" color="primary" onClick={() => register(router)}>
+            <RightButton variant="contained" color="primary" onClick={register}>
               가입
             </RightButton>
           </div>

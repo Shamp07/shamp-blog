@@ -3,9 +3,10 @@ import { observer } from 'mobx-react-lite';
 import useStores from '../../../stores/useStores';
 import SideTokenList from './SideTokenList';
 import SideNoTokenList from './SideNoTokenList';
+import { RootStore } from '../../../stores';
 
 const SideTokenMenu = () => {
-  const { SignStore } = useStores();
+  const { SignStore } = useStores() as RootStore;
   const { userData, cookieChecked } = SignStore;
   const loggedIn = !!userData;
 

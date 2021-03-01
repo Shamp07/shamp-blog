@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import useStores from '../../../../stores/useStores';
+import { RootStore } from '../../../../stores';
 
 const FootprintModifyMenu = () => {
-  const { HomeStore } = useStores();
+  const { HomeStore } = useStores() as RootStore;
   const { modifierFootprintId, setModifierFootprintId, modifyFootprint } = HomeStore;
 
   return (

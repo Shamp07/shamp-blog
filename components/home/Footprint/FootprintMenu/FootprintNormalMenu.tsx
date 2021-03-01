@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../../../stores/useStores';
+import { RootStore } from '../../../../stores';
 
 interface FootprintNormalMenuProps {
   id: number;
@@ -10,7 +11,7 @@ interface FootprintNormalMenuProps {
 }
 
 const FootprintNormalMenu = ({ data }: { data: FootprintNormalMenuProps }) => {
-  const { HomeStore, SignStore, UtilStore } = useStores();
+  const { HomeStore, SignStore, UtilStore } = useStores() as RootStore;
   const { setModifierFootprintId, deleteFootprint } = HomeStore;
   const { userData } = SignStore;
   const { toggleConfirmModal } = UtilStore;

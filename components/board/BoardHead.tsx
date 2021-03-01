@@ -8,6 +8,7 @@ import { observer } from 'mobx-react-lite';
 import { Button } from '@material-ui/core';
 import useStores from '../../stores/useStores';
 import BoardTag from './BoardTag';
+import { RootStore } from '../../stores';
 
 interface TagsType {
   tags: string
@@ -18,7 +19,7 @@ const BoardHead = () => {
   const {
     SidebarStore, CategoryStore, SignStore,
     PostStore,
-  } = useStores();
+  } = useStores() as RootStore;
   const { boardCategoryName } = SidebarStore;
   const { categoryTags } = CategoryStore;
   const { userData } = SignStore;

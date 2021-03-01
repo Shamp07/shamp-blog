@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import useStores from '../../../stores/useStores';
+import { RootStore } from '../../../stores';
 
 const SideTokenList = () => {
-  const { SignStore } = useStores();
+  const { SignStore } = useStores() as RootStore;
   const { userData, logout } = SignStore;
   const { name } = userData;
 

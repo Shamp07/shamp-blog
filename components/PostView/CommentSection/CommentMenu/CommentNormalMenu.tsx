@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../../../stores/useStores';
+import { RootStore } from '../../../../stores';
 
 interface CommentNormalMenuProps {
   id: number;
@@ -15,7 +16,7 @@ const CommentNormalMenu = ({ data }: { data: CommentNormalMenuProps }) => {
   const {
     PostStore, CommentStore, SignStore,
     UtilStore,
-  } = useStores();
+  } = useStores() as RootStore;
   const { postView } = PostStore;
   const { id: postId } = postView;
   const { setReplyCommentId, setModifierCommentId, deleteComment } = CommentStore;

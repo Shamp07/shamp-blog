@@ -23,7 +23,6 @@ const BoardPaginationItem: FC<PaginationItemProp> = (props: PaginationItemProp) 
     text = '>';
   }
 
-  console.log(router);
   return (
     <Link
       href={{

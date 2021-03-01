@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import PaginationItem from '@material-ui/lab/PaginationItem';
 import useStores from '../../stores/useStores';
+import { RootStore } from '../../stores';
 
 const BoardPagination = () => {
   const router = useRouter();
@@ -13,7 +14,7 @@ const BoardPagination = () => {
     pageCount = Number(router.query.page);
   }
 
-  const { PostStore } = useStores();
+  const { PostStore } = useStores() as RootStore;
   const { postList, movePage } = PostStore;
 
   let count: number = 0;

@@ -2,9 +2,10 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import useStores from '../../../stores/useStores';
+import { RootStore } from '../../../stores';
 
 const Backdrop = () => {
-  const { SidebarStore } = useStores();
+  const { SidebarStore } = useStores() as RootStore;
   const { isOpenSidebar, toggleSidebar } = SidebarStore;
   return (
     <SidebarBackdrop isOpenSidebar={isOpenSidebar} onClick={toggleSidebar} />

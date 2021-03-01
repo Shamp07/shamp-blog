@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import CommentNormalMenu from './CommentNormalMenu';
 import CommentModifyMenu from './CommentModifyMenu';
 import useStores from '../../../../stores/useStores';
+import { RootStore } from '../../../../stores';
 
 interface CommentRowInterface {
   id: number,
@@ -16,7 +17,7 @@ interface CommentRowInterface {
 }
 
 const CommentMenu = ({ data }: { data: CommentRowInterface }) => {
-  const { CommentStore } = useStores();
+  const { CommentStore } = useStores() as RootStore;
   const { modifierCommentId } = CommentStore;
   const { id } = data;
 

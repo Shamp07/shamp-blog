@@ -6,9 +6,10 @@ import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { Button } from '@material-ui/core';
 import useStores from '../../stores/useStores';
+import { RootStore } from '../../stores';
 
 const ConfirmModal = () => {
-  const { AlertStore } = useStores();
+  const { AlertStore } = useStores() as RootStore;
   const { isOpenAlertModal, text, closeAlertModal } = AlertStore;
 
   return (
@@ -26,6 +27,7 @@ const ConfirmModal = () => {
       <Fade in={isOpenAlertModal}>
         <Paper>
           <h2 id="transition-modal-title">알림</h2>
+          {/* eslint-disable-next-line react/no-danger */}
           <div dangerouslySetInnerHTML={{ __html: text }} />
           <div>
             <RightButton variant="contained" color="primary" onClick={closeAlertModal}>확인</RightButton>
