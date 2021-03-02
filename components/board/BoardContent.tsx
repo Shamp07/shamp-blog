@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import useStores from '../../stores/useStores';
-import BoardPost, { BoardPostProps } from './BoardPost';
-import BoardPostNone from './BoardPostNone';
 import { RootStore } from '../../stores';
+import { PostListType } from '../../stores/PostStore';
+import BoardPost from './BoardPost';
+import BoardPostNone from './BoardPostNone';
 
 const BoardContent = () => {
   const { PostStore } = useStores() as RootStore;
@@ -12,7 +13,7 @@ const BoardContent = () => {
   return (
     <ArticleWrapper>
       {postList.length > 0 ? postList.map(
-        (data: BoardPostProps) => (
+        (data: PostListType) => (
           <BoardPost data={data} key={data.id} />
         ),
       ) : <BoardPostNone />}

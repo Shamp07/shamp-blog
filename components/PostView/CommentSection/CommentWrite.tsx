@@ -1,15 +1,15 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { TextField } from '@material-ui/core';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../../stores/useStores';
 import { RootStore } from '../../../stores';
 
-interface CommentProp {
+interface CommentWriteProps {
   isReply: boolean;
 }
 
-const CommentWrite: FC<CommentProp> = ({ isReply }: CommentProp) => {
+const CommentWrite = ({ isReply }: CommentWriteProps) => {
   const { PostStore, CommentStore } = useStores() as RootStore;
   const { postView } = PostStore;
   const { id } = postView;
@@ -48,7 +48,7 @@ const CommentWrite: FC<CommentProp> = ({ isReply }: CommentProp) => {
   );
 };
 
-const CommentWriteWrapper = styled.div<CommentProp>`
+const CommentWriteWrapper = styled.div<CommentWriteProps>`
   position: relative;
   padding: ${(props) => (props.isReply ? '24px 16px 24px 64px' : '24px 16px')};
   background-color: #f8f9fa;

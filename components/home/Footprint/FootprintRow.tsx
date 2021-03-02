@@ -1,25 +1,13 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { TextField } from '@material-ui/core';
 import { observer } from 'mobx-react-lite';
 import FootprintMenu from './FootprintMenu';
 import useStores from '../../../stores/useStores';
 import { RootStore } from '../../../stores';
+import { FootprintDataProps } from './FootprintMenu/FootprintNormalMenu';
 
-interface FootprintRowProp {
-  data: FootprintRowInterface;
-}
-
-export interface FootprintRowInterface {
-  id: number,
-  userId: number,
-  userName: string,
-  content: string,
-  time: string,
-  modifiedTime: string,
-}
-
-const FootprintRow: FC<FootprintRowProp> = ({ data }: FootprintRowProp) => {
+const FootprintRow = ({ data }: FootprintDataProps) => {
   const { HomeStore } = useStores() as RootStore;
   const {
     modifierFootprintId, modifierFootprintText,

@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import useStores from '../../../stores/useStores';
-import Category, { CategoryProps } from './Category';
+import Category from './Category';
 import SideTokenMenu from './SideTokenMenu';
 import { RootStore } from '../../../stores';
 
@@ -24,7 +24,7 @@ const Sidebar = () => {
       <CategoryWrapper>
         <ul>
           {topCategoryList.map(
-            (data: CategoryProps) => (
+            (data) => (
               <Category isBoard={false} path={data.path} name={data.name} key={data.path} />
             ),
           )}
@@ -33,7 +33,7 @@ const Sidebar = () => {
       <BottomCategory>
         <ul>
           {boardCategoryList.map(
-            (data: CategoryProps) => (
+            (data) => (
               <Category isBoard path={data.path} name={data.name} key={data.path} />
             ),
           )}
@@ -43,11 +43,11 @@ const Sidebar = () => {
   );
 };
 
-interface Container {
+interface WrapperProps {
   isOpenSidebar: boolean;
 }
 
-const Wrapper = styled.div<Container>`
+const Wrapper = styled.div<WrapperProps>`
   display: block;
   width: 300px;
   will-change: min-height;
@@ -80,7 +80,6 @@ const CloseIcon = styled(FontAwesomeIcon)`
   right: 10px;
   height: 20px;
   color: #616161;
-  
 `;
 
 const CategoryWrapper = styled.div`

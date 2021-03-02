@@ -1,35 +1,35 @@
-import React, { FC } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 
-interface BoardTagInterface {
+interface BoardTagProps {
   tags: string;
 }
 
-const BoardTag: FC<BoardTagInterface> = ({ tags }: BoardTagInterface) => {
+const BoardTag = ({ tags }: BoardTagProps) => {
   const router = useRouter();
   const boardParams = router.query.board as Array<string>;
   const boardPath = boardParams[0];
   const boardTag = boardParams[1];
 
   return (
-    <CategoryTagList active={boardTag === tags}>
+    <CategoryTag active={boardTag === tags}>
       <Link href={`/category/${boardPath}/${tags}`}>
         {tags}
       </Link>
-    </CategoryTagList>
+    </CategoryTag>
   );
 };
 
-interface TagInterface {
+interface CategoryTagProps {
   active: boolean;
 }
 
-const CategoryTagList = styled.li<TagInterface>`
+const CategoryTag = styled.li<CategoryTagProps>`
   & > a {
-    ${(props) => (props.active ? 'color: #fff !important;' : null)}
-    ${(props) => (props.active ? 'background-color: #2d79c7 !important;' : null)}
+    ${(props) => (props.active ? 'color: #fff !important' : null)};
+    ${(props) => (props.active ? 'background-color: #2d79c7 !important' : null)};
   }
 `;
 

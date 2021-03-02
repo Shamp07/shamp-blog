@@ -5,14 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../../../stores/useStores';
 import { RootStore } from '../../../../stores';
+import { CommentType } from '../../../../stores/CommentStore';
 
-interface CommentNormalMenuProps {
-  id: number;
-  userId: number;
-  content: string;
+export interface CommentDataProps {
+  data: CommentType
 }
 
-const CommentNormalMenu = ({ data }: { data: CommentNormalMenuProps }) => {
+const CommentNormalMenu = ({ data }: CommentDataProps) => {
   const {
     PostStore, CommentStore, SignStore,
     UtilStore,
@@ -25,10 +24,9 @@ const CommentNormalMenu = ({ data }: { data: CommentNormalMenuProps }) => {
 
   const { id, userId, content } = data;
 
-  let isMine: boolean = false;
-  const loggedIn = !!userData;
+  let isMine = false;
 
-  if (loggedIn) {
+  if (userData) {
     const { id: userIdToken } = userData;
     isMine = userId === userIdToken;
   }
@@ -58,7 +56,7 @@ const CommentNormalMenu = ({ data }: { data: CommentNormalMenuProps }) => {
           </span>
         </>
       )}
-      {loggedIn && (
+      {!!userData && (
         <span
           role="button"
           tabIndex={0}

@@ -164,12 +164,7 @@ const SELECT_COMMENT = `
         THEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'MI') AS INTEGER)) || ' 분 전'
       WHEN (CAST(TO_CHAR(NOW() - c.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000)
         THEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'HH24') AS INTEGER)) || ' 시간 전'
-      WHEN (CAST(TO_CHAR(NOW() - c.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 100000000)
-        THEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'DD') AS INTEGER)) || ' 일 전'
-      WHEN (CAST(TO_CHAR(NOW() - c.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 10000000000)
-        THEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'MM') AS INTEGER)) || ' 달 전'
-      WHEN (CAST(TO_CHAR(NOW() - c.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000000000)
-        THEN (CAST(TO_CHAR(NOW() - c.crt_dttm, 'YYYY') AS INTEGER)) || ' 년 전'
+      ELSE TO_CHAR(c.crt_dttm, 'YYYY-MM-DD')
       END AS time,
       CASE WHEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 100)
         THEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'SS') AS INTEGER)) || ' 초 전 수정'
@@ -177,12 +172,7 @@ const SELECT_COMMENT = `
         THEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'MI') AS INTEGER)) || ' 분 전 수정'
       WHEN (CAST(TO_CHAR(NOW() - c.mfy_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000)
         THEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'HH24') AS INTEGER)) || ' 시간 전 수정'
-      WHEN (CAST(TO_CHAR(NOW() - c.mfy_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 100000000)
-        THEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'DD') AS INTEGER)) || ' 일 전 수정'
-      WHEN (CAST(TO_CHAR(NOW() - c.mfy_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 10000000000)
-        THEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'MM') AS INTEGER)) || ' 달 전 수정'
-      WHEN (CAST(TO_CHAR(NOW() - c.mfy_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000000000)
-        THEN (CAST(TO_CHAR(NOW() - c.mfy_dttm, 'YYYY') AS INTEGER)) || ' 년 전 수정'
+      ELSE TO_CHAR(c.mfy_dttm, 'YYYY-MM-DD')
       END AS "modifiedTime"
     FROM comment c
     WHERE

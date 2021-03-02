@@ -1,18 +1,13 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
+import { HomePostType } from '../../stores/HomeStore';
 
-export interface HomePostProp {
-  data: PostInterface;
+export interface HomePostProps {
+  data: HomePostType;
 }
 
-export interface PostInterface {
-  id: number,
-  title: string,
-  commentCnt: number,
-}
-
-const HomePost: FC<HomePostProp> = ({ data }: HomePostProp) => {
+const HomePost = ({ data }: HomePostProps) => {
   const { id, title } = data;
   return (
     <Link href={`/post/${id}`}>

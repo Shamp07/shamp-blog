@@ -7,16 +7,14 @@ import { RootStore } from '../../../stores';
 const Backdrop = () => {
   const { SidebarStore } = useStores() as RootStore;
   const { isOpenSidebar, toggleSidebar } = SidebarStore;
-  return (
-    <SidebarBackdrop isOpenSidebar={isOpenSidebar} onClick={toggleSidebar} />
-  );
+  return <SidebarBackdrop isOpenSidebar={isOpenSidebar} onClick={toggleSidebar} />;
 };
 
-interface BackdropInterface {
+interface SidebarBackdropProps {
   isOpenSidebar: boolean;
 }
 
-const SidebarBackdrop = styled.div<BackdropInterface>`
+const SidebarBackdrop = styled.div<SidebarBackdropProps>`
   height: 100%;
   width: 100%;
   position: fixed;

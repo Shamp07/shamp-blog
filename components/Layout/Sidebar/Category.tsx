@@ -1,16 +1,22 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styled from '@emotion/styled';
 import useStores from '../../../stores/useStores';
 import { RootStore } from '../../../stores';
 
-const Category: FC<CategoryProps> = ({ path, name, isBoard }: CategoryProps) => {
+interface CategoryProps {
+  path: string;
+  name: string;
+  isBoard: boolean;
+}
+
+const Category = ({ path, name, isBoard }: CategoryProps) => {
   const { SidebarStore } = useStores() as RootStore;
   const { toggleSidebar } = SidebarStore;
   const router = useRouter();
-  let baseUrl: string = '';
-  let currentPath: string;
+  let baseUrl = '';
+  let currentPath;
 
   // 게시판의 경우
   if (isBoard) {
@@ -29,17 +35,11 @@ const Category: FC<CategoryProps> = ({ path, name, isBoard }: CategoryProps) => 
   );
 };
 
-export interface CategoryProps {
-  path: string;
-  name: string;
-  isBoard: boolean;
-}
-
-interface CategoryInterface {
+interface CategoryListProps {
   active: boolean;
 }
 
-const CategoryList = styled.li<CategoryInterface>`
+const CategoryList = styled.li<CategoryListProps>`
   ${(props) => (props.active ? 'background-color: #2d79c7 !important;' : null)};
   & > a {
     ${(props) => (props.active ? 'transition: all 0.3s;' : null)};

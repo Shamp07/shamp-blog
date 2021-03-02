@@ -5,21 +5,10 @@ import { TextField } from '@material-ui/core';
 import useStores from '../../../stores/useStores';
 import CommentWrite from './CommentWrite';
 import CommentMenu from './CommentMenu';
-import { RootStore } from "../../../stores";
+import { RootStore } from '../../../stores';
+import { CommentDataProps } from './CommentMenu/CommentNormalMenu';
 
-export interface CommentRowInterface {
-  id: number,
-  commentId: number,
-  userId: number,
-  userName: string,
-  commentUserName: string,
-  content: string,
-  time: string,
-  modifiedTime: string,
-  isTag: boolean,
-}
-
-const CommentRow = ({ data }: { data: CommentRowInterface }) => {
+const CommentRow = ({ data }: CommentDataProps) => {
   const { CommentStore } = useStores() as RootStore;
   const {
     replyCommentId, modifierComment,
@@ -66,11 +55,11 @@ const CommentRow = ({ data }: { data: CommentRowInterface }) => {
   );
 };
 
-interface CommentInterface {
+interface CommentWrapperProps {
   isReply: boolean;
 }
 
-const CommentWrapper = styled.div<CommentInterface>`
+const CommentWrapper = styled.div<CommentWrapperProps>`
   position: relative;
   padding: ${(props) => (props.isReply ? '12px 12px 12px 64px' : '12px')};
   background-color: ${(props) => (props.isReply ? '#f8f9fa' : '#ffffff')};

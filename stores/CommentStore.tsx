@@ -4,6 +4,21 @@ import axios from 'axios';
 import PostStore from './PostStore';
 import AlertStore from './AlertStore';
 
+export interface CommentType {
+  rownum: number;
+  total: number;
+  id: number;
+  userId: number;
+  upperId: number;
+  commentId: number;
+  commentUserName: string;
+  userName: string;
+  content: string;
+  isTag: boolean;
+  time: string;
+  modifiedTime: string;
+}
+
 class CommentStore {
   PostStore: PostStore;
 
@@ -15,7 +30,7 @@ class CommentStore {
 
   modifierComment: string = '';
 
-  commentList = [];
+  commentList: Array<CommentType> = [];
 
   commentSize: number = 15;
 

@@ -3,6 +3,23 @@ import { action, makeObservable, observable } from 'mobx';
 import axios from 'axios';
 import AlertStore from './AlertStore';
 
+export interface FootPrintType {
+  rownum: number;
+  total: number;
+  id: number;
+  userId: number;
+  userName: string;
+  content: string;
+  time: string;
+  modifiedTime: string;
+}
+
+export interface HomePostType {
+  id: number,
+  title: string,
+  commentCnt: number,
+}
+
 class HomeStore {
   AlertStore: AlertStore;
 
@@ -10,7 +27,7 @@ class HomeStore {
 
   noticePostList = [];
 
-  footprintList = [];
+  footprintList: Array<FootPrintType> = [];
 
   footprintSize: number = 20;
 
@@ -163,8 +180,12 @@ class HomeStore {
       });
   };
 
-  deleteFootprint = (): void => {
-    axios.delete('/api/footprint')
+  deleteFootprint = (id: number): void => {
+    axios.delete('/api/footprint', {
+      params: {
+        id,
+      },
+    })
       .then((response) => {
         const { data } = response;
         if (data.success) {

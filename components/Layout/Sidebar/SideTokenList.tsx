@@ -6,6 +6,8 @@ import { RootStore } from '../../../stores';
 const SideTokenList = () => {
   const { SignStore } = useStores() as RootStore;
   const { userData, logout } = SignStore;
+  if (!userData) return null;
+
   const { name } = userData;
 
   return (

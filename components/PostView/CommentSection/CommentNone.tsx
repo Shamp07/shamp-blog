@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentDots } from '@fortawesome/free-solid-svg-icons';
 import styled from '@emotion/styled';
 
-const CommonNone = () => (
+const CommentNone = () => (
   <li>
     <NoneWrapper>
       <CommentIcon icon={faCommentDots} />
@@ -27,4 +27,4 @@ const CommentIcon = styled(FontAwesomeIcon)`
   margin-bottom: 15px;
 `;
 
-export default CommonNone;
+export default CommentNone;

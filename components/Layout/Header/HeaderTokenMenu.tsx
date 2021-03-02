@@ -8,14 +8,12 @@ import { RootStore } from '../../../stores';
 const HeaderTokenMenu = () => {
   const { SignStore } = useStores() as RootStore;
   const { userData, cookieChecked } = SignStore;
-  const loggedIn = !!userData;
 
-  // 쿠키 내의 토큰 체크가 되기 전
   if (!cookieChecked) {
     return null;
   }
 
-  return loggedIn ? <HeaderTokenList /> : <HeaderNoTokenList />;
+  return userData ? <HeaderTokenList /> : <HeaderNoTokenList />;
 };
 
 export default observer(HeaderTokenMenu);

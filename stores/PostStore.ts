@@ -14,8 +14,31 @@ interface PostType {
   page: number,
 }
 
-interface PostViewType {
+export interface PostListType {
+  rownum: number;
+  page: number;
   id: number;
+  category: string;
+  tags: string;
+  title: string;
+  content: string;
+  crtDttm: string;
+  likeCnt: number;
+  commentCnt: number;
+  time: string;
+}
+
+export interface PostViewType {
+  id: number;
+  category: string;
+  tags: string;
+  title: string;
+  content: string;
+  viewCnt: string;
+  likeCnt: string;
+  commentCnt: string;
+  time: string;
+  modifiedTime: string;
 }
 
 class PostStore {
@@ -25,14 +48,13 @@ class PostStore {
 
   postView: PostViewType;
 
-  postList;
+  postList: Array<PostListType>;
 
   constructor(initialData = initialPost, root: { AlertStore: AlertStore }) {
     this.AlertStore = root.AlertStore;
     this.postList = initialData.postList;
     this.postView = initialData.postView;
     this.post = initialData.post;
-
     makeObservable(this, {
       post: observable,
       postView: observable,

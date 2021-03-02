@@ -8,11 +8,10 @@ import { RootStore } from '../../../stores';
 const Footprint = () => {
   const { SignStore } = useStores() as RootStore;
   const { userData } = SignStore;
-  const loggedIn = !!userData;
 
   return (
     <div>
-      {loggedIn && <FootprintWrite />}
+      {!!userData && <FootprintWrite />}
       <FootprintList />
     </div>
   );

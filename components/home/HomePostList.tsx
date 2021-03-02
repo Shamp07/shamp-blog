@@ -1,14 +1,15 @@
-import React, { FC } from 'react';
-import HomePost, { PostInterface } from './HomePost';
+import React from 'react';
+import HomePost from './HomePost';
+import { HomePostType } from '../../stores/HomeStore';
 
 interface HomePostListProps {
-  array: Array<PostInterface>;
+  array: Array<HomePostType>;
 }
 
-const HomePostList: FC<HomePostListProps> = ({ array }: { array: Array<PostInterface> }) => (
+const HomePostList = ({ array }: HomePostListProps) => (
   <div>
     {array.map(
-      (data: PostInterface) => <HomePost data={data} key={data.id} />,
+      (data: HomePostType) => <HomePost data={data} key={data.id} />,
     )}
   </div>
 );

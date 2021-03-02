@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoePrints } from '@fortawesome/free-solid-svg-icons';
 import styled from '@emotion/styled';
 
-const CommonNone = () => (
+const FootPrintNone = () => (
   <li>
     <NoneWrapper>
       <FootprintIcon icon={faShoePrints} />
@@ -27,4 +27,4 @@ const FootprintIcon = styled(FontAwesomeIcon)`
   margin-bottom: 15px;
 `;
 
-export default CommonNone;
+export default FootPrintNone;

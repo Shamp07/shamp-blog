@@ -8,16 +8,15 @@ import { RootStore } from '../../stores';
 
 const BoardPagination = () => {
   const router = useRouter();
+  const { PostStore } = useStores() as RootStore;
+  const { postList, movePage } = PostStore;
 
   let pageCount = 1;
   if (router.query.page) {
     pageCount = Number(router.query.page);
   }
 
-  const { PostStore } = useStores() as RootStore;
-  const { postList, movePage } = PostStore;
-
-  let count: number = 0;
+  let count = 0;
   if (postList.length > 0) {
     count = Number(postList[0].page);
   }

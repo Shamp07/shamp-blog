@@ -6,8 +6,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import useStores from '../../stores/useStores';
 import { RootStore } from '../../stores';
+import { PostListType } from '../../stores/PostStore';
 
-const BoardPost = ({ data }: { data: BoardPostProps }) => {
+interface BoardPostProps {
+  data: PostListType;
+}
+
+const BoardPost = ({ data }: BoardPostProps) => {
   const router = useRouter();
   const routerParams = router.query.board as Array<string>;
   const { SidebarStore } = useStores() as RootStore;
@@ -40,7 +45,7 @@ const BoardPost = ({ data }: { data: BoardPostProps }) => {
             </PostLinkSpan>
           </Link>
         </PostTitle>
-        <PostInfo>
+        <div>
           <PostInfoUl>
             <li>
               <span>{boardCategoryName[category]}</span>
@@ -52,7 +57,7 @@ const BoardPost = ({ data }: { data: BoardPostProps }) => {
               <span>{time}</span>
             </li>
           </PostInfoUl>
-        </PostInfo>
+        </div>
       </ArticleContent>
     </Article>
   );
@@ -113,7 +118,6 @@ const ArticleContent = styled.div`
 `;
 
 const PostTitle = styled.div`
-  
   & > span:first-of-type {
     padding-right: 5px;
   }
@@ -121,10 +125,6 @@ const PostTitle = styled.div`
   & > span:last-child {
     color: #2d79c7;    
   }
-`;
-
-const PostInfo = styled.div`
-
 `;
 
 const PostInfoUl = styled.ul`
@@ -152,15 +152,5 @@ const PostInfoUl = styled.ul`
 const ThumbsUp = styled(FontAwesomeIcon)`
   height: 16px;
 `;
-
-export interface BoardPostProps {
-  id: number,
-  title: string,
-  category: string,
-  commentCnt: number,
-  tags: string,
-  time: string,
-  likeCnt: number,
-}
 
 export default BoardPost;

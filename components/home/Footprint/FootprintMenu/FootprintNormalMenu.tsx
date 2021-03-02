@@ -3,14 +3,13 @@ import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../../../stores/useStores';
 import { RootStore } from '../../../../stores';
+import { FootPrintType } from '../../../../stores/HomeStore';
 
-interface FootprintNormalMenuProps {
-  id: number;
-  userId: number;
-  content: string;
+export interface FootprintDataProps {
+  data: FootPrintType;
 }
 
-const FootprintNormalMenu = ({ data }: { data: FootprintNormalMenuProps }) => {
+const FootprintNormalMenu = ({ data }: FootprintDataProps) => {
   const { HomeStore, SignStore, UtilStore } = useStores() as RootStore;
   const { setModifierFootprintId, deleteFootprint } = HomeStore;
   const { userData } = SignStore;
@@ -18,10 +17,8 @@ const FootprintNormalMenu = ({ data }: { data: FootprintNormalMenuProps }) => {
 
   const { id, userId, content } = data;
 
-  let isMine: boolean = false;
-  const loggedIn = !!userData;
-
-  if (loggedIn) {
+  let isMine = false;
+  if (userData) {
     const { id: userIdToken } = userData;
     isMine = userId === userIdToken;
   }

@@ -24,7 +24,7 @@ const FootprintWrite = () => {
           <span>
             <span>
               (
-              { footprintText.length }
+              {footprintText.length}
               /1000)
             </span>
             <FootprintWriteButton onClick={() => addFootprint()}>

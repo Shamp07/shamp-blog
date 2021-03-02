@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, FC } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { css, Global } from '@emotion/react';
 import styled from '@emotion/styled';
 import Header from './Header';
@@ -8,11 +8,11 @@ import Backdrop from './Sidebar/Backdrop';
 import useStores from '../../stores/useStores';
 import { RootStore } from '../../stores';
 
-interface Props {
+interface LayoutProps {
   children: ReactNode;
 }
 
-const Layout: FC<Props> = ({ children }: Props) => {
+const Layout = ({ children }: LayoutProps) => {
   const { SignStore } = useStores() as RootStore;
   const { cookieCheck } = SignStore;
   useEffect(() => {

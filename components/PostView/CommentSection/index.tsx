@@ -10,12 +10,11 @@ import { RootStore } from '../../../stores';
 const CommentSection = () => {
   const { SignStore } = useStores() as RootStore;
   const { userData } = SignStore;
-  const loggedIn = !!userData;
 
   return (
     <Wrapper>
       <CommentHeader />
-      {loggedIn && <CommentWrite isReply={false} />}
+      {!!userData && <CommentWrite isReply={false} />}
       <CommentList />
     </Wrapper>
   );

@@ -5,7 +5,7 @@ import logger from '../../config/log.config';
 import authMiddleware, { NextApiRequestToken } from '../../middleware/auth';
 import cors from '../../middleware/cors';
 
-interface Interface {
+interface RequestParamsType {
   [key: string]: string | string[];
 }
 
@@ -23,7 +23,7 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
 };
 
 const addFootprint = async (request: NextApiRequestToken, response: NextApiResponse) => {
-  const { content }: Interface = request.body;
+  const { content }: RequestParamsType = request.body;
   const { id: userId } = request.decodedToken;
   const values: (number | string | string[])[] = [userId, content];
 
@@ -44,7 +44,7 @@ const addFootprint = async (request: NextApiRequestToken, response: NextApiRespo
 };
 
 const getFootprint = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { size }: Interface = request.query;
+  const { size }: RequestParamsType = request.query;
   const values: (string | string[])[] = [size];
   await Database.execute(
     (database: Client) => database.query(
@@ -63,7 +63,7 @@ const getFootprint = async (request: NextApiRequest, response: NextApiResponse) 
 };
 
 const modifyFootprint = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { id, content }: Interface = request.body;
+  const { id, content }: RequestParamsType = request.body;
   const values: (string | string[])[] = [content, id];
 
   await Database.execute(
@@ -83,7 +83,7 @@ const modifyFootprint = async (request: NextApiRequest, response: NextApiRespons
 };
 
 const deleteFootprint = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { id }: Interface = request.query;
+  const { id }: RequestParamsType = request.query;
   const values: (string | string[])[] = [id];
 
   await Database.execute(
@@ -115,7 +115,7 @@ const INSERT_FOOTPRINT = `
 const SELECT_FOOTPRINT = `
   SELECT * FROM (
     SELECT
-      ROW_NUMBER() OVER(ORDER BY crt_dttm DESC) AS rownum,
+      ROW_NUMBER() OVER(ORDER BY f.crt_dttm DESC) AS rownum,
       COUNT(*) OVER() AS total,
       f.id,
       f.user_id AS "userId",
@@ -127,12 +127,7 @@ const SELECT_FOOTPRINT = `
         THEN (CAST(TO_CHAR(NOW() - f.crt_dttm, 'MI') AS INTEGER)) || ' 분 전'
       WHEN (CAST(TO_CHAR(NOW() - f.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000)
         THEN (CAST(TO_CHAR(NOW() - f.crt_dttm, 'HH24') AS INTEGER)) || ' 시간 전'
-      WHEN (CAST(TO_CHAR(NOW() - f.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 100000000)
-        THEN (CAST(TO_CHAR(NOW() - f.crt_dttm, 'DD') AS INTEGER)) || ' 일 전'
-      WHEN (CAST(TO_CHAR(NOW() - f.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 10000000000)
-        THEN (CAST(TO_CHAR(NOW() - f.crt_dttm, 'MM') AS INTEGER)) || ' 달 전'
-      WHEN (CAST(TO_CHAR(NOW() - f.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000000000)
-        THEN (CAST(TO_CHAR(NOW() - f.crt_dttm, 'YYYY') AS INTEGER)) || ' 년 전'
+      ELSE TO_CHAR(f.crt_dttm, 'YYYY-MM-DD')
       END AS time,
       CASE WHEN (CAST(TO_CHAR(NOW() - f.mfy_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 100)
         THEN (CAST(TO_CHAR(NOW() - f.mfy_dttm, 'SS') AS INTEGER)) || ' 초 전 수정'
@@ -140,12 +135,7 @@ const SELECT_FOOTPRINT = `
         THEN (CAST(TO_CHAR(NOW() - f.mfy_dttm, 'MI') AS INTEGER)) || ' 분 전 수정'
       WHEN (CAST(TO_CHAR(NOW() - f.mfy_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000)
         THEN (CAST(TO_CHAR(NOW() - f.mfy_dttm, 'HH24') AS INTEGER)) || ' 시간 전 수정'
-      WHEN (CAST(TO_CHAR(NOW() - f.mfy_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 100000000)
-        THEN (CAST(TO_CHAR(NOW() - f.mfy_dttm, 'DD') AS INTEGER)) || ' 일 전 수정'
-      WHEN (CAST(TO_CHAR(NOW() - f.mfy_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 10000000000)
-        THEN (CAST(TO_CHAR(NOW() - f.mfy_dttm, 'MM') AS INTEGER)) || ' 달 전 수정'
-      WHEN (CAST(TO_CHAR(NOW() - f.mfy_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000000000)
-        THEN (CAST(TO_CHAR(NOW() - f.mfy_dttm, 'YYYY') AS INTEGER)) || ' 년 전 수정'
+      ELSE TO_CHAR(f.crt_dttm, 'YYYY-MM-DD')
       END AS "modifiedTime"
     FROM footprint f
     WHERE f.delete_fl = false

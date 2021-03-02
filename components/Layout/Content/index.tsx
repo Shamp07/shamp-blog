@@ -1,14 +1,14 @@
-import React, { ReactNode, FC } from 'react';
+import React, { ReactNode } from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../../stores/useStores';
 import { RootStore } from '../../../stores';
 
-interface ContentProp {
+interface ContentProps {
   children: ReactNode;
 }
 
-const Content: FC<ContentProp> = ({ children }: ContentProp) => {
+const Content = ({ children }: ContentProps) => {
   const { SignStore } = useStores() as RootStore;
   const { cookieChecked } = SignStore;
 

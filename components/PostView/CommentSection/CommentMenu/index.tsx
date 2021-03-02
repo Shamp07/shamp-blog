@@ -1,22 +1,11 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import CommentNormalMenu from './CommentNormalMenu';
+import CommentNormalMenu, { CommentDataProps } from './CommentNormalMenu';
 import CommentModifyMenu from './CommentModifyMenu';
 import useStores from '../../../../stores/useStores';
 import { RootStore } from '../../../../stores';
 
-interface CommentRowInterface {
-  id: number,
-  commentId: number,
-  userId: number,
-  userName: string,
-  commentUserName: string,
-  content: string,
-  time: string,
-  isTag: boolean,
-}
-
-const CommentMenu = ({ data }: { data: CommentRowInterface }) => {
+const CommentMenu = ({ data }: CommentDataProps) => {
   const { CommentStore } = useStores() as RootStore;
   const { modifierCommentId } = CommentStore;
   const { id } = data;
