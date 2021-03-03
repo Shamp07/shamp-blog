@@ -29,13 +29,13 @@ class HomeStore {
 
   footprintList: Array<FootPrintType> = [];
 
-  footprintSize: number = 20;
+  footprintSize = 20;
 
-  footprintText: string = '';
+  footprintText = '';
 
-  modifierFootprintText: string = '';
+  modifierFootprintText = '';
 
-  modifierFootprintId: number = 0;
+  modifierFootprintId = 0;
 
   constructor(initialData = initialHome, root: { AlertStore: AlertStore }) {
     this.AlertStore = root.AlertStore;
@@ -203,7 +203,7 @@ class HomeStore {
 export const initialHome = {
   recentlyPostList: [],
   noticePostList: [],
-  footprintList: [],
+  footprintList: [] as Array<FootPrintType>,
 };
 
 export default HomeStore;

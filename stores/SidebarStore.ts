@@ -53,7 +53,7 @@ class SidebarStore {
     etc: 'etc',
   };
 
-  isOpenSidebar: boolean = false;
+  isOpenSidebar = false;
 
   constructor() {
     makeObservable(this, {
@@ -61,8 +61,6 @@ class SidebarStore {
       toggleSidebar: action,
     });
   }
-
-  getBoardCategoryName = (path: stirng) => this.boardCategoryName[path];
 
   toggleSidebar = (): void => {
     this.isOpenSidebar = !this.isOpenSidebar;

@@ -8,7 +8,11 @@ import Editor from '../../components/posting/Editor';
 import useStores from '../../stores/useStores';
 import { RootStore } from '../../stores';
 
-const Post = ({ isModify }: { isModify: boolean }) => {
+interface PostProps {
+  isModify: boolean;
+}
+
+const Post = ({ isModify }: PostProps) => {
   const router = useRouter();
   const {
     SidebarStore, PostStore,

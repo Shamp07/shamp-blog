@@ -24,19 +24,19 @@ class CommentStore {
 
   AlertStore: AlertStore;
 
-  comment: string = '';
+  comment = '';
 
-  replyComment: string = '';
+  replyComment = '';
 
-  modifierComment: string = '';
+  modifierComment = '';
 
   commentList: Array<CommentType> = [];
 
-  commentSize: number = 15;
+  commentSize = 15;
 
-  modifierCommentId: number = 0;
+  modifierCommentId = 0;
 
-  replyCommentId: number = 0;
+  replyCommentId = 0;
 
   constructor(initialData = initialComment, root: {
     PostStore: PostStore, AlertStore: AlertStore
@@ -193,7 +193,7 @@ class CommentStore {
 }
 
 export const initialComment = {
-  commentList: [],
+  commentList: [] as Array<CommentType>,
 };
 
 export default CommentStore;

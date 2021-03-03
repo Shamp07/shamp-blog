@@ -16,7 +16,7 @@ interface UserDataType {
 class SignStore {
   AlertStore: AlertStore;
 
-  cookieChecked: boolean = false;
+  cookieChecked = false;
 
   userData: UserDataType | undefined;
 
@@ -32,13 +32,13 @@ class SignStore {
     name: '',
   };
 
-  emailVerifyCode: string = '';
+  emailVerifyCode = '';
 
-  isOpenSignModal: boolean = false;
+  isOpenSignModal = false;
 
-  isOpenRegisterModal: boolean = false;
+  isOpenRegisterModal = false;
 
-  isOpenEmailModal: boolean = false;
+  isOpenEmailModal = false;
 
   constructor(root: { AlertStore: AlertStore }) {
     this.AlertStore = root.AlertStore;

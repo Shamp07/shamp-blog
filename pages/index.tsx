@@ -1,7 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import styled from '@emotion/styled';
-import { NextPage } from 'next';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,7 +10,7 @@ import Footprint from '../components/home/Footprint';
 import { MyNextPageContext } from './_app';
 import { RootStore } from '../stores';
 
-const Home: NextPage = () => {
+const Home = () => {
   const { HomeStore } = useStores() as RootStore;
   const { noticePostList, recentlyPostList, getFootprint } = HomeStore;
 

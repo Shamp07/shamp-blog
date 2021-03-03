@@ -70,7 +70,9 @@ class PostStore {
     });
   }
 
-  postHandleChange = (event: string | React.ChangeEvent<HTMLInputElement>): void => {
+  postHandleChange = (
+    event: string | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ): void => {
     if (typeof event === 'string') {
       this.post = {
         ...this.post,
@@ -217,7 +219,7 @@ class PostStore {
 }
 
 export const initialPost = {
-  postList: [],
+  postList: [] as Array<PostListType>,
   postView: {} as PostViewType,
   post: {
     id: 0,

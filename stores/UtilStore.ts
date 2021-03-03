@@ -5,7 +5,7 @@ class UtilStore {
 
   callback: Function | undefined;
 
-  text: string = '';
+  text = '';
 
   constructor() {
     makeObservable(this, {

@@ -1,9 +1,8 @@
 import React from 'react';
-import { NextPage } from 'next';
 import PostView from '../../components/PostView';
 import { MyNextPageContext } from '../_app';
 
-const Post: NextPage = () => <PostView />;
+const Post = () => <PostView />;
 
 Post.getInitialProps = async ({ query, store }: MyNextPageContext) => {
   const { id } = query;
