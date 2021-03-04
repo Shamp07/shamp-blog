@@ -14,10 +14,10 @@ const CommentWrite = ({ isReply }: CommentWriteProps) => {
   const { postView } = PostStore;
   const { id } = postView;
   const {
-    comment, replyComment,
-    addComment, commentHandleChange, replyCommentHandleChange,
-    replyCommentId,
+    commentInfo, addComment,
+    commentHandleChange, replyCommentId,
   } = CommentStore;
+  const { comment, replyComment } = commentInfo;
 
   return (
     <CommentWriteWrapper isReply={isReply}>
@@ -27,7 +27,8 @@ const CommentWrite = ({ isReply }: CommentWriteProps) => {
           type="text"
           multiline
           rows={3}
-          onChange={isReply ? replyCommentHandleChange : commentHandleChange}
+          onChange={commentHandleChange}
+          name={isReply ? 'replyComment' : comment}
           value={isReply ? replyComment : comment}
           placeholder="포스팅에 관련된 의견이나 질문을 자유롭게 남겨주세요!"
         />

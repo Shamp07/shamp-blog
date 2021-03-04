@@ -67,6 +67,7 @@
     "./components",
     "./database",
     "./middleware",
+    "./util",
     "./config",
     "./next.config.js",
     "./server.js"

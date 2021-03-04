@@ -24,11 +24,11 @@ class CommentStore {
 
   AlertStore: AlertStore;
 
-  comment = '';
-
-  replyComment = '';
-
-  modifierComment = '';
+  commentInfo = {
+    comment: '',
+    replyComment: '',
+    modifierComment: '',
+  };
 
   commentList: Array<CommentType> = [];
 
@@ -45,16 +45,12 @@ class CommentStore {
     this.AlertStore = root.AlertStore;
     this.commentList = initialData.commentList;
     makeObservable(this, {
-      comment: observable,
-      replyComment: observable,
-      modifierComment: observable,
+      commentInfo: observable,
       commentList: observable,
       commentSize: observable,
       modifierCommentId: observable,
       replyCommentId: observable,
       commentHandleChange: action,
-      replyCommentHandleChange: action,
-      modifierCommentHandleChange: action,
       setModifierCommentId: action,
       setReplyCommentId: action,
       addComment: action,
@@ -67,39 +63,30 @@ class CommentStore {
 
   commentHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.value.length <= 1000) {
-      this.comment = event.target.value;
-    }
-  };
-
-  replyCommentHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    if (event.target.value.length <= 1000) {
-      this.replyComment = event.target.value;
-    }
-  };
-
-  modifierCommentHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    if (event.target.value.length <= 1000) {
-      this.modifierComment = event.target.value;
+      this.commentInfo = {
+        ...this.commentInfo,
+        [event.target.name]: event.target.value,
+      };
     }
   };
 
   setModifierCommentId = (id: number, content: string): void => {
     this.modifierCommentId = id;
-    this.modifierComment = content;
+    this.commentInfo.modifierComment = content;
   };
 
   setReplyCommentId = (id: number): void => {
     this.replyCommentId = id;
-    this.replyComment = '';
+    this.commentInfo.replyComment = '';
   };
 
   addComment = (postId: number, commentId: number, isReply: boolean): void => {
-    if (!isReply && !this.comment.trim()) {
+    if (!isReply && !this.commentInfo.comment.trim()) {
       this.AlertStore.toggleAlertModal('댓글 내용을 입력해주세요!');
       return;
     }
 
-    if (isReply && !this.replyComment.trim()) {
+    if (isReply && !this.commentInfo.replyComment.trim()) {
       this.AlertStore.toggleAlertModal('답글 내용을 입력해주세요!');
       return;
     }
@@ -107,12 +94,12 @@ class CommentStore {
     axios.post('/api/post/comment', {
       postId,
       commentId: isReply ? commentId : null,
-      comment: isReply ? this.replyComment : this.comment,
+      comment: isReply ? this.commentInfo.replyComment : this.commentInfo.comment,
     })
       .then((response) => {
         const { data } = response;
         if (data.success) {
-          this.comment = '';
+          this.commentInfo.comment = '';
           this.setReplyCommentId(0);
           this.getComment(postId);
           this.PostStore.getPost(postId, false);
@@ -154,7 +141,7 @@ class CommentStore {
   modifyComment = (commentId: number, postId: number): void => {
     axios.put('/api/post/comment', {
       commentId,
-      comment: this.modifierComment,
+      comment: this.commentInfo.modifierComment,
     })
       .then((response) => {
         const { data } = response;
