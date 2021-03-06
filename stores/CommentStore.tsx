@@ -1,8 +1,9 @@
 import React from 'react';
 import { action, makeObservable, observable } from 'mobx';
-import axios from 'axios';
+import axios, { axiosPromise } from 'axios';
 import PostStore from './PostStore';
 import AlertStore from './AlertStore';
+import axiosWrap from '../util/axiosWrap';
 
 export interface CommentType {
   rownum: number;
@@ -91,25 +92,21 @@ class CommentStore {
       return;
     }
 
-    axios.post('/api/post/comment', {
+    axiosWrap('post', '/api/post/comment', {
       postId,
       commentId: isReply ? commentId : null,
       comment: isReply ? this.commentInfo.replyComment : this.commentInfo.comment,
-    })
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          this.commentInfo.comment = '';
-          this.setReplyCommentId(0);
-          this.getComment(postId);
-          this.PostStore.getPost(postId, false);
-        } else {
-          this.AlertStore.toggleAlertModal(data.message);
-        }
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+    }, false, (response: axiosPromise) => {
+      const { data } = response;
+      if (data.success) {
+        this.commentInfo.comment = '';
+        this.setReplyCommentId(0);
+        this.getComment(postId);
+        this.PostStore.getPost(postId, false);
+      } else {
+        this.AlertStore.toggleAlertModal(data.message);
+      }
+    });
   };
 
   moreComment = (postId: number): void => {

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import logger from '../config/log.config';
 
 const axiosWrap = (
@@ -6,6 +6,7 @@ const axiosWrap = (
   url: string,
   requestData: any,
   isServer: boolean,
+  callback: Function,
 ) => {
   let axiosRequest;
   switch (method) {
@@ -24,12 +25,9 @@ const axiosWrap = (
     default:
   }
 
-  if (!axiosRequest) return new Error('axiosRequest is undefined');
+  if (!axiosRequest) throw new Error('axiosRequest is undefined');
 
-  axiosRequest.then((response) => {
-    const { data } = response;
-    console.log(data);
-  }).catch((response) => {
+  axiosRequest.then((response) => callback(response)).catch((response) => {
     if (isServer) logger.error(response);
   });
 };
