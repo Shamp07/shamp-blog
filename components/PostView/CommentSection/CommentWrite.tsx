@@ -28,7 +28,7 @@ const CommentWrite = ({ isReply }: CommentWriteProps) => {
           multiline
           rows={3}
           onChange={commentHandleChange}
-          name={isReply ? 'replyComment' : comment}
+          name={isReply ? 'replyComment' : 'comment'}
           value={isReply ? replyComment : comment}
           placeholder="포스팅에 관련된 의견이나 질문을 자유롭게 남겨주세요!"
         />

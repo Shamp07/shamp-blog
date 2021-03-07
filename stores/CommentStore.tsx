@@ -1,9 +1,8 @@
 import React from 'react';
 import { action, makeObservable, observable } from 'mobx';
-import axios, { axiosPromise } from 'axios';
 import PostStore from './PostStore';
 import AlertStore from './AlertStore';
-import axiosWrap from '../util/axiosWrap';
+import Axios from '../util/Axios';
 
 export interface CommentType {
   rownum: number;
@@ -92,11 +91,11 @@ class CommentStore {
       return;
     }
 
-    axiosWrap('post', '/api/post/comment', {
+    Axios('post', '/api/post/comment', {
       postId,
       commentId: isReply ? commentId : null,
       comment: isReply ? this.commentInfo.replyComment : this.commentInfo.comment,
-    }, false, (response: axiosPromise) => {
+    }, false, (response) => {
       const { data } = response;
       if (data.success) {
         this.commentInfo.comment = '';
@@ -115,64 +114,46 @@ class CommentStore {
   };
 
   getComment = async (postId: number): Promise<void> => {
-    await axios.get(`${process.env.BASE_PATH}/api/post/comment`, {
-      params: {
-        postId,
-        commentSize: this.commentSize,
-      },
-    })
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          const { result } = data;
-          this.commentList = result;
-        } else {
-          console.warn(data.message);
-        }
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+    await Axios('get', `${process.env.BASE_PATH}/api/post/comment`, {
+      postId,
+      commentSize: this.commentSize,
+    }, typeof window === undefined, (response) => {
+      const { data } = response;
+      if (data.success) {
+        const { result } = data;
+        this.commentList = result;
+      }
+    });
   };
 
   modifyComment = (commentId: number, postId: number): void => {
-    axios.put('/api/post/comment', {
+    Axios('put', '/api/post/comment', {
       commentId,
       comment: this.commentInfo.modifierComment,
-    })
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          this.setModifierCommentId(0, '');
-          this.PostStore.getPost(postId, false);
-          this.getComment(postId);
-        } else {
-          this.AlertStore.toggleAlertModal(data.message);
-        }
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+    }, false, (response) => {
+      const { data } = response;
+      if (data.success) {
+        this.setModifierCommentId(0, '');
+        this.PostStore.getPost(postId, false);
+        this.getComment(postId);
+      } else {
+        this.AlertStore.toggleAlertModal(data.message);
+      }
+    });
   };
 
   deleteComment = (commentId: number, postId: number): void => {
-    axios.delete('/api/post/comment', {
-      params: {
-        commentId,
-      },
-    })
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          this.getComment(postId);
-          this.PostStore.getPost(postId, false);
-        } else {
-          this.AlertStore.toggleAlertModal(data.message);
-        }
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+    Axios('delete', '/api/post/comment', {
+      commentId,
+    }, false, (response) => {
+      const { data } = response;
+      if (data.success) {
+        this.getComment(postId);
+        this.PostStore.getPost(postId, false);
+      } else {
+        this.AlertStore.toggleAlertModal(data.message);
+      }
+    });
   };
 }
 
