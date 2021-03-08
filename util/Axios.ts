@@ -4,29 +4,34 @@ const Axios = (
   method: 'get' | 'post' | 'put' | 'delete',
   url: string,
   data: any,
-  isServer: boolean,
-  callback: (response: AxiosResponse<any>) => void,
+  success: (response: AxiosResponse) => void,
+  fail?: (response: AxiosResponse) => void,
+  complete?: (response: AxiosResponse) => void,
 ) => {
   let axiosRequest;
   switch (method) {
     case 'get':
-      axiosRequest = axios.get(url, getConfigParams(method, data));
+      axiosRequest = axios.get;
       break;
     case 'post':
-      axiosRequest = axios.post(url, getConfigParams(method, data));
+      axiosRequest = axios.post;
       break;
     case 'put':
-      axiosRequest = axios.put(url, getConfigParams(method, data));
+      axiosRequest = axios.put;
       break;
     case 'delete':
-      axiosRequest = axios.delete(url, getConfigParams(method, data));
+      axiosRequest = axios.delete;
       break;
     default:
   }
 
   if (!axiosRequest) throw new Error('axiosRequest is undefined');
 
-  axiosRequest.then((response) => callback(response)).catch((response) => console.error(response));
+  axiosRequest(url, getConfigParams(method, data)).then((response) => {
+    if (response.data.success) success(response);
+    else if (fail) fail(response);
+    if (complete) complete(response);
+  }).catch((response) => console.error(response));
 };
 
 const getConfigParams = (method: 'get' | 'post' | 'put' | 'delete', data: any) => {

@@ -95,65 +95,62 @@ class CommentStore {
       postId,
       commentId: isReply ? commentId : null,
       comment: isReply ? this.commentInfo.replyComment : this.commentInfo.comment,
-    }, false, (response) => {
-      const { data } = response;
-      if (data.success) {
-        this.commentInfo.comment = '';
-        this.setReplyCommentId(0);
-        this.getComment(postId);
-        this.PostStore.getPost(postId, false);
-      } else {
-        this.AlertStore.toggleAlertModal(data.message);
-      }
+    }, () => {
+      this.PostStore.getPost(postId, false);
+      this.getComment(postId);
+      this.setReplyCommentId(0);
+      this.commentInfo.comment = '';
     });
   };
 
   moreComment = (postId: number): void => {
-    this.commentSize += 15;
     this.getComment(postId);
+    this.commentSize += 15;
   };
 
   getComment = async (postId: number): Promise<void> => {
-    await Axios('get', `${process.env.BASE_PATH}/api/post/comment`, {
-      postId,
-      commentSize: this.commentSize,
-    }, typeof window === undefined, (response) => {
-      const { data } = response;
-      if (data.success) {
-        const { result } = data;
+    await Axios(
+      'get',
+      `${process.env.BASE_PATH}/api/post/comment`,
+      {
+        postId,
+        commentSize: this.commentSize,
+      },
+      (response) => {
+        const { result } = response.data;
         this.commentList = result;
-      }
-    });
+      },
+    );
   };
 
   modifyComment = (commentId: number, postId: number): void => {
-    Axios('put', '/api/post/comment', {
-      commentId,
-      comment: this.commentInfo.modifierComment,
-    }, false, (response) => {
-      const { data } = response;
-      if (data.success) {
+    Axios(
+      'put',
+      '/api/post/comment',
+      {
+        commentId,
+        comment: this.commentInfo.modifierComment,
+      },
+      () => {
         this.setModifierCommentId(0, '');
         this.PostStore.getPost(postId, false);
         this.getComment(postId);
-      } else {
-        this.AlertStore.toggleAlertModal(data.message);
-      }
-    });
+      },
+    );
   };
 
   deleteComment = (commentId: number, postId: number): void => {
-    Axios('delete', '/api/post/comment', {
-      commentId,
-    }, false, (response) => {
-      const { data } = response;
-      if (data.success) {
-        this.getComment(postId);
+    Axios(
+      'delete',
+      '/api/post/comment',
+      {
+        commentId,
+      },
+      () => {
         this.PostStore.getPost(postId, false);
-      } else {
-        this.AlertStore.toggleAlertModal(data.message);
-      }
-    });
+        this.getComment(postId);
+      },
+    );
   };
 }
 
