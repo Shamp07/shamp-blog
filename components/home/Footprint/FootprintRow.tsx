@@ -9,10 +9,8 @@ import { FootprintDataProps } from './FootprintMenu/FootprintNormalMenu';
 
 const FootprintRow = ({ data }: FootprintDataProps) => {
   const { HomeStore } = useStores() as RootStore;
-  const {
-    modifierFootprintId, modifierFootprintText,
-    modifierFootprintHandleChange,
-  } = HomeStore;
+  const { modifierFootprintId, footprintInfo, footprintHandleChange } = HomeStore;
+  const { modifierFootprint } = footprintInfo;
 
   const {
     id, userName,
@@ -32,8 +30,9 @@ const FootprintRow = ({ data }: FootprintDataProps) => {
               type="text"
               multiline
               rows={3}
-              onChange={modifierFootprintHandleChange}
-              value={modifierFootprintText}
+              onChange={footprintHandleChange}
+              name="modifierFootprint"
+              value={modifierFootprint}
               placeholder="블로그에 관련된 건의사항이나 의견들을 자유롭게 작성해주세요!"
             />
           ) : content}

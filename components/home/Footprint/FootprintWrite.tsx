@@ -7,7 +7,8 @@ import { RootStore } from '../../../stores';
 
 const FootprintWrite = () => {
   const { HomeStore } = useStores() as RootStore;
-  const { footprintText, footprintHandleChange, addFootprint } = HomeStore;
+  const { footprintInfo, footprintHandleChange, addFootprint } = HomeStore;
+  const { footprint } = footprintInfo;
 
   return (
     <FootprintWriteWrapper>
@@ -17,17 +18,18 @@ const FootprintWrite = () => {
           multiline
           rows={3}
           onChange={footprintHandleChange}
-          value={footprintText}
+          name="footprint"
+          value={footprint}
           placeholder="블로그에 관련된 건의사항이나 의견들을 자유롭게 작성해주세요!"
         />
         <FootprintWriteFooter>
           <span>
             <span>
               (
-              {footprintText.length}
+              {footprint.length}
               /1000)
             </span>
-            <FootprintWriteButton onClick={() => addFootprint()}>
+            <FootprintWriteButton onClick={addFootprint}>
               작성
             </FootprintWriteButton>
           </span>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { action, makeObservable, observable } from 'mobx';
-import axios from 'axios';
 import AlertStore from './AlertStore';
+import Axios from '../util/Axios';
 
 export interface FootPrintType {
   rownum: number;
@@ -31,9 +31,10 @@ class HomeStore {
 
   footprintSize = 20;
 
-  footprintText = '';
-
-  modifierFootprintText = '';
+  footprintInfo = {
+    footprint: '',
+    modifierFootprint: '',
+  };
 
   modifierFootprintId = 0;
 
@@ -48,12 +49,10 @@ class HomeStore {
       noticePostList: observable,
       footprintList: observable,
       footprintSize: observable,
-      footprintText: observable,
-      modifierFootprintText: observable,
+      footprintInfo: observable,
       modifierFootprintId: observable,
       setModifierFootprintId: action,
       footprintHandleChange: action,
-      modifierFootprintHandleChange: action,
       getRecentlyPostList: action,
       getNoticePostList: action,
       addFootprint: action,
@@ -66,74 +65,59 @@ class HomeStore {
 
   setModifierFootprintId = (id: number, content: string): void => {
     this.modifierFootprintId = id;
-    this.modifierFootprintText = content;
+    this.footprintInfo.modifierFootprint = content;
   };
 
   footprintHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.value.length <= 1000) {
-      this.footprintText = event.target.value;
-    }
-  };
-
-  modifierFootprintHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    if (event.target.value.length <= 1000) {
-      this.modifierFootprintText = event.target.value;
+      this.footprintInfo = {
+        ...this.footprintInfo,
+        [event.target.name]: event.target.value,
+      };
     }
   };
 
   getRecentlyPostList = async (): Promise<void> => {
-    await axios.get(`${process.env.BASE_PATH}/api/post/list/recently`)
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          const { result } = data;
-          this.recentlyPostList = result;
-        } else {
-          console.warn(data.message);
-        }
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+    await Axios(
+      'get',
+      `${process.env.BASE_PATH}/api/post/list/recently`,
+      {},
+      (response) => {
+        const { result } = response.data;
+        this.recentlyPostList = result;
+      },
+    );
   };
 
   getNoticePostList = async (): Promise<void> => {
-    await axios.get(`${process.env.BASE_PATH}/api/post/list/notice`)
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          const { result } = data;
-          this.noticePostList = result;
-        } else {
-          console.warn(data.message);
-        }
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+    await Axios(
+      'get',
+      `${process.env.BASE_PATH}/api/post/list/notice`,
+      {},
+      (response) => {
+        const { result } = response.data;
+        this.noticePostList = result;
+      },
+    );
   };
 
   addFootprint = (): void => {
-    if (!this.footprintText.trim()) {
+    if (!this.footprintInfo.footprint.trim()) {
       this.AlertStore.toggleAlertModal('발자취 내용을 입력해주세요!');
       return;
     }
 
-    axios.post('/api/footprint', {
-      content: this.footprintText,
-    })
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          this.footprintText = '';
-          this.getFootprint();
-        } else {
-          this.AlertStore.toggleAlertModal(data.message);
-        }
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+    Axios(
+      'post',
+      '/api/footprint',
+      {
+        content: this.footprintInfo.footprint,
+      },
+      () => {
+        this.getFootprint();
+        this.footprintInfo.footprint = '';
+      },
+    );
   };
 
   moreFootprint = (): void => {
@@ -142,61 +126,45 @@ class HomeStore {
   };
 
   getFootprint = async (): Promise<void> => {
-    await axios.get(`${process.env.BASE_PATH}/api/footprint`, {
-      params: {
+    await Axios(
+      'get',
+      `${process.env.BASE_PATH}/api/footprint`,
+      {
         size: this.footprintSize,
       },
-    })
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          const { result } = data;
-          this.footprintList = result;
-        } else {
-          console.warn(data.message);
-        }
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+      (response) => {
+        const { result } = response.data;
+        this.footprintList = result;
+      },
+    );
   };
 
   modifyFootprint = (id: number): void => {
-    axios.put('/api/footprint', {
-      id,
-      content: this.modifierFootprintText,
-    })
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          this.getFootprint();
-          this.setModifierFootprintId(0, '');
-        } else {
-          this.AlertStore.toggleAlertModal(data.message);
-        }
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+    Axios(
+      'put',
+      '/api/footprint',
+      {
+        id,
+        content: this.footprintInfo.modifierFootprint,
+      },
+      () => {
+        this.getFootprint();
+        this.setModifierFootprintId(0, '');
+      },
+    );
   };
 
   deleteFootprint = (id: number): void => {
-    axios.delete('/api/footprint', {
-      params: {
+    Axios(
+      'delete',
+      '/api/footprint',
+      {
         id,
       },
-    })
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          this.getFootprint();
-        } else {
-          this.AlertStore.toggleAlertModal(data.message);
-        }
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+      () => {
+        this.getFootprint();
+      },
+    );
   };
 }
 

@@ -11,9 +11,10 @@ import { CommentDataProps } from './CommentMenu/CommentNormalMenu';
 const CommentRow = ({ data }: CommentDataProps) => {
   const { CommentStore } = useStores() as RootStore;
   const {
-    replyCommentId, modifierComment,
-    modifierCommentId, modifierCommentHandleChange,
+    commentInfo,
+    replyCommentId, modifierCommentId, commentHandleChange,
   } = CommentStore;
+  const { modifierComment } = commentInfo;
 
   const {
     id, commentId, userName,
@@ -36,7 +37,8 @@ const CommentRow = ({ data }: CommentDataProps) => {
                 type="text"
                 multiline
                 rows={3}
-                onChange={modifierCommentHandleChange}
+                onChange={commentHandleChange}
+                name="modifierComment"
                 value={modifierComment}
                 placeholder="포스팅에 관련된 의견이나 질문을 자유롭게 남겨주세요!"
               />
