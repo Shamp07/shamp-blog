@@ -78,27 +78,25 @@ class HomeStore {
   };
 
   getRecentlyPostList = async (): Promise<void> => {
-    await Axios(
-      'get',
-      `${process.env.BASE_PATH}/api/post/list/recently`,
-      {},
-      (response) => {
+    await Axios({
+      method: 'get',
+      url: `${process.env.BASE_PATH}/api/post/list/recently`,
+      success: (response) => {
         const { result } = response.data;
         this.recentlyPostList = result;
       },
-    );
+    });
   };
 
   getNoticePostList = async (): Promise<void> => {
-    await Axios(
-      'get',
-      `${process.env.BASE_PATH}/api/post/list/notice`,
-      {},
-      (response) => {
+    await Axios({
+      method: 'get',
+      url: `${process.env.BASE_PATH}/api/post/list/notice`,
+      success: (response) => {
         const { result } = response.data;
         this.noticePostList = result;
       },
-    );
+    });
   };
 
   addFootprint = (): void => {
@@ -107,17 +105,17 @@ class HomeStore {
       return;
     }
 
-    Axios(
-      'post',
-      '/api/footprint',
-      {
+    Axios({
+      method: 'post',
+      url: '/api/footprint',
+      data: {
         content: this.footprintInfo.footprint,
       },
-      () => {
+      success: () => {
         this.getFootprint();
         this.footprintInfo.footprint = '';
       },
-    );
+    });
   };
 
   moreFootprint = (): void => {
@@ -126,45 +124,41 @@ class HomeStore {
   };
 
   getFootprint = async (): Promise<void> => {
-    await Axios(
-      'get',
-      `${process.env.BASE_PATH}/api/footprint`,
-      {
+    await Axios({
+      method: 'get',
+      url: `${process.env.BASE_PATH}/api/footprint`,
+      data: {
         size: this.footprintSize,
       },
-      (response) => {
+      success: (response) => {
         const { result } = response.data;
         this.footprintList = result;
       },
-    );
+    });
   };
 
   modifyFootprint = (id: number): void => {
-    Axios(
-      'put',
-      '/api/footprint',
-      {
+    Axios({
+      method: 'put',
+      url: '/api/footprint',
+      data: {
         id,
         content: this.footprintInfo.modifierFootprint,
       },
-      () => {
+      success: () => {
         this.getFootprint();
         this.setModifierFootprintId(0, '');
       },
-    );
+    });
   };
 
   deleteFootprint = (id: number): void => {
-    Axios(
-      'delete',
-      '/api/footprint',
-      {
-        id,
-      },
-      () => {
-        this.getFootprint();
-      },
-    );
+    Axios({
+      method: 'delete',
+      url: '/api/footprint',
+      data: { id },
+      success: () => this.getFootprint(),
+    });
   };
 }
 

@@ -91,15 +91,20 @@ class CommentStore {
       return;
     }
 
-    Axios('post', '/api/post/comment', {
-      postId,
-      commentId: isReply ? commentId : null,
-      comment: isReply ? this.commentInfo.replyComment : this.commentInfo.comment,
-    }, () => {
-      this.PostStore.getPost(postId, false);
-      this.getComment(postId);
-      this.setReplyCommentId(0);
-      this.commentInfo.comment = '';
+    Axios({
+      method: 'post',
+      url: '/api/post/comment',
+      data: {
+        postId,
+        commentId: isReply ? commentId : null,
+        comment: isReply ? this.commentInfo.replyComment : this.commentInfo.comment,
+      },
+      success: () => {
+        this.PostStore.getPost(postId, false);
+        this.getComment(postId);
+        this.setReplyCommentId(0);
+        this.commentInfo.comment = '';
+      },
     });
   };
 
@@ -109,48 +114,46 @@ class CommentStore {
   };
 
   getComment = async (postId: number): Promise<void> => {
-    await Axios(
-      'get',
-      `${process.env.BASE_PATH}/api/post/comment`,
-      {
+    await Axios({
+      method: 'get',
+      url: `${process.env.BASE_PATH}/api/post/comment`,
+      data: {
         postId,
         commentSize: this.commentSize,
       },
-      (response) => {
+      success: (response) => {
         const { result } = response.data;
         this.commentList = result;
       },
-    );
+    });
   };
 
   modifyComment = (commentId: number, postId: number): void => {
-    Axios(
-      'put',
-      '/api/post/comment',
-      {
+    Axios({
+      method: 'put',
+      url: '/api/post/comment',
+      data: {
         commentId,
         comment: this.commentInfo.modifierComment,
       },
-      () => {
-        this.setModifierCommentId(0, '');
+      success: () => {
         this.PostStore.getPost(postId, false);
         this.getComment(postId);
+        this.setModifierCommentId(0, '');
       },
-    );
+    });
   };
 
   deleteComment = (commentId: number, postId: number): void => {
-    Axios(
-      'delete',
-      '/api/post/comment',
-      {
-        commentId,
-      },
-      () => {
+    Axios({
+      method: 'delete',
+      url: '/api/post/comment',
+      data: { commentId },
+      success: () => {
         this.PostStore.getPost(postId, false);
         this.getComment(postId);
       },
-    );
+    });
   };
 }
 

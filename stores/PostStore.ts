@@ -1,8 +1,8 @@
 import React from 'react';
 import { action, makeObservable, observable } from 'mobx';
-import axios from 'axios';
 import { NextRouter } from 'next/dist/next-server/lib/router/router';
 import AlertStore from './AlertStore';
+import Axios from '../util/Axios';
 
 interface PostType {
   id: number,
@@ -106,115 +106,73 @@ class PostStore {
   };
 
   addPost = (router: NextRouter): void => {
-    axios.post('/api/post', this.post)
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          router.back();
-        } else {
-          this.AlertStore.toggleAlertModal(data.message);
-        }
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+    Axios({
+      method: 'post',
+      url: '/api/post',
+      data: this.post,
+      success: router.back,
+    });
   };
 
   getPostList = async (
     category: string, tag: string | undefined, page: number = 1,
   ): Promise<void> => {
-    await axios.get(`${process.env.BASE_PATH}/api/post/list`, {
-      params: {
-        category,
-        tag,
-        page,
+    await Axios({
+      method: 'get',
+      url: `${process.env.BASE_PATH}/api/post/list`,
+      data: { category, tag, page },
+      success: (response) => {
+        const { result } = response.data;
+        this.postList = result;
       },
-    })
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          this.postList = data.result;
-        } else {
-          console.warn(data.message);
-        }
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+    });
   };
 
   getPost = async (id: number, isModify: boolean): Promise<void> => {
-    await axios.get(`${process.env.BASE_PATH}/api/post`, {
-      params: {
-        id,
+    await Axios({
+      method: 'get',
+      url: `${process.env.BASE_PATH}/api/post`,
+      data: { id },
+      success: (response) => {
+        const { result } = response.data;
+        if (isModify) this.post = result;
+        else this.postView = result;
       },
-    })
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          if (isModify) this.post = data.result;
-          else this.postView = data.result;
-        } else {
-          console.warn(data.message);
-        }
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+    });
   };
 
   modifyPost = (router: NextRouter): void => {
-    axios.put('/api/post', this.post)
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          router.back();
-        } else {
-          this.AlertStore.toggleAlertModal(data.message);
-        }
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+    Axios({
+      method: 'put',
+      url: '/api/post',
+      data: this.post,
+      success: router.back,
+    });
   };
 
   deletePost = (id: number, router: NextRouter): void => {
-    axios.delete('/api/post', {
-      params: {
-        id,
-      },
-    })
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          router.back();
-        } else {
-          this.AlertStore.toggleAlertModal(data.message);
-        }
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+    Axios({
+      method: 'delete',
+      url: '/api/post',
+      data: { id },
+      success: router.back,
+    });
   };
 
   addPostLike = (postId: number): void => {
-    axios.post('/api/post/like', {
-      postId,
-    })
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          if (data.code === 2) {
-            this.AlertStore.toggleAlertModal(data.message);
-          }
-          this.getPost(postId, false);
-        } else {
-          this.AlertStore.toggleAlertModal(data.message);
+    Axios({
+      method: 'post',
+      url: '/api/post/like',
+      data: { postId },
+      success: (response) => {
+        const { code } = response.data;
+        if (code === 2) {
+          const { message } = response.data;
+          this.AlertStore.toggleAlertModal(message);
         }
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+        this.getPost(postId, false);
+      },
+    });
   };
 }
 

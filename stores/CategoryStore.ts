@@ -17,17 +17,15 @@ class CategoryStore {
   }
 
   getCategoryTags = async (category: string): Promise<void> => {
-    await Axios(
-      'get',
-      `${process.env.BASE_PATH}/api/category/tag`,
-      {
-        category,
-      },
-      (response) => {
+    await Axios({
+      method: 'get',
+      url: `${process.env.BASE_PATH}/api/category/tag`,
+      data: { category },
+      success: (response) => {
         const { result } = response.data;
         this.categoryTags = result;
       },
-    );
+    });
   };
 }
 

@@ -1,13 +1,17 @@
 import axios, { AxiosResponse } from 'axios';
 
-const Axios = (
+interface AxiosType {
   method: 'get' | 'post' | 'put' | 'delete',
   url: string,
-  data: any,
+  data?: any,
   success: (response: AxiosResponse) => void,
   fail?: (response: AxiosResponse) => void,
   complete?: (response: AxiosResponse) => void,
-) => {
+}
+
+const Axios = ({
+  method, url, data, success, fail, complete,
+}: AxiosType) => {
   let axiosRequest;
   switch (method) {
     case 'get':
