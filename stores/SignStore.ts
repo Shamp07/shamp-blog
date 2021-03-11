@@ -1,8 +1,8 @@
 import React from 'react';
 import { action, makeObservable, observable } from 'mobx';
-import axios from 'axios';
 import cookie from 'js-cookie';
 import AlertStore from './AlertStore';
+import Axios from '../util/Axios';
 
 interface UserDataType {
   id: number;
@@ -112,40 +112,38 @@ class SignStore {
   };
 
   cookieCheck = (): void => {
-    axios.get('/api/user/cookie')
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          this.userData = data.result;
-        }
+    Axios({
+      method: 'get',
+      url: '/api/user/cookie',
+      success: (response) => {
+        const { result } = response.data;
+        this.userData = result;
+      },
+      complete: () => {
         this.cookieChecked = true;
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+      },
+    });
   };
 
   login = (): void => {
-    axios.post('/api/user/login', this.loginInfo)
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          if (data.code === 1) {
-            cookie.set('token', data.result, { expires: 2 });
-            this.cookieCheck();
-            this.toggleSignModal();
-            this.AlertStore.toggleAlertModal(data.message);
-          } else if (data.code === 2) {
-            this.AlertStore.toggleAlertModal(data.message);
-          } else if (data.code === 3) {
-            this.registerInfo.email = this.loginInfo.email;
-            this.verifyEmail(false);
-          }
+    Axios({
+      method: 'post',
+      url: '/api/user/login',
+      success: (response) => {
+        const { code, message, result } = response.data;
+        if (code === 1) {
+          cookie.set('token', result, { expires: 2 });
+          this.cookieCheck();
+          this.toggleSignModal();
+          this.AlertStore.toggleAlertModal(message);
+        } else if (code === 2) {
+          this.AlertStore.toggleAlertModal(message);
+        } else if (code === 3) {
+          this.registerInfo.email = this.loginInfo.email;
+          this.verifyEmail(false);
         }
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+      },
+    });
   };
 
   register = (): void => {
@@ -153,61 +151,56 @@ class SignStore {
       return;
     }
 
-    axios.post('/api/user', this.registerInfo)
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          if (data.code === 1) {
-            this.verifyEmail(true);
-          } else {
-            this.AlertStore.toggleAlertModal(data.message);
-          }
+    Axios({
+      method: 'post',
+      url: '/api/user',
+      data: this.registerInfo,
+      success: (response) => {
+        const { code, message } = response.data;
+        if (code === 1) {
+          this.verifyEmail(true);
+        } else {
+          this.AlertStore.toggleAlertModal(message);
         }
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+      },
+    });
   };
 
   verifyEmail = (isFromRegister: boolean): void => {
-    axios.put('/api/user/verify', {
-      email: this.registerInfo.email,
-    })
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          if (isFromRegister) {
-            this.toggleRegisterModal();
-          } else {
-            this.toggleSignModal();
-          }
-          this.toggleEmailModal();
+    Axios({
+      method: 'put',
+      url: '/api/user/verify',
+      data: { email: this.registerInfo.email },
+      success: () => {
+        if (isFromRegister) {
+          this.toggleRegisterModal();
         } else {
-          this.AlertStore.toggleAlertModal(data.message);
+          this.toggleSignModal();
         }
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+        this.toggleEmailModal();
+      },
+    });
   };
 
   verifyCode = (): void => {
-    axios.put('/api/user/verify/code', {
-      email: this.registerInfo.email,
-      code: this.emailVerifyCode,
-    })
-      .then((response) => {
-        const { data } = response;
-        if (data.success) {
-          if (data.code === 1) {
-            this.toggleEmailModal();
-          }
+    Axios({
+      method: 'put',
+      url: '/api/user/verify/code',
+      data: {
+        email: this.registerInfo.email,
+        code: this.emailVerifyCode,
+      },
+      success: (response) => {
+        const { code } = response.data;
+        if (code === 1) {
+          this.toggleEmailModal();
         }
-        this.AlertStore.toggleAlertModal(data.message);
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+      },
+      complete: (response) => {
+        const { message } = response.data;
+        this.AlertStore.toggleAlertModal(message);
+      },
+    });
   };
 
   registerValidationCheck = (): boolean => {
