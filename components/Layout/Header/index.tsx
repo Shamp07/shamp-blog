@@ -1,13 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import NextNprogress from 'nextjs-progressbar';
 import HeaderLeftLogo from './HeaderLeftLogo';
 import HeaderRightList from './HeaderRightList';
-import SignModal from '../../util/SignModal';
-import AlertModal from '../../util/AlertModal';
-import ConfirmModal from '../../util/ConfirmModal';
-import RegisterModal from '../../util/RegisterModal';
-import EmailModal from '../../util/EmailModal';
+import HeaderUtilComponents from './HeaderUtilComponents';
 
 const Header = () => (
   <div>
@@ -18,20 +13,7 @@ const Header = () => (
       </ResponsiveContainer>
     </HeaderTopBar>
     <BackgroundImage />
-    <SignModal />
-    <RegisterModal />
-    <AlertModal />
-    <ConfirmModal />
-    <EmailModal />
-    <NextNprogress
-      color="#fff"
-      startPosition={0.3}
-      stopDelayMs={200}
-      height={3}
-      options={{
-        showSpinner: false,
-      }}
-    />
+    <HeaderUtilComponents />
   </div>
 );
 

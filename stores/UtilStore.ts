@@ -1,7 +1,10 @@
 import { action, makeObservable, observable } from 'mobx';
+import React from 'react';
 
 class UtilStore {
-  isOpenConfirmModal: boolean = false;
+  profileMenu: HTMLElement | null = null;
+
+  isOpenConfirmModal = false;
 
   callback: Function | undefined;
 
@@ -9,6 +12,7 @@ class UtilStore {
 
   constructor() {
     makeObservable(this, {
+      profileMenu: observable,
       isOpenConfirmModal: observable,
       callback: observable,
       text: observable,
@@ -31,6 +35,13 @@ class UtilStore {
 
   closeConfirmModal = (): void => {
     this.isOpenConfirmModal = false;
+  };
+
+  toggleProfileMenu = (
+    event: React.MouseEvent<HTMLLIElement | HTMLAnchorElement, MouseEvent>,
+  ): void => {
+    if (!this.profileMenu) this.profileMenu = event.currentTarget;
+    else this.profileMenu = null;
   };
 }
 

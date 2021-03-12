@@ -1,11 +1,16 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import { observer } from 'mobx-react-lite';
 import useStores from '../../../stores/useStores';
 import { RootStore } from '../../../stores';
 
 const HeaderTokenList = () => {
-  const { SignStore } = useStores() as RootStore;
+  const { SignStore, UtilStore } = useStores() as RootStore;
   const { userData, logout } = SignStore;
+  const { profileMenu, toggleProfileMenu } = UtilStore;
 
   if (!userData) {
     return null;
@@ -16,11 +21,21 @@ const HeaderTokenList = () => {
   return (
     <>
       <li>
-        <NoStyleA>
+        <NoStyleA onClick={toggleProfileMenu}>
           {name}
           {' '}
           님
         </NoStyleA>
+        <Menu
+          anchorEl={profileMenu}
+          keepMounted
+          open={Boolean(profileMenu)}
+          onClose={toggleProfileMenu}
+        >
+          <MenuItem onClick={toggleProfileMenu}>알림 조회</MenuItem>
+          <MenuItem onClick={toggleProfileMenu}>비밀번호 변경</MenuItem>
+          <MenuItem onClick={toggleProfileMenu}>탈퇴하기</MenuItem>
+        </Menu>
       </li>
       <li>
         <NoStyleA onClick={logout}>
@@ -45,4 +60,4 @@ const NoStyleA = styled.a`
   }
 `;
 
-export default HeaderTokenList;
+export default observer(HeaderTokenList);

@@ -13,7 +13,6 @@ import { RootStore } from '../stores';
 const Home = () => {
   const { HomeStore } = useStores() as RootStore;
   const { noticePostList, recentlyPostList, getFootprint } = HomeStore;
-
   return (
     <GridWrapper>
       <CustomGrid container spacing={3}>

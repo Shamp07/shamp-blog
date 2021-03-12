@@ -129,6 +129,7 @@ class SignStore {
     Axios({
       method: 'post',
       url: '/api/user/login',
+      data: this.loginInfo,
       success: (response) => {
         const { code, message, result } = response.data;
         if (code === 1) {

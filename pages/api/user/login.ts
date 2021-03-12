@@ -29,6 +29,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 
           const { salt } = result.rows[0];
           const hashPassword = crypto.createHash('sha512').update(password + salt).digest('hex');
+          console.log(hashPassword);
           const values2: (string | string[])[] = [email, hashPassword];
 
           return database.query(

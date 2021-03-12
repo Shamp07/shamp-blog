@@ -9,7 +9,7 @@ interface AxiosType {
   complete?: (response: AxiosResponse) => void,
 }
 
-const Axios = ({
+const Axios = async ({
   method, url, data, success, fail, complete,
 }: AxiosType) => {
   let axiosRequest;
@@ -31,7 +31,7 @@ const Axios = ({
 
   if (!axiosRequest) throw new Error('axiosRequest is undefined');
 
-  axiosRequest(url, getConfigParams(method, data)).then((response) => {
+  await axiosRequest(url, getConfigParams(method, data)).then((response) => {
     if (response.data.success) success(response);
     else if (fail) fail(response);
     if (complete) complete(response);
