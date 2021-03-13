@@ -1,4 +1,5 @@
-import { action, makeObservable, observable } from 'mobx';
+import { makeObservable } from 'mobx';
+import makeAnnotations from '../util/Mobx';
 
 class AlertStore {
   isOpenAlertModal = false;
@@ -6,12 +7,10 @@ class AlertStore {
   text = '';
 
   constructor() {
-    makeObservable(this, {
-      isOpenAlertModal: observable,
-      text: observable,
-      toggleAlertModal: action,
-      closeAlertModal: action,
-    });
+    makeObservable(this, makeAnnotations({
+      observables: ['isOpenAlertModal', 'text'],
+      actions: ['toggleAlertModal', 'closeAlertModal'],
+    }));
   }
 
   toggleAlertModal = (text: string): void => {

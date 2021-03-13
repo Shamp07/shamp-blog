@@ -40,6 +40,8 @@ class SignStore {
 
   isOpenEmailModal = false;
 
+  isOpenPasswordChangeModal = false;
+
   constructor(root: { AlertStore: AlertStore }) {
     this.AlertStore = root.AlertStore;
 
@@ -66,6 +68,10 @@ class SignStore {
 
   changeRegister = (): void => {
     this.toggleRegisterModal();
+  };
+
+  togglePasswordChangeModal = (): void => {
+    this.isOpenPasswordChangeModal = !this.isOpenPasswordChangeModal;
   };
 
   toggleSignModal = (): void => {
@@ -145,6 +151,10 @@ class SignStore {
         }
       },
     });
+  };
+
+  changePassword = (): void => {
+
   };
 
   register = (): void => {
