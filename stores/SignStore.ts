@@ -1,8 +1,9 @@
 import React from 'react';
-import { action, makeObservable, observable } from 'mobx';
+import { makeObservable } from 'mobx';
 import cookie from 'js-cookie';
 import AlertStore from './AlertStore';
 import Axios from '../util/Axios';
+import makeAnnotations from '../util/Mobx';
 
 interface UserDataType {
   id: number;
@@ -45,25 +46,15 @@ class SignStore {
   constructor(root: { AlertStore: AlertStore }) {
     this.AlertStore = root.AlertStore;
 
-    makeObservable(this, {
-      cookieChecked: observable,
-      userData: observable,
-      loginInfo: observable,
-      registerInfo: observable,
-      changeRegister: action,
-      toggleSignModal: action,
-      toggleRegisterModal: action,
-      toggleEmailModal: action,
-      loginHandleChange: action,
-      registerHandleChange: action,
-      verifyHandleChange: action,
-      cookieCheck: action,
-      login: action,
-      register: action,
-      verifyEmail: action,
-      verifyCode: action,
-      logout: action,
-    });
+    makeObservable(this, makeAnnotations<this>({
+      observables: ['cookieChecked', 'userData', 'loginInfo', 'registerInfo'],
+      actions: [
+        'changeRegister', 'toggleSignModal', 'toggleRegisterModal',
+        'toggleEmailModal', 'loginHandleChange', 'registerHandleChange',
+        'verifyHandleChange', 'cookieCheck', 'login',
+        'register', 'verifyEmail', 'verifyCode', 'logout',
+      ],
+    }));
   }
 
   changeRegister = (): void => {

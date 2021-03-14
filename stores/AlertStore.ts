@@ -7,7 +7,7 @@ class AlertStore {
   text = '';
 
   constructor() {
-    makeObservable(this, makeAnnotations({
+    makeObservable(this, makeAnnotations<this>({
       observables: ['isOpenAlertModal', 'text'],
       actions: ['toggleAlertModal', 'closeAlertModal'],
     }));

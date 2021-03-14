@@ -1,8 +1,9 @@
 import React from 'react';
-import { action, makeObservable, observable } from 'mobx';
+import { makeObservable } from 'mobx';
 import PostStore from './PostStore';
 import AlertStore from './AlertStore';
 import Axios from '../util/Axios';
+import makeAnnotations from '../util/Mobx';
 
 export interface CommentType {
   rownum: number;
@@ -44,21 +45,17 @@ class CommentStore {
     this.PostStore = root.PostStore;
     this.AlertStore = root.AlertStore;
     this.commentList = initialData.commentList;
-    makeObservable(this, {
-      commentInfo: observable,
-      commentList: observable,
-      commentSize: observable,
-      modifierCommentId: observable,
-      replyCommentId: observable,
-      commentHandleChange: action,
-      setModifierCommentId: action,
-      setReplyCommentId: action,
-      addComment: action,
-      moreComment: action,
-      getComment: action,
-      modifyComment: action,
-      deleteComment: action,
-    });
+    makeObservable(this, makeAnnotations<this>({
+      observables: [
+        'commentInfo', 'commentList', 'commentSize',
+        'modifierCommentId', 'replyCommentId',
+      ],
+      actions: [
+        'commentHandleChange', 'setModifierCommentId',
+        'setReplyCommentId', 'addComment', 'moreComment',
+        'getComment', 'modifyComment', 'deleteComment',
+      ],
+    }));
   }
 
   commentHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {

@@ -1,5 +1,6 @@
-import { action, makeObservable, observable } from 'mobx';
+import { makeObservable } from 'mobx';
 import React from 'react';
+import makeAnnotations from '../util/Mobx';
 
 class UtilStore {
   profileMenu: HTMLElement | null = null;
@@ -11,15 +12,10 @@ class UtilStore {
   text = '';
 
   constructor() {
-    makeObservable(this, {
-      profileMenu: observable,
-      isOpenConfirmModal: observable,
-      callback: observable,
-      text: observable,
-      toggleConfirmModal: action,
-      callFunction: action,
-      closeConfirmModal: action,
-    });
+    makeObservable(this, makeAnnotations<this>({
+      observables: ['profileMenu', 'isOpenConfirmModal', 'callback', 'text'],
+      actions: ['toggleConfirmModal', 'callFunction', 'closeConfirmModal'],
+    }));
   }
 
   toggleConfirmModal = (text: string, callback: Function | undefined): void => {

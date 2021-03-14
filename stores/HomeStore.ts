@@ -1,7 +1,8 @@
 import React from 'react';
-import { action, makeObservable, observable } from 'mobx';
+import { makeObservable } from 'mobx';
 import AlertStore from './AlertStore';
 import Axios from '../util/Axios';
+import makeAnnotations from '../util/Mobx';
 
 export interface FootPrintType {
   rownum: number;
@@ -44,23 +45,17 @@ class HomeStore {
     this.noticePostList = initialData.noticePostList;
     this.footprintList = initialData.footprintList;
 
-    makeObservable(this, {
-      recentlyPostList: observable,
-      noticePostList: observable,
-      footprintList: observable,
-      footprintSize: observable,
-      footprintInfo: observable,
-      modifierFootprintId: observable,
-      setModifierFootprintId: action,
-      footprintHandleChange: action,
-      getRecentlyPostList: action,
-      getNoticePostList: action,
-      addFootprint: action,
-      moreFootprint: action,
-      getFootprint: action,
-      modifyFootprint: action,
-      deleteFootprint: action,
-    });
+    makeObservable(this, makeAnnotations<this>({
+      observables: [
+        'recentlyPostList', 'noticePostList', 'footprintList',
+        'footprintSize', 'footprintInfo', 'modifierFootprintId',
+      ],
+      actions: [
+        'setModifierFootprintId', 'footprintHandleChange', 'getRecentlyPostList',
+        'getNoticePostList', 'addFootprint', 'moreFootprint',
+        'getFootprint', 'modifyFootprint', 'deleteFootprint',
+      ],
+    }));
   }
 
   setModifierFootprintId = (id: number, content: string): void => {

@@ -1,4 +1,5 @@
-import { action, makeObservable, observable } from 'mobx';
+import { makeObservable } from 'mobx';
+import makeAnnotations from '../util/Mobx';
 
 class SidebarStore {
   topCategoryList = [{
@@ -56,10 +57,10 @@ class SidebarStore {
   isOpenSidebar = false;
 
   constructor() {
-    makeObservable(this, {
-      isOpenSidebar: observable,
-      toggleSidebar: action,
-    });
+    makeObservable(this, makeAnnotations<this>({
+      observables: ['isOpenSidebar'],
+      actions: ['toggleSidebar'],
+    }));
   }
 
   toggleSidebar = (): void => {

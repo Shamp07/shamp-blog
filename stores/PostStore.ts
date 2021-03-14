@@ -1,8 +1,9 @@
 import React from 'react';
-import { action, makeObservable, observable } from 'mobx';
+import { makeObservable } from 'mobx';
 import { NextRouter } from 'next/dist/next-server/lib/router/router';
 import AlertStore from './AlertStore';
 import Axios from '../util/Axios';
+import makeAnnotations from '../util/Mobx';
 
 interface PostType {
   id: number,
@@ -55,19 +56,14 @@ class PostStore {
     this.postList = initialData.postList;
     this.postView = initialData.postView;
     this.post = initialData.post;
-    makeObservable(this, {
-      post: observable,
-      postView: observable,
-      postList: observable,
-      postHandleChange: action,
-      clearPost: action,
-      addPost: action,
-      getPostList: action,
-      getPost: action,
-      modifyPost: action,
-      deletePost: action,
-      addPostLike: action,
-    });
+    makeObservable(this, makeAnnotations<this>({
+      observables: ['post', 'postView', 'postList'],
+      actions: [
+        'postHandleChange', 'clearPost', 'addPost',
+        'getPostList', 'getPost', 'modifyPost',
+        'deletePost', 'addPostLike',
+      ],
+    }));
   }
 
   postHandleChange = (

@@ -1,5 +1,6 @@
-import { action, makeObservable, observable } from 'mobx';
+import { makeObservable } from 'mobx';
 import Axios from '../util/Axios';
+import makeAnnotations from '../util/Mobx';
 
 export interface TagType {
   tags: string
@@ -10,10 +11,10 @@ class CategoryStore {
 
   constructor(initialData = initialCategory) {
     this.categoryTags = initialData.categoryTags;
-    makeObservable(this, {
-      categoryTags: observable,
-      getCategoryTags: action,
-    });
+    makeObservable(this, makeAnnotations<this>({
+      observables: ['categoryTags'],
+      actions: ['getCategoryTags'],
+    }));
   }
 
   getCategoryTags = async (category: string): Promise<void> => {
