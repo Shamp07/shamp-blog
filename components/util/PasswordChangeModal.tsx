@@ -12,8 +12,11 @@ const PasswordChangeModal = () => {
   const { SignStore } = useStores() as RootStore;
   const {
     isOpenPasswordChangeModal, togglePasswordChangeModal,
-    changePassword,
+    changePassword, passwordInfo, passwordHandleChange,
   } = SignStore;
+  const {
+    currentPassword, changePassword: changePasswordValue, changePasswordCheck,
+  } = passwordInfo;
 
   return (
     <CustomModal
@@ -31,9 +34,29 @@ const PasswordChangeModal = () => {
         <Paper>
           <h2 id="transition-modal-title">비밀번호 변경</h2>
           <div>
-            <CustomTextField label="e-mail" name="email" onChange={loginHandleChange} value={email} />
+            <CustomTextField
+              label="현재 비밀번호"
+              onChange={passwordHandleChange}
+              value={currentPassword}
+              name="currentPassword"
+              type="password"
+            />
             <br />
-            <CustomTextField label="비밀번호" name="password" onChange={loginHandleChange} value={password} type="password" />
+            <CustomTextField
+              label="변경할 비밀번호"
+              onChange={passwordHandleChange}
+              value={changePasswordValue}
+              name="changePasswordValue"
+              type="password"
+            />
+            <br />
+            <CustomTextField
+              label="변경할 비밀번호 확인"
+              onChange={passwordHandleChange}
+              value={changePasswordCheck}
+              name="changePasswordCheck"
+              type="password"
+            />
             <br />
           </div>
           <div>

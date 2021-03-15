@@ -33,6 +33,12 @@ class SignStore {
     name: '',
   };
 
+  passwordInfo = {
+    currentPassword: '',
+    changePassword: '',
+    changePasswordCheck: '',
+  };
+
   emailVerifyCode = '';
 
   isOpenSignModal = false;
@@ -47,7 +53,10 @@ class SignStore {
     this.AlertStore = root.AlertStore;
 
     makeObservable(this, makeAnnotations<this>({
-      observables: ['cookieChecked', 'userData', 'loginInfo', 'registerInfo'],
+      observables: [
+        'cookieChecked', 'userData', 'loginInfo', 'registerInfo',
+        'passwordInfo',
+      ],
       actions: [
         'changeRegister', 'toggleSignModal', 'toggleRegisterModal',
         'toggleEmailModal', 'loginHandleChange', 'registerHandleChange',
@@ -100,6 +109,13 @@ class SignStore {
   registerHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.registerInfo = {
       ...this.registerInfo,
+      [event.target.name]: event.target.value,
+    };
+  };
+
+  passwordHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    this.passwordInfo = {
+      ...this.passwordInfo,
       [event.target.name]: event.target.value,
     };
   };
