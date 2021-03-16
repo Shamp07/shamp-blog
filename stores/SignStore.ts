@@ -161,7 +161,12 @@ class SignStore {
   };
 
   changePassword = (): void => {
-
+    Axios({
+      method: 'put',
+      url: '/api/user/password',
+      data: this.passwordInfo,
+      success: () => this.AlertStore.toggleAlertModal('비밀번호가 정상적으로 변경되었습니다!'),
+    });
   };
 
   register = (): void => {

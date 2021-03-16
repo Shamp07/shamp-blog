@@ -38,7 +38,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           </a>
           <div style="border-top: 1px solid #DDD; padding: 5px;">
             <p style="font-size: 13px; line-height: 21px; color: #555;">
-              만약 코드를 정상적으로 입력하여, 인증 실패 한다면 메일을 재전송 해주세요.<br />
+              만약 코드를 정상적으로 입력하여도, 인증 실패 한다면 메일을 재전송 해주세요.<br />
             </p>
           </div>
         </div>
