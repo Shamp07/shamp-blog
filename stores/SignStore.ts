@@ -39,6 +39,11 @@ class SignStore {
     changePasswordCheck: '',
   };
 
+  deleteUserInfo = {
+    deleteEmail: '',
+    deleteText: '',
+  };
+
   emailVerifyCode = '';
 
   isOpenSignModal = false;
@@ -55,7 +60,7 @@ class SignStore {
     makeObservable(this, makeAnnotations<this>({
       observables: [
         'cookieChecked', 'userData', 'loginInfo', 'registerInfo',
-        'passwordInfo',
+        'passwordInfo', 'deleteUserInfo',
       ],
       actions: [
         'changeRegister', 'toggleSignModal', 'toggleRegisterModal',
@@ -120,6 +125,13 @@ class SignStore {
     };
   };
 
+  deleteUserHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    this.deleteUserInfo = {
+      ...this.deleteUserInfo,
+      [event.target.name]: event.target.value,
+    };
+  };
+
   verifyHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.emailVerifyCode = event.target.value;
   };
@@ -166,6 +178,15 @@ class SignStore {
       url: '/api/user/password',
       data: this.passwordInfo,
       success: () => this.AlertStore.toggleAlertModal('비밀번호가 정상적으로 변경되었습니다!'),
+    });
+  };
+
+  deleteUser = (): void => {
+    Axios({
+      method: 'delete',
+      url: '/api/user',
+      data: this.deleteUserInfo,
+      success: () => this.AlertStore.toggleAlertModal('정상적으로 탈퇴가 완료되었습니다!'),
     });
   };
 

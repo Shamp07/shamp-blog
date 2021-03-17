@@ -15,7 +15,7 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
   if (request.method === 'PUT') {
     const { id } = request.decodedToken;
     const { currentPassword, changePassword }: Interface = request.body;
-    const values: (number | string | string[])[] = [id];
+    const values = [id];
 
     await Database.execute(
       (database: Client) => database.query(

@@ -5,10 +5,6 @@ import Database from '../../../database/Database';
 import logger from '../../../config/log.config';
 import cors from '../../../middleware/cors';
 
-interface Interface {
-  [key: string]: string | string[];
-}
-
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   await cors(request, response);
   if (request.method === 'POST') {
@@ -17,7 +13,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 };
 
 const addUser = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { email, name, password }: Interface = request.body;
+  const { email, name, password } = request.body;
   const salt = String(Math.round((new Date().valueOf() * Math.random())));
   const hashPassword = crypto.createHash('sha512').update(password + salt).digest('hex');
 
