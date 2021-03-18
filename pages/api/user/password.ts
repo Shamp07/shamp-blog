@@ -16,7 +16,6 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
     const { id } = request.decodedToken;
     const { currentPassword, changePassword }: Interface = request.body;
     const values = [id];
-
     await Database.execute(
       (database: Client) => database.query(
         SELECT_USER_SALT,
@@ -52,20 +51,21 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
         }, () => {
           response.json({
             success: true,
+            code: 3,
             message: '유저 정보가 올바르지 않습니다.',
-            code: 1,
           });
         })
         .then(() => {
           response.json({
             success: true,
+            code: 1,
             message: '비밀번호가 성공적으로 변경되었습니다!',
           });
         }, () => {
           response.json({
             success: true,
-            message: '현재 비밀번호가 올바르지 않습니다.',
             code: 2,
+            message: '현재 비밀번호가 올바르지 않습니다.',
           });
         }),
     ).then(() => {

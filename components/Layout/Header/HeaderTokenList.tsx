@@ -8,7 +8,7 @@ import { RootStore } from '../../../stores';
 
 const HeaderTokenList = () => {
   const { SignStore, UtilStore } = useStores() as RootStore;
-  const { userData, logout } = SignStore;
+  const { userData, logout, togglePasswordChangeModal } = SignStore;
   const { profileMenu, toggleProfileMenu } = UtilStore;
 
   if (!userData) {
@@ -32,7 +32,7 @@ const HeaderTokenList = () => {
           onClose={toggleProfileMenu}
         >
           <MenuItem onClick={toggleProfileMenu}>알림 조회</MenuItem>
-          <MenuItem onClick={toggleProfileMenu}>비밀번호 변경</MenuItem>
+          <MenuItem onClick={togglePasswordChangeModal}>비밀번호 변경</MenuItem>
           <MenuItem onClick={toggleProfileMenu}>탈퇴하기</MenuItem>
         </Menu>
       </li>

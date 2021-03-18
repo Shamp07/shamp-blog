@@ -46,7 +46,7 @@ const PasswordChangeModal = () => {
               label="변경할 비밀번호"
               onChange={passwordHandleChange}
               value={changePasswordValue}
-              name="changePasswordValue"
+              name="changePassword"
               type="password"
             />
             <br />

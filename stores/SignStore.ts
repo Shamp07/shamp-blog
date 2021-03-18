@@ -54,19 +54,23 @@ class SignStore {
 
   isOpenPasswordChangeModal = false;
 
+  isOpenDeleteUserModal = false;
+
   constructor(root: { AlertStore: AlertStore }) {
     this.AlertStore = root.AlertStore;
 
     makeObservable(this, makeAnnotations<this>({
       observables: [
         'cookieChecked', 'userData', 'loginInfo', 'registerInfo',
-        'passwordInfo', 'deleteUserInfo',
+        'passwordInfo', 'deleteUserInfo', 'isOpenPasswordChangeModal',
+        'isOpenDeleteUserModal',
       ],
       actions: [
         'changeRegister', 'toggleSignModal', 'toggleRegisterModal',
         'toggleEmailModal', 'loginHandleChange', 'registerHandleChange',
         'verifyHandleChange', 'cookieCheck', 'login',
         'register', 'verifyEmail', 'verifyCode', 'logout',
+        'togglePasswordChangeModal',
       ],
     }));
   }
@@ -77,6 +81,15 @@ class SignStore {
 
   togglePasswordChangeModal = (): void => {
     this.isOpenPasswordChangeModal = !this.isOpenPasswordChangeModal;
+    this.passwordInfo = {
+      currentPassword: '',
+      changePassword: '',
+      changePasswordCheck: '',
+    };
+  };
+
+  toggleDeleteUserModal = (): void => {
+    this.isOpenDeleteUserModal = !this.isOpenDeleteUserModal;
   };
 
   toggleSignModal = (): void => {
@@ -173,11 +186,23 @@ class SignStore {
   };
 
   changePassword = (): void => {
+    const { changePassword, changePasswordCheck } = this.passwordInfo;
+    if (!this.passwordCheck(changePassword, changePasswordCheck)) {
+      return;
+    }
+
     Axios({
       method: 'put',
       url: '/api/user/password',
       data: this.passwordInfo,
-      success: () => this.AlertStore.toggleAlertModal('비밀번호가 정상적으로 변경되었습니다!'),
+      success: (response) => {
+        const { code, message } = response.data;
+        console.log(code, message);
+        if (code === 1) {
+          this.togglePasswordChangeModal();
+        }
+        this.AlertStore.toggleAlertModal(message);
+      },
     });
   };
 
@@ -248,29 +273,37 @@ class SignStore {
   };
 
   registerValidationCheck = (): boolean => {
+    const { toggleAlertModal } = this.AlertStore;
+    const { name } = this.registerInfo;
+
     if (!this.isEmail()) {
-      this.AlertStore.toggleAlertModal('이메일을 제대로 입력해주세요.');
+      toggleAlertModal('이메일을 제대로 입력해주세요.');
       return false;
     }
 
-    if (!this.registerInfo.name.trim()) {
-      this.AlertStore.toggleAlertModal('이름을 제대로 입력해주세요.');
+    if (!name.trim()) {
+      toggleAlertModal('이름을 제대로 입력해주세요.');
       return false;
     }
 
-    if (!this.registerInfo.password.trim()) {
+    const { password, passwordCheck } = this.registerInfo;
+    return this.passwordCheck(password, passwordCheck);
+  };
+
+  passwordCheck = (password: string, passwordCheck: string) => {
+    if (!password.trim()) {
       this.AlertStore.toggleAlertModal('패스워드를 제대로 입력해주세요.');
       return false;
     }
 
-    const num = this.registerInfo.password.search(/[0-9]/g);
-    const eng = this.registerInfo.password.search(/[a-z]/ig);
-    const spe = this.registerInfo.password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+    const num = password.search(/[0-9]/g);
+    const eng = password.search(/[a-z]/ig);
+    const spe = password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
-    if (this.registerInfo.password.length < 8 || this.registerInfo.password.length > 20) {
+    if (password.length < 8 || password.length > 20) {
       this.AlertStore.toggleAlertModal('비밀번호는 8자리 ~ 20자리 이내로 입력해주세요.');
       return false;
-    } if (this.registerInfo.password.search(/\s/) !== -1) {
+    } if (password.search(/\s/) !== -1) {
       this.AlertStore.toggleAlertModal('비밀번호는 공백 없이 입력해주세요.');
       return false;
     } if (num < 0 || eng < 0 || spe < 0) {
@@ -278,7 +311,7 @@ class SignStore {
       return false;
     }
 
-    if (this.registerInfo.password !== this.registerInfo.passwordCheck) {
+    if (password !== passwordCheck) {
       this.AlertStore.toggleAlertModal('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
       return false;
     }
