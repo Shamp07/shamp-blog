@@ -37,7 +37,7 @@ const HeaderTokenList = () => {
         </Menu>
       </li>
       <li>
-        <NoStyleA onClick={logout}>
+        <NoStyleA onClick={() => logout(false)}>
           로그아웃
         </NoStyleA>
       </li>

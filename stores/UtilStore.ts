@@ -34,9 +34,9 @@ class UtilStore {
   };
 
   toggleProfileMenu = (
-    event: React.MouseEvent<HTMLLIElement | HTMLAnchorElement, MouseEvent>,
+    event?: React.MouseEvent<HTMLLIElement | HTMLAnchorElement, MouseEvent>,
   ): void => {
-    if (!this.profileMenu) this.profileMenu = event.currentTarget;
+    if (!this.profileMenu && event) this.profileMenu = event.currentTarget;
     else this.profileMenu = null;
   };
 }

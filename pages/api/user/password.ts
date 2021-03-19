@@ -42,7 +42,7 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
 
           const salt = String(Math.round((new Date().valueOf() * Math.random())));
           const hashPassword = crypto.createHash('sha512').update(changePassword + salt).digest('hex');
-          const values3: (number | string | string[])[] = [hashPassword, id];
+          const values3 = [hashPassword, salt, id];
 
           return database.query(
             UPDATE_USER_PASSWORD,
@@ -87,8 +87,10 @@ const SELECT_USER_PASSWORD = `
 
 const UPDATE_USER_PASSWORD = `
   UPDATE "user"
-  SET password = $1
-  WHERE id = $2
+  SET
+    password = $1,
+    salt = $2
+  WHERE id = $3
 `;
 
 export default authMiddleware(handler, 0);

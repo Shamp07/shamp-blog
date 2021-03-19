@@ -12,7 +12,7 @@ const DeleteUserModal = () => {
   const { SignStore } = useStores() as RootStore;
   const {
     isOpenDeleteUserModal, toggleDeleteUserModal, deleteUserInfo,
-    deleteUserHandleChange, deleteUser
+    deleteUserHandleChange, deleteUser,
   } = SignStore;
   const { deleteEmail, deleteText } = deleteUserInfo;
 
@@ -20,7 +20,7 @@ const DeleteUserModal = () => {
     <CustomModal
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
-      open={toggleDeleteUserModal}
+      open={isOpenDeleteUserModal}
       onClose={toggleDeleteUserModal}
       closeAfterTransition
       BackdropComponent={Backdrop}

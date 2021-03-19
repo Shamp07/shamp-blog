@@ -2,6 +2,7 @@ import React from 'react';
 import { makeObservable } from 'mobx';
 import cookie from 'js-cookie';
 import AlertStore from './AlertStore';
+import UtilStore from './UtilStore';
 import Axios from '../util/Axios';
 import makeAnnotations from '../util/Mobx';
 
@@ -16,6 +17,8 @@ interface UserDataType {
 
 class SignStore {
   AlertStore: AlertStore;
+
+  UtilStore: UtilStore;
 
   cookieChecked = false;
 
@@ -56,14 +59,16 @@ class SignStore {
 
   isOpenDeleteUserModal = false;
 
-  constructor(root: { AlertStore: AlertStore }) {
+  constructor(root: { AlertStore: AlertStore, UtilStore: UtilStore }) {
     this.AlertStore = root.AlertStore;
+    this.UtilStore = root.UtilStore;
 
     makeObservable(this, makeAnnotations<this>({
       observables: [
         'cookieChecked', 'userData', 'loginInfo', 'registerInfo',
         'passwordInfo', 'deleteUserInfo', 'isOpenPasswordChangeModal',
-        'isOpenDeleteUserModal',
+        'isOpenDeleteUserModal', 'isOpenEmailModal', 'emailVerifyCode',
+        'isOpenRegisterModal',
       ],
       actions: [
         'changeRegister', 'toggleSignModal', 'toggleRegisterModal',
@@ -80,6 +85,10 @@ class SignStore {
   };
 
   togglePasswordChangeModal = (): void => {
+    if (!this.isOpenPasswordChangeModal) {
+      this.UtilStore.toggleProfileMenu();
+    }
+
     this.isOpenPasswordChangeModal = !this.isOpenPasswordChangeModal;
     this.passwordInfo = {
       currentPassword: '',
@@ -197,8 +206,8 @@ class SignStore {
       data: this.passwordInfo,
       success: (response) => {
         const { code, message } = response.data;
-        console.log(code, message);
         if (code === 1) {
+          this.logout(true);
           this.togglePasswordChangeModal();
         }
         this.AlertStore.toggleAlertModal(message);
@@ -324,10 +333,12 @@ class SignStore {
     return regExp.test(this.registerInfo.email);
   };
 
-  logout = (): void => {
+  logout = (isChangePassword: boolean): void => {
     cookie.remove('token');
     this.userData = undefined;
-    this.AlertStore.toggleAlertModal('로그아웃 되었습니다.');
+    if (!isChangePassword) {
+      this.AlertStore.toggleAlertModal('로그아웃 되었습니다.');
+    }
   };
 }
 
