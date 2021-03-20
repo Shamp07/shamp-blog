@@ -38,22 +38,22 @@ const DeleteUserModal = () => {
               label="e-mail"
               onChange={deleteUserHandleChange}
               value={deleteEmail}
-              name="changePasswordValue"
-              type="password"
+              name="deleteEmail"
             />
             <br />
             <CustomTextField
-              label="계정을 삭제하겠습니다."
+              label="'계정을 삭제하겠습니다' 라고 적어주세요."
               onChange={deleteUserHandleChange}
               value={deleteText}
-              name="changePasswordCheck"
-              type="password"
+              name="deleteText"
             />
             <br />
           </div>
           <div>
             <Button variant="contained" onClick={toggleDeleteUserModal}>취소</Button>
-            <Button variant="contained" color="primary" onClick={deleteUser}>탈퇴하기</Button>
+            <Button variant="contained" color="primary" onClick={deleteUser} disabled={deleteText !== '계정을 삭제하겠습니다'}>
+              탈퇴하기
+            </Button>
           </div>
         </Paper>
       </Fade>
@@ -69,7 +69,7 @@ const CustomModal = styled(Modal)`
 
 const Paper = styled.div`
   margin: 0 40px;
-  width: 300px;
+  width: 400px;
   max-width: 100%;
   background-color: #fff;
   border: 1px solid #e6e6e6;
@@ -100,6 +100,7 @@ const Paper = styled.div`
   & > div > button:last-of-type {
     margin-left: auto;
   }
+
 `;
 
 const CustomTextField = styled(TextField)`

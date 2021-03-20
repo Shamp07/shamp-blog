@@ -82,6 +82,7 @@ const SELECT_USER = `
   SELECT
     id,
     name,
+    email,
     admin_fl AS "adminFl",
     verify_fl AS "verifyFl"
   FROM "user"

@@ -8,6 +8,7 @@ export interface NextApiRequestToken extends NextApiRequest {
 
 export interface Token {
   id: number;
+  email: string;
   name: string;
   adminFl: boolean;
   verifyFl: boolean;

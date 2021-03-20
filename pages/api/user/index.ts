@@ -1,18 +1,21 @@
 import { Client } from 'pg';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiResponse } from 'next';
 import crypto from 'crypto';
 import Database from '../../../database/Database';
 import logger from '../../../config/log.config';
 import cors from '../../../middleware/cors';
+import authMiddleware, { NextApiRequestToken } from '../../../middleware/auth';
 
-const handler = async (request: NextApiRequest, response: NextApiResponse) => {
+const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
   if (request.method === 'POST') {
     await addUser(request, response);
+  } else if (request.method === 'DELETE') {
+    await authMiddleware(deleteUser, 0)(request, response);
   }
 };
 
-const addUser = async (request: NextApiRequest, response: NextApiResponse) => {
+const addUser = async (request: NextApiRequestToken, response: NextApiResponse) => {
   const { email, name, password } = request.body;
   const salt = String(Math.round((new Date().valueOf() * Math.random())));
   const hashPassword = crypto.createHash('sha512').update(password + salt).digest('hex');
@@ -59,6 +62,37 @@ const addUser = async (request: NextApiRequest, response: NextApiResponse) => {
   });
 };
 
+const deleteUser = async (request: NextApiRequestToken, response: NextApiResponse) => {
+  const { deleteEmail } = request.query;
+  const { email, id } = request.decodedToken;
+
+  if (email !== deleteEmail) {
+    response.json({
+      success: true,
+      code: 2,
+      message: '이메일이 올바르지 않습니다.',
+    });
+  } else {
+    const values = [deleteEmail, id];
+
+    await Database.execute(
+      (database: Client) => database.query(
+        DELETE_USER,
+        values,
+      )
+        .then(() => {
+          response.json({
+            success: true,
+            code: 1,
+            message: '회원탈퇴가 정상적으로 완료되었습니다!',
+          });
+        }),
+    ).then(() => {
+      logger.info('[UPDATE, DELETE /api/user] 회원탈퇴');
+    });
+  }
+};
+
 const INSERT_USER = `
   INSERT INTO "user" (
     email,
@@ -84,6 +118,13 @@ const SELECT_USER_DUPLICATE = `
   WHERE
     email = $1
     OR name = $2
+`;
+
+const DELETE_USER = `
+  UPDATE "user"
+  SET delete_fl = true
+  WHERE email = $1
+  AND id = $2
 `;
 
 export default handler;

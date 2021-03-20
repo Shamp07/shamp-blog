@@ -88,16 +88,25 @@ class SignStore {
     if (!this.isOpenPasswordChangeModal) {
       this.UtilStore.toggleProfileMenu();
     }
-
-    this.isOpenPasswordChangeModal = !this.isOpenPasswordChangeModal;
     this.passwordInfo = {
       currentPassword: '',
       changePassword: '',
       changePasswordCheck: '',
     };
+
+    this.isOpenPasswordChangeModal = !this.isOpenPasswordChangeModal;
   };
 
   toggleDeleteUserModal = (): void => {
+    if (!this.isOpenDeleteUserModal) {
+      this.UtilStore.toggleProfileMenu();
+    }
+
+    this.deleteUserInfo = {
+      deleteEmail: '',
+      deleteText: '',
+    };
+
     this.isOpenDeleteUserModal = !this.isOpenDeleteUserModal;
   };
 
@@ -220,7 +229,14 @@ class SignStore {
       method: 'delete',
       url: '/api/user',
       data: this.deleteUserInfo,
-      success: () => this.AlertStore.toggleAlertModal('정상적으로 탈퇴가 완료되었습니다!'),
+      success: (response) => {
+        const { code, message } = response.data;
+        if (code === 1) {
+          this.toggleDeleteUserModal();
+          this.logout(true);
+        }
+        this.AlertStore.toggleAlertModal(message);
+      },
     });
   };
 
