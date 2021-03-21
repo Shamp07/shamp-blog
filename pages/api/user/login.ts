@@ -1,4 +1,4 @@
-import { Client } from 'pg';
+  import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
@@ -16,6 +16,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   if (request.method === 'POST') {
     const { email, password }: Interface = request.body;
     const values: (string | string[])[] = [email];
+    let message: string;
 
     await Database.execute(
       (database: Client) => database.query(
@@ -24,6 +25,11 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
       )
         .then((result) => {
           if (result.rows.length <= 0) {
+            message = '😅 ID가 존재하지 않거나 비밀번호가 일치하지 않습니다.';
+            return Promise.reject();
+          }
+          if (result.rows[0].deleteFl) {
+            message = '😅 해당 계정을 탈퇴된 상태입니다.';
             return Promise.reject();
           }
 
@@ -69,7 +75,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           response.json({
             success: true,
             code: 2,
-            message: '😅 ID가 존재하지 않거나 비밀번호가 일치하지 않습니다.',
+            message,
           });
         }),
     ).then(() => {
@@ -92,7 +98,10 @@ const SELECT_USER = `
 `;
 
 const SELECT_USER_SALT = `
-  SELECT salt FROM "user"
+  SELECT
+    salt,
+    delete_fl AS "deleteFl" 
+  FROM "user" 
   WHERE email = $1
 `;
 

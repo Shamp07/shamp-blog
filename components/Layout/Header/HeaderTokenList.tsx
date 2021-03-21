@@ -3,30 +3,21 @@ import styled from '@emotion/styled';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { observer } from 'mobx-react-lite';
+import { faUser, faBell } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useStores from '../../../stores/useStores';
 import { RootStore } from '../../../stores';
 
 const HeaderTokenList = () => {
   const { SignStore, UtilStore } = useStores() as RootStore;
-  const {
-    userData, logout, togglePasswordChangeModal,
-    toggleDeleteUserModal,
-  } = SignStore;
+  const { logout, togglePasswordChangeModal, toggleDeleteUserModal } = SignStore;
   const { profileMenu, toggleProfileMenu } = UtilStore;
-
-  if (!userData) {
-    return null;
-  }
-
-  const { name } = userData;
 
   return (
     <>
       <li>
         <NoStyleA onClick={toggleProfileMenu}>
-          {name}
-          {' '}
-          님
+          <FontAwesomeIcon icon={faUser} />
         </NoStyleA>
         <Menu
           anchorEl={profileMenu}
@@ -34,14 +25,14 @@ const HeaderTokenList = () => {
           open={Boolean(profileMenu)}
           onClose={toggleProfileMenu}
         >
-          <MenuItem onClick={toggleProfileMenu}>알림 조회</MenuItem>
           <MenuItem onClick={togglePasswordChangeModal}>비밀번호 변경</MenuItem>
           <MenuItem onClick={toggleDeleteUserModal}>탈퇴하기</MenuItem>
+          <MenuItem onClick={() => logout(false)}>로그아웃</MenuItem>
         </Menu>
       </li>
       <li>
-        <NoStyleA onClick={() => logout(false)}>
-          로그아웃
+        <NoStyleA>
+          <FontAwesomeIcon icon={faBell} />
         </NoStyleA>
       </li>
     </>
