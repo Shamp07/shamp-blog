@@ -40,16 +40,19 @@ const HeaderTokenList = () => {
 };
 
 const NoStyleA = styled.a`
-  display: block;
+  display: inline-block;
   color: #ffffff;
   transition: all 0.125s ease-in 0s;
   cursor: pointer;
-  height: 70px;
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
   font-weight: 500;
   text-align: center;
 
   &:hover {
-    color: #d0d0d0;
+    background-color: rgba(0, 0, 0, 0.04);
   }
 `;
 

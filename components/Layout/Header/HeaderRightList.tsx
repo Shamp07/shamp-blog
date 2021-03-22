@@ -51,28 +51,21 @@ const RightList = styled.ul`
   }
   
   & svg {
-    width: 26px;
-    height: 26px;
-    vertical-align: middle;
-  }
-
-  & li:last-of-type svg {
-    width: 30px !important;
-    height: 30px !important;
+    width: 30px;
+    height: 30px;
   }
 `;
 
 const NoStyleA = styled.a`
-  display: block;
+  flex: 0 0 auto;
   color: #FFFFFF;
-  transition: all 0.125s ease-in 0s;
   cursor: pointer;
-  height: 70px;
+  border-radius: 25px;
   font-weight: 500;
   text-align: center;
-
+  transition: all 0.125s ease-in 0s;
   &:hover {
-    color: #d0d0d0;
+    background-color: rgba(0, 0, 0, 0.04);
   }
 `;
 
