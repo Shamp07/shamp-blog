@@ -11,9 +11,9 @@ const HeaderRightList = () => (
       <RightList>
         <HeaderTokenMenu />
         <li>
-          <NoStyleA href="https://github.com/Shamp07">
+          <a href="https://github.com/Shamp07">
             <FontAwesomeIcon icon={faGithubAlt} />
-          </NoStyleA>
+          </a>
         </li>
       </RightList>
     </ListWrapper>
@@ -50,22 +50,35 @@ const RightList = styled.ul`
     text-align: center;
   }
   
-  & svg {
-    width: 30px;
-    height: 30px;
-  }
-`;
+  & > li > a, & > li > button {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    margin: 10px 0;
+    color: #fff;
+    border-radius: 25px;
+    transition: background-color 0.2s;
+    cursor: pointer;
 
-const NoStyleA = styled.a`
-  flex: 0 0 auto;
-  color: #FFFFFF;
-  cursor: pointer;
-  border-radius: 25px;
-  font-weight: 500;
-  text-align: center;
-  transition: all 0.125s ease-in 0s;
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.04);
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.03);
+    }
+  }
+
+  & > li > button {
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+    
+    &:focus {
+      outline: 0;
+    }
+  }
+  
+  & svg {
+    padding: 12px;
+    width: 25px;
+    height: 25px;
   }
 `;
 

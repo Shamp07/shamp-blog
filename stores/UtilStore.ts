@@ -1,6 +1,6 @@
 import { makeObservable } from 'mobx';
-import React from 'react';
 import makeAnnotations from '../util/Mobx';
+import React from 'react';
 
 class UtilStore {
   profileMenu: HTMLElement | null = null;
@@ -33,11 +33,12 @@ class UtilStore {
     this.isOpenConfirmModal = false;
   };
 
-  toggleProfileMenu = (
-    event?: React.MouseEvent<HTMLLIElement | HTMLAnchorElement, MouseEvent>,
-  ): void => {
-    if (!this.profileMenu && event) this.profileMenu = event.currentTarget;
-    else this.profileMenu = null;
+  openProfileMenu = (event: React.MouseEvent<HTMLElement>): void => {
+    this.profileMenu = event.currentTarget;
+  };
+
+  closeProfileMenu = () => {
+    this.profileMenu = null;
   };
 }
 

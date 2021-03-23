@@ -86,7 +86,7 @@ class SignStore {
 
   togglePasswordChangeModal = (): void => {
     if (!this.isOpenPasswordChangeModal) {
-      this.UtilStore.toggleProfileMenu();
+      this.UtilStore.closeProfileMenu();
     }
     this.passwordInfo = {
       currentPassword: '',
@@ -99,7 +99,7 @@ class SignStore {
 
   toggleDeleteUserModal = (): void => {
     if (!this.isOpenDeleteUserModal) {
-      this.UtilStore.toggleProfileMenu();
+      this.UtilStore.closeProfileMenu();
     }
 
     this.deleteUserInfo = {
@@ -350,6 +350,8 @@ class SignStore {
   };
 
   logout = (isChangePassword: boolean): void => {
+    this.UtilStore.closeProfileMenu();
+
     cookie.remove('token');
     this.userData = undefined;
     if (!isChangePassword) {

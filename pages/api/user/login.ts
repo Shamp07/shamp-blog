@@ -1,4 +1,4 @@
-  import { Client } from 'pg';
+import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
