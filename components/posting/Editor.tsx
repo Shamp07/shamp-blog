@@ -50,12 +50,14 @@ Editor.modules = {
 const CustomQuill = styled(QuillNoSSRWRapper)`
   & .ql-editor {
     font-size: 16px;  
+    line-height: 2;
   }
   
   & pre.ql-syntax, & pre.ql-syntax * {
     font-family: 'JetBrains Mono', 'Noto Sans KR', serif;
     font-size: 14px;
     line-height: 1.5;
+    background: #2e3440 !important;
   }
 `;
 

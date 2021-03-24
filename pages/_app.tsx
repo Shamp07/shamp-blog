@@ -6,7 +6,7 @@ import { NextComponentType, NextPageContext } from 'next';
 import Layout from '../components/Layout';
 import initializeStore, { RootStore } from '../stores';
 import 'react-quill/dist/quill.snow.css';
-import 'highlight.js/styles/atom-one-dark.css';
+import 'highlight.js/styles/nord.css';
 
 React.useLayoutEffect = React.useEffect;
 

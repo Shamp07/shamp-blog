@@ -49,7 +49,7 @@ interface WrapperProps {
 
 const Wrapper = styled.div<WrapperProps>`
   display: block;
-  width: 300px;
+  width: 260px;
   will-change: min-height;
   
   @media (max-width: 1064px) {

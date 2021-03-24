@@ -20,7 +20,7 @@ const Header = () => (
 const ResponsiveContainer = styled.div`
   display: flex;
   height: 70px;
-  max-width: 1044px;
+  max-width: 1200px;
   margin: 0 auto;
   @media (max-width: 1064px) {
     padding-left: 0 !important;

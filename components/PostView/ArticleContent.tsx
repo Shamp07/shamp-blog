@@ -37,7 +37,7 @@ const ArticleText = styled.div`
   width: 100%;
   box-sizing: border-box;
   padding: 24px 16px;
-  line-height: 1.42;
+  line-height: 2;
   font-size: 16px;
   color: #1e2022;
   word-break: break-all;
@@ -62,7 +62,7 @@ const ArticleText = styled.div`
   }
   
   & pre.ql-syntax {
-    background-color: #23241f;
+    background: #2e3440;
     color: #f8f8f2;
     overflow: auto;
     margin-bottom: 5px;

@@ -13,7 +13,7 @@ const SideTokenList = () => {
   return (
     <MobileMenu>
       <TopMenu>{name}</TopMenu>
-      <TopMenu onClick={logout}>로그아웃</TopMenu>
+      <TopMenu onClick={() => logout(false)}>로그아웃</TopMenu>
     </MobileMenu>
   );
 };
