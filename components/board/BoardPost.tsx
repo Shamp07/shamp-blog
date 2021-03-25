@@ -16,7 +16,7 @@ const BoardPost = ({ data }: BoardPostProps) => {
   const router = useRouter();
   const routerParams = router.query.board as Array<string>;
   const { SidebarStore } = useStores() as RootStore;
-  const { boardCategoryName } = SidebarStore;
+  const { getCategoryName } = SidebarStore;
   const {
     id, title, category,
     commentCnt, tags, time, likeCnt,
@@ -48,7 +48,7 @@ const BoardPost = ({ data }: BoardPostProps) => {
         <div>
           <PostInfoUl>
             <li>
-              <span>{boardCategoryName[category]}</span>
+              <span>{getCategoryName(category)}</span>
             </li>
             <li>
               <span>{tags}</span>

@@ -27,7 +27,7 @@ const Content = ({ children }: ContentProps) => {
 const Wrapper = styled.div`
   margin-left: auto;
   box-sizing: border-box;
-  width: 928px;
+  width: 754px;
   margin-bottom: 20px;
   
   @media (max-width: 1064px) {

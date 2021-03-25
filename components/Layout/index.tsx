@@ -41,7 +41,7 @@ const Wrapper = styled.div`
 
 const CenterContent = styled.div`
   margin: -200px auto 0 auto;
-  max-width: 1200px;
+  max-width: 1044px;
   display: flex;
   
   &:after {

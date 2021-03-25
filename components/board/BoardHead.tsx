@@ -17,7 +17,7 @@ const BoardHead = () => {
     SidebarStore, CategoryStore, SignStore,
     PostStore,
   } = useStores() as RootStore;
-  const { boardCategoryName } = SidebarStore;
+  const { getCategoryName } = SidebarStore;
   const { categoryTags } = CategoryStore;
   const { userData } = SignStore;
   const { clearPost } = PostStore;
@@ -35,7 +35,7 @@ const BoardHead = () => {
       <HeadSection>
         <SubTitle>
           <h2>
-            {boardCategoryName[boardPath]}
+            {getCategoryName(boardPath)}
           </h2>
           { isAdmin && (
             <AbsoluteUl>

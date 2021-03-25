@@ -1,9 +1,9 @@
 import { makeObservable } from 'mobx';
-import makeAnnotations from '../util/Mobx';
 import React from 'react';
+import makeAnnotations from '../util/Mobx';
 
 class UtilStore {
-  profileMenu: HTMLElement | null = null;
+  profileMenu: string | null = null;
 
   isOpenConfirmModal = false;
 
@@ -34,7 +34,7 @@ class UtilStore {
   };
 
   openProfileMenu = (event: React.MouseEvent<HTMLElement>): void => {
-    this.profileMenu = event.currentTarget;
+    this.profileMenu = event.currentTarget.getAttribute('name');
   };
 
   closeProfileMenu = () => {

@@ -7,7 +7,7 @@ import { RootStore } from '../../stores';
 
 const ArticleHeader = () => {
   const { PostStore, SidebarStore } = useStores() as RootStore;
-  const { boardCategoryName } = SidebarStore;
+  const { getCategoryName } = SidebarStore;
   const { postView } = PostStore;
   const {
     title, category, tags, time,
@@ -27,7 +27,7 @@ const ArticleHeader = () => {
       </ArticleTitle>
       <ArticleMeta>
         <ArticleMetaLeft>
-          <li>{boardCategoryName[category]}</li>
+          <li>{getCategoryName(category)}</li>
           <li>{tags}</li>
           <li>
             {modifiedTime || time}

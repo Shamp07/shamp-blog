@@ -38,9 +38,13 @@ const ArticleText = styled.div`
   box-sizing: border-box;
   padding: 24px 16px;
   line-height: 2;
-  font-size: 16px;
+  font-size: 14px;
   color: #1e2022;
   word-break: break-all;
+
+  @media (min-width: 1064px) {
+    font-size: 16px;
+  }
   
   @media (min-width: 1064px) {
     padding-right: 24px;

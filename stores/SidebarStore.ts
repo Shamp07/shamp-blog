@@ -42,7 +42,9 @@ class SidebarStore {
     path: 'etc',
   }];
 
-  boardCategoryName = {
+  boardCategoryName: {
+    [key: string]: string
+  } = {
     notice: '공지사항',
     all: '전체 글',
     best: '인기 글',
@@ -65,6 +67,10 @@ class SidebarStore {
 
   toggleSidebar = (): void => {
     this.isOpenSidebar = !this.isOpenSidebar;
+  };
+
+  getCategoryName = (path: string): string => {
+    return this.boardCategoryName[path] ? this.boardCategoryName[path] : '';
   };
 }
 

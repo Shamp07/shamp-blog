@@ -15,13 +15,13 @@ const HeaderTokenList = () => {
   return (
     <>
       <li>
-        <button type="button" onClick={openProfileMenu}>
+        <button type="button" onClick={openProfileMenu} name="profile">
           <FontAwesomeIcon icon={faUserCircle} />
         </button>
         <Menu
           anchorEl={profileMenu}
           keepMounted
-          open={Boolean(profileMenu)}
+          open={profileMenu === 'name'}
           onClose={closeProfileMenu}
         >
           <MenuItem onClick={togglePasswordChangeModal}>비밀번호 변경</MenuItem>
@@ -30,9 +30,17 @@ const HeaderTokenList = () => {
         </Menu>
       </li>
       <li>
-        <button type="button">
+        <button type="button" onClick={openProfileMenu}>
           <FontAwesomeIcon icon={faBell} />
         </button>
+        <Menu
+          anchorEl={profileMenu}
+          keepMounted
+          open={Boolean(profileMenu)}
+          onClose={closeProfileMenu}
+        >
+          <MenuItem>알림이 없습니다.</MenuItem>
+        </Menu>
       </li>
     </>
   );
