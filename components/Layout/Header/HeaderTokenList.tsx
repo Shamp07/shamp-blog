@@ -10,19 +10,19 @@ import { RootStore } from '../../../stores';
 const HeaderTokenList = () => {
   const { SignStore, UtilStore } = useStores() as RootStore;
   const { logout, togglePasswordChangeModal, toggleDeleteUserModal } = SignStore;
-  const { profileMenu, openProfileMenu, closeProfileMenu } = UtilStore;
+  const { headerMenu, headerMenuElement, openHeaderMenu, closeHeaderMenu } = UtilStore;
 
   return (
     <>
       <li>
-        <button type="button" onClick={openProfileMenu} name="profile">
+        <button type="button" onClick={openHeaderMenu} name="profile">
           <FontAwesomeIcon icon={faUserCircle} />
         </button>
         <Menu
-          anchorEl={profileMenu}
+          anchorEl={headerMenuElement}
           keepMounted
-          open={profileMenu === 'name'}
-          onClose={closeProfileMenu}
+          open={headerMenu === 'profile'}
+          onClose={closeHeaderMenu}
         >
           <MenuItem onClick={togglePasswordChangeModal}>비밀번호 변경</MenuItem>
           <MenuItem onClick={toggleDeleteUserModal}>탈퇴하기</MenuItem>
@@ -30,16 +30,17 @@ const HeaderTokenList = () => {
         </Menu>
       </li>
       <li>
-        <button type="button" onClick={openProfileMenu}>
+        <button type="button" onClick={openHeaderMenu} name="alert">
           <FontAwesomeIcon icon={faBell} />
         </button>
         <Menu
-          anchorEl={profileMenu}
+          anchorEl={headerMenuElement}
           keepMounted
-          open={Boolean(profileMenu)}
-          onClose={closeProfileMenu}
+          open={headerMenu === 'alert'}
+          onClose={closeHeaderMenu}
         >
-          <MenuItem>알림이 없습니다.</MenuItem>
+          <MenuItem>포스팅에 댓글이 달렸습니다.</MenuItem>
+          <MenuItem>댓글에 답글이 달렸습니다.</MenuItem>
         </Menu>
       </li>
     </>

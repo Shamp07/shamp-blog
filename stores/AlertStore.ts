@@ -1,17 +1,31 @@
 import { makeObservable } from 'mobx';
 import makeAnnotations from '../util/Mobx';
+import Axios from '../util/Axios';
 
 class AlertStore {
   isOpenAlertModal = false;
 
   text = '';
 
+  alertList = [];
+
   constructor() {
     makeObservable(this, makeAnnotations<this>({
-      observables: ['isOpenAlertModal', 'text'],
-      actions: ['toggleAlertModal', 'closeAlertModal'],
+      observables: ['isOpenAlertModal', 'text', 'alertList'],
+      actions: ['toggleAlertModal', 'closeAlertModal', 'getAlertList'],
     }));
   }
+
+  getAlertList = () => {
+    Axios({
+      method: 'get',
+      url: '/user/alert',
+      success: (response) => {
+        const { result } = response.data;
+        this.alertList = result;
+      },
+    });
+  };
 
   toggleAlertModal = (text: string): void => {
     this.text = text;

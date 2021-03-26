@@ -3,7 +3,9 @@ import React from 'react';
 import makeAnnotations from '../util/Mobx';
 
 class UtilStore {
-  profileMenu: string | null = null;
+  headerMenu: string | null = null;
+
+  headerMenuElement: Element | null = null;
 
   isOpenConfirmModal = false;
 
@@ -13,7 +15,7 @@ class UtilStore {
 
   constructor() {
     makeObservable(this, makeAnnotations<this>({
-      observables: ['profileMenu', 'isOpenConfirmModal', 'callback', 'text'],
+      observables: ['headerMenu', 'isOpenConfirmModal', 'callback', 'text'],
       actions: ['toggleConfirmModal', 'callFunction', 'closeConfirmModal'],
     }));
   }
@@ -33,12 +35,13 @@ class UtilStore {
     this.isOpenConfirmModal = false;
   };
 
-  openProfileMenu = (event: React.MouseEvent<HTMLElement>): void => {
-    this.profileMenu = event.currentTarget.getAttribute('name');
+  openHeaderMenu = (event: React.MouseEvent<HTMLElement>): void => {
+    this.headerMenu = event.currentTarget.getAttribute('name');
+    this.headerMenuElement = event.currentTarget;
   };
 
-  closeProfileMenu = () => {
-    this.profileMenu = null;
+  closeHeaderMenu = () => {
+    this.headerMenu = null;
   };
 }
 
