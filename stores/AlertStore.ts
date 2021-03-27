@@ -22,6 +22,7 @@ class AlertStore {
       url: '/user/alert',
       success: (response) => {
         const { result } = response.data;
+        console.log(result);
         this.alertList = result;
       },
     });

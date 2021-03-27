@@ -40,7 +40,7 @@ export class RootStore {
   constructor(initialData = initialRoot) {
     this.AlertStore = new AlertStore();
     this.SidebarStore = new SidebarStore();
-    this.UtilStore = new UtilStore();
+    this.UtilStore = new UtilStore(this);
     this.SignStore = new SignStore(this);
     this.PostStore = new PostStore(initialData.PostStore, this);
     this.CategoryStore = new CategoryStore(initialData.CategoryStore);

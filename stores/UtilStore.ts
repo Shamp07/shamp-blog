@@ -1,8 +1,11 @@
 import { makeObservable } from 'mobx';
 import React from 'react';
 import makeAnnotations from '../util/Mobx';
+import AlertStore from './AlertStore';
 
 class UtilStore {
+  AlertStore: AlertStore;
+
   headerMenu: string | null = null;
 
   headerMenuElement: Element | null = null;
@@ -13,7 +16,8 @@ class UtilStore {
 
   text = '';
 
-  constructor() {
+  constructor(root: { AlertStore: AlertStore }) {
+    this.AlertStore = root.AlertStore;
     makeObservable(this, makeAnnotations<this>({
       observables: ['headerMenu', 'isOpenConfirmModal', 'callback', 'text'],
       actions: ['toggleConfirmModal', 'callFunction', 'closeConfirmModal'],
@@ -36,6 +40,10 @@ class UtilStore {
   };
 
   openHeaderMenu = (event: React.MouseEvent<HTMLElement>): void => {
+    if (!this.headerMenu) {
+      this.AlertStore.getAlertList();
+    }
+
     this.headerMenu = event.currentTarget.getAttribute('name');
     this.headerMenuElement = event.currentTarget;
   };

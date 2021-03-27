@@ -22,18 +22,32 @@ const getUser = async (request: NextApiRequestToken, response: NextApiResponse) 
       queryParam,
     )
       .then((result) => {
+        const { rows } = result;
         response.json({
           success: true,
-          result: result.rows,
+          result: rows,
         });
       }),
   ).then(() => {
-    logger.info('[INSERT, POST /api/user] 회원가입');
+    logger.info('[SELECT, GET /api/user/alert] 유저 알림 조회');
   });
 };
 
 const SELECT_ALERT = `
-  SELECT * FROM alert
+  SELECT
+    (SELECT content FROM comment WHERE id = a.comment_id),
+    (SELECT post_id FROM comment WHERE id = a.comment_id),
+    read_fl,
+    CASE WHEN (CAST(TO_CHAR(NOW() - a.crt_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 100)
+        THEN (CAST(TO_CHAR(NOW() - a.crt_dttm, 'SS') AS INTEGER)) || ' 초 전'
+      WHEN (CAST(TO_CHAR(NOW() - a.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 10000)
+        THEN (CAST(TO_CHAR(NOW() - a.crt_dttm, 'MI') AS INTEGER)) || ' 분 전'
+      WHEN (CAST(TO_CHAR(NOW() - a.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000)
+        THEN (CAST(TO_CHAR(NOW() - a.crt_dttm, 'HH24') AS INTEGER)) || ' 시간 전'
+      ELSE TO_CHAR(a.crt_dttm, 'YYYY-MM-DD')
+    END AS time
+  FROM alert a
+  WHERE USER_ID = $1
 `;
 
 export default authMiddleware(handler, 0);
