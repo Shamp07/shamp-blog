@@ -35,9 +35,10 @@ const getUser = async (request: NextApiRequestToken, response: NextApiResponse) 
 
 const SELECT_ALERT = `
   SELECT
+    id,
     (SELECT content FROM comment WHERE id = a.comment_id),
-    (SELECT post_id FROM comment WHERE id = a.comment_id),
-    read_fl,
+    (SELECT post_id FROM comment WHERE id = a.comment_id) AS "postId",
+    read_fl AS "readFl",
     CASE WHEN (CAST(TO_CHAR(NOW() - a.crt_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 100)
         THEN (CAST(TO_CHAR(NOW() - a.crt_dttm, 'SS') AS INTEGER)) || ' 초 전'
       WHEN (CAST(TO_CHAR(NOW() - a.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 10000)
@@ -47,7 +48,7 @@ const SELECT_ALERT = `
       ELSE TO_CHAR(a.crt_dttm, 'YYYY-MM-DD')
     END AS time
   FROM alert a
-  WHERE USER_ID = $1
+  WHERE user_id = $1
 `;
 
 export default authMiddleware(handler, 0);

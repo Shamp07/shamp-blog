@@ -4,13 +4,18 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { observer } from 'mobx-react-lite';
 import { faUserCircle, faBell } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Alert from './Alert';
 import useStores from '../../../stores/useStores';
 import { RootStore } from '../../../stores';
+import { AlertType } from '../../../stores/AlertStore';
 
 const HeaderTokenList = () => {
-  const { SignStore, UtilStore } = useStores() as RootStore;
+  const { SignStore, UtilStore, AlertStore } = useStores() as RootStore;
   const { logout, togglePasswordChangeModal, toggleDeleteUserModal } = SignStore;
-  const { headerMenu, headerMenuElement, openHeaderMenu, closeHeaderMenu } = UtilStore;
+  const {
+    headerMenu, headerMenuElement, openHeaderMenu, closeHeaderMenu,
+  } = UtilStore;
+  const { alertList } = AlertStore;
 
   return (
     <>
@@ -39,8 +44,11 @@ const HeaderTokenList = () => {
           open={headerMenu === 'alert'}
           onClose={closeHeaderMenu}
         >
-          <MenuItem>포스팅에 댓글이 달렸습니다.</MenuItem>
-          <MenuItem>댓글에 답글이 달렸습니다.</MenuItem>
+          <MenuItem key={-1}>새로고침</MenuItem>
+          <MenuItem key={0}>모두 확인</MenuItem>
+          {alertList.map((data: AlertType) => (
+            <Alert key={data.id} data={data} />
+          ))}
         </Menu>
       </li>
     </>

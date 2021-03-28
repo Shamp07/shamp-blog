@@ -2,6 +2,14 @@ import { makeObservable } from 'mobx';
 import makeAnnotations from '../util/Mobx';
 import Axios from '../util/Axios';
 
+export interface AlertType {
+  id: number;
+  content: string;
+  postId: number;
+  readFl: boolean;
+  time: string;
+}
+
 class AlertStore {
   isOpenAlertModal = false;
 
@@ -19,10 +27,9 @@ class AlertStore {
   getAlertList = () => {
     Axios({
       method: 'get',
-      url: '/user/alert',
+      url: '/api/user/alert',
       success: (response) => {
         const { result } = response.data;
-        console.log(result);
         this.alertList = result;
       },
     });
