@@ -15,22 +15,31 @@ class AlertStore {
 
   text = '';
 
+  alertLoading = true;
+
   alertList = [];
+
+  alertSize = 10;
 
   constructor() {
     makeObservable(this, makeAnnotations<this>({
-      observables: ['isOpenAlertModal', 'text', 'alertList'],
+      observables: ['isOpenAlertModal', 'text', 'alertList', 'alertLoading'],
       actions: ['toggleAlertModal', 'closeAlertModal', 'getAlertList'],
     }));
   }
 
   getAlertList = () => {
+    this.alertLoading = true;
     Axios({
       method: 'get',
+      data: {
+        alertSize: this.alertSize,
+      },
       url: '/api/user/alert',
       success: (response) => {
         const { result } = response.data;
         this.alertList = result;
+        this.alertLoading = false;
       },
     });
   };

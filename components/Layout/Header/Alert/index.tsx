@@ -9,12 +9,12 @@ interface AlertProps {
 
 const Alert = ({ data }: AlertProps) => {
   const {
-    alertId,
     content, postId, readFl, time,
   } = data;
+
   return (
     <MenuItemCustom>
-      <MenuItemInner isRead={readFl}>
+      <MenuItemInner href={`/post/${postId}`} isRead={readFl}>
         <div>
           &quot;
           {content}
@@ -38,10 +38,13 @@ const MenuItemCustom = styled(MenuItem)`
   white-space: normal;
 `;
 
-const MenuItemInner = styled.div<MenuItemInnerProps>`
-  width: 300px;
+const MenuItemInner = styled.a<MenuItemInnerProps>`
+  display: block;
+  width: 100%;
+  font-weight: 300;
   font-size: 15px;
   word-break: break-all;
+  text-decoration: none;
   color: ${(props) => (props.isRead ? '#e6e6e6' : '#000')};
 `;
 
