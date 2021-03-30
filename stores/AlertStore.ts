@@ -1,6 +1,7 @@
 import { makeObservable } from 'mobx';
 import makeAnnotations from '../util/Mobx';
 import Axios from '../util/Axios';
+import {NextRouter} from "next/dist/next-server/lib/router/router";
 
 export interface AlertType {
   id: number;
@@ -24,9 +25,14 @@ class AlertStore {
   constructor() {
     makeObservable(this, makeAnnotations<this>({
       observables: ['isOpenAlertModal', 'text', 'alertList', 'alertLoading'],
-      actions: ['toggleAlertModal', 'closeAlertModal', 'getAlertList'],
+      actions: ['toggleAlertModal', 'closeAlertModal', 'getAlertList', 'moreAlert'],
     }));
   }
+
+  moreAlert = () => {
+    this.alertSize += 10;
+    this.getAlertList();
+  };
 
   getAlertList = () => {
     this.alertLoading = true;
@@ -42,6 +48,18 @@ class AlertStore {
         this.alertLoading = false;
       },
     });
+  };
+
+  movePost = (router: NextRouter, postId: number, alertId: number): void => {
+    Axios({
+      method: 'put',
+      data: {
+        id: alertId,
+      },
+      url: '/api/user/alert',
+    });
+
+    router.push(`/post/${postId}`);
   };
 
   toggleAlertModal = (text: string): void => {

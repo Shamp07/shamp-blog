@@ -1,20 +1,25 @@
 import React from 'react';
 import { MenuItem } from '@material-ui/core';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 import { AlertType } from '../../../../stores/AlertStore';
+import useStores from '../../../../stores/useStores';
 
 interface AlertProps {
   data: AlertType;
 }
 
 const Alert = ({ data }: AlertProps) => {
+  const router = useRouter();
+  const { AlertStore } = useStores();
+  const { movePost } = AlertStore;
   const {
     content, postId, readFl, time,
   } = data;
 
   return (
     <MenuItemCustom>
-      <MenuItemInner href={`/post/${postId}`} isRead={readFl}>
+      <MenuItemInner onClick={() => movePost(postId, router)} isRead={readFl}>
         <div>
           &quot;
           {content}
@@ -38,7 +43,7 @@ const MenuItemCustom = styled(MenuItem)`
   white-space: normal;
 `;
 
-const MenuItemInner = styled.a<MenuItemInnerProps>`
+const MenuItemInner = styled.button<MenuItemInnerProps>`
   display: block;
   width: 100%;
   font-weight: 300;

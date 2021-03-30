@@ -16,7 +16,7 @@ const HeaderTokenList = () => {
   const {
     headerMenu, headerMenuElement, openHeaderMenu, closeHeaderMenu,
   } = UtilStore;
-  const { alertList, alertLoading } = AlertStore;
+  const { alertList, alertLoading, moreAlert } = AlertStore;
 
   return (
     <>
@@ -48,7 +48,7 @@ const HeaderTokenList = () => {
           <MenuItem>알림 목록</MenuItem>
           {alertLoading ? <AlertSpinner /> : <AlertList />}
           {alertList.length > 0 && (
-            <MenuItem>
+            <MenuItem onClick={moreAlert}>
               <span>더 보기</span>
             </MenuItem>
           )}

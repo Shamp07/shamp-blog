@@ -4,7 +4,7 @@ interface AxiosType {
   method: 'get' | 'post' | 'put' | 'delete',
   url: string,
   data?: any,
-  success: (response: AxiosResponse) => void,
+  success?: (response: AxiosResponse) => void,
   fail?: (response: AxiosResponse) => void,
   complete?: (response: AxiosResponse) => void,
 }
