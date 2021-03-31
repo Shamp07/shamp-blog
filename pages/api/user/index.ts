@@ -20,7 +20,7 @@ const addUser = async (request: NextApiRequestToken, response: NextApiResponse) 
   const salt = String(Math.round((new Date().valueOf() * Math.random())));
   const hashPassword = crypto.createHash('sha512').update(password + salt).digest('hex');
 
-  const values: (string | string[])[] = [email, name];
+  const values = [email, name];
 
   let message: string;
 
@@ -39,7 +39,7 @@ const addUser = async (request: NextApiRequestToken, response: NextApiResponse) 
           return Promise.reject();
         }
 
-        const values2: (string | string[])[] = [email, hashPassword, salt, name];
+        const values2 = [email, hashPassword, salt, name];
         return database.query(
           INSERT_USER,
           values2,

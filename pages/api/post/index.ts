@@ -5,10 +5,6 @@ import logger from '../../../config/log.config';
 import authMiddleware, { NextApiRequestToken } from '../../../middleware/auth';
 import cors from '../../../middleware/cors';
 
-interface Interface {
-  [key: string]: string | string[];
-}
-
 const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
   if (request.method === 'POST') {
@@ -25,8 +21,8 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
 const addPost = async (request: NextApiRequest, response: NextApiResponse) => {
   const {
     category, tags, title, content,
-  }: Interface = request.body;
-  const values: (string | string[])[] = [category, tags, title, content];
+  } = request.body;
+  const values = [category, tags, title, content];
 
   await Database.execute(
     (database: Client) => database.query(
@@ -45,8 +41,8 @@ const addPost = async (request: NextApiRequest, response: NextApiResponse) => {
 };
 
 const getPost = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { id }: Interface = request.query;
-  const values: (string | string[])[] = [id];
+  const { id } = request.query;
+  const values = [id];
 
   let post: object;
 
@@ -77,8 +73,8 @@ const modifyPost = async (request: NextApiRequest, response: NextApiResponse) =>
   const {
     id,
     category, tags, title, content,
-  }: Interface = request.body;
-  const values: (string | string[])[] = [category, tags, title, content, id];
+  } = request.body;
+  const values = [category, tags, title, content, id];
 
   await Database.execute(
     (database: Client) => database.query(
@@ -97,8 +93,8 @@ const modifyPost = async (request: NextApiRequest, response: NextApiResponse) =>
 };
 
 const deletePost = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { id }: Interface = request.query;
-  const values: (string | string[])[] = [id];
+  const { id } = request.query;
+  const values = [id];
 
   await Database.execute(
     (database: Client) => database.query(

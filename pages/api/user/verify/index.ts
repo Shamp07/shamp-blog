@@ -5,14 +5,10 @@ import Database from '../../../../database/Database';
 import logger from '../../../../config/log.config';
 import cors from '../../../../middleware/cors';
 
-interface Interface {
-  [key: string]: string | string[];
-}
-
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   await cors(request, response);
   if (request.method === 'PUT') {
-    const { email }: Interface = request.body;
+    const { email } = request.body;
     const code = generateRandom(111111, 999999);
 
     const mailOptions = {
@@ -37,7 +33,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             </p>
           </a>
           <div style="border-top: 1px solid #DDD; padding: 5px;">
-            <p style="font-size: 13px; line-height: 21px; color: #555;">
+            <p style="font-size: 13px; line-height: 21px; color: #555;"> 
               만약 코드를 정상적으로 입력하여도, 인증 실패 한다면 메일을 재전송 해주세요.<br />
             </p>
           </div>
@@ -55,7 +51,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
       smtpTransport.close();
     });
 
-    const values: (string | string[])[] = [email, code];
+    const values = [email, code];
     await Database.execute(
       (database: Client) => database.query(
         UPDATE_USER_VERIFY_CODE,
@@ -64,7 +60,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         .then(() => {
           response.json({
             success: true,
-            message: '😀 입력하신 이메일로 가입 메일이 전송되었어요!<br /> 메일 URL 을 클릭하여 가입을 완료하세요!',
+            message: '😀 입력하신 이메일로 가입 메일이 전송되었어요!',
           });
         }),
     ).then(() => {

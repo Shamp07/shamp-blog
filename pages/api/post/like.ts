@@ -1,13 +1,9 @@
 import { Client } from 'pg';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiResponse } from 'next';
 import Database from '../../../database/Database';
 import logger from '../../../config/log.config';
 import authMiddleware, { NextApiRequestToken } from '../../../middleware/auth';
 import cors from '../../../middleware/cors';
-
-interface Interface {
-  [key: string]: string | string[];
-}
 
 const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
@@ -17,9 +13,9 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
 };
 
 const addLike = async (request: NextApiRequestToken, response: NextApiResponse) => {
-  const { postId }: Interface = request.body;
+  const { postId } = request.body;
   const { id } = request.decodedToken;
-  const values: (number | string | string[])[] = [postId, id];
+  const values = [postId, id];
 
   await Database.execute(
     (database: Client) => database.query(

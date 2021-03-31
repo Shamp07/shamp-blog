@@ -5,10 +5,6 @@ import logger from '../../../config/log.config';
 import authMiddleware, { NextApiRequestToken } from '../../../middleware/auth';
 import cors from '../../../middleware/cors';
 
-interface Interface {
-  [key: string]: string | string[];
-}
-
 const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
   if (request.method === 'POST') {
@@ -23,9 +19,9 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
 };
 
 const addComment = async (request: NextApiRequestToken, response: NextApiResponse) => {
-  const { postId, commentId, comment }: Interface = request.body;
+  const { postId, commentId, comment } = request.body;
   const { id } = request.decodedToken;
-  const values: (number | string | string[])[] = [postId, commentId, id, comment];
+  const values = [postId, commentId, id, comment];
 
   await Database.execute(
     (database: Client) => database.query(
@@ -44,8 +40,8 @@ const addComment = async (request: NextApiRequestToken, response: NextApiRespons
 };
 
 const getComment = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { postId, commentSize }: Interface = request.query;
-  const values: (string | string[])[] = [postId, commentSize];
+  const { postId, commentSize } = request.query;
+  const values = [postId, commentSize];
 
   await Database.execute(
     (database: Client) => database.query(
@@ -64,9 +60,9 @@ const getComment = async (request: NextApiRequest, response: NextApiResponse) =>
 };
 
 const modifyComment = async (request: NextApiRequestToken, response: NextApiResponse) => {
-  const { commentId, comment }: Interface = request.body;
+  const { commentId, comment } = request.body;
   const { id } = request.decodedToken;
-  const values: (number | string | string[])[] = [comment, commentId, id];
+  const values = [comment, commentId, id];
 
   await Database.execute(
     (database: Client) => database.query(
@@ -85,9 +81,9 @@ const modifyComment = async (request: NextApiRequestToken, response: NextApiResp
 };
 
 const deleteComment = async (request: NextApiRequestToken, response: NextApiResponse) => {
-  const { commentId }: Interface = request.query;
+  const { commentId } = request.query;
   const { id } = request.decodedToken;
-  const values: (number | string | string[])[] = [commentId, id];
+  const values = [commentId, id];
 
   await Database.execute(
     (database: Client) => database.query(
@@ -114,7 +110,7 @@ const deleteComment = async (request: NextApiRequestToken, response: NextApiResp
         response.json({
           success: true,
           code: 2,
-          message: '😳 해당 댓글에 답글이 달려있어서 삭제가 불가능해요!ㅠㅜ',
+          message: '😳 해당 댓글에 답글이 달려있어서 삭제가 불가능합니다.',
         });
       }),
   ).then(() => {

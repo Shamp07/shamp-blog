@@ -6,15 +6,11 @@ import logger from '../../../config/log.config';
 import cors from '../../../middleware/cors';
 import authMiddleware, { NextApiRequestToken } from '../../../middleware/auth';
 
-interface Interface {
-  [key: string]: string | string[];
-}
-
 const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
   if (request.method === 'PUT') {
     const { id } = request.decodedToken;
-    const { currentPassword, changePassword }: Interface = request.body;
+    const { currentPassword, changePassword } = request.body;
     const values = [id];
     await Database.execute(
       (database: Client) => database.query(
@@ -28,7 +24,7 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
 
           const { salt } = result.rows[0];
           const hashPassword = crypto.createHash('sha512').update(currentPassword + salt).digest('hex');
-          const values2: (number | string | string[])[] = [id, hashPassword];
+          const values2 = [id, hashPassword];
 
           return database.query(
             SELECT_USER_PASSWORD,

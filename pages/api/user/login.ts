@@ -7,15 +7,11 @@ import config from '../../../config/jwt.config.json';
 import logger from '../../../config/log.config';
 import cors from '../../../middleware/cors';
 
-interface Interface {
-  [key: string]: string | string[];
-}
-
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   await cors(request, response);
   if (request.method === 'POST') {
-    const { email, password }: Interface = request.body;
-    const values: (string | string[])[] = [email];
+    const { email, password } = request.body;
+    const values = [email];
     let message: string;
 
     await Database.execute(
@@ -35,7 +31,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 
           const { salt } = result.rows[0];
           const hashPassword = crypto.createHash('sha512').update(password + salt).digest('hex');
-          const values2: (string | string[])[] = [email, hashPassword];
+          const values2 = [email, hashPassword];
 
           return database.query(
             SELECT_USER,

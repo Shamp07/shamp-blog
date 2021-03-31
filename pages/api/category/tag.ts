@@ -4,15 +4,11 @@ import Database from '../../../database/Database';
 import logger from '../../../config/log.config';
 import cors from '../../../middleware/cors';
 
-interface Interface {
-  [key: string]: string | string[];
-}
-
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   await cors(request, response);
   if (request.method === 'GET') {
-    const { category }: Interface = request.query;
-    const values: (string | string[])[] = [category];
+    const { category } = request.query;
+    const values = [category];
 
     await Database.execute(
       (database: Client) => database.query(

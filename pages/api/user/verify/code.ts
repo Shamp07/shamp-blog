@@ -4,10 +4,6 @@ import Database from '../../../../database/Database';
 import logger from '../../../../config/log.config';
 import cors from '../../../../middleware/cors';
 
-interface Interface {
-  [key: string]: string | string[];
-}
-
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   await cors(request, response);
 
@@ -17,8 +13,8 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 };
 
 const verifyUser = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { email, code }: Interface = request.body;
-  const values: (string | string[])[] = [email];
+  const { email, code } = request.body;
+  const values = [email];
 
   await Database.execute(
     (database: Client) => database.query(

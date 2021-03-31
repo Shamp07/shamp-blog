@@ -5,10 +5,6 @@ import logger from '../../config/log.config';
 import authMiddleware, { NextApiRequestToken } from '../../middleware/auth';
 import cors from '../../middleware/cors';
 
-interface RequestParamsType {
-  [key: string]: string | string[];
-}
-
 const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
   if (request.method === 'POST') {
@@ -23,9 +19,9 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
 };
 
 const addFootprint = async (request: NextApiRequestToken, response: NextApiResponse) => {
-  const { content }: RequestParamsType = request.body;
+  const { content } = request.body;
   const { id: userId } = request.decodedToken;
-  const values: (number | string | string[])[] = [userId, content];
+  const values = [userId, content];
 
   await Database.execute(
     (database: Client) => database.query(
@@ -44,8 +40,8 @@ const addFootprint = async (request: NextApiRequestToken, response: NextApiRespo
 };
 
 const getFootprint = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { size }: RequestParamsType = request.query;
-  const values: (string | string[])[] = [size];
+  const { size } = request.query;
+  const values = [size];
   await Database.execute(
     (database: Client) => database.query(
       SELECT_FOOTPRINT,
@@ -63,8 +59,8 @@ const getFootprint = async (request: NextApiRequest, response: NextApiResponse) 
 };
 
 const modifyFootprint = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { id, content }: RequestParamsType = request.body;
-  const values: (string | string[])[] = [content, id];
+  const { id, content } = request.body;
+  const values = [content, id];
 
   await Database.execute(
     (database: Client) => database.query(
@@ -83,8 +79,8 @@ const modifyFootprint = async (request: NextApiRequest, response: NextApiRespons
 };
 
 const deleteFootprint = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { id }: RequestParamsType = request.query;
-  const values: (string | string[])[] = [id];
+  const { id } = request.query;
+  const values = [id];
 
   await Database.execute(
     (database: Client) => database.query(
