@@ -32,8 +32,9 @@ const Axios = async ({
   if (!axiosRequest) throw new Error('axiosRequest is undefined');
 
   await axiosRequest(url, getConfigParams(method, data)).then((response) => {
-    if (response.data.success) success(response);
-    else if (fail) fail(response);
+    if (response.data.success) {
+      if (success) success(response);
+    } else if (fail) fail(response);
     if (complete) complete(response);
   }).catch((response) => console.error(response));
 };

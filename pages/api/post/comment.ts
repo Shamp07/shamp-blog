@@ -29,6 +29,13 @@ const addComment = async (request: NextApiRequestToken, response: NextApiRespons
       values,
     )
       .then(() => {
+        const values2 = [id, commentId];
+        return database.query(
+          INSERT_ALERT,
+          values2,
+        );
+      })
+      .then(() => {
         response.status(200).json({
           success: true,
           message: '😀 정상적으로 댓글이 등록 되었어요!',
@@ -136,6 +143,16 @@ const INSERT_COMMENT = `
     $2,
     $3,
     $4
+  )
+`;
+
+const INSERT_ALERT = `
+  INSERT INTO alert (
+    user_id,
+    comment_id
+  ) VALUES (
+    $1,
+    $2
   )
 `;
 

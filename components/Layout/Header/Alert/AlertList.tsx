@@ -5,10 +5,17 @@ import { observer } from 'mobx-react-lite';
 import { AlertType } from '../../../../stores/AlertStore';
 import Alert from './index';
 import useStores from '../../../../stores/useStores';
+import AlertMore from './AlertMore';
 
 const AlertList = () => {
   const { AlertStore } = useStores();
-  const { alertList } = AlertStore;
+  const { alertList, alertSize } = AlertStore;
+
+  let isMoreAlert = false;
+  if (alertList.length && alertList[0].total > alertSize) {
+    isMoreAlert = true;
+  }
+
   return (
     <>
       {alertList.length > 0 ? alertList.map((data: AlertType) => (
@@ -18,6 +25,7 @@ const AlertList = () => {
           <span>알림이 없습니다.</span>
         </MenuItemNone>
       )}
+      {isMoreAlert && <AlertMore />}
     </>
   );
 };

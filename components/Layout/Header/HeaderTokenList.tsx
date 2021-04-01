@@ -47,11 +47,6 @@ const HeaderTokenList = () => {
         >
           <MenuItem>알림 목록</MenuItem>
           {alertLoading ? <AlertSpinner /> : <AlertList />}
-          {alertList.length > 0 && (
-            <MenuItem onClick={moreAlert}>
-              <span>더 보기</span>
-            </MenuItem>
-          )}
         </MenuCustom>
       </li>
     </>

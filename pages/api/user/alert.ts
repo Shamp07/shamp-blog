@@ -59,7 +59,8 @@ const readAlert = async (request: NextApiRequestToken, response: NextApiResponse
 const SELECT_ALERT = `
   SELECT * FROM (
     SELECT
-        ROW_NUMBER() OVER(ORDER BY crt_dttm) AS rownum,
+        ROW_NUMBER() OVER(ORDER BY crt_dttm DESC) AS rownum,
+        COUNT(*) OVER() AS total,
         id,
         (SELECT content FROM comment WHERE id = a.comment_id),
         (SELECT post_id FROM comment WHERE id = a.comment_id) AS "postId",
@@ -73,16 +74,17 @@ const SELECT_ALERT = `
           ELSE TO_CHAR(a.crt_dttm, 'YYYY-MM-DD')
         END AS time
       FROM alert a
-      WHERE user_id = $1
+      WHERE a.user_id = $1
+      ORDER BY crt_dttm DESC
   ) b
-  WHERE a.rownum <= $2
+  WHERE b.rownum <= $2
 `;
 
 const UPDATE_ALERT_READ = `
   UPDATE alert
   SET read_fl = true
   WHERE 
-    alert_id = $1
+    id = $1
     AND user_id = $2 
 `;
 

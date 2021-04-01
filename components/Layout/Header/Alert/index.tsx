@@ -14,12 +14,13 @@ const Alert = ({ data }: AlertProps) => {
   const { AlertStore } = useStores();
   const { movePost } = AlertStore;
   const {
+    id,
     content, postId, readFl, time,
   } = data;
 
   return (
-    <MenuItemCustom>
-      <MenuItemInner onClick={() => movePost(postId, router)} isRead={readFl}>
+    <MenuItemCustom onClick={() => movePost(router, postId, id)}>
+      <MenuItemInner isRead={readFl}>
         <div>
           &quot;
           {content}
@@ -41,16 +42,17 @@ interface MenuItemInnerProps {
 
 const MenuItemCustom = styled(MenuItem)`
   white-space: normal;
+  border-bottom: 1px solid #e6e6e6 !important;
 `;
 
-const MenuItemInner = styled.button<MenuItemInnerProps>`
+const MenuItemInner = styled.div<MenuItemInnerProps>`
   display: block;
   width: 100%;
   font-weight: 300;
   font-size: 15px;
   word-break: break-all;
   text-decoration: none;
-  color: ${(props) => (props.isRead ? '#e6e6e6' : '#000')};
+  color: ${(props) => (props.isRead ? '#C1C1C1' : '#000')} !important;
 `;
 
 const MenuItemTime = styled.div`

@@ -39,7 +39,7 @@ class AlertStore {
     Axios({
       method: 'get',
       data: {
-        alertSize: this.alertSize,
+        size: this.alertSize,
       },
       url: '/api/user/alert',
       success: (response) => {
