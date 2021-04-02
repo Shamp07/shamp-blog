@@ -1,4 +1,4 @@
-import { Client } from 'pg';
+import { Client, QueryResult } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
 import Database from '../../../database/Database';
 import logger from '../../../config/log.config';
@@ -20,20 +20,43 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
 
 const addComment = async (request: NextApiRequestToken, response: NextApiResponse) => {
   const { postId, commentId, comment } = request.body;
-  const { id } = request.decodedToken;
-  const values = [postId, commentId, id, comment];
+  const { id, adminFl } = request.decodedToken;
 
   await Database.execute(
     (database: Client) => database.query(
-      INSERT_COMMENT,
-      values,
+      SELECT_COMMENT_CURRVAL,
     )
-      .then(() => {
-        const values2 = [id, commentId];
+      .then((result) => {
+        const { currentId } = result.rows[0];
+        const values = [currentId, postId, commentId, id, comment];
         return database.query(
-          INSERT_ALERT,
-          values2,
+          INSERT_COMMENT,
+          values,
         );
+      })
+      .then((): void | PromiseLike<void> | Promise<QueryResult> => {
+        // Not Admin (Me)
+        if (!adminFl) {
+          const values2 = [0, commentId];
+          return database.query(
+            INSERT_ALERT,
+            values2,
+          );
+        }
+
+        return Promise.resolve();
+      })
+      .then((): void | PromiseLike<void> | Promise<QueryResult> => {
+        // Not Admin And Comment is Reply
+        if (!adminFl && commentId) {
+          const values3 = [commentId];
+          return database.query(
+            INSERT_ALERT_COMMENT_USER,
+            values3,
+          );
+        }
+
+        return Promise.resolve();
       })
       .then(() => {
         response.status(200).json({
@@ -125,6 +148,11 @@ const deleteComment = async (request: NextApiRequestToken, response: NextApiResp
   });
 };
 
+const SELECT_COMMENT_CURRVAL = `
+  SELECT NEXTVAL('seq_comment')
+  FROM comment'
+`;
+
 const INSERT_COMMENT = `
   INSERT INTO comment (
     id,
@@ -153,6 +181,16 @@ const INSERT_ALERT = `
   ) VALUES (
     $1,
     $2
+  )
+`;
+
+const INSERT_ALERT_COMMENT_USER = `
+  INSERT INTO alert (
+    user_id,
+    comment_id
+  ) VALUES (
+    (SELECT USER_ID FROM comment WHERE comment_id = $1),
+    $1,  
   )
 `;
 
