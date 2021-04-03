@@ -21,23 +21,17 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
 const addComment = async (request: NextApiRequestToken, response: NextApiResponse) => {
   const { postId, commentId, comment } = request.body;
   const { id, adminFl } = request.decodedToken;
+  const values = [postId, commentId, id, comment];
 
   await Database.execute(
     (database: Client) => database.query(
-      SELECT_COMMENT_CURRVAL,
+      INSERT_COMMENT,
+      values,
     )
-      .then((result) => {
-        const { currentId } = result.rows[0];
-        const values = [currentId, postId, commentId, id, comment];
-        return database.query(
-          INSERT_COMMENT,
-          values,
-        );
-      })
-      .then((): void | PromiseLike<void> | Promise<QueryResult> => {
+      .then((): Promise<void | QueryResult> => {
         // Not Admin (Me)
         if (!adminFl) {
-          const values2 = [0, commentId];
+          const values2 = [0];
           return database.query(
             INSERT_ALERT,
             values2,
@@ -46,9 +40,28 @@ const addComment = async (request: NextApiRequestToken, response: NextApiRespons
 
         return Promise.resolve();
       })
-      .then((): void | PromiseLike<void> | Promise<QueryResult> => {
-        // Not Admin And Comment is Reply
-        if (!adminFl && commentId) {
+      .then((): Promise<void | QueryResult> => {
+        // if Comment is Reply, Check Comment is Mine
+        if (commentId) {
+          const values3 = [commentId];
+          return database.query(
+            SELECT_COMMENT_IS_MINE,
+            values3,
+          );
+        }
+
+        return Promise.resolve();
+      })
+      .then((result): Promise<void | QueryResult> => {
+        if (!result) {
+          return Promise.resolve();
+        }
+
+        const queryResult = result as QueryResult;
+        const { userId } = queryResult.rows[0];
+
+        // Not Admin And Comment is Reply And isn't my comment reply
+        if (!adminFl && commentId && userId !== id) {
           const values3 = [commentId];
           return database.query(
             INSERT_ALERT_COMMENT_USER,
@@ -148,11 +161,6 @@ const deleteComment = async (request: NextApiRequestToken, response: NextApiResp
   });
 };
 
-const SELECT_COMMENT_CURRVAL = `
-  SELECT NEXTVAL('seq_comment')
-  FROM comment'
-`;
-
 const INSERT_COMMENT = `
   INSERT INTO comment (
     id,
@@ -162,10 +170,10 @@ const INSERT_COMMENT = `
     user_id,
     content
   ) VALUES (
-    NEXTVAL('seq_comment'),
+    NEXTVAL('comment_id_seq'),
     $1,
     (SELECT CASE WHEN $2::integer IS NULL
-      THEN CURRVAL('seq_comment')
+      THEN CURRVAL('comment_id_seq')
       ELSE (SELECT UPPER_ID FROM comment WHERE id = $2::integer)
     END),
     $2,
@@ -180,8 +188,15 @@ const INSERT_ALERT = `
     comment_id
   ) VALUES (
     $1,
-    $2
+    CURRVAL('comment_id_seq')
   )
+`;
+
+const SELECT_COMMENT_IS_MINE = `
+  SELECT
+    user_id AS "userId"
+   FROM comment
+  WHERE id = $1
 `;
 
 const INSERT_ALERT_COMMENT_USER = `
@@ -189,8 +204,8 @@ const INSERT_ALERT_COMMENT_USER = `
     user_id,
     comment_id
   ) VALUES (
-    (SELECT USER_ID FROM comment WHERE comment_id = $1),
-    $1,  
+    (SELECT USER_ID FROM comment WHERE id = $1),
+    $1
   )
 `;
 
