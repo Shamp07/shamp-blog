@@ -16,7 +16,7 @@ const HeaderTokenList = () => {
   const {
     headerMenu, headerMenuElement, openHeaderMenu, closeHeaderMenu,
   } = UtilStore;
-  const { alertList, alertLoading, moreAlert } = AlertStore;
+  const { alertNotReadSize, alertLoading } = AlertStore;
 
   return (
     <>
@@ -36,9 +36,10 @@ const HeaderTokenList = () => {
         </Menu>
       </li>
       <li>
-        <button type="button" onClick={openHeaderMenu} name="alert">
+        <AlertButton type="button" onClick={openHeaderMenu} name="alert">
           <FontAwesomeIcon icon={faBell} />
-        </button>
+          {alertNotReadSize > 0 && <div>{alertNotReadSize}</div>}
+        </AlertButton>
         <MenuCustom
           anchorEl={headerMenuElement}
           keepMounted
@@ -52,6 +53,20 @@ const HeaderTokenList = () => {
     </>
   );
 };
+
+const AlertButton = styled.button`
+  position: relative;
+  
+  & > div {
+    background-color: red;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+`;
 
 const MenuCustom = styled(Menu)`
   white-space: normal !important;

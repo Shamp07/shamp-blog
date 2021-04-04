@@ -60,8 +60,8 @@ const addComment = async (request: NextApiRequestToken, response: NextApiRespons
         const queryResult = result as QueryResult;
         const { userId } = queryResult.rows[0];
 
-        // Not Admin And Comment is Reply And isn't my comment reply
-        if (!adminFl && commentId && userId !== id) {
+        // Comment is Reply And isn't my comment reply
+        if (commentId && userId !== id) {
           const values3 = [commentId];
           return database.query(
             INSERT_ALERT_COMMENT_USER,

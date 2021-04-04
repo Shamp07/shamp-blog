@@ -1,6 +1,9 @@
 import React, { ReactNode, useEffect } from 'react';
 import { css, Global } from '@emotion/react';
 import styled from '@emotion/styled';
+import Fab from '@material-ui/core/Fab';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCommentDots } from '@fortawesome/free-solid-svg-icons';
 import Header from './Header';
 import SideBar from './Sidebar';
 import Content from './Content';
@@ -13,11 +16,13 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
-  const { SignStore } = useStores() as RootStore;
+  const { SignStore, AlertStore } = useStores() as RootStore;
   const { cookieCheck } = SignStore;
+  const { getAlertList } = AlertStore;
   useEffect(() => {
     cookieCheck();
-  }, [cookieCheck]);
+    getAlertList();
+  }, [cookieCheck, getAlertList]);
 
   return (
     <Wrapper>
@@ -30,9 +35,32 @@ const Layout = ({ children }: LayoutProps) => {
           {children}
         </Content>
       </CenterContent>
+      <ChatFloatIcon color="primary" aria-label="add">
+        <FontAwesomeIcon icon={faCommentDots} />
+      </ChatFloatIcon>
     </Wrapper>
   );
 };
+
+const ChatFloatIcon = styled(Fab)`
+  position: fixed !important;
+  bottom: 30px;
+  right: 30px;
+  color: #fff;
+  
+  & > span:first-of-type {
+    z-index: 100;
+    
+    & > svg {
+      width: 25px;
+      height: 25px;
+    }
+  }
+  
+  & > span:last-of-type {
+    background-color: #2d79c7 !important;
+  }
+`;
 
 const Wrapper = styled.div`
   background-color: #ebeef1;

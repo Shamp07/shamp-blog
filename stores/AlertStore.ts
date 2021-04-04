@@ -1,7 +1,7 @@
 import { makeObservable } from 'mobx';
+import { NextRouter } from 'next/dist/next-server/lib/router/router';
 import makeAnnotations from '../util/Mobx';
 import Axios from '../util/Axios';
-import {NextRouter} from "next/dist/next-server/lib/router/router";
 
 export interface AlertType {
   id: number;
@@ -21,6 +21,8 @@ class AlertStore {
   alertList = [];
 
   alertSize = 10;
+
+  alertNotReadSize = 0;
 
   constructor() {
     makeObservable(this, makeAnnotations<this>({
@@ -45,6 +47,7 @@ class AlertStore {
       success: (response) => {
         const { result } = response.data;
         this.alertList = result;
+        this.alertNotReadSize = this.alertList.filter((data: AlertType) => !data.readFl).length;
         this.alertLoading = false;
       },
     });
