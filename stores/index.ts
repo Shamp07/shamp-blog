@@ -7,6 +7,7 @@ import CategoryStore, { initialCategory } from './CategoryStore';
 import CommentStore, { initialComment } from './CommentStore';
 import HomeStore, { initialHome } from './HomeStore';
 import UtilStore from './UtilStore';
+import ChatStore from './ChatStore';
 
 const isServer = typeof window === 'undefined';
 enableStaticRendering(isServer);
@@ -37,6 +38,8 @@ export class RootStore {
 
   UtilStore: UtilStore;
 
+  ChatStore: ChatStore;
+
   constructor(initialData = initialRoot) {
     this.AlertStore = new AlertStore();
     this.SidebarStore = new SidebarStore();
@@ -46,6 +49,7 @@ export class RootStore {
     this.CategoryStore = new CategoryStore(initialData.CategoryStore);
     this.CommentStore = new CommentStore(initialData.CommentStore, this);
     this.HomeStore = new HomeStore(initialData.HomeStore, this);
+    this.ChatStore = new ChatStore();
   }
 }
 
