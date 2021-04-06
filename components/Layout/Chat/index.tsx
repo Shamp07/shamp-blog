@@ -6,6 +6,7 @@ import Fab from '@material-ui/core/Fab';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../../stores/useStores';
 import { RootStore } from '../../../stores';
+import ChatWidget from './ChatWidget';
 
 const Chat = () => {
   const { ChatStore } = useStores() as RootStore;
@@ -19,16 +20,6 @@ const Chat = () => {
     </div>
   );
 };
-
-const ChatWidget = styled.div`
-  position: fixed;
-  right: 30px;
-  bottom: 120px;
-  width: 400px;
-  height: 700px;
-  background-color: #fff;
-  border-radius: 30px;
-`;
 
 const ChatFloatButton = styled(Fab)`
   position: fixed !important;
