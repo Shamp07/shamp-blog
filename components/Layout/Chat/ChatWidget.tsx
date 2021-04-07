@@ -12,7 +12,9 @@ const ChatWidget = () => {
         Shamp 님과의 채팅
       </Header>
       <Content />
-      <Footer />
+      <Footer>
+
+      </Footer>
     </Wrapper>
   );
 };
@@ -36,11 +38,13 @@ const Header = styled.header`
 `;
 
 const Content = styled.article`
-  height: 500px;
+  height: 600px;
 `;
 
 const Footer = styled.footer`
-
+  height: 30px;
+  padding: 10px;
+  border-top: 1px solid #e6e6e6;
 `;
 
 export default ChatWidget;

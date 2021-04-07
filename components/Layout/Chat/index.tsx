@@ -12,20 +12,39 @@ const Chat = () => {
   const { ChatStore } = useStores() as RootStore;
   const { openChat, isChatOpen } = ChatStore;
   return (
-    <div>
+    <Wrapper onClick={openChat}>
       {isChatOpen && <ChatWidget />}
-      <ChatFloatButton color="primary" aria-label="add" onClick={openChat}>
+      <span>질문하기!</span>
+      <ChatFloatButton color="primary" aria-label="add">
         <FontAwesomeIcon icon={faCommentDots} />
       </ChatFloatButton>
-    </div>
+    </Wrapper>
   );
 };
 
-const ChatFloatButton = styled(Fab)`
+const Wrapper = styled.div`
+  font-weight: bold;
+  box-shadow: rgb(0 0 0 / 12%) 0px 3px 12px 0px;
+  height: 56px;
+  width: 150px;
+  border-radius: 28px;
+  background-color: #fff;
   position: fixed !important;
   bottom: 30px;
   right: 30px;
+  display: flex;
+  cursor: pointer;
+  
+  & > span {
+    line-height: 56px;
+    margin-left: 20px;
+  }
+`;
+
+const ChatFloatButton = styled(Fab)`
   color: #fff;
+  margin-left: auto !important;
+  
 
   & > span:first-of-type {
     z-index: 100;
@@ -37,6 +56,7 @@ const ChatFloatButton = styled(Fab)`
   }
 
   & > span:last-of-type {
+    background-image: linear-gradient(94deg, #2d79c7, #52a7ff);
     background-color: #2d79c7 !important;
   }
 `;
