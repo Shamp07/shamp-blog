@@ -9,7 +9,7 @@ const ChatWidget = () => {
   return (
     <Wrapper>
       <Header>
-        Shamp 님과의 채팅
+        Shamp 님 과의 채팅
       </Header>
       <Content>
         <ChatDate>
@@ -38,12 +38,14 @@ const Header = styled.header`
   line-height: 30px;
   border-bottom: 1px solid #e6e6e6;
   background: linear-gradient(94deg, #2d79c7, #52a7ff);
+  box-shadow: rgb(81 99 120 / 30%) 0 6px 60px 0;
   color: #fff;
 `;
 
 const Content = styled.article`
   background-color: #fff;
   height: 600px;
+  box-shadow: rgb(81 99 120 / 30%) 0 6px 60px 0;
 `;
 
 const ChatDate = styled.div`

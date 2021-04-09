@@ -12,10 +12,10 @@ const Chat = () => {
   const { ChatStore } = useStores() as RootStore;
   const { openChat, isChatOpen } = ChatStore;
   return (
-    <Wrapper onClick={openChat}>
+    <Wrapper>
       {isChatOpen && <ChatWidget />}
       <span>질문하기!</span>
-      <ChatFloatButton color="primary" aria-label="add">
+      <ChatFloatButton color="primary" aria-label="add" onClick={openChat}>
         <FontAwesomeIcon icon={faCommentDots} />
       </ChatFloatButton>
     </Wrapper>
@@ -24,7 +24,7 @@ const Chat = () => {
 
 const Wrapper = styled.div`
   font-weight: bold;
-  box-shadow: rgb(0 0 0 / 12%) 0px 3px 12px 0px;
+  box-shadow: rgb(0 0 0 / 12%) 0 3px 12px 0;
   height: 56px;
   width: 150px;
   border-radius: 28px;
@@ -33,7 +33,6 @@ const Wrapper = styled.div`
   bottom: 30px;
   right: 30px;
   display: flex;
-  cursor: pointer;
   
   & > span {
     line-height: 56px;
@@ -44,7 +43,7 @@ const Wrapper = styled.div`
 const ChatFloatButton = styled(Fab)`
   color: #fff;
   margin-left: auto !important;
-  
+  cursor: pointer;
 
   & > span:first-of-type {
     z-index: 100;
