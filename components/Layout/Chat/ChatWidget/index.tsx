@@ -24,9 +24,8 @@ const ChatWidget = () => {
 const Wrapper = styled.div`
   position: fixed;
   right: 30px;
-  bottom: 120px;
+  bottom: 100px;
   width: 400px;
-  height: 700px;
 `;
 
 const Header = styled.header`

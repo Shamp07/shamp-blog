@@ -62,10 +62,6 @@ const CenterContent = styled.div`
 `;
 
 const GlobalStyle = css`
-  html {
-    line-height: 1.15;
-  }
-
   header, body, span, div, nav, ul, li, h1, h2, h3, h4, pre {
     font-family: 'Roboto', 'Noto Sans KR', serif;
     margin: 0;

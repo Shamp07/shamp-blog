@@ -14,10 +14,12 @@ const Chat = () => {
   return (
     <Wrapper>
       {isChatOpen && <ChatWidget />}
-      <span>질문하기!</span>
-      <ChatFloatButton color="primary" aria-label="add" onClick={openChat}>
-        <FontAwesomeIcon icon={faCommentDots} />
-      </ChatFloatButton>
+      <ButtonWrapper onClick={openChat}>
+        <span>질문하기!</span>
+        <ChatFloatButton color="primary" aria-label="add">
+          <FontAwesomeIcon icon={faCommentDots} />
+        </ChatFloatButton>
+      </ButtonWrapper>
     </Wrapper>
   );
 };
@@ -34,10 +36,18 @@ const Wrapper = styled.div`
   right: 30px;
   display: flex;
   
-  & > span {
+  & > div > span {
     line-height: 56px;
     margin-left: 20px;
+    cursor: pointer;
   }
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  
 `;
 
 const ChatFloatButton = styled(Fab)`
@@ -56,7 +66,6 @@ const ChatFloatButton = styled(Fab)`
 
   & > span:last-of-type {
     background-image: linear-gradient(94deg, #2d79c7, #52a7ff);
-    background-color: #2d79c7 !important;
   }
 `;
 

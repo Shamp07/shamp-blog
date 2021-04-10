@@ -2,23 +2,31 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink, faCode, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import useStores from '../../../../stores/useStores';
+import { RootStore } from '../../../../stores';
+import { observer } from 'mobx-react-lite';
 
-const Footer = () => (
-  <Wrapper>
-    <ChatButton type="button">
-      <FontAwesomeIcon icon={faLink} />
-    </ChatButton>
-    <ChatButton>
-      <FontAwesomeIcon icon={faCode} />
-    </ChatButton>
-    <ChatInputWrapper>
-      <textarea />
-    </ChatInputWrapper>
-    <ChatEnter>
-      <FontAwesomeIcon icon={faCaretRight} />
-    </ChatEnter>
-  </Wrapper>
-);
+const Footer = () => {
+  const { ChatStore } = useStores() as RootStore;
+  const { onHeight, chatHeight } = ChatStore;
+
+  return (
+    <Wrapper>
+      <ChatButton type="button">
+        <FontAwesomeIcon icon={faLink} />
+      </ChatButton>
+      <ChatButton>
+        <CodeIcon icon={faCode} />
+      </ChatButton>
+      <ChatInputWrapper>
+        <TextAreaCustom onInput={onHeight} height={chatHeight} />
+      </ChatInputWrapper>
+      <ChatEnter>
+        <FontAwesomeIcon icon={faCaretRight} />
+      </ChatEnter>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.footer`
   position: static;
@@ -39,11 +47,38 @@ const Wrapper = styled.footer`
   padding: 0 15px;
 `;
 
+interface TextAreaCustomProps {
+  height: number;
+}
+
+const TextAreaCustom = styled.textarea<TextAreaCustomProps>`
+  padding: 0 10px !important;
+  width: 95%;
+  overflow: hidden;
+  height: ${(props) => props.height}px;
+  resize: none;
+  line-height: 20px;
+  border: 0;
+  font-family: inherit;
+  font-size: 15px;
+  white-space: pre-wrap;
+
+  &:focus {
+    outline: 0;
+  }
+`;
+
 const ChatButton = styled.button`
   border: 0;
   background-color: transparent;
   color: #d6d6d6;
   margin-right: 2px;
+  height: 22px;
+  transition: color 0.2s;
+  
+  &:hover {
+    color: #2d79c7;
+  }
   
   & > svg {
     width: 20px;
@@ -52,35 +87,34 @@ const ChatButton = styled.button`
   }
 `;
 
+const CodeIcon = styled(FontAwesomeIcon)`
+  width: 23px !important;
+  height: 20px !important;
+`;
+
 const ChatInputWrapper = styled.div`
   width: 100%;
   padding: 18px 0;
-  height: 20px;
+  flex: 1 1 0;
+  display: flex;
   
-  & > textarea {
-    width: 95%;
-    height: 20px;
-    padding: 0;
-    resize: none;
-    border: 0;
-    font-family: inherit;
-    font-size: 15px;
-    white-space: pre-wrap;
-    
-    &:focus {
-      outline: 0;
-    }
-  }
 `;
 
 const ChatEnter = styled.div`
   margin-left: auto;
-  color: #d6d6d6;
+  color: #52a7ff;
+  transition: color 0.2s;
+  cursor: pointer;
+  
+  &:hover {
+    color: #2d79c7;
+  }
+  
   
   & > svg {
-    width: 30px;
+    width: 25px;
     height: 35px;
   }
 `;
 
-export default Footer;
+export default observer(Footer);
