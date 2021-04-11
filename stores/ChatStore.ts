@@ -1,16 +1,16 @@
 import { makeObservable } from 'mobx';
+import React from 'react';
 import makeAnnotations from '../util/Mobx';
-import React from "react";
 
 class ChatStore {
   isChatOpen = false;
 
-  chatHeight = 20;
+  chat = '';
 
   constructor() {
     makeObservable(this, makeAnnotations<this>({
-      observables: ['isChatOpen', 'chatHeight'],
-      actions: ['openChat', 'onHeight'],
+      observables: ['isChatOpen', 'chat'],
+      actions: ['openChat', 'onChangeChat'],
     }));
   }
 
@@ -18,10 +18,8 @@ class ChatStore {
     this.isChatOpen = !this.isChatOpen;
   };
 
-  onHeight = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.currentTarget.scrollHeight < 200) {
-      this.chatHeight = event.currentTarget.scrollHeight;
-    }
+  onChangeChat = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    this.chat = event.target.value;
   };
 }
 

@@ -35,6 +35,7 @@ const Wrapper = styled.div`
   bottom: 30px;
   right: 30px;
   display: flex;
+  z-index: 100;
   
   & > div > span {
     line-height: 56px;

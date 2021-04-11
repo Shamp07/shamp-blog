@@ -2,13 +2,14 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink, faCode, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { observer } from 'mobx-react-lite';
+import TextareaAutosize from 'react-textarea-autosize';
 import useStores from '../../../../stores/useStores';
 import { RootStore } from '../../../../stores';
-import { observer } from 'mobx-react-lite';
 
 const Footer = () => {
   const { ChatStore } = useStores() as RootStore;
-  const { onHeight, chatHeight } = ChatStore;
+  const { chat, onChangeChat } = ChatStore;
 
   return (
     <Wrapper>
@@ -19,9 +20,9 @@ const Footer = () => {
         <CodeIcon icon={faCode} />
       </ChatButton>
       <ChatInputWrapper>
-        <TextAreaCustom onInput={onHeight} height={chatHeight} />
+        <TextAreaCustom value={chat} onChange={onChangeChat} />
       </ChatInputWrapper>
-      <ChatEnter>
+      <ChatEnter active={!!chat}>
         <FontAwesomeIcon icon={faCaretRight} />
       </ChatEnter>
     </Wrapper>
@@ -47,15 +48,11 @@ const Wrapper = styled.footer`
   padding: 0 15px;
 `;
 
-interface TextAreaCustomProps {
-  height: number;
-}
-
-const TextAreaCustom = styled.textarea<TextAreaCustomProps>`
+const TextAreaCustom = styled(TextareaAutosize)`
   padding: 0 10px !important;
   width: 95%;
   overflow: hidden;
-  height: ${(props) => props.height}px;
+  max-height: 100px;
   resize: none;
   line-height: 20px;
   border: 0;
@@ -100,20 +97,20 @@ const ChatInputWrapper = styled.div`
   
 `;
 
-const ChatEnter = styled.div`
+interface ChatEnterProps {
+  active: boolean;
+}
+
+const ChatEnter = styled.div<ChatEnterProps>`
   margin-left: auto;
-  color: #52a7ff;
+  color: ${(props) => (props.active ? '#52a7ff' : '#e6e6e6')};
+  cursor: ${(props) => (props.active ? 'pointer' : 'not-allowed')};
+  cursor: ${(props) => (props.active ? '&:hover { color: #2d79c7; }' : null)};
   transition: color 0.2s;
-  cursor: pointer;
-  
-  &:hover {
-    color: #2d79c7;
-  }
-  
   
   & > svg {
     width: 25px;
-    height: 35px;
+    height: 35px
   }
 `;
 

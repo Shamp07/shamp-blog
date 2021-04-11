@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { RootStore } from '../../../../stores';
 import useStores from '../../../../stores/useStores';
+import Content from './Content';
 import Footer from './Footer';
 
 const ChatWidget = () => {
@@ -11,11 +12,7 @@ const ChatWidget = () => {
       <Header>
         Shamp 님 과의 채팅
       </Header>
-      <Content>
-        <ChatDate>
-          오늘
-        </ChatDate>
-      </Content>
+      <Content />
       <Footer />
     </Wrapper>
   );
@@ -41,23 +38,8 @@ const Header = styled.header`
   color: #fff;
 `;
 
-const Content = styled.article`
-  background-color: #fff;
-  height: 600px;
-  box-shadow: rgb(81 99 120 / 30%) 0 6px 60px 0;
-`;
 
-const ChatDate = styled.div`
-  padding: 16px 14px 0;
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  justify-content: center;
-  text-align: center;
-  font-size: 11px;
-  font-weight: 600;
-  color: rgb(167, 167, 170);
-`;
+
+
 
 export default ChatWidget;
