@@ -3,9 +3,23 @@ import React from 'react';
 
 const ReceiveMessage = () => (
   <Wrapper>
-    <Profile />
+    <Profile>
+      <ProfileImage />
+    </Profile>
     <MessageWrapper>
-
+      <NameAndTime>
+        <div>Shamp</div>
+        <div>6:06 PM</div>
+      </NameAndTime>
+      <MessageContentWrapper>
+        <MessageContentInner>
+          <div>
+            안녕하세요!
+            <br />
+            포스팅에 대한 궁금한 점이나 의견이 있으면 언제든지 채팅을 보내주세요!
+          </div>
+        </MessageContentInner>
+      </MessageContentWrapper>
     </MessageWrapper>
   </Wrapper>
 );
@@ -20,9 +34,64 @@ const Profile = styled.div`
   padding-left: 10px;
 `;
 
+const ProfileImage = styled.div`
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-image: url("/logo_profile.png");
+  background-size: cover;
+  background-position: center center;
+  background-color: rgb(255, 255, 255);
+  box-shadow: none;
+`;
+
 const MessageWrapper = styled.div`
   flex: 1 1 0;
   overflow: hidden;
+`;
+
+const NameAndTime = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  margin: 4px 20% 4px 0;
+  color: rgb(36, 36, 40);
+  
+  & > div:first-of-type {
+    flex: 0 1 auto;
+    font-size: 13px;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  & > div:last-of-type {
+    margin-left: 7px;
+    font-size: 11px;
+    color: rgb(167, 167, 170);
+  }
+`;
+
+const MessageContentWrapper = styled.div`
+  display: flex;
+  margin-bottom: 4px;
+`;
+
+const MessageContentInner = styled.div`
+  max-width: 280px;
+  padding: 10px;
+  border-radius: 12px;
+  background-color: rgb(240, 240, 241);
+  color: rgb(36, 36, 40);
+  
+  & > div {
+    max-width: 300px;
+    line-height: 20px !important;
+    font-size: 15px !important;
+    font-weight: normal !important;
+  }
 `;
 
 export default ReceiveMessage;

@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import ReceiveMessage from './ReceiveMessage';
+import SendMessage from './SendMessage';
 
 const Content = () => (
   <Wrapper>
     <ChatDate>오늘</ChatDate>
     <ReceiveMessage />
+    <SendMessage />
   </Wrapper>
 );
 
