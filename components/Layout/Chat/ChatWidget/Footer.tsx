@@ -9,7 +9,7 @@ import { RootStore } from '../../../../stores';
 
 const Footer = () => {
   const { ChatStore } = useStores() as RootStore;
-  const { chat, onChangeChat } = ChatStore;
+  const { chat, onChangeChat, sendChat } = ChatStore;
 
   return (
     <Wrapper>
@@ -22,7 +22,7 @@ const Footer = () => {
       <ChatInputWrapper>
         <TextAreaCustom value={chat} onChange={onChangeChat} />
       </ChatInputWrapper>
-      <ChatEnter active={!!chat}>
+      <ChatEnter active={!!chat} onClick={sendChat}>
         <FontAwesomeIcon icon={faCaretRight} />
       </ChatEnter>
     </Wrapper>
