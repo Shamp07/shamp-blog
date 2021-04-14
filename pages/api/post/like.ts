@@ -8,7 +8,7 @@ import cors from '../../../middleware/cors';
 const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
   if (request.method === 'POST') {
-    await authMiddleware(addLike, 0)(request, response);
+    await addLike(request, response);
   }
 };
 

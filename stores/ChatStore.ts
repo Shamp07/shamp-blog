@@ -2,6 +2,7 @@ import { makeObservable } from 'mobx';
 import React from 'react';
 import socketio from 'socket.io-client';
 import makeAnnotations from '../util/Mobx';
+import Axios from '../util/Axios';
 
 class ChatStore {
   isChatOpen = false;
@@ -19,10 +20,21 @@ class ChatStore {
 
   openChat = (): void => {
     this.isChatOpen = !this.isChatOpen;
-    this.chatSocket = socketio.connect('http://localhost');
+  };
 
-    this.chatSocket.on('receiveMessage', (data: any) => {
-      alert(data.message);
+  connectSocket = () => {
+    this.chatSocket = socketio.connect('http://localhost');
+    this.chatSocket.emit('get_socket_id');
+    this.chatSocket.on('send_socket_id', this.updateSocketId);
+  };
+
+  updateSocketId = (socketId: string) => {
+    Axios({
+      method: 'put',
+      url: '/api/chat/socket',
+      data: {
+        socketId,
+      },
     });
   };
 

@@ -5,6 +5,8 @@ import AlertStore from './AlertStore';
 import UtilStore from './UtilStore';
 import Axios from '../util/Axios';
 import makeAnnotations from '../util/Mobx';
+import ChatStore from './ChatStore';
+import Chat from "../components/Layout/Chat";
 
 interface UserDataType {
   id: number;
@@ -19,6 +21,8 @@ class SignStore {
   AlertStore: AlertStore;
 
   UtilStore: UtilStore;
+
+  ChatStore: ChatStore;
 
   cookieChecked = false;
 
@@ -59,9 +63,10 @@ class SignStore {
 
   isOpenDeleteUserModal = false;
 
-  constructor(root: { AlertStore: AlertStore, UtilStore: UtilStore }) {
+  constructor(root: { AlertStore: AlertStore, UtilStore: UtilStore, ChatStore: ChatStore }) {
     this.AlertStore = root.AlertStore;
     this.UtilStore = root.UtilStore;
+    this.ChatStore = root.ChatStore;
 
     makeObservable(this, makeAnnotations<this>({
       observables: [
@@ -174,6 +179,7 @@ class SignStore {
       success: (response) => {
         const { result } = response.data;
         this.userData = result;
+        this.ChatStore.connectSocket();
       },
       complete: () => {
         this.cookieChecked = true;

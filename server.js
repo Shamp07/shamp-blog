@@ -40,21 +40,16 @@ app.prepare().then(() => {
   const ioServer = io(server);
 
   ioServer.on('connection', (socket) => {
-    console.log('a user connected');
-    socket.on('chat message', (msg) => {
-      ioServer.emit('chat message', msg);
-    });
     socket.on('disconnect', () => {
-      console.log('user disconnected');
+      // ioServer.to('all').emit('receiveMessage', message);
     });
 
-    socket.on('roomjoin', (userid) => {
-      socket.join(userid);
+    socket.on('send_message', (message) => {
+      ioServer.to('all').emit('RECEIVE_MESSAGE', message);
     });
 
-    socket.on('sendMessage', (message) => {
-      console.log('sendMessage!');
-      ioServer.to(message).emit('receiveMessage', message);
+    socket.on('get_socket_id', () => {
+      ioServer.to(socket.id).emit('send_socket_id', socket.id);
     });
   });
 

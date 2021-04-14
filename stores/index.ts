@@ -44,12 +44,12 @@ export class RootStore {
     this.AlertStore = new AlertStore();
     this.SidebarStore = new SidebarStore();
     this.UtilStore = new UtilStore(this);
+    this.ChatStore = new ChatStore();
     this.SignStore = new SignStore(this);
     this.PostStore = new PostStore(initialData.PostStore, this);
     this.CategoryStore = new CategoryStore(initialData.CategoryStore);
     this.CommentStore = new CommentStore(initialData.CommentStore, this);
     this.HomeStore = new HomeStore(initialData.HomeStore, this);
-    this.ChatStore = new ChatStore();
   }
 }
 
