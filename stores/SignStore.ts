@@ -6,7 +6,7 @@ import UtilStore from './UtilStore';
 import Axios from '../util/Axios';
 import makeAnnotations from '../util/Mobx';
 import ChatStore from './ChatStore';
-import Chat from "../components/Layout/Chat";
+import Chat from '../components/Layout/Chat';
 
 interface UserDataType {
   id: number;
@@ -179,7 +179,8 @@ class SignStore {
       success: (response) => {
         const { result } = response.data;
         this.userData = result;
-        this.ChatStore.connectSocket();
+        const { id } = result as UserDataType;
+        this.ChatStore.connectSocket(id);
       },
       complete: () => {
         this.cookieChecked = true;

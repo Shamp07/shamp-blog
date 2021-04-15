@@ -1,18 +1,27 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { ChatType } from '../../../../../stores/ChatStore';
 
-const SendMessage = () => (
-  <MessageWrapper>
-    <Time>11:15 PM</Time>
-    <MessageContentWrapper>
-      <MessageContentInner>
-        <div>
-          안녕하세요
-        </div>
-      </MessageContentInner>
-    </MessageContentWrapper>
-  </MessageWrapper>
-);
+interface SendMessageProps {
+  data: ChatType;
+}
+
+const SendMessage = ({ data }: SendMessageProps) => {
+  const { message, time } = data;
+
+  return (
+    <MessageWrapper>
+      <Time>{time}</Time>
+      <MessageContentWrapper>
+        <MessageContentInner>
+          <div>
+            {message}
+          </div>
+        </MessageContentInner>
+      </MessageContentWrapper>
+    </MessageWrapper>
+  );
+};
 
 const MessageWrapper = styled.div`
   padding-right: 12px;

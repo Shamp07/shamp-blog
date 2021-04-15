@@ -1,28 +1,34 @@
 import styled from '@emotion/styled';
 import React from 'react';
+import { ChatType } from '../../../../../stores/ChatStore';
 
-const ReceiveMessage = () => (
-  <Wrapper>
-    <Profile>
-      <ProfileImage />
-    </Profile>
-    <MessageWrapper>
-      <NameAndTime>
-        <div>Shamp</div>
-        <div>6:06 PM</div>
-      </NameAndTime>
-      <MessageContentWrapper>
-        <MessageContentInner>
-          <div>
-            안녕하세요!
-            <br />
-            포스팅에 대한 궁금한 점이나 의견이 있으면 언제든지 채팅을 보내주세요!
-          </div>
-        </MessageContentInner>
-      </MessageContentWrapper>
-    </MessageWrapper>
-  </Wrapper>
-);
+interface ReceiveMessageProps {
+  data: ChatType;
+}
+
+const ReceiveMessage = ({ data }: ReceiveMessageProps) => {
+  const { message, time } = data;
+  return (
+    <Wrapper>
+      <Profile>
+        <ProfileImage />
+      </Profile>
+      <MessageWrapper>
+        <NameAndTime>
+          <div>Shamp</div>
+          <div>{time}</div>
+        </NameAndTime>
+        <MessageContentWrapper>
+          <MessageContentInner>
+            <div>
+              {message}
+            </div>
+          </MessageContentInner>
+        </MessageContentWrapper>
+      </MessageWrapper>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.div`
   margin-top: 13px;

@@ -8,8 +8,15 @@ import useStores from '../../../../stores/useStores';
 import { RootStore } from '../../../../stores';
 
 const Footer = () => {
-  const { ChatStore } = useStores() as RootStore;
+  const { ChatStore, SignStore } = useStores() as RootStore;
   const { chat, onChangeChat, sendChat } = ChatStore;
+  const { userData } = SignStore;
+
+  if (!userData) {
+    return null;
+  }
+
+  const { id } = userData;
 
   return (
     <Wrapper>
@@ -22,7 +29,7 @@ const Footer = () => {
       <ChatInputWrapper>
         <TextAreaCustom value={chat} onChange={onChangeChat} />
       </ChatInputWrapper>
-      <ChatEnter active={!!chat} onClick={sendChat}>
+      <ChatEnter active={!!chat} onClick={() => sendChat(id)}>
         <FontAwesomeIcon icon={faCaretRight} />
       </ChatEnter>
     </Wrapper>

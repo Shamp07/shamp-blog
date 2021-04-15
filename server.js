@@ -44,8 +44,8 @@ app.prepare().then(() => {
       // ioServer.to('all').emit('receiveMessage', message);
     });
 
-    socket.on('send_message', (message) => {
-      ioServer.to('all').emit('RECEIVE_MESSAGE', message);
+    socket.on('send_message', ({ socketId, message }) => {
+      ioServer.to(socketId).emit('receive_message', message);
     });
 
     socket.on('get_socket_id', () => {
