@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink, faCode, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { observer } from 'mobx-react-lite';
 import TextareaAutosize from 'react-textarea-autosize';
-import useStores from '../../../../stores/useStores';
-import { RootStore } from '../../../../stores';
+import useStores from '../../../../../stores/useStores';
+import { RootStore } from '../../../../../stores';
 
 const Footer = () => {
   const { ChatStore, SignStore } = useStores() as RootStore;

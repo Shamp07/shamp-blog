@@ -44,7 +44,7 @@ export class RootStore {
     this.AlertStore = new AlertStore();
     this.SidebarStore = new SidebarStore();
     this.UtilStore = new UtilStore(this);
-    this.ChatStore = new ChatStore();
+    this.ChatStore = new ChatStore(this);
     this.SignStore = new SignStore(this);
     this.PostStore = new PostStore(initialData.PostStore, this);
     this.CategoryStore = new CategoryStore(initialData.CategoryStore);

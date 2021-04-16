@@ -5,17 +5,19 @@ import styled from '@emotion/styled';
 import Fab from '@material-ui/core/Fab';
 import { observer } from 'mobx-react-lite';
 import useStores from '../../../stores/useStores';
-import { RootStore } from '../../../stores';
 import ChatWidget from './ChatWidget';
+import { RootStore } from '../../../stores';
 
 const Chat = () => {
-  const { ChatStore } = useStores() as RootStore;
+  const { ChatStore, SignStore } = useStores() as RootStore;
+  const { userData } = SignStore;
   const { openChat, isChatOpen } = ChatStore;
+
   return (
     <Wrapper>
       {isChatOpen && <ChatWidget />}
-      <ButtonWrapper onClick={openChat}>
-        <span>질문하기!</span>
+      <ButtonWrapper onClick={() => openChat(!!userData)}>
+        <span>{(userData && userData.adminFl) ? '채팅하기' : '질문하기'}</span>
         <ChatFloatButton color="primary" aria-label="add">
           <FontAwesomeIcon icon={faCommentDots} />
         </ChatFloatButton>

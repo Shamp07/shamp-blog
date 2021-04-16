@@ -7,9 +7,31 @@ import cors from '../../../middleware/cors';
 
 const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
-  if (request.method === 'PUT') {
+
+  if (request.method === 'GET') {
+    await getSocketId(request, response);
+  } else if (request.method === 'PUT') {
     await modifySocketId(request, response);
   }
+};
+
+const getSocketId = async (request: NextApiRequestToken, response: NextApiResponse) => {
+  const { userId } = request.query;
+  const values = [userId];
+  await Database.execute(
+    (database: Client) => database.query(
+      SELECT_USER_SOCKET_ID,
+      values,
+    )
+      .then((result) => {
+        response.json({
+          success: true,
+          result: result.rows[0].socketId,
+        });
+      }),
+  ).then(() => {
+    logger.info('[SELECT, GET /api/chat/socket] 유저 socket id 조회');
+  });
 };
 
 const modifySocketId = async (request: NextApiRequestToken, response: NextApiResponse) => {
@@ -25,14 +47,19 @@ const modifySocketId = async (request: NextApiRequestToken, response: NextApiRes
       .then(() => {
         response.json({
           success: true,
-          code: 1,
-          message: '😀 게시글 좋아요 감사합니다!',
         });
       }),
   ).then(() => {
-    logger.info('[UPDATE, PUT /api/post/like] 유저 socket id 수정');
+    logger.info('[UPDATE, PUT /api/chat/socket] 유저 socket id 수정');
   });
 };
+
+const SELECT_USER_SOCKET_ID = `
+  SELECT
+    socket_id AS "socketId" 
+  FROM "user"
+  WHERE id = $1
+`;
 
 const UPDATE_USER_SOCKET_ID = `
   UPDATE "user"

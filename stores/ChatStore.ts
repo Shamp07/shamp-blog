@@ -3,6 +3,7 @@ import React from 'react';
 import socketio from 'socket.io-client';
 import makeAnnotations from '../util/Mobx';
 import Axios from '../util/Axios';
+import AlertStore from './AlertStore';
 
 export interface ChatType {
   fromUserId: number;
@@ -12,6 +13,8 @@ export interface ChatType {
 }
 
 class ChatStore {
+  AlertStore: AlertStore;
+
   isChatOpen = false;
 
   chat = '';
@@ -22,15 +25,20 @@ class ChatStore {
 
   socketId = '';
 
-  constructor() {
+  constructor(root: { AlertStore: AlertStore }) {
+    this.AlertStore = root.AlertStore;
     makeObservable(this, makeAnnotations<this>({
       observables: ['isChatOpen', 'chat', 'chatList'],
       actions: ['openChat', 'onChangeChat'],
     }));
   }
 
-  openChat = (): void => {
+  openChat = (loggedIn: boolean): void => {
     if (!this.isChatOpen) {
+      if (!loggedIn) {
+        this.AlertStore.toggleAlertModal('채팅은 로그인 이후 이용하실 수 있습니다! 비회원은 곧 지원 예정입니다.');
+        return;
+      }
       this.getSocketId();
     }
     this.isChatOpen = !this.isChatOpen;
@@ -40,7 +48,7 @@ class ChatStore {
     this.chatSocket = socketio.connect('http://localhost');
     this.chatSocket.emit('get_socket_id');
     this.chatSocket.on('send_socket_id', this.updateSocketId);
-    this.chatSocket.on('receive_message', ({ message }: { message: string }) => {
+    this.chatSocket.on('receive_message', (message: string) => {
       this.chatList.push({
         fromUserId: userId,
         toUserId: 0,
@@ -52,7 +60,7 @@ class ChatStore {
 
   getSocketId = () => {
     Axios({
-      method: 'put',
+      method: 'get',
       url: '/api/chat/socket',
       data: {
         userId: 0,

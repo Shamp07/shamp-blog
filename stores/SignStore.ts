@@ -6,7 +6,6 @@ import UtilStore from './UtilStore';
 import Axios from '../util/Axios';
 import makeAnnotations from '../util/Mobx';
 import ChatStore from './ChatStore';
-import Chat from '../components/Layout/Chat';
 
 interface UserDataType {
   id: number;
