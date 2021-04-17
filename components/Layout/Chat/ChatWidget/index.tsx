@@ -4,13 +4,15 @@ import { RootStore } from '../../../../stores';
 import useStores from '../../../../stores/useStores';
 import ChatRoom from './ChatRoom';
 import ChatLobby from './ChatLobby';
+import Header from './Header';
 
 const ChatWidget = () => {
   const { SignStore } = useStores() as RootStore;
   const { userData } = SignStore;
   return (
     <Wrapper>
-      {(userData && userData.adminFl) ? <ChatRoom /> : <ChatLobby />}
+      <Header />
+      {(userData && userData.adminFl) ? <ChatLobby /> : <ChatRoom />}
     </Wrapper>
   );
 };

@@ -21,14 +21,10 @@ const ChatRoom = () => {
 
   return (
     <Wrapper>
-      <Header>
-        Shamp 님 과의 채팅
-      </Header>
       <ChatDate>오늘</ChatDate>
       {chatList.map((data: ChatType) => (
         data.fromUserId === id ? <SendMessage data={data} /> : <ReceiveMessage data={data} />))}
       <Footer />
-      <ChatRoom />
     </Wrapper>
   );
 };
@@ -37,19 +33,6 @@ const Wrapper = styled.article`
   background-color: #fff;
   height: 600px;
   box-shadow: rgb(81 99 120 / 30%) 0 6px 60px 0;
-`;
-
-const Header = styled.header`
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
-  height: 30px;
-  text-align: center;
-  padding: 10px;
-  line-height: 30px;
-  border-bottom: 1px solid #e6e6e6;
-  background: linear-gradient(94deg, #2d79c7, #52a7ff);
-  box-shadow: rgb(81 99 120 / 30%) 0 6px 60px 0;
-  color: #fff;
 `;
 
 const ChatDate = styled.div`
