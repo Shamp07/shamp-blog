@@ -17,6 +17,8 @@ class ChatStore {
 
   isChatOpen = false;
 
+  chatRoomList = [];
+
   chat = '';
 
   chatList: Array<ChatType> = [];
@@ -28,7 +30,7 @@ class ChatStore {
   constructor(root: { AlertStore: AlertStore }) {
     this.AlertStore = root.AlertStore;
     makeObservable(this, makeAnnotations<this>({
-      observables: ['isChatOpen', 'chat', 'chatList'],
+      observables: ['isChatOpen', 'chat', 'chatList', 'chatRoomList'],
       actions: ['openChat', 'onChangeChat'],
     }));
   }
@@ -78,6 +80,17 @@ class ChatStore {
       url: '/api/chat/socket',
       data: {
         socketId,
+      },
+    });
+  };
+
+  getChatRoomList = () => {
+    Axios({
+      method: 'get',
+      url: '/api/chat/room',
+      success: (response) => {
+        const { result } = response.data;
+        this.chatRoomList = result;
       },
     });
   };
