@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { AlertType } from '../../../../stores/AlertStore';
 import useStores from '../../../../stores/useStores';
+import { RootStore } from '../../../../stores';
 
 interface AlertProps {
   data: AlertType;
@@ -11,7 +12,7 @@ interface AlertProps {
 
 const Alert = ({ data }: AlertProps) => {
   const router = useRouter();
-  const { AlertStore } = useStores();
+  const { AlertStore } = useStores() as RootStore;
   const { movePost } = AlertStore;
   const {
     id,

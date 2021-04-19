@@ -15,8 +15,8 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
 
 const getChatRoom = async (request: NextApiRequestToken, response: NextApiResponse) => {
   const { id } = request.decodedToken;
-
   const values = [id];
+
   await Database.execute(
     (database: Client) => database.query(
       SELECT_CHATROOM_LIST,
@@ -34,17 +34,28 @@ const getChatRoom = async (request: NextApiRequestToken, response: NextApiRespon
 };
 
 const SELECT_CHATROOM_LIST = `
-  SELECT * FROM (
-    SELECT distinct on (1) A.* FROM (
-        SELECT
-            array_to_string(sort(array[from_user_id, to_user_id]), ',') AS room_id,
-            *
-        FROM chat
-        WHERE
-            from_user_id = 0
-            OR to_user_id = 0
+  SELECT
+    B.id,
+    B."fromUserName",
+    B."toUserName",
+    B.message,
+    CASE WHEN (CAST(TO_CHAR(NOW() - B.crt_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 1000000)
+      THEN TO_CHAR(NOW() - B.crt_dttm, 'hh12:mi AM')
+    ELSE TO_CHAR(B.crt_dttm, 'MM/DD')
+    END AS time
+  FROM (
+    SELECT DISTINCT ON (1) A.* FROM (
+      SELECT
+        ARRAY_TO_STRING(SORT(ARRAY[c.from_user_id, c.to_user_id]), ',') AS room_id,
+        *,
+        (SELECT name FROM "user" WHERE id = c.from_user_id) AS "fromUserName",
+        (SELECT name FROM "user" WHERE id = c.to_user_id) AS "toUserName"
+      FROM chat c
+      WHERE
+        c.from_user_id = $1
+        OR c.to_user_id = $1
     ) A
-    ORDER BY 1, 2 DESC, 5
+    ORDER BY 1, 2 DESC
   ) B
   ORDER BY B.crt_dttm DESC
 `;

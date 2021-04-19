@@ -4,6 +4,7 @@ import makeAnnotations from '../util/Mobx';
 import Axios from '../util/Axios';
 
 export interface AlertType {
+  total: number;
   id: number;
   content: string;
   postId: number;
@@ -18,7 +19,7 @@ class AlertStore {
 
   alertLoading = true;
 
-  alertList = [];
+  alertList: Array<AlertType> = [];
 
   alertSize = 10;
 

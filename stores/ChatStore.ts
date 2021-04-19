@@ -12,12 +12,21 @@ export interface ChatType {
   time: string;
 }
 
+export interface ChatRoomType {
+  id: number;
+  fromUserId: number;
+  fromUserName: string;
+  toUserName: string;
+  message: string;
+  time: string;
+}
+
 class ChatStore {
   AlertStore: AlertStore;
 
   isChatOpen = false;
 
-  chatRoomList = [];
+  chatRoomList: Array<ChatRoomType> = [];
 
   chat = '';
 
@@ -41,6 +50,7 @@ class ChatStore {
         this.AlertStore.toggleAlertModal('채팅은 로그인 이후 이용하실 수 있습니다! 비회원은 곧 지원 예정입니다.');
         return;
       }
+      this.getChatRoomList();
       this.getSocketId();
     }
     this.isChatOpen = !this.isChatOpen;

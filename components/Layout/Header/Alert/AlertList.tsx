@@ -6,9 +6,10 @@ import { AlertType } from '../../../../stores/AlertStore';
 import Alert from './index';
 import useStores from '../../../../stores/useStores';
 import AlertMore from './AlertMore';
+import { RootStore } from '../../../../stores';
 
 const AlertList = () => {
-  const { AlertStore } = useStores();
+  const { AlertStore } = useStores() as RootStore;
   const { alertList, alertSize } = AlertStore;
 
   let isMoreAlert = false;
