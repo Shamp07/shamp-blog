@@ -11,8 +11,9 @@ interface ChatRoomProps {
 }
 
 const ChatRoom = ({ data }: ChatRoomProps) => {
-  const { SignStore } = useStores() as RootStore;
+  const { SignStore, ChatStore } = useStores() as RootStore;
   const { userData } = SignStore;
+  const { goChatRoom } = ChatStore;
 
   if (!userData) return null;
 
@@ -21,8 +22,9 @@ const ChatRoom = ({ data }: ChatRoomProps) => {
     fromUserId, toUserName, fromUserName,
     message, time,
   } = data;
+
   return (
-    <ChatRoomWrapper>
+    <ChatRoomWrapper onClick={goChatRoom}>
       <Profile>
         <div>
           <FontAwesomeIcon icon={faUser} />

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { observer } from 'mobx-react-lite';
 import ChatRoom from './ChatRoom';
 import { RootStore } from '../../../../../stores';
 import useStores from '../../../../../stores/useStores';
@@ -22,4 +23,4 @@ const Wrapper = styled.article`
   border-bottom-left-radius: 16px;
 `;
 
-export default ChatLobby;
+export default observer(ChatLobby);

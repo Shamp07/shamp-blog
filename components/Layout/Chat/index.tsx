@@ -16,7 +16,7 @@ const Chat = () => {
   return (
     <Wrapper>
       {isChatOpen && <ChatWidget />}
-      <ButtonWrapper onClick={() => openChat(!!userData)}>
+      <ButtonWrapper onClick={() => openChat(!!userData, !!userData?.adminFl)}>
         <span>{(userData && userData.adminFl) ? '채팅하기' : '질문하기'}</span>
         <ChatFloatButton color="primary" aria-label="add">
           <FontAwesomeIcon icon={faCommentDots} />

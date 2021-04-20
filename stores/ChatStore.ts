@@ -7,7 +7,6 @@ import AlertStore from './AlertStore';
 
 export interface ChatType {
   fromUserId: number;
-  toUserId: number;
   message: string;
   time: string;
 }
@@ -26,7 +25,13 @@ class ChatStore {
 
   isChatOpen = false;
 
+  isChatLoading = true;
+
   chatRoomList: Array<ChatRoomType> = [];
+
+  // 0: ChatLobby
+  // 1: ChatRoom
+  chatPage = 0;
 
   chat = '';
 
@@ -39,18 +44,28 @@ class ChatStore {
   constructor(root: { AlertStore: AlertStore }) {
     this.AlertStore = root.AlertStore;
     makeObservable(this, makeAnnotations<this>({
-      observables: ['isChatOpen', 'chat', 'chatList', 'chatRoomList'],
-      actions: ['openChat', 'onChangeChat'],
+      observables: [
+        'isChatOpen', 'chat', 'chatList', 'chatRoomList',
+        'chatPage',
+      ],
+      actions: ['openChat', 'onChangeChat', 'getChatList'],
     }));
   }
 
-  openChat = (loggedIn: boolean): void => {
+  openChat = (loggedIn: boolean, isAdmin: boolean): void => {
     if (!this.isChatOpen) {
       if (!loggedIn) {
         this.AlertStore.toggleAlertModal('채팅은 로그인 이후 이용하실 수 있습니다! 비회원은 곧 지원 예정입니다.');
         return;
       }
-      this.getChatRoomList();
+
+      if (isAdmin) {
+        this.chatPage = 0;
+        this.getChatRoomList();
+      } else {
+        this.chatPage = 1;
+      }
+
       this.getSocketId();
     }
     this.isChatOpen = !this.isChatOpen;
@@ -63,7 +78,6 @@ class ChatStore {
     this.chatSocket.on('receive_message', (message: string) => {
       this.chatList.push({
         fromUserId: userId,
-        toUserId: 0,
         message,
         time: '',
       });
@@ -95,18 +109,37 @@ class ChatStore {
   };
 
   getChatRoomList = () => {
+    this.isChatLoading = true;
     Axios({
       method: 'get',
       url: '/api/chat/room',
       success: (response) => {
         const { result } = response.data;
         this.chatRoomList = result;
+        this.isChatLoading = false;
+      },
+    });
+  };
+
+  getChatList = () => {
+    this.isChatLoading = true;
+    Axios({
+      method: 'get',
+      url: '/api/chat',
+      success: (response) => {
+        const { result } = response.data;
+        this.chatList = result;
+        this.isChatLoading = false;
       },
     });
   };
 
   onChangeChat = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     this.chat = event.target.value;
+  };
+
+  goChatRoom = () => {
+    this.chatPage = 1;
   };
 
   sendChat = (userId: number) => {
@@ -118,7 +151,6 @@ class ChatStore {
 
     this.chatList.push({
       fromUserId: userId,
-      toUserId: 0,
       message: this.chat,
       time: '',
     });
