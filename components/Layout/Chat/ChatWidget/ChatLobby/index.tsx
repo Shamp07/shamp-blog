@@ -10,7 +10,7 @@ const ChatLobby = () => {
   const { chatRoomList } = ChatStore;
   return (
     <Wrapper>
-      {chatRoomList.map((data) => <ChatRoom data={data} />)}
+      {chatRoomList.map((data) => <ChatRoom key={data.id} data={data} />)}
     </Wrapper>
   );
 };

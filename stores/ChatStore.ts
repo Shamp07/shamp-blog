@@ -15,6 +15,7 @@ export interface ChatRoomType {
   id: number;
   fromUserId: number;
   fromUserName: string;
+  toUserId: number;
   toUserName: string;
   message: string;
   time: string;
@@ -46,9 +47,9 @@ class ChatStore {
     makeObservable(this, makeAnnotations<this>({
       observables: [
         'isChatOpen', 'chat', 'chatList', 'chatRoomList',
-        'chatPage',
+        'chatPage', 'isChatLoading',
       ],
-      actions: ['openChat', 'onChangeChat', 'getChatList'],
+      actions: ['openChat', 'onChangeChat', 'getChatList', 'moveChatPage'],
     }));
   }
 
@@ -121,11 +122,14 @@ class ChatStore {
     });
   };
 
-  getChatList = () => {
+  getChatList = (userId: number) => {
     this.isChatLoading = true;
     Axios({
       method: 'get',
       url: '/api/chat',
+      data: {
+        userId,
+      },
       success: (response) => {
         const { result } = response.data;
         this.chatList = result;
@@ -138,8 +142,13 @@ class ChatStore {
     this.chat = event.target.value;
   };
 
-  goChatRoom = () => {
-    this.chatPage = 1;
+  moveChatPage = (page: number, userId: number) => {
+    if (page === 0) {
+      this.getChatRoomList();
+    } else if (page === 1) {
+      this.getChatList(userId);
+    }
+    this.chatPage = page;
   };
 
   sendChat = (userId: number) => {

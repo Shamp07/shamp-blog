@@ -13,18 +13,20 @@ interface ChatRoomProps {
 const ChatRoom = ({ data }: ChatRoomProps) => {
   const { SignStore, ChatStore } = useStores() as RootStore;
   const { userData } = SignStore;
-  const { goChatRoom } = ChatStore;
+  const { moveChatPage } = ChatStore;
 
   if (!userData) return null;
 
   const { id } = userData;
   const {
-    fromUserId, toUserName, fromUserName,
+    fromUserId, toUserId,
+    toUserName, fromUserName,
     message, time,
   } = data;
+  const otherUserId = fromUserId === id ? toUserId : fromUserId;
 
   return (
-    <ChatRoomWrapper onClick={goChatRoom}>
+    <ChatRoomWrapper onClick={() => moveChatPage(1, otherUserId)}>
       <Profile>
         <div>
           <FontAwesomeIcon icon={faUser} />
@@ -54,14 +56,13 @@ const ChatRoomWrapper = styled.div`
 `;
 
 const Profile = styled.div`
-  width: 62px;
-  padding: 13px 0 0  16px;
+  padding: 15px 15px;
   
   & > div {
     width: 30px;
     height: 30px;
     padding: 5px;
-    background-color: #e6e6e6;
+    background-color: #2d79c7;
     border-radius: 25px;
     color: #fff;
   }
@@ -75,11 +76,34 @@ const Profile = styled.div`
 `;
 
 const ChatRoomContent = styled.div`
-  flex: 1 1 0px;
+  flex: 1 1 0;
   min-width: 180px;
-  padding: 12px 8px 12px 0px;
   font-size: 13px;
   color: rgb(36, 36, 40);
+  height: 40px;
+  padding: 15px 8px 15px 0;
+  
+  & > div {
+    overflow: hidden;
+  }
+  
+  & > div:first-of-type {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 600;
+    line-height: 16px;
+    height: 16px;
+  }
+  
+  & > div:last-of-type {
+    margin-top: 4px;
+    line-height: 20px;
+    word-break: break-all;
+    white-space: pre-line;
+    font-weight: normal;
+    height: 20px;
+    color: inherit;
+  }
 `;
 
 const ChatRoomDate = styled.div`
