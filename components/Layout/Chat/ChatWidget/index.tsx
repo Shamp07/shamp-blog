@@ -24,8 +24,12 @@ const ChatWidget = () => {
 const Wrapper = styled.div`
   position: fixed;
   right: 30px;
-  bottom: 100px;
+  bottom: 120px;
   width: 400px;
+  height: 700px;
+  background-color: #fff;
+  box-shadow: rgb(81 99 120 / 30%) 0 6px 60px 0;
+  border-radius: 20px;
 `;
 
 export default observer(ChatWidget);

@@ -51,7 +51,6 @@ const Wrapper = styled.footer`
   min-height: 54px;
   border-top: 1px solid rgb(228, 228, 229);
   background-color: rgb(255, 255, 255);
-  box-shadow: rgb(0 0 0 / 5%) 0 2px 6px 0;
   padding: 0 15px;
 `;
 

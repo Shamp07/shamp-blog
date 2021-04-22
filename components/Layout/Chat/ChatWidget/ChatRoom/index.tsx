@@ -20,19 +20,19 @@ const ChatRoom = () => {
   const { id } = userData;
 
   return (
-    <Wrapper>
-      <ChatDate>오늘</ChatDate>
-      {chatList.map((data: ChatType) => (
-        data.fromUserId === id ? <SendMessage data={data} /> : <ReceiveMessage data={data} />))}
+    <>
+      <ChatListWrapper>
+        <ChatDate>오늘</ChatDate>
+        {chatList.map((data: ChatType) => (
+          data.fromUserId === id ? <SendMessage data={data} /> : <ReceiveMessage data={data} />))}
+      </ChatListWrapper>
       <Footer />
-    </Wrapper>
+    </>
   );
 };
 
-const Wrapper = styled.article`
-  background-color: #fff;
-  height: 600px;
-  box-shadow: rgb(81 99 120 / 30%) 0 6px 60px 0;
+const ChatListWrapper = styled.div`
+  height: 592px;
 `;
 
 const ChatDate = styled.div`
