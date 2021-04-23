@@ -36,9 +36,9 @@ const getChatRoom = async (request: NextApiRequestToken, response: NextApiRespon
 const SELECT_CHATROOM_LIST = `
   SELECT
     B.id,
-    B.to_user_id,
+    B.to_user_id AS "toUserId",
     B."fromUserName",
-    B.from_user_id,
+    B.from_user_id AS "fromUserId",
     B."toUserName",
     B.message,
     CASE WHEN (CAST(TO_CHAR(NOW() - B.crt_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 1000000)

@@ -29,7 +29,7 @@ const Wrapper = styled.div`
   height: 700px;
   background-color: #fff;
   box-shadow: rgb(81 99 120 / 30%) 0 6px 60px 0;
-  border-radius: 20px;
+  border-radius: 16px;
 `;
 
 export default observer(ChatWidget);

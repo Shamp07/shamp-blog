@@ -22,9 +22,9 @@ const ChatRoom = () => {
   return (
     <>
       <ChatListWrapper>
-        <ChatDate>오늘</ChatDate>
+        {/* <ChatDate>오늘</ChatDate> */}
         {chatList.map((data: ChatType) => (
-          data.fromUserId === id ? <SendMessage data={data} /> : <ReceiveMessage data={data} />))}
+          data.fromUserId === id ? <SendMessage key={data.id} data={data} /> : <ReceiveMessage key={data.id} data={data} />))}
       </ChatListWrapper>
       <Footer />
     </>
@@ -32,7 +32,8 @@ const ChatRoom = () => {
 };
 
 const ChatListWrapper = styled.div`
-  height: 592px;
+  padding-top: 10px;
+  height: 582px;
 `;
 
 const ChatDate = styled.div`

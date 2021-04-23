@@ -7,7 +7,7 @@ interface ReceiveMessageProps {
 }
 
 const ReceiveMessage = ({ data }: ReceiveMessageProps) => {
-  const { message, time } = data;
+  const { fromUserName, message, time } = data;
   return (
     <Wrapper>
       <Profile>
@@ -15,7 +15,7 @@ const ReceiveMessage = ({ data }: ReceiveMessageProps) => {
       </Profile>
       <MessageWrapper>
         <NameAndTime>
-          <div>Shamp</div>
+          <div>{fromUserName}</div>
           <div>{time}</div>
         </NameAndTime>
         <MessageContentWrapper>

@@ -6,6 +6,8 @@ import Axios from '../util/Axios';
 import AlertStore from './AlertStore';
 
 export interface ChatType {
+  id: number;
+  fromUserName?: string;
   fromUserId: number;
   message: string;
   time: string;
@@ -38,6 +40,8 @@ class ChatStore {
 
   chatList: Array<ChatType> = [];
 
+  chatTempId = 0;
+
   chatSocket: SocketIOClient.Socket | null = null;
 
   socketId = '';
@@ -49,7 +53,10 @@ class ChatStore {
         'isChatOpen', 'chat', 'chatList', 'chatRoomList',
         'chatPage', 'isChatLoading',
       ],
-      actions: ['openChat', 'onChangeChat', 'getChatList', 'moveChatPage'],
+      actions: [
+        'openChat', 'onChangeChat', 'getChatList', 'moveChatPage',
+        'sendChat',
+      ],
     }));
   }
 
@@ -158,12 +165,20 @@ class ChatStore {
       socketId: this.socketId,
     });
 
-    this.chatList.push({
-      fromUserId: userId,
-      message: this.chat,
-      time: '',
-    });
+    this.chatList = [
+      ...this.chatList,
+      {
+        id: this.chatTempId,
+        fromUserId: userId,
+        message: this.chat,
+        time: '',
+      },
+    ];
 
+    console.log([...this.chatList ]);
+
+
+    this.chatTempId -= 1;
     this.chat = '';
   };
 }

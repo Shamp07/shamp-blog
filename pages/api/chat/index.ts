@@ -38,13 +38,14 @@ const SELECT_CHAT_LIST = `
   SELECT
     id,
     message,
-    from_user_id,
+    from_user_id AS "fromUserId",
+    (SELECT name FROM "user" WHERE id = from_user_id) AS "fromUserName",
     TO_CHAR(NOW() - crt_dttm, 'hh12:mi AM') AS time
   FROM chat
   WHERE
     (from_user_id = $1 AND to_user_id = $2)
     OR (from_user_id = $2 AND to_user_id = $1)
-  ORDER BY crt_dttm DESC
+  ORDER BY crt_dttm
 `;
 
 export default authMiddleware(handler, 0);

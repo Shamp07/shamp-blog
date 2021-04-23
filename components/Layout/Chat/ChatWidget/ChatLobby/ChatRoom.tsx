@@ -33,7 +33,7 @@ const ChatRoom = ({ data }: ChatRoomProps) => {
         </div>
       </Profile>
       <ChatRoomContent>
-        <div>{fromUserId === id ? fromUserName : toUserName}</div>
+        <div>{fromUserId === id ? toUserName : fromUserName}</div>
         <div>{message}</div>
       </ChatRoomContent>
       <ChatRoomDate>
