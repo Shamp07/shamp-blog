@@ -1,6 +1,7 @@
 import { makeObservable } from 'mobx';
 import React from 'react';
 import socketio from 'socket.io-client';
+import dayjs from 'dayjs';
 import makeAnnotations from '../util/Mobx';
 import Axios from '../util/Axios';
 import AlertStore from './AlertStore';
@@ -73,8 +74,6 @@ class ChatStore {
       } else {
         this.chatPage = 1;
       }
-
-      this.getSocketId();
     }
     this.isChatOpen = !this.isChatOpen;
   };
@@ -84,6 +83,7 @@ class ChatStore {
     this.chatSocket.emit('get_socket_id');
     this.chatSocket.on('send_socket_id', this.updateSocketId);
     this.chatSocket.on('receive_message', (message: string) => {
+      alert('메시지가 도착했습니다.');
       this.chatList.push({
         fromUserId: userId,
         message,
@@ -145,6 +145,22 @@ class ChatStore {
     });
   };
 
+  addChat = async (userId: number) => {
+    await Axios({
+      method: 'post',
+      url: '/api/chat',
+      data: {
+        userId,
+        message: this.chat,
+      },
+      success: (response) => {
+        const { result } = response.data;
+        this.chatList = result;
+        this.isChatLoading = false;
+      },
+    });
+  };
+
   onChangeChat = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     this.chat = event.target.value;
   };
@@ -158,25 +174,33 @@ class ChatStore {
     this.chatPage = page;
   };
 
-  sendChat = (userId: number) => {
+  sendChat = async (userId: number) => {
     if (!this.chatSocket) return;
     this.chatSocket.emit('send_message', {
       message: this.chat,
       socketId: this.socketId,
     });
 
+    const nowTime = dayjs().format('hh:mm A');
+
+    const time = ((inTime): string => {
+      if (this.chatList.length <= 0) {
+        return '';
+      }
+
+      return this.chatList[this.chatList.length - 1].time === inTime ? '' : inTime;
+    })(nowTime);
+
+    await this.addChat(userId);
     this.chatList = [
       ...this.chatList,
       {
         id: this.chatTempId,
         fromUserId: userId,
         message: this.chat,
-        time: '',
+        time,
       },
     ];
-
-    console.log([...this.chatList ]);
-
 
     this.chatTempId -= 1;
     this.chat = '';

@@ -10,6 +10,8 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
 
   if (request.method === 'GET') {
     await getChatList(request, response);
+  } else if (request.method === 'POST') {
+    await sendChat(request, response);
   }
 };
 
@@ -34,6 +36,26 @@ const getChatList = async (request: NextApiRequestToken, response: NextApiRespon
   });
 };
 
+const sendChat = async (request: NextApiRequestToken, response: NextApiResponse) => {
+  const { userId, message } = request.query;
+  const { id } = request.decodedToken;
+  const values = [id, userId, message];
+
+  await Database.execute(
+    (database: Client) => database.query(
+      INSERT_CHAT,
+      values,
+    )
+      .then(() => {
+        response.json({
+          success: true,
+        });
+      }),
+  ).then(() => {
+    logger.info('[INSERT, POST /api/chat] 채팅 송신');
+  });
+};
+
 const SELECT_CHAT_LIST = `
   SELECT
     id,
@@ -46,6 +68,18 @@ const SELECT_CHAT_LIST = `
     (from_user_id = $1 AND to_user_id = $2)
     OR (from_user_id = $2 AND to_user_id = $1)
   ORDER BY crt_dttm
+`;
+
+const INSERT_CHAT = `
+  INSERT INTO chat (
+    from_user_id,
+    to_user_id,
+    message
+  ) VALUES (
+    $1,
+    $2,
+    $3
+  );
 `;
 
 export default authMiddleware(handler, 0);
