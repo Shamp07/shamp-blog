@@ -41,6 +41,8 @@ class ChatStore {
 
   chatList: Array<ChatType> = [];
 
+  toUserId = -1;
+
   chatTempId = 0;
 
   chatSocket: SocketIOClient.Socket | null = null;
@@ -145,18 +147,24 @@ class ChatStore {
     });
   };
 
-  addChat = async (userId: number) => {
+  addChat = async (userId: number, toUserId: number, time: string) => {
     await Axios({
       method: 'post',
       url: '/api/chat',
       data: {
-        userId,
+        userId: toUserId,
         message: this.chat,
       },
-      success: (response) => {
-        const { result } = response.data;
-        this.chatList = result;
-        this.isChatLoading = false;
+      success: () => {
+        this.chatList = [
+          ...this.chatList,
+          {
+            id: this.chatTempId,
+            fromUserId: userId,
+            message: this.chat,
+            time,
+          },
+        ];
       },
     });
   };
@@ -170,6 +178,7 @@ class ChatStore {
       this.getChatRoomList();
     } else if (page === 1) {
       this.getChatList(userId);
+      this.toUserId = userId;
     }
     this.chatPage = page;
   };
@@ -191,19 +200,16 @@ class ChatStore {
       return this.chatList[this.chatList.length - 1].time === inTime ? '' : inTime;
     })(nowTime);
 
-    await this.addChat(userId);
-    this.chatList = [
-      ...this.chatList,
-      {
-        id: this.chatTempId,
-        fromUserId: userId,
-        message: this.chat,
-        time,
-      },
-    ];
-
+    await this.addChat(userId, this.toUserId, time);
     this.chatTempId -= 1;
     this.chat = '';
+  };
+
+  onKeyPressChat = (event: React.KeyboardEvent<HTMLTextAreaElement>, userId: number) => {
+    if (event.key === 'Enter') {
+      this.sendChat(userId);
+      return false;
+    }
   };
 }
 

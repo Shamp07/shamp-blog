@@ -32,8 +32,28 @@ const ChatRoom = () => {
 };
 
 const ChatListWrapper = styled.div`
-  padding-top: 10px;
+  overflow-y: auto;
+  padding: 10px 0;
   height: 582px;
+
+
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 6px;
+    background: transparent;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: #a6a6a6;
+    border-radius: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #e6e6e6;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
 `;
 
 const ChatDate = styled.div`

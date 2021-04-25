@@ -9,7 +9,9 @@ import { RootStore } from '../../../../../stores';
 
 const Footer = () => {
   const { ChatStore, SignStore } = useStores() as RootStore;
-  const { chat, onChangeChat, sendChat } = ChatStore;
+  const {
+    chat, onChangeChat, sendChat, onKeyPressChat,
+  } = ChatStore;
   const { userData } = SignStore;
 
   if (!userData) {
@@ -27,7 +29,13 @@ const Footer = () => {
         <CodeIcon icon={faCode} />
       </ChatButton>
       <ChatInputWrapper>
-        <TextAreaCustom value={chat} onChange={onChangeChat} />
+        <TextAreaCustom
+          value={chat}
+          onChange={onChangeChat}
+          onKeyPress={
+            (event: React.KeyboardEvent<HTMLTextAreaElement>) => onKeyPressChat(event, id)
+          }
+        />
       </ChatInputWrapper>
       <ChatEnter active={!!chat} onClick={() => sendChat(id)}>
         <FontAwesomeIcon icon={faCaretRight} />
