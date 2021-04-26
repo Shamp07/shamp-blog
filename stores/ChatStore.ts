@@ -12,6 +12,7 @@ export interface ChatType {
   fromUserId: number;
   message: string;
   time: string;
+  displayedTime: string;
 }
 
 export interface ChatRoomType {
@@ -60,6 +61,7 @@ class ChatStore {
         'openChat', 'onChangeChat', 'getChatList', 'moveChatPage',
         'sendChat',
       ],
+      computeds: ['displayedChatList'],
     }));
   }
 
@@ -131,6 +133,19 @@ class ChatStore {
     });
   };
 
+  get displayedChatList(): Array<ChatType> {
+    let beforeTime = '';
+    return this.chatList.map((data) => {
+      const { time } = data;
+      const displayedTime = beforeTime === time ? '' : time;
+      beforeTime = time;
+      return {
+        ...data,
+        displayedTime,
+      };
+    });
+  }
+
   getChatList = (userId: number) => {
     this.isChatLoading = true;
     Axios({
@@ -147,7 +162,7 @@ class ChatStore {
     });
   };
 
-  addChat = async (userId: number, toUserId: number, time: string) => {
+  addChat = async (userId: number, toUserId: number, time: string, displayedTime: string) => {
     await Axios({
       method: 'post',
       url: '/api/chat',
@@ -163,6 +178,7 @@ class ChatStore {
             fromUserId: userId,
             message: this.chat,
             time,
+            displayedTime,
           },
         ];
       },
@@ -190,17 +206,17 @@ class ChatStore {
       socketId: this.socketId,
     });
 
-    const nowTime = dayjs().format('hh:mm A');
+    const time = dayjs().format('hh:mm A');
 
-    const time = ((inTime): string => {
+    const displayedTime = ((): string => {
       if (this.chatList.length <= 0) {
         return '';
       }
 
-      return this.chatList[this.chatList.length - 1].time === inTime ? '' : inTime;
-    })(nowTime);
+      return this.chatList[this.chatList.length - 1].time === time ? '' : time;
+    })();
 
-    await this.addChat(userId, this.toUserId, time);
+    await this.addChat(userId, this.toUserId, time, displayedTime);
     this.chatTempId -= 1;
     this.chat = '';
   };

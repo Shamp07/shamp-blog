@@ -10,7 +10,7 @@ import Footer from './Footer';
 
 const ChatRoom = () => {
   const { ChatStore, SignStore } = useStores() as RootStore;
-  const { chatList } = ChatStore;
+  const { displayedChatList } = ChatStore;
   const { userData } = SignStore;
 
   if (!userData) {
@@ -23,7 +23,7 @@ const ChatRoom = () => {
     <>
       <ChatListWrapper>
         {/* <ChatDate>오늘</ChatDate> */}
-        {chatList.map((data: ChatType) => (
+        {displayedChatList.map((data: ChatType) => (
           data.fromUserId === id ? <SendMessage key={data.id} data={data} /> : <ReceiveMessage key={data.id} data={data} />))}
       </ChatListWrapper>
       <Footer />

@@ -7,11 +7,11 @@ interface SendMessageProps {
 }
 
 const SendMessage = ({ data }: SendMessageProps) => {
-  const { message, time } = data;
+  const { message, displayedTime } = data;
 
   return (
     <MessageWrapper>
-      <Time>{time}</Time>
+      <Time>{displayedTime}</Time>
       <MessageContentWrapper>
         <MessageContentInner>
           <div>
