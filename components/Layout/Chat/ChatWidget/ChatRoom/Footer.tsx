@@ -7,7 +7,11 @@ import TextareaAutosize from 'react-textarea-autosize';
 import useStores from '../../../../../stores/useStores';
 import { RootStore } from '../../../../../stores';
 
-const Footer = () => {
+interface FooterProps {
+  scrollRef: React.MutableRefObject<null | HTMLElement>;
+}
+
+const Footer = ({ scrollRef }: FooterProps) => {
   const { ChatStore, SignStore } = useStores() as RootStore;
   const {
     chat, onChangeChat, sendChat, onKeyPressChat,
@@ -37,7 +41,7 @@ const Footer = () => {
           }
         />
       </ChatInputWrapper>
-      <ChatEnter active={!!chat} onClick={() => sendChat(id)}>
+      <ChatEnter active={!!chat} onClick={() => sendChat(id, scrollRef)}>
         <FontAwesomeIcon icon={faCaretRight} />
       </ChatEnter>
     </Wrapper>

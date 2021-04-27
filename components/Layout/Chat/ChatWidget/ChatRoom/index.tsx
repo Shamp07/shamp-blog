@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 import ReceiveMessage from './ReceiveMessage';
@@ -12,6 +12,7 @@ const ChatRoom = () => {
   const { ChatStore, SignStore } = useStores() as RootStore;
   const { displayedChatList } = ChatStore;
   const { userData } = SignStore;
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   if (!userData) {
     return null;
@@ -21,12 +22,12 @@ const ChatRoom = () => {
 
   return (
     <>
-      <ChatListWrapper>
+      <ChatListWrapper ref={scrollRef}>
         {/* <ChatDate>오늘</ChatDate> */}
         {displayedChatList.map((data: ChatType) => (
           data.fromUserId === id ? <SendMessage key={data.id} data={data} /> : <ReceiveMessage key={data.id} data={data} />))}
       </ChatListWrapper>
-      <Footer />
+      <Footer scrollRef={scrollRef} />
     </>
   );
 };
@@ -35,7 +36,6 @@ const ChatListWrapper = styled.div`
   overflow-y: auto;
   padding: 10px 0;
   height: 582px;
-
 
   &::-webkit-scrollbar {
     width: 10px;

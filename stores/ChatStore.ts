@@ -162,7 +162,7 @@ class ChatStore {
     });
   };
 
-  addChat = async (userId: number, toUserId: number, time: string, displayedTime: string) => {
+  addChat = async (userId: number, toUserId: number, time: string) => {
     await Axios({
       method: 'post',
       url: '/api/chat',
@@ -178,7 +178,7 @@ class ChatStore {
             fromUserId: userId,
             message: this.chat,
             time,
-            displayedTime,
+            displayedTime: '',
           },
         ];
       },
@@ -199,7 +199,7 @@ class ChatStore {
     this.chatPage = page;
   };
 
-  sendChat = async (userId: number) => {
+  sendChat = async (userId: number, scrollRef: React.RefObject<HTMLDivElement>) => {
     if (!this.chatSocket) return;
     this.chatSocket.emit('send_message', {
       message: this.chat,
@@ -207,16 +207,8 @@ class ChatStore {
     });
 
     const time = dayjs().format('hh:mm A');
-
-    const displayedTime = ((): string => {
-      if (this.chatList.length <= 0) {
-        return '';
-      }
-
-      return this.chatList[this.chatList.length - 1].time === time ? '' : time;
-    })();
-
-    await this.addChat(userId, this.toUserId, time, displayedTime);
+    await this.addChat(userId, this.toUserId, time);
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
     this.chatTempId -= 1;
     this.chat = '';
   };
