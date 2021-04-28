@@ -40,7 +40,6 @@ const sendChat = async (request: NextApiRequestToken, response: NextApiResponse)
   const { userId, message } = request.body;
   const { id } = request.decodedToken;
   const values = [id, userId, message];
-  console.log(values);
 
   await Database.execute(
     (database: Client) => database.query(

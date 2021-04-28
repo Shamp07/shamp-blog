@@ -46,6 +46,8 @@ class ChatStore {
 
   chatTempId = 0;
 
+  notReadChatCount = 5;
+
   chatSocket: SocketIOClient.Socket | null = null;
 
   socketId = '';
@@ -55,7 +57,7 @@ class ChatStore {
     makeObservable(this, makeAnnotations<this>({
       observables: [
         'isChatOpen', 'chat', 'chatList', 'chatRoomList',
-        'chatPage', 'isChatLoading',
+        'chatPage', 'isChatLoading', 'notReadChatCount',
       ],
       actions: [
         'openChat', 'onChangeChat', 'getChatList', 'moveChatPage',
@@ -77,31 +79,38 @@ class ChatStore {
         this.getChatRoomList();
       } else {
         this.chatPage = 1;
+        this.getChatListAndConnect(0);
       }
     }
     this.isChatOpen = !this.isChatOpen;
   };
+
+  getChatListAndConnect = async (userId: number) => {
+    this.isChatLoading = true;
+    await Promise.all([this.getChatList(userId), this.getSocketId(userId)]);
+    this.isChatLoading = false;
+  }
 
   connectSocket = (userId: number) => {
     this.chatSocket = socketio.connect('http://localhost');
     this.chatSocket.emit('get_socket_id');
     this.chatSocket.on('send_socket_id', this.updateSocketId);
     this.chatSocket.on('receive_message', (message: string) => {
-      alert('메시지가 도착했습니다.');
-      this.chatList.push({
-        fromUserId: userId,
-        message,
-        time: '',
-      });
+      alert(message);
+      // this.chatList.push({
+      //   fromUserId: userId,
+      //   message,
+      //   time: '',
+      // });
     });
   };
 
-  getSocketId = () => {
-    Axios({
+  getSocketId = async (userId: number) => {
+    await Axios({
       method: 'get',
       url: '/api/chat/socket',
       data: {
-        userId: 0,
+        userId,
       },
       success: (response) => {
         const { result } = response.data;
@@ -146,9 +155,8 @@ class ChatStore {
     });
   }
 
-  getChatList = (userId: number) => {
-    this.isChatLoading = true;
-    Axios({
+  getChatList = async (userId: number) => {
+    await Axios({
       method: 'get',
       url: '/api/chat',
       data: {
@@ -157,7 +165,6 @@ class ChatStore {
       success: (response) => {
         const { result } = response.data;
         this.chatList = result;
-        this.isChatLoading = false;
       },
     });
   };
@@ -189,11 +196,11 @@ class ChatStore {
     this.chat = event.target.value;
   };
 
-  moveChatPage = (page: number, userId: number) => {
+  moveChatPage = async (page: number, userId: number) => {
     if (page === 0) {
       this.getChatRoomList();
     } else if (page === 1) {
-      this.getChatList(userId);
+      this.getChatListAndConnect(0);
       this.toUserId = userId;
     }
     this.chatPage = page;

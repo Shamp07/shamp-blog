@@ -11,13 +11,14 @@ import { RootStore } from '../../../stores';
 const Chat = () => {
   const { ChatStore, SignStore } = useStores() as RootStore;
   const { userData } = SignStore;
-  const { openChat, isChatOpen } = ChatStore;
+  const { openChat, isChatOpen, notReadChatCount } = ChatStore;
 
   return (
     <Wrapper>
       {isChatOpen && <ChatWidget />}
       <ButtonWrapper onClick={() => openChat(!!userData, !!userData?.adminFl)}>
         <span>{(userData && userData.adminFl) ? '채팅하기' : '질문하기'}</span>
+        {notReadChatCount && <div>5</div>}
         <ChatFloatButton color="primary" aria-label="add">
           <FontAwesomeIcon icon={faCommentDots} />
         </ChatFloatButton>
@@ -51,6 +52,19 @@ const ButtonWrapper = styled.div`
   width: 100%;
   cursor: pointer;
   
+  & > div {
+    position: absolute;
+    text-align: center;
+    background-color: red;
+    color: #fff;
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    line-height: 24px;
+    right: -5px;
+    top: -5px;
+    z-index: 10;
+  }
 `;
 
 const ChatFloatButton = styled(Fab)`
