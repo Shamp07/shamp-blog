@@ -18,7 +18,7 @@ const Chat = () => {
       {isChatOpen && <ChatWidget />}
       <ButtonWrapper onClick={() => openChat(!!userData, !!userData?.adminFl)}>
         <span>{(userData && userData.adminFl) ? '채팅하기' : '질문하기'}</span>
-        {notReadChatCount && <div>5</div>}
+        {!!notReadChatCount && <div>{notReadChatCount}</div>}
         <ChatFloatButton color="primary" aria-label="add">
           <FontAwesomeIcon icon={faCommentDots} />
         </ChatFloatButton>
@@ -57,13 +57,14 @@ const ButtonWrapper = styled.div`
     text-align: center;
     background-color: red;
     color: #fff;
-    width: 24px;
-    height: 24px;
-    border-radius: 12px;
-    line-height: 24px;
-    right: -5px;
-    top: -5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    line-height: 20px;
+    right: 0;
+    top: 0;
     z-index: 10;
+    font-size: 12px;
   }
 `;
 

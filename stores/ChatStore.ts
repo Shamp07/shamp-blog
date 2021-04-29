@@ -25,6 +25,11 @@ export interface ChatRoomType {
   time: string;
 }
 
+interface ReceiveMessageType {
+  message: string,
+  userId: number,
+}
+
 class ChatStore {
   AlertStore: AlertStore;
 
@@ -46,7 +51,7 @@ class ChatStore {
 
   chatTempId = 0;
 
-  notReadChatCount = 5;
+  notReadChatCount = 0;
 
   chatSocket: SocketIOClient.Socket | null = null;
 
@@ -87,21 +92,32 @@ class ChatStore {
 
   getChatListAndConnect = async (userId: number) => {
     this.isChatLoading = true;
+    this.toUserId = userId;
     await Promise.all([this.getChatList(userId), this.getSocketId(userId)]);
     this.isChatLoading = false;
-  }
+  };
 
-  connectSocket = (userId: number) => {
+  connectSocket = () => {
     this.chatSocket = socketio.connect('http://localhost');
     this.chatSocket.emit('get_socket_id');
     this.chatSocket.on('send_socket_id', this.updateSocketId);
-    this.chatSocket.on('receive_message', (message: string) => {
-      alert(message);
-      // this.chatList.push({
-      //   fromUserId: userId,
-      //   message,
-      //   time: '',
-      // });
+    this.chatSocket.on('receive_message', ({ message, userId }: ReceiveMessageType) => {
+      if (this.toUserId === userId && this.isChatOpen) {
+        this.chatTempId -= -1;
+        const time = this.getChatTime();
+        this.chatList = [
+          ...this.chatList,
+          {
+            id: this.chatTempId,
+            fromUserId: userId,
+            message,
+            time,
+            displayedTime: '',
+          },
+        ];
+      } else {
+        this.notReadChatCount += 1;
+      }
     });
   };
 
@@ -178,6 +194,7 @@ class ChatStore {
         message: this.chat,
       },
       success: () => {
+        this.chatTempId -= -1;
         this.chatList = [
           ...this.chatList,
           {
@@ -200,8 +217,7 @@ class ChatStore {
     if (page === 0) {
       this.getChatRoomList();
     } else if (page === 1) {
-      this.getChatListAndConnect(0);
-      this.toUserId = userId;
+      this.getChatListAndConnect(userId);
     }
     this.chatPage = page;
   };
@@ -209,11 +225,12 @@ class ChatStore {
   sendChat = async (userId: number, scrollRef: React.RefObject<HTMLDivElement>) => {
     if (!this.chatSocket) return;
     this.chatSocket.emit('send_message', {
+      userId,
       message: this.chat,
       socketId: this.socketId,
     });
 
-    const time = dayjs().format('hh:mm A');
+    const time = this.getChatTime();
     await this.addChat(userId, this.toUserId, time);
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
     this.chatTempId -= 1;
@@ -226,6 +243,8 @@ class ChatStore {
       return false;
     }
   };
+
+  getChatTime = () => dayjs().format('hh:mm A');
 }
 
 export default ChatStore;
