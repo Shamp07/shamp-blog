@@ -37,7 +37,9 @@ const Footer = ({ scrollRef }: FooterProps) => {
           value={chat}
           onChange={onChangeChat}
           onKeyPress={
-            (event: React.KeyboardEvent<HTMLTextAreaElement>) => onKeyPressChat(event, id)
+            (event: React.KeyboardEvent<HTMLTextAreaElement>) => onKeyPressChat(
+              event, id, scrollRef
+            )
           }
         />
       </ChatInputWrapper>

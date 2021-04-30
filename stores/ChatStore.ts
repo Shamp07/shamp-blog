@@ -103,7 +103,7 @@ class ChatStore {
     this.chatSocket.on('send_socket_id', this.updateSocketId);
     this.chatSocket.on('receive_message', ({ message, userId }: ReceiveMessageType) => {
       if (this.toUserId === userId && this.isChatOpen) {
-        this.chatTempId -= -1;
+        this.chatTempId -= 1;
         const time = this.getChatTime();
         this.chatList = [
           ...this.chatList,
@@ -194,7 +194,7 @@ class ChatStore {
         message: this.chat,
       },
       success: () => {
-        this.chatTempId -= -1;
+        this.chatTempId -= 1;
         this.chatList = [
           ...this.chatList,
           {
@@ -222,7 +222,7 @@ class ChatStore {
     this.chatPage = page;
   };
 
-  sendChat = async (userId: number, scrollRef: React.RefObject<HTMLDivElement>) => {
+  sendChat = async (userId: number, scrollRef: React.RefObject<HTMLDivElement | null>) => {
     if (!this.chatSocket) return;
     this.chatSocket.emit('send_message', {
       userId,
@@ -232,16 +232,28 @@ class ChatStore {
 
     const time = this.getChatTime();
     await this.addChat(userId, this.toUserId, time);
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+
+    const { current } = scrollRef;
+    if (current) {
+      const { scrollHeight, clientHeight } = current;
+      current.scrollTop = scrollHeight - clientHeight;
+    }
+
     this.chatTempId -= 1;
     this.chat = '';
   };
 
-  onKeyPressChat = (event: React.KeyboardEvent<HTMLTextAreaElement>, userId: number) => {
+  onKeyPressChat = (
+    event: React.KeyboardEvent<HTMLTextAreaElement>,
+    userId: number,
+    scrollRef: React.RefObject<HTMLDivElement | null>,
+  ) => {
     if (event.key === 'Enter') {
-      this.sendChat(userId);
-      return false;
+      this.sendChat(userId, scrollRef);
+      event.preventDefault();
     }
+
+    return true;
   };
 
   getChatTime = () => dayjs().format('hh:mm A');
