@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, {useEffect, useRef} from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 import ReceiveMessage from './ReceiveMessage';
@@ -10,7 +10,7 @@ import Footer from './Footer';
 
 const ChatRoom = () => {
   const { ChatStore, SignStore } = useStores() as RootStore;
-  const { displayedChatList } = ChatStore;
+  const { displayedChatList, setScrollRef } = ChatStore;
   const { userData } = SignStore;
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -20,14 +20,17 @@ const ChatRoom = () => {
 
   const { id } = userData;
 
+  useEffect(() => {
+    setScrollRef(scrollRef);
+  }, [setScrollRef, scrollRef])
+
   return (
     <>
       <ChatListWrapper ref={scrollRef}>
-        {/* <ChatDate>오늘</ChatDate> */}
         {displayedChatList.map((data: ChatType) => (
           data.fromUserId === id ? <SendMessage key={data.id} data={data} /> : <ReceiveMessage key={data.id} data={data} />))}
       </ChatListWrapper>
-      <Footer scrollRef={scrollRef} />
+      <Footer />
     </>
   );
 };
@@ -35,7 +38,7 @@ const ChatRoom = () => {
 const ChatListWrapper = styled.div`
   overflow-y: auto;
   padding: 10px 0;
-  height: 582px;
+  height: 572px;
 
   &::-webkit-scrollbar {
     width: 10px;
@@ -44,7 +47,7 @@ const ChatListWrapper = styled.div`
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background-color: #a6a6a6;
     border-radius: 4px;

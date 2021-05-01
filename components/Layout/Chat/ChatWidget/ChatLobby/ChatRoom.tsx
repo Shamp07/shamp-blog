@@ -7,7 +7,7 @@ import { RootStore } from '../../../../../stores';
 import useStores from '../../../../../stores/useStores';
 
 interface ChatRoomProps {
-  data: ChatRoomType
+  data: ChatRoomType;
 }
 
 const ChatRoom = ({ data }: ChatRoomProps) => {

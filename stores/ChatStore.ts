@@ -57,20 +57,27 @@ class ChatStore {
 
   socketId = '';
 
+  scrollRef: React.RefObject<HTMLDivElement> | null = null;
+
   constructor(root: { AlertStore: AlertStore }) {
     this.AlertStore = root.AlertStore;
     makeObservable(this, makeAnnotations<this>({
       observables: [
         'isChatOpen', 'chat', 'chatList', 'chatRoomList',
         'chatPage', 'isChatLoading', 'notReadChatCount',
+        'scrollRef',
       ],
       actions: [
         'openChat', 'onChangeChat', 'getChatList', 'moveChatPage',
-        'sendChat',
+        'sendChat', 'setScrollRef',
       ],
       computeds: ['displayedChatList'],
     }));
   }
+
+  setScrollRef = (ref: React.RefObject<HTMLDivElement>) => {
+    this.scrollRef = ref;
+  };
 
   openChat = (loggedIn: boolean, isAdmin: boolean): void => {
     if (!this.isChatOpen) {
@@ -94,6 +101,7 @@ class ChatStore {
     this.isChatLoading = true;
     this.toUserId = userId;
     await Promise.all([this.getChatList(userId), this.getSocketId(userId)]);
+    setTimeout(this.scrollToBottom, 0);
     this.isChatLoading = false;
   };
 
@@ -217,12 +225,12 @@ class ChatStore {
     if (page === 0) {
       this.getChatRoomList();
     } else if (page === 1) {
-      this.getChatListAndConnect(userId);
+      await this.getChatListAndConnect(userId);
     }
     this.chatPage = page;
   };
 
-  sendChat = async (userId: number, scrollRef: React.RefObject<HTMLDivElement | null>) => {
+  sendChat = async (userId: number) => {
     if (!this.chatSocket) return;
     this.chatSocket.emit('send_message', {
       userId,
@@ -232,12 +240,7 @@ class ChatStore {
 
     const time = this.getChatTime();
     await this.addChat(userId, this.toUserId, time);
-
-    const { current } = scrollRef;
-    if (current) {
-      const { scrollHeight, clientHeight } = current;
-      current.scrollTop = scrollHeight - clientHeight;
-    }
+    this.scrollToBottom();
 
     this.chatTempId -= 1;
     this.chat = '';
@@ -246,14 +249,23 @@ class ChatStore {
   onKeyPressChat = (
     event: React.KeyboardEvent<HTMLTextAreaElement>,
     userId: number,
-    scrollRef: React.RefObject<HTMLDivElement | null>,
   ) => {
     if (event.key === 'Enter') {
-      this.sendChat(userId, scrollRef);
+      this.sendChat(userId);
       event.preventDefault();
     }
 
     return true;
+  };
+
+  scrollToBottom = () => {
+    const { scrollRef } = this;
+    if (scrollRef && scrollRef.current) {
+      const { current } = scrollRef;
+      const { scrollHeight, clientHeight } = current;
+      console.log(scrollHeight, clientHeight);
+      current.scrollTop = scrollHeight - clientHeight;
+    }
   };
 
   getChatTime = () => dayjs().format('hh:mm A');
