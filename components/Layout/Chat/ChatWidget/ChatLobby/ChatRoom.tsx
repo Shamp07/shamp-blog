@@ -24,9 +24,10 @@ const ChatRoom = ({ data }: ChatRoomProps) => {
     message, time,
   } = data;
   const otherUserId = fromUserId === id ? toUserId : fromUserId;
+  const otherUserName = fromUserId === id? toUserName : fromUserName;
 
   return (
-    <ChatRoomWrapper onClick={() => moveChatPage(1, otherUserId)}>
+    <ChatRoomWrapper onClick={() => moveChatPage(1, otherUserId, otherUserName)}>
       <Profile>
         <div>
           <FontAwesomeIcon icon={faUser} />

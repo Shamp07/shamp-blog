@@ -53,6 +53,7 @@ const MessageContentInner = styled.div`
   
   & > div {
     max-width: 300px;
+    text-align: left;
     line-height: 20px !important;
     font-size: 15px !important;
     font-weight: normal !important;

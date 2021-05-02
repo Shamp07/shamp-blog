@@ -7,17 +7,18 @@ import { RootStore } from '../../../../stores';
 import useStores from '../../../../stores/useStores';
 
 const Header = () => {
-  const { ChatStore } = useStores() as RootStore;
-  const { chatPage, moveChatPage } = ChatStore;
+  const { ChatStore, SignStore } = useStores() as RootStore;
+  const { chatPage, moveChatPage, toUserName } = ChatStore;
+  const { userData } = SignStore;
 
   return (
     <HeaderWrapper>
-      {chatPage === 1 && (
+      {(chatPage === 1 && userData && userData.adminFl) && (
         <button type="button" onClick={() => moveChatPage(0, 0)}>
           <FontAwesomeIcon icon={faArrowLeft} />
         </button>
       )}
-      {chatPage === 0 ? '채팅 방 목록' : ' 님 과의 채팅'}
+      {chatPage === 0 ? '채팅 방 목록' : `${toUserName} 님 과의 채팅`}
     </HeaderWrapper>
   );
 };

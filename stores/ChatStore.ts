@@ -49,6 +49,8 @@ class ChatStore {
 
   toUserId = -1;
 
+  toUserName = 'Shamp';
+
   chatTempId = 0;
 
   notReadChatCount = 0;
@@ -69,11 +71,22 @@ class ChatStore {
       ],
       actions: [
         'openChat', 'onChangeChat', 'getChatList', 'moveChatPage',
-        'sendChat', 'setScrollRef',
+        'sendChat', 'setScrollRef', 'clearChatList',
       ],
       computeds: ['displayedChatList'],
     }));
   }
+
+  clearChatList = () => {
+    this.chatList = [{
+      id: 0,
+      fromUserName: 'Shamp',
+      fromUserId: 0,
+      message: '안녕하세요. 블로그에 관련된 건의사항이나, 질문들을 자유롭게 보내주세요!',
+      time: '',
+      displayedTime: '',
+    }];
+  };
 
   setScrollRef = (ref: React.RefObject<HTMLDivElement>) => {
     this.scrollRef = ref;
@@ -118,11 +131,14 @@ class ChatStore {
           {
             id: this.chatTempId,
             fromUserId: userId,
+            fromUserName: this.toUserName,
             message,
             time,
             displayedTime: '',
           },
         ];
+
+        this.scrollToBottom();
       } else {
         this.notReadChatCount += 1;
       }
@@ -180,6 +196,7 @@ class ChatStore {
   }
 
   getChatList = async (userId: number) => {
+    this.clearChatList();
     await Axios({
       method: 'get',
       url: '/api/chat',
@@ -188,7 +205,10 @@ class ChatStore {
       },
       success: (response) => {
         const { result } = response.data;
-        this.chatList = result;
+        this.chatList = [
+          ...this.chatList,
+          ...result,
+        ];
       },
     });
   };
@@ -221,7 +241,8 @@ class ChatStore {
     this.chat = event.target.value;
   };
 
-  moveChatPage = async (page: number, userId: number) => {
+  moveChatPage = async (page: number, userId: number, userName: string) => {
+    this.toUserName = userName;
     if (page === 0) {
       this.getChatRoomList();
     } else if (page === 1) {
