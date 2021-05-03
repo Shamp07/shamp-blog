@@ -284,7 +284,6 @@ class ChatStore {
     if (scrollRef && scrollRef.current) {
       const { current } = scrollRef;
       const { scrollHeight, clientHeight } = current;
-      console.log(scrollHeight, clientHeight);
       current.scrollTop = scrollHeight - clientHeight;
     }
   };

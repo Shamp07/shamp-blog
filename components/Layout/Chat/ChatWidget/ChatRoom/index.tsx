@@ -53,7 +53,7 @@ const ChatListWrapper = styled.div`
     border-radius: 4px;
   }
   &::-webkit-scrollbar-track {
-    background-color: #e6e6e6;
+    background-color: #d6d6d6;
   }
 `;
 

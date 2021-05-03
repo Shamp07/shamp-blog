@@ -7,17 +7,23 @@ interface ReceiveMessageProps {
 }
 
 const ReceiveMessage = ({ data }: ReceiveMessageProps) => {
-  const { fromUserName, message, time } = data;
+  const {
+    fromUserName, message, time, displayedTime,
+  } = data;
   return (
-    <Wrapper>
+    <Wrapper isFull={!!displayedTime}>
       <Profile>
-        <ProfileImage />
+        {displayedTime && (
+          <ProfileImage />
+        )}
       </Profile>
       <MessageWrapper>
-        <NameAndTime>
-          <div>{fromUserName}</div>
-          <div>{time}</div>
-        </NameAndTime>
+        {displayedTime && (
+          <NameAndTime>
+            <div>{fromUserName}</div>
+            <div>{time}</div>
+          </NameAndTime>
+        )}
         <MessageContentWrapper>
           <MessageContentInner>
             <div>
@@ -30,8 +36,12 @@ const ReceiveMessage = ({ data }: ReceiveMessageProps) => {
   );
 };
 
-const Wrapper = styled.div`
-  margin-top: 13px;
+interface WrapperProps {
+  isFull: boolean
+}
+
+const Wrapper = styled.div<WrapperProps>`
+  margin-top: ${(props) => (props.isFull ? '12px' : '5px')};
   display: flex;
 `;
 
