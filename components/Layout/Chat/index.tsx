@@ -12,7 +12,9 @@ const Chat = () => {
   const { ChatStore, SignStore } = useStores() as RootStore;
   const { userData } = SignStore;
   const { openChat, isChatOpen, notReadChatCount } = ChatStore;
-
+  console.log(!!notReadChatCount);
+  console.log(notReadChatCount);
+  console.log(typeof notReadChatCount);
   return (
     <Wrapper>
       {isChatOpen && <ChatWidget />}

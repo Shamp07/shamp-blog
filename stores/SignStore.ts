@@ -178,8 +178,8 @@ class SignStore {
       success: (response) => {
         const { result } = response.data;
         this.userData = result;
-        const { id } = result as UserDataType;
-        this.ChatStore.connectSocket(id);
+        this.ChatStore.connectSocket();
+        this.ChatStore.getChatCount(true);
       },
       complete: () => {
         this.cookieChecked = true;

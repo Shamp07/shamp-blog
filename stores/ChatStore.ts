@@ -71,7 +71,7 @@ class ChatStore {
       ],
       actions: [
         'openChat', 'onChangeChat', 'getChatList', 'moveChatPage',
-        'sendChat', 'setScrollRef', 'clearChatList',
+        'sendChat', 'setScrollRef', 'clearChatList', 'getChatCount',
       ],
       computeds: ['displayedChatList'],
     }));
@@ -209,6 +209,20 @@ class ChatStore {
           ...this.chatList,
           ...result,
         ];
+      },
+    });
+  };
+
+  getChatCount = (isNotRead: boolean) => {
+    Axios({
+      method: 'get',
+      url: '/api/chat/count',
+      data: {
+        isNotRead,
+      },
+      success: (response) => {
+        const { result } = response.data;
+        this.notReadChatCount = Number(result);
       },
     });
   };
