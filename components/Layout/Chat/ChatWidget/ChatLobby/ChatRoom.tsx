@@ -21,10 +21,10 @@ const ChatRoom = ({ data }: ChatRoomProps) => {
   const {
     fromUserId, toUserId,
     toUserName, fromUserName,
-    message, time,
+    message, time, notReadChatCount,
   } = data;
   const otherUserId = fromUserId === id ? toUserId : fromUserId;
-  const otherUserName = fromUserId === id? toUserName : fromUserName;
+  const otherUserName = fromUserId === id ? toUserName : fromUserName;
 
   return (
     <ChatRoomWrapper onClick={() => moveChatPage(1, otherUserId, otherUserName)}>
@@ -37,9 +37,10 @@ const ChatRoom = ({ data }: ChatRoomProps) => {
         <div>{fromUserId === id ? toUserName : fromUserName}</div>
         <div>{message}</div>
       </ChatRoomContent>
-      <ChatRoomDate>
+      <ChatRoomDataAndCount>
         <div>{time}</div>
-      </ChatRoomDate>
+        {!!notReadChatCount && <div>{notReadChatCount}</div>}
+      </ChatRoomDataAndCount>
     </ChatRoomWrapper>
   );
 };
@@ -107,17 +108,30 @@ const ChatRoomContent = styled.div`
   }
 `;
 
-const ChatRoomDate = styled.div`
+const ChatRoomDataAndCount = styled.div`
   position: relative;
   width: 56px;
   
-  & > div {
+  & > div:first-of-type {
     position: absolute;
     top: 15px;
     right: 14px;
     font-size: 11px;
     color: rgb(167, 167, 170);
     white-space: nowrap;
+  }
+  
+  & > div:last-of-type {
+    position: absolute;
+    background-color: #ff0000;
+    width: 20px;
+    border-radius: 10px;
+    line-height: 20px;
+    text-align: center;
+    bottom: 15px;
+    right: 14px;
+    color: #ffffff;
+    font-size: 11px;
   }
 `;
 

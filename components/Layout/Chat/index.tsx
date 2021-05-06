@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentDots } from '@fortawesome/free-solid-svg-icons';
 import styled from '@emotion/styled';
@@ -12,9 +12,7 @@ const Chat = () => {
   const { ChatStore, SignStore } = useStores() as RootStore;
   const { userData } = SignStore;
   const { openChat, isChatOpen, notReadChatCount } = ChatStore;
-  console.log(!!notReadChatCount);
-  console.log(notReadChatCount);
-  console.log(typeof notReadChatCount);
+
   return (
     <Wrapper>
       {isChatOpen && <ChatWidget />}
@@ -66,7 +64,7 @@ const ButtonWrapper = styled.div`
     right: 0;
     top: 0;
     z-index: 10;
-    font-size: 12px;
+    font-size: 10px;
   }
 `;
 

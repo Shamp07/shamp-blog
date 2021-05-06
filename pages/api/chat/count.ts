@@ -14,7 +14,7 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
 };
 
 const getChatCount = async (request: NextApiRequestToken, response: NextApiResponse) => {
-  const { isNotRead } = request.body;
+  const { isNotRead } = request.query;
   const { id } = request.decodedToken;
   const values = [id, isNotRead];
 
@@ -24,7 +24,6 @@ const getChatCount = async (request: NextApiRequestToken, response: NextApiRespo
       values,
     )
       .then((result) => {
-        console.log(result);
         response.json({
           success: true,
           result: result.rows[0].count,

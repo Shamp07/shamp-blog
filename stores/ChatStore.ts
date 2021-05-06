@@ -23,6 +23,7 @@ export interface ChatRoomType {
   toUserName: string;
   message: string;
   time: string;
+  notReadChatCount: number;
 }
 
 interface ReceiveMessageType {
@@ -266,6 +267,7 @@ class ChatStore {
   };
 
   sendChat = async (userId: number) => {
+    if (!this.chat) return;
     if (!this.chatSocket) return;
     this.chatSocket.emit('send_message', {
       userId,

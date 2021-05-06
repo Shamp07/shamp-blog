@@ -44,7 +44,13 @@ const SELECT_CHATROOM_LIST = `
     CASE WHEN (CAST(TO_CHAR(NOW() - B.crt_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 1000000)
       THEN TO_CHAR(NOW() - B.crt_dttm, 'hh12:mi AM')
     ELSE TO_CHAR(B.crt_dttm, 'MM/DD')
-    END AS time
+    END AS time,
+    (SELECT COUNT(*) FROM (
+      SELECT
+        ARRAY_TO_STRING(SORT(ARRAY[from_user_id, to_user_id]), ',') AS room_id
+      FROM chat
+      WHERE read_fl = false
+    ) D WHERE D.room_id = B.room_id) AS "notReadChatCount"
   FROM (
     SELECT DISTINCT ON (1) A.* FROM (
       SELECT
