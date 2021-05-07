@@ -23,6 +23,7 @@ const ChatRoom = ({ data }: ChatRoomProps) => {
     toUserName, fromUserName,
     message, time, notReadChatCount,
   } = data;
+
   const otherUserId = fromUserId === id ? toUserId : fromUserId;
   const otherUserName = fromUserId === id ? toUserName : fromUserName;
 
@@ -39,7 +40,7 @@ const ChatRoom = ({ data }: ChatRoomProps) => {
       </ChatRoomContent>
       <ChatRoomDataAndCount>
         <div>{time}</div>
-        {!!notReadChatCount && <div>{notReadChatCount}</div>}
+        {!!Number(notReadChatCount) && <ChatRoomData>{notReadChatCount}</ChatRoomData>}
       </ChatRoomDataAndCount>
     </ChatRoomWrapper>
   );
@@ -74,7 +75,6 @@ const Profile = styled.div`
     height: 20px;
     padding: 5px;
   }
-  
 `;
 
 const ChatRoomContent = styled.div`
@@ -120,19 +120,19 @@ const ChatRoomDataAndCount = styled.div`
     color: rgb(167, 167, 170);
     white-space: nowrap;
   }
-  
-  & > div:last-of-type {
-    position: absolute;
-    background-color: #ff0000;
-    width: 20px;
-    border-radius: 10px;
-    line-height: 20px;
-    text-align: center;
-    bottom: 15px;
-    right: 14px;
-    color: #ffffff;
-    font-size: 11px;
-  }
+`;
+
+const ChatRoomData = styled.div`
+  position: absolute;
+  background-color: rgb(255, 84, 66);
+  width: 20px;
+  border-radius: 10px;
+  line-height: 20px;
+  text-align: center;
+  bottom: 15px;
+  right: 14px;
+  color: #ffffff;
+  font-size: 11px;
 `;
 
 export default ChatRoom;

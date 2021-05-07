@@ -55,14 +55,14 @@ const ButtonWrapper = styled.div`
   & > div {
     position: absolute;
     text-align: center;
-    background-color: red;
+    background-color: rgb(255, 84, 66);
     color: #fff;
     width: 20px;
     height: 20px;
     border-radius: 10px;
     line-height: 20px;
-    right: 0;
-    top: 0;
+    right: -3px;
+    top: -3px;
     z-index: 10;
     font-size: 10px;
   }

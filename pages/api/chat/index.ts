@@ -22,9 +22,13 @@ const getChatList = async (request: NextApiRequestToken, response: NextApiRespon
 
   await Database.execute(
     (database: Client) => database.query(
-      SELECT_CHAT_LIST,
+      UPDATE_CHAT_LIST,
       values,
     )
+      .then(() => database.query(
+        SELECT_CHAT_LIST,
+        values,
+      ))
       .then((result) => {
         response.json({
           success: true,
@@ -68,6 +72,15 @@ const SELECT_CHAT_LIST = `
     (from_user_id = $1 AND to_user_id = $2)
     OR (from_user_id = $2 AND to_user_id = $1)
   ORDER BY crt_dttm
+`;
+
+const UPDATE_CHAT_LIST = `
+  UPDATE chat
+  SET
+    read_fl = true
+  WHERE
+    to_user_id = $1 
+    AND from_user_id = $2
 `;
 
 const INSERT_CHAT = `
