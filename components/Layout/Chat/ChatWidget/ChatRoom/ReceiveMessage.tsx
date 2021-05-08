@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { ChatType } from '../../../../../stores/ChatStore';
 
 interface ReceiveMessageProps {
@@ -9,12 +11,25 @@ interface ReceiveMessageProps {
 const ReceiveMessage = ({ data }: ReceiveMessageProps) => {
   const {
     fromUserName, message, time, displayedTime,
+    fromUserId,
   } = data;
+
   return (
     <Wrapper isFull={!!displayedTime}>
       <Profile>
         {displayedTime && (
-          <ProfileImage />
+        <>
+          {
+                fromUserId === 0 ? <ProfileImage />
+                  : (
+                    <OtherProfile>
+                      <div>
+                        <FontAwesomeIcon icon={faUser} />
+                      </div>
+                    </OtherProfile>
+                  )
+              }
+        </>
         )}
       </Profile>
       <MessageWrapper>
@@ -48,6 +63,23 @@ const Wrapper = styled.div<WrapperProps>`
 const Profile = styled.div`
   width: 40px;
   padding-left: 10px;
+`;
+
+const OtherProfile = styled.div`
+  & > div {
+    width: 25px;
+    height: 25px;
+    padding: 5px;
+    background-color: #2d79c7;
+    border-radius: 25px;
+    color: #fff;
+  }
+
+  & svg {
+    width: 15px;
+    height: 15px;
+    padding: 5px;
+  }
 `;
 
 const ProfileImage = styled.div`
