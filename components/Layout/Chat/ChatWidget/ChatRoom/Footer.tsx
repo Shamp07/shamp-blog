@@ -117,7 +117,7 @@ interface ChatEnterProps {
 
 const ChatEnter = styled.div<ChatEnterProps>`
   margin-left: auto;
-  color: ${(props) => (props.active ? '#52a7ff' : '#e6e6e6')};
+  color: ${(props) => (props.active ? '#2d79c7' : '#e6e6e6')};
   cursor: ${(props) => (props.active ? 'pointer' : 'not-allowed')};
   cursor: ${(props) => (props.active ? '&:hover { color: #2d79c7; }' : null)};
   transition: color 0.2s;

@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { ChatType } from '../../../../../stores/ChatStore';
+import DefaultUserProfile from './DefaultUserProfile';
 
 interface ReceiveMessageProps {
   data: ChatType;
@@ -14,23 +13,12 @@ const ReceiveMessage = ({ data }: ReceiveMessageProps) => {
     fromUserId,
   } = data;
 
+  const ProfileComponent = fromUserId === 0 ? <ProfileImage /> : <DefaultUserProfile />;
+
   return (
     <Wrapper isFull={!!displayedTime}>
       <Profile>
-        {displayedTime && (
-        <>
-          {
-                fromUserId === 0 ? <ProfileImage />
-                  : (
-                    <OtherProfile>
-                      <div>
-                        <FontAwesomeIcon icon={faUser} />
-                      </div>
-                    </OtherProfile>
-                  )
-              }
-        </>
-        )}
+        {displayedTime && ProfileComponent}
       </Profile>
       <MessageWrapper>
         {displayedTime && (
@@ -63,23 +51,6 @@ const Wrapper = styled.div<WrapperProps>`
 const Profile = styled.div`
   width: 40px;
   padding-left: 10px;
-`;
-
-const OtherProfile = styled.div`
-  & > div {
-    width: 25px;
-    height: 25px;
-    padding: 5px;
-    background-color: #2d79c7;
-    border-radius: 25px;
-    color: #fff;
-  }
-
-  & svg {
-    width: 15px;
-    height: 15px;
-    padding: 5px;
-  }
 `;
 
 const ProfileImage = styled.div`
