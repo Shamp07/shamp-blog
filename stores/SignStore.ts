@@ -178,7 +178,7 @@ class SignStore {
       success: (response) => {
         const { result } = response.data;
         this.userData = result;
-        this.ChatStore.connectSocket();
+        this.ChatStore.connectSocket(result.id);
         this.ChatStore.getChatCount(true);
       },
       complete: () => {

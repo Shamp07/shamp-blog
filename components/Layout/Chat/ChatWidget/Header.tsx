@@ -14,7 +14,7 @@ const Header = () => {
   return (
     <HeaderWrapper>
       {(chatPage === 1 && userData && userData.adminFl) && (
-        <button type="button" onClick={() => moveChatPage(0, 0)}>
+        <button type="button" onClick={() => moveChatPage(0, 0, toUserName)}>
           <FontAwesomeIcon icon={faArrowLeft} />
         </button>
       )}
@@ -36,15 +36,22 @@ const HeaderWrapper = styled.header`
 
   & > button {
     position: absolute;
-    top: 14px;
-    left: 15px;
+    top: 10px;
+    left: 10px;
     cursor: pointer;
     background-color: transparent;
-    padding: 0;
     border: 0;
     color: white;
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    border-radius: 15px;
+    transition: background-color 0.2s;
+    line-height: 28px;
+    
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
     
     &:focus {
       outline: 0;
@@ -52,7 +59,8 @@ const HeaderWrapper = styled.header`
   }
   
   & > button > svg {
-    width: 20px;
+    line-height: 30px;
+    width: 15px;
   }
 `;
 

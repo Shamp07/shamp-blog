@@ -28,7 +28,7 @@ export interface ChatRoomType {
 
 interface ReceiveMessageType {
   message: string,
-  userId: number,
+  fromUserId: number,
 }
 
 class ChatStore {
@@ -119,11 +119,10 @@ class ChatStore {
     this.isChatLoading = false;
   };
 
-  connectSocket = () => {
+  connectSocket = (userId: number) => {
     this.chatSocket = socketio.connect('http://localhost');
-    this.chatSocket.emit('get_socket_id');
-    this.chatSocket.on('send_socket_id', this.updateSocketId);
-    this.chatSocket.on('receive_message', ({ message, userId }: ReceiveMessageType) => {
+    this.chatSocket.emit('connect_client', userId);
+    this.chatSocket.on('receive_message', ({ message, fromUserId }: ReceiveMessageType) => {
       if (this.toUserId === userId && this.isChatOpen) {
         this.chatTempId -= 1;
         const time = this.getChatTime();
@@ -131,7 +130,7 @@ class ChatStore {
           ...this.chatList,
           {
             id: this.chatTempId,
-            fromUserId: userId,
+            fromUserId,
             fromUserName: this.toUserName,
             message,
             time,
