@@ -40,15 +40,17 @@ app.prepare().then(() => {
   const ioServer = io(server);
   const users = {};
   ioServer.on('connection', (socket) => {
+    socket.on('disconnect', (userId) => {
+      delete users[userId];
+    });
+
     socket.on('connect_client', (userId) => {
-      console.log(userId);
       users[userId] = socket.id;
     });
 
-    socket.on('send_message', ({ message, userId }) => {
-      console.log()
-      if (users[userId]) {
-        ioServer.to(users[userId]).emit('receive_message', { message, fromUserId: userId });
+    socket.on('send_message', ({ message, toUserId, fromUserId }) => {
+      if (users[toUserId]) {
+        ioServer.to(users[toUserId]).emit('receive_message', { message, fromUserId });
       }
     });
 

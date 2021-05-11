@@ -57,7 +57,7 @@ const ButtonWrapper = styled.div`
     text-align: center;
     background-color: rgb(255, 84, 66);
     color: #fff;
-    width: 20px;
+    min-width: 20px;
     height: 20px;
     border-radius: 10px;
     line-height: 20px;

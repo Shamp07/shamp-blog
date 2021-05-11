@@ -123,7 +123,7 @@ class ChatStore {
     this.chatSocket = socketio.connect('http://localhost');
     this.chatSocket.emit('connect_client', userId);
     this.chatSocket.on('receive_message', ({ message, fromUserId }: ReceiveMessageType) => {
-      if (this.toUserId === userId && this.isChatOpen) {
+      if (this.toUserId === fromUserId && this.isChatOpen) {
         this.chatTempId -= 1;
         const time = this.getChatTime();
         this.chatList = [
@@ -269,9 +269,9 @@ class ChatStore {
     if (!this.chat) return;
     if (!this.chatSocket) return;
     this.chatSocket.emit('send_message', {
-      userId,
       message: this.chat,
-      socketId: this.socketId,
+      toUserId: this.toUserId,
+      fromUserId: userId,
     });
 
     const time = this.getChatTime();

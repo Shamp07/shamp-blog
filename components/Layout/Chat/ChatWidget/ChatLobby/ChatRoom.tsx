@@ -38,10 +38,10 @@ const ChatRoom = ({ data }: ChatRoomProps) => {
         <div>{fromUserId === id ? toUserName : fromUserName}</div>
         <div>{message}</div>
       </ChatRoomContent>
-      <ChatRoomDataAndCount>
+      <ChatRoomDateAndCount>
         <div>{time}</div>
-        {!!Number(notReadChatCount) && <ChatRoomData>{notReadChatCount}</ChatRoomData>}
-      </ChatRoomDataAndCount>
+        {!!Number(notReadChatCount) && <ChatRoomCount>{notReadChatCount}</ChatRoomCount>}
+      </ChatRoomDateAndCount>
     </ChatRoomWrapper>
   );
 };
@@ -108,7 +108,7 @@ const ChatRoomContent = styled.div`
   }
 `;
 
-const ChatRoomDataAndCount = styled.div`
+const ChatRoomDateAndCount = styled.div`
   position: relative;
   width: 56px;
   
@@ -122,10 +122,11 @@ const ChatRoomDataAndCount = styled.div`
   }
 `;
 
-const ChatRoomData = styled.div`
+const ChatRoomCount = styled.div`
   position: absolute;
   background-color: rgb(255, 84, 66);
-  width: 20px;
+  min-width: 20px;
+  height: 20px;
   border-radius: 10px;
   line-height: 20px;
   text-align: center;
