@@ -8,11 +8,12 @@ import AlertStore from './AlertStore';
 
 export interface ChatType {
   id: number;
-  fromUserName?: string;
+  fromUserName: string;
   fromUserId: number;
   message: string;
   time: string;
-  displayedTime: string;
+  displayedTime?: string;
+  isSimple?: boolean;
 }
 
 export interface ChatRoomType {
@@ -85,7 +86,6 @@ class ChatStore {
       fromUserId: 0,
       message: '안녕하세요. 블로그에 관련된 건의사항이나, 질문들을 자유롭게 보내주세요!',
       time: '',
-      displayedTime: '',
     }];
   };
 
@@ -184,10 +184,27 @@ class ChatStore {
 
   get displayedChatList(): Array<ChatType> {
     let beforeTime = '';
-    return this.chatList.map((data) => {
-      const { time } = data;
-      const displayedTime = beforeTime === time ? '' : time;
+    let beforeFromUserId = -1;
+
+    return this.chatList.map((data, index) => {
+      if (index === 0 && this.chatList[index].id === 0) {
+        if (this.chatList[index + 1]) {
+          return {
+            ...data,
+            displayedTime: this.chatList[index + 1].time
+          };
+        }
+
+        return {
+          ...data,
+          displayedTime: this.getChatTime(),
+        };
+      }
+
+      const { fromUserId, time } = data;
+      const displayedTime = (beforeTime === time && beforeFromUserId !== fromUserId) ? '' : time;
       beforeTime = time;
+      beforeFromUserId = fromUserId;
       return {
         ...data,
         displayedTime,

@@ -9,19 +9,19 @@ interface ReceiveMessageProps {
 
 const ReceiveMessage = ({ data }: ReceiveMessageProps) => {
   const {
-    fromUserName, message, time, displayedTime,
-    fromUserId,
+    fromUserName, fromUserId, message, time,
+    isSimple,
   } = data;
 
   const ProfileComponent = fromUserId === 0 ? <ProfileImage /> : <DefaultUserProfile />;
 
   return (
-    <Wrapper isFull={!!displayedTime}>
+    <Wrapper isSimple={isSimple}>
       <Profile>
-        {displayedTime && ProfileComponent}
+        {!isSimple && ProfileComponent}
       </Profile>
       <MessageWrapper>
-        {displayedTime && (
+        {!isSimple && (
           <NameAndTime>
             <div>{fromUserName}</div>
             <div>{time}</div>
@@ -40,12 +40,12 @@ const ReceiveMessage = ({ data }: ReceiveMessageProps) => {
 };
 
 interface WrapperProps {
-  isFull: boolean
+  isSimple: boolean;
 }
 
 const Wrapper = styled.div<WrapperProps>`
-  margin-top: ${(props) => (props.isFull ? '12px' : '5px')};
   display: flex;
+  margin-top: ${(props) => (props.isSimple ? '5px' : '12px')};
 `;
 
 const Profile = styled.div`

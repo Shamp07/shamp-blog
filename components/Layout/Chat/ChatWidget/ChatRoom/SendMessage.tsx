@@ -8,6 +8,7 @@ interface SendMessageProps {
 
 const SendMessage = ({ data }: SendMessageProps) => {
   const { message, displayedTime } = data;
+  console.log(message, displayedTime);
 
   return (
     <MessageWrapper>
