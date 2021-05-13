@@ -187,11 +187,12 @@ class ChatStore {
     let beforeFromUserId = -1;
 
     return this.chatList.map((data, index) => {
+      // 첫 메시지 시간 설정하는 부분.
       if (index === 0 && this.chatList[index].id === 0) {
         if (this.chatList[index + 1]) {
           return {
             ...data,
-            displayedTime: this.chatList[index + 1].time
+            displayedTime: this.chatList[index + 1].time,
           };
         }
 
@@ -202,12 +203,11 @@ class ChatStore {
       }
 
       const { fromUserId, time } = data;
-      const displayedTime = (beforeTime === time && beforeFromUserId !== fromUserId) ? '' : time;
+      const isSimple = (beforeTime === time);
       beforeTime = time;
-      beforeFromUserId = fromUserId;
       return {
         ...data,
-        displayedTime,
+        isSimple,
       };
     });
   }
@@ -261,7 +261,6 @@ class ChatStore {
             fromUserId: userId,
             message: this.chat,
             time,
-            displayedTime: '',
           },
         ];
       },

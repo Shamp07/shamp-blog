@@ -7,12 +7,11 @@ interface SendMessageProps {
 }
 
 const SendMessage = ({ data }: SendMessageProps) => {
-  const { message, displayedTime } = data;
-  console.log(message, displayedTime);
+  const { message, isSimple, displayedTime } = data;
 
   return (
     <MessageWrapper>
-      <Time>{displayedTime}</Time>
+      {!isSimple && <Time>{displayedTime}</Time>}
       <MessageContentWrapper>
         <MessageContentInner>
           <div>
@@ -28,13 +27,14 @@ const MessageWrapper = styled.div`
   padding-right: 12px;
   text-align: right;
   color: rgb(36, 36, 40);
+  margin-bottom: 4px;
 `;
 
 const Time = styled.div`
   display: block;
   font-size: 11px;
-  margin: 10px 0 4px;
   color: rgb(167, 167, 170);
+  margin: 10px 0 4px;
 `;
 
 const MessageContentWrapper = styled.div`
