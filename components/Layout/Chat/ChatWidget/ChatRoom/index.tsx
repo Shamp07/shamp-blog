@@ -24,6 +24,7 @@ const ChatRoom = () => {
     setScrollRef(scrollRef);
   }, [setScrollRef, scrollRef])
 
+  console.log(displayedChatList);
   return (
     <>
       <ChatListWrapper ref={scrollRef}>

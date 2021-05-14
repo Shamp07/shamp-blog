@@ -187,7 +187,7 @@ class ChatStore {
     let beforeFromUserId = -1;
 
     return this.chatList.map((data, index) => {
-      // 첫 메시지 시간 설정하는 부분.
+      // 첫 메시지 시간 설정하는 부분
       if (index === 0 && this.chatList[index].id === 0) {
         if (this.chatList[index + 1]) {
           return {
@@ -203,11 +203,16 @@ class ChatStore {
       }
 
       const { fromUserId, time } = data;
-      const isSimple = (beforeTime === time);
+      // 전 메시지와 보낸시간이 같고, 전에 보낸 송신자가 동일하면 메시지 축양형으로 설정
+      const isSimple = (beforeTime === time && beforeFromUserId === fromUserId);
+
       beforeTime = time;
+      beforeFromUserId = fromUserId;
+
       return {
         ...data,
         isSimple,
+        displayedTime: time,
       };
     });
   }
