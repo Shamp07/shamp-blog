@@ -16,7 +16,7 @@ export interface ChatType {
   isSimple?: boolean;
 }
 
-export interface ChatRoomType {
+export interface ChatRoomListType {
   id: number;
   fromUserId: number;
   fromUserName: string;
@@ -24,7 +24,12 @@ export interface ChatRoomType {
   toUserName: string;
   message: string;
   time: string;
+  timeStamp: number;
   notReadChatCount: number;
+}
+
+interface ChatRoom {
+  [userId: number]: ChatRoomListType;
 }
 
 interface ReceiveMessageType {
@@ -46,6 +51,8 @@ class ChatStore {
   chatPage = 0;
 
   chat = '';
+
+  chatRoom: ChatRoom = {};
 
   chatList: Array<ChatType> = [];
 
@@ -69,13 +76,14 @@ class ChatStore {
       observables: [
         'isChatOpen', 'chat', 'chatList', 'chatRoomList',
         'chatPage', 'isChatLoading', 'notReadChatCount',
-        'scrollRef',
+        'scrollRef', 'chatRoom',
       ],
       actions: [
         'openChat', 'onChangeChat', 'getChatList', 'moveChatPage',
         'sendChat', 'setScrollRef', 'clearChatList', 'getChatCount',
+        'receiveChat', 'insertChatRoom',
       ],
-      computeds: ['displayedChatList'],
+      computeds: ['displayedChatRoomList', 'displayedChatList'],
     }));
   }
 
@@ -122,27 +130,33 @@ class ChatStore {
   connectSocket = (userId: number) => {
     this.chatSocket = socketio.connect('http://localhost');
     this.chatSocket.emit('connect_client', userId);
-    this.chatSocket.on('receive_message', ({ message, fromUserId }: ReceiveMessageType) => {
-      if (this.toUserId === fromUserId && this.isChatOpen) {
-        this.chatTempId -= 1;
-        const time = this.getChatTime();
-        this.chatList = [
-          ...this.chatList,
-          {
-            id: this.chatTempId,
-            fromUserId,
-            fromUserName: this.toUserName,
-            message,
-            time,
-            displayedTime: '',
-          },
-        ];
+    this.chatSocket.on('receive_message', this.receiveChat);
+  };
 
-        this.scrollToBottom();
-      } else {
-        this.notReadChatCount += 1;
-      }
-    });
+  receiveChat = ({ message, fromUserId }: ReceiveMessageType) => {
+    if (this.toUserId === fromUserId && this.isChatOpen) {
+      this.chatTempId -= 1;
+      this.chatList = [
+        ...this.chatList,
+        {
+          id: this.chatTempId,
+          fromUserId,
+          fromUserName: this.toUserName,
+          message,
+          time: this.getChatTime(),
+          displayedTime: '',
+        },
+      ];
+      this.scrollToBottom();
+    }
+
+    this.notReadChatCount += 1;
+  };
+
+  insertChatRoom = () => {
+    this.chatRoomList = [
+      ...this.c
+    ]
   };
 
   getSocketId = async (userId: number) => {
@@ -181,6 +195,12 @@ class ChatStore {
       },
     });
   };
+
+  get displayedChatRoomList(): Array<ChatRoomListType> {
+    return this.chatRoomList.slice().sort(
+      ({ timeStamp: prevTimeStamp }, { timeStamp }) => timeStamp - prevTimeStamp,
+    );
+  }
 
   get displayedChatList(): Array<ChatType> {
     let beforeTime = '';
@@ -317,10 +337,9 @@ class ChatStore {
 
   scrollToBottom = () => {
     const { scrollRef } = this;
-    if (scrollRef && scrollRef.current) {
-      const { current } = scrollRef;
-      const { scrollHeight, clientHeight } = current;
-      current.scrollTop = scrollHeight - clientHeight;
+    if (scrollRef?.current) {
+      const { scrollHeight, clientHeight } = scrollRef.current;
+      scrollRef.current.scrollTop = scrollHeight - clientHeight;
     }
   };
 

@@ -54,7 +54,7 @@ const ChatRoomWrapper = styled.div`
   border-bottom: 1px solid #e6e6e6;
   
   &:hover {
-    background-color: #e6e6e6;    
+    background-color: #f6f6f6;    
   }
 `;
 

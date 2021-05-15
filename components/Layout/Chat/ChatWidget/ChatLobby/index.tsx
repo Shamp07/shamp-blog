@@ -6,10 +6,10 @@ import useStores from '../../../../../stores/useStores';
 
 const ChatLobby = () => {
   const { ChatStore } = useStores() as RootStore;
-  const { chatRoomList } = ChatStore;
+  const { displayedChatRoomList } = ChatStore;
   return (
     <>
-      {chatRoomList.map((data) => <ChatRoom key={data.id} data={data} />)}
+      {displayedChatRoomList.map((data) => <ChatRoom key={data.id} data={data} />)}
     </>
   );
 };

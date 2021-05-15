@@ -41,6 +41,7 @@ const SELECT_CHATROOM_LIST = `
     B.from_user_id AS "fromUserId",
     B."toUserName",
     B.message,
+    CAST(TO_CHAR(B.crt_dttm, 'YYYYMMDDHH24MISS') AS BIGINT) AS "timeStamp",
     CASE WHEN (CAST(TO_CHAR(NOW() - B.crt_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 1000000)
       THEN TO_CHAR(NOW() - B.crt_dttm, 'hh12:mi AM')
     ELSE TO_CHAR(B.crt_dttm, 'MM/DD')
