@@ -44,8 +44,6 @@ class ChatStore {
 
   isChatLoading = true;
 
-  chatRoomList: Array<ChatRoomType> = [];
-
   // 0: ChatLobby
   // 1: ChatRoom
   chatPage = 0;
@@ -74,7 +72,7 @@ class ChatStore {
     this.AlertStore = root.AlertStore;
     makeObservable(this, makeAnnotations<this>({
       observables: [
-        'isChatOpen', 'chat', 'chatList', 'chatRoomList',
+        'isChatOpen', 'chat', 'chatList',
         'chatPage', 'isChatLoading', 'notReadChatCount',
         'scrollRef', 'chatRoom',
       ],
@@ -83,7 +81,7 @@ class ChatStore {
         'sendChat', 'setScrollRef', 'clearChatList', 'getChatCount',
         'receiveChat', 'insertChatRoom',
       ],
-      computeds: ['displayedChatRoomList', 'displayedChatList'],
+      computeds: ['chatRoomList', 'displayedChatList'],
     }));
   }
 
@@ -148,15 +146,25 @@ class ChatStore {
         },
       ];
       this.scrollToBottom();
+    } else if (this.chatPage === 0) {
+      this.insertChatRoom(fromUserId, message);
     }
 
     this.notReadChatCount += 1;
   };
 
-  insertChatRoom = () => {
-    this.chatRoomList = [
-      ...this.c
-    ]
+  insertChatRoom = (fromUserId: number, message: string) => {
+    console.log(this.getChatTimeStamp());
+    this.chatRoom = {
+      ...this.chatRoom,
+      [fromUserId]: {
+        ...this.chatRoom[fromUserId],
+        message,
+        timeStamp: Number(this.getChatTimeStamp()),
+        time: this.getChatTime(),
+        notReadChatCount: Number(this.chatRoom[fromUserId].notReadChatCount) + 1,
+      },
+    };
   };
 
   getSocketId = async (userId: number) => {
@@ -190,16 +198,21 @@ class ChatStore {
       url: '/api/chat/room',
       success: (response) => {
         const { result } = response.data;
-        this.chatRoomList = result;
+        result.forEach((data: ChatRoomListType) => {
+          const { fromUserId } = data;
+          this.chatRoom[Number(fromUserId)] = data;
+        });
         this.isChatLoading = false;
       },
     });
   };
 
-  get displayedChatRoomList(): Array<ChatRoomListType> {
-    return this.chatRoomList.slice().sort(
-      ({ timeStamp: prevTimeStamp }, { timeStamp }) => timeStamp - prevTimeStamp,
-    );
+  get chatRoomList(): Array<ChatRoomListType> {
+    return Object.keys(this.chatRoom)
+      .map((id) => this.chatRoom[Number(id)])
+      .sort(({ timeStamp: pts }, { timeStamp: ts }) => {
+        return Number(ts) - Number(pts);
+      });
   }
 
   get displayedChatList(): Array<ChatType> {
@@ -344,6 +357,8 @@ class ChatStore {
   };
 
   getChatTime = () => dayjs().format('hh:mm A');
+
+  getChatTimeStamp = () => dayjs().format('YYYYMMDDHHmmss');
 }
 
 export default ChatStore;
