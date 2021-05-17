@@ -60,8 +60,6 @@ class ChatStore {
 
   chatTempId = 0;
 
-  notReadChatCount = 0;
-
   chatSocket: SocketIOClient.Socket | null = null;
 
   socketId = '';
@@ -72,16 +70,15 @@ class ChatStore {
     this.AlertStore = root.AlertStore;
     makeObservable(this, makeAnnotations<this>({
       observables: [
-        'isChatOpen', 'chat', 'chatList',
-        'chatPage', 'isChatLoading', 'notReadChatCount',
-        'scrollRef', 'chatRoom',
+        'isChatOpen', 'chat', 'chatList', 'chatPage',
+        'isChatLoading', 'scrollRef', 'chatRoom',
       ],
       actions: [
         'openChat', 'onChangeChat', 'getChatList', 'moveChatPage',
-        'sendChat', 'setScrollRef', 'clearChatList', 'getChatCount',
-        'receiveChat', 'insertChatRoom',
+        'sendChat', 'setScrollRef', 'clearChatList', 'receiveChat',
+        'insertChatRoom',
       ],
-      computeds: ['chatRoomList', 'displayedChatList'],
+      computeds: ['chatRoomList', 'displayedChatList', 'notReadChatCount'],
     }));
   }
 
@@ -111,16 +108,16 @@ class ChatStore {
         this.getChatRoomList();
       } else {
         this.chatPage = 1;
-        this.getChatListAndConnect(0);
+        this.getChatListSet(0);
       }
     }
     this.isChatOpen = !this.isChatOpen;
   };
 
-  getChatListAndConnect = async (userId: number) => {
+  getChatListSet = async (userId: number) => {
     this.isChatLoading = true;
     this.toUserId = userId;
-    await Promise.all([this.getChatList(userId), this.getSocketId(userId)]);
+    await this.getChatList(userId);
     setTimeout(this.scrollToBottom, 0);
     this.isChatLoading = false;
   };
@@ -149,12 +146,9 @@ class ChatStore {
     } else if (this.chatPage === 0) {
       this.insertChatRoom(fromUserId, message);
     }
-
-    this.notReadChatCount += 1;
   };
 
   insertChatRoom = (fromUserId: number, message: string) => {
-    console.log(this.getChatTimeStamp());
     this.chatRoom = {
       ...this.chatRoom,
       [fromUserId]: {
@@ -165,30 +159,6 @@ class ChatStore {
         notReadChatCount: Number(this.chatRoom[fromUserId].notReadChatCount) + 1,
       },
     };
-  };
-
-  getSocketId = async (userId: number) => {
-    await Axios({
-      method: 'get',
-      url: '/api/chat/socket',
-      data: {
-        userId,
-      },
-      success: (response) => {
-        const { result } = response.data;
-        this.socketId = result;
-      },
-    });
-  };
-
-  updateSocketId = (socketId: string) => {
-    Axios({
-      method: 'put',
-      url: '/api/chat/socket',
-      data: {
-        socketId,
-      },
-    });
   };
 
   getChatRoomList = () => {
@@ -210,9 +180,16 @@ class ChatStore {
   get chatRoomList(): Array<ChatRoomListType> {
     return Object.keys(this.chatRoom)
       .map((id) => this.chatRoom[Number(id)])
-      .sort(({ timeStamp: pts }, { timeStamp: ts }) => {
-        return Number(ts) - Number(pts);
+      .sort(({ timeStamp: pts }, { timeStamp: ts }) => Number(ts) - Number(pts));
+  }
+
+  get notReadChatCount(): number {
+    let count = 0;
+    Object.keys(this.chatRoom)
+      .forEach((id) => {
+        count += Number(this.chatRoom[Number(id)].notReadChatCount);
       });
+    return count;
   }
 
   get displayedChatList(): Array<ChatType> {
@@ -268,20 +245,6 @@ class ChatStore {
     });
   };
 
-  getChatCount = (isNotRead: boolean) => {
-    Axios({
-      method: 'get',
-      url: '/api/chat/count',
-      data: {
-        isNotRead,
-      },
-      success: (response) => {
-        const { result } = response.data;
-        this.notReadChatCount = Number(result);
-      },
-    });
-  };
-
   addChat = async (userId: number, toUserId: number, time: string) => {
     await Axios({
       method: 'post',
@@ -296,6 +259,7 @@ class ChatStore {
           ...this.chatList,
           {
             id: this.chatTempId,
+            fromUserName: '',
             fromUserId: userId,
             message: this.chat,
             time,
@@ -314,7 +278,7 @@ class ChatStore {
     if (page === 0) {
       this.getChatRoomList();
     } else if (page === 1) {
-      await this.getChatListAndConnect(userId);
+      await this.getChatListSet(userId);
     }
     this.chatPage = page;
   };

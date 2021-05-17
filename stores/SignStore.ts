@@ -179,7 +179,7 @@ class SignStore {
         const { result } = response.data;
         this.userData = result;
         this.ChatStore.connectSocket(result.id);
-        this.ChatStore.getChatCount(true);
+        this.ChatStore.getChatRoomList();
       },
       complete: () => {
         this.cookieChecked = true;
