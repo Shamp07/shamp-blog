@@ -76,7 +76,7 @@ class ChatStore {
       actions: [
         'openChat', 'onChangeChat', 'getChatList', 'moveChatPage',
         'sendChat', 'setScrollRef', 'clearChatList', 'receiveChat',
-        'insertChatRoom',
+        'insertChatRoom', 'readChat',
       ],
       computeds: ['chatRoomList', 'displayedChatList', 'notReadChatCount'],
     }));
@@ -145,6 +145,9 @@ class ChatStore {
       this.scrollToBottom();
     } else if (this.chatPage === 0) {
       this.insertChatRoom(fromUserId, message);
+    } else if (this.chatPage === 1) {
+      this.chatRoom[fromUserId].notReadChatCount =
+        Number(this.chatRoom[fromUserId].notReadChatCount) + 1;
     }
   };
 
@@ -279,8 +282,13 @@ class ChatStore {
       this.getChatRoomList();
     } else if (page === 1) {
       await this.getChatListSet(userId);
+      this.readChat(userId);
     }
     this.chatPage = page;
+  };
+
+  readChat = (userId: number) => {
+    this.chatRoom[userId].notReadChatCount = 0;
   };
 
   sendChat = async (userId: number) => {
