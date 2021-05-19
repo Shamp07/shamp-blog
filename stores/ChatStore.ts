@@ -22,6 +22,7 @@ export interface ChatRoomListType {
   fromUserName: string;
   toUserId: number;
   toUserName: string;
+  opponentUserId: number;
   message: string;
   time: string;
   timeStamp: number;
@@ -146,8 +147,9 @@ class ChatStore {
     } else if (this.chatPage === 0) {
       this.insertChatRoom(fromUserId, message);
     } else if (this.chatPage === 1) {
-      this.chatRoom[fromUserId].notReadChatCount =
-        Number(this.chatRoom[fromUserId].notReadChatCount) + 1;
+      this.chatRoom[fromUserId].notReadChatCount = Number(
+        this.chatRoom[fromUserId].notReadChatCount,
+      ) + 1;
     }
   };
 
@@ -172,8 +174,9 @@ class ChatStore {
       success: (response) => {
         const { result } = response.data;
         result.forEach((data: ChatRoomListType) => {
-          const { fromUserId } = data;
-          this.chatRoom[Number(fromUserId)] = data;
+          const { opponentUserId } = data;
+
+          this.chatRoom[Number(opponentUserId)] = data;
         });
         this.isChatLoading = false;
       },
@@ -279,7 +282,7 @@ class ChatStore {
   moveChatPage = async (page: number, userId: number, userName: string) => {
     this.toUserName = userName;
     if (page === 0) {
-      this.getChatRoomList();
+      await this.getChatRoomList();
     } else if (page === 1) {
       await this.getChatListSet(userId);
       this.readChat(userId);

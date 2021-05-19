@@ -41,6 +41,10 @@ const SELECT_CHATROOM_LIST = `
     B.from_user_id AS "fromUserId",
     B."toUserName",
     B.message,
+    CASE WHEN B.from_user_id = $1
+      THEN B.to_user_id 
+      ELSE B.from_user_id
+    END AS "opponentUserId",
     CAST(TO_CHAR(B.crt_dttm, 'YYYYMMDDHH24MISS') AS BIGINT) AS "timeStamp",
     CASE WHEN (CAST(TO_CHAR(NOW() - B.crt_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 1000000)
       THEN TO_CHAR(B.crt_dttm, 'hh12:mi AM')
@@ -50,7 +54,9 @@ const SELECT_CHATROOM_LIST = `
       SELECT
         ARRAY_TO_STRING(SORT(ARRAY[from_user_id, to_user_id]), ',') AS room_id
       FROM chat
-      WHERE read_fl = false
+      WHERE 
+        read_fl = false
+        AND to_user_id = $1
     ) D WHERE D.room_id = B.room_id) AS "notReadChatCount"
   FROM (
     SELECT DISTINCT ON (1) A.* FROM (
