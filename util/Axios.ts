@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 interface AxiosType {
   method: 'get' | 'post' | 'put' | 'delete',
   url: string,
-  data?: any,
+  data?: { [key: string]: number | string },
   success?: (response: AxiosResponse) => void,
   fail?: (response: AxiosResponse) => void,
   complete?: (response: AxiosResponse) => void,
@@ -39,7 +39,7 @@ const Axios = async ({
   }).catch((response) => console.error(response));
 };
 
-const getConfigParams = (method: 'get' | 'post' | 'put' | 'delete', data: any) => {
+const getConfigParams = (method: AxiosType['method'], data: AxiosType['data']) => {
   if (method === 'get' || method === 'delete') {
     return { params: data };
   }
