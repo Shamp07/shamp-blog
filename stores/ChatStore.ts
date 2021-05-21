@@ -52,7 +52,7 @@ class ChatStore {
 
   // 0: ChatLobby
   // 1: ChatRoom
-  chatPage = 0;
+  chatPage = ChatPage.LOBBY;
 
   chat = '';
 
@@ -190,9 +190,9 @@ class ChatStore {
         },
       ];
       this.scrollToBottom();
-    } else if (this.chatPage === 0) {
+    } else if (this.chatPage === ChatPage.LOBBY) {
       this.insertChatRoom(fromUserId, message);
-    } else if (this.chatPage === 1) {
+    } else if (this.chatPage === ChatPage.ROOM) {
       this.chatRoom[fromUserId].notReadChatCount = Number(
         this.chatRoom[fromUserId].notReadChatCount,
       ) + 1;
@@ -212,17 +212,15 @@ class ChatStore {
     };
   };
 
-
-
   onChangeChat = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     this.chat = event.target.value;
   };
 
   moveChatPage = async (page: number, userId: number, userName: string) => {
     this.toUserName = userName;
-    if (page === ChatPage.CHAT_LOBBY) {
+    if (page === ChatPage.LOBBY) {
       await this.getChatRoomList();
-    } else if (page === ChatPage.CHAT_ROOM) {
+    } else if (page === ChatPage.ROOM) {
       await this.loadChatList(userId);
     }
     this.chatPage = page;
