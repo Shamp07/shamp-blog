@@ -5,43 +5,7 @@ import dayjs from 'dayjs';
 import makeAnnotations from '../util/Mobx';
 import Axios from '../util/Axios';
 import AlertStore from './AlertStore';
-
-export interface ChatType {
-  id: number;
-  fromUserName: string;
-  fromUserId: number;
-  message: string;
-  time: string;
-  displayedTime?: string;
-  isSimple?: boolean;
-}
-
-export interface ChatRoomListType {
-  id: number;
-  fromUserId: number;
-  fromUserName: string;
-  toUserId: number;
-  toUserName: string;
-  opponentUserId: number;
-  message: string;
-  time: string;
-  timeStamp: number;
-  notReadChatCount: number;
-}
-
-interface ChatRoomType {
-  [userId: number]: ChatRoomListType;
-}
-
-interface ReceiveMessageType {
-  message: string,
-  fromUserId: number,
-}
-
-enum ChatPage {
-  LOBBY = 0,
-  ROOM = 1,
-}
+import * as T from '../Type';
 
 class ChatStore {
   AlertStore: AlertStore;
@@ -50,15 +14,13 @@ class ChatStore {
 
   isChatLoading = true;
 
-  // 0: ChatLobby
-  // 1: ChatRoom
-  chatPage = ChatPage.LOBBY;
+  chatPage = T.ChatPage.LOBBY;
 
   chat = '';
 
-  chatRoom: ChatRoomType = {};
+  chatRoom: T.ChatRoomType = {};
 
-  chatList: Array<ChatType> = [];
+  chatList: Array<T.Chat> = [];
 
   toUserId = -1;
 
@@ -88,7 +50,7 @@ class ChatStore {
     }));
   }
 
-  get chatRoomList(): Array<ChatRoomListType> {
+  get chatRoomList(): Array<T.ChatRoomList> {
     return Object.keys(this.chatRoom)
       .map((id) => this.chatRoom[Number(id)])
       .sort(({ timeStamp: pts }, { timeStamp: ts }) => Number(ts) - Number(pts));
@@ -103,7 +65,7 @@ class ChatStore {
     return count;
   }
 
-  get displayedChatList(): Array<ChatType> {
+  get displayedChatList(): Array<T.Chat> {
     let beforeTime = '';
     let beforeFromUserId = -1;
 
@@ -146,10 +108,10 @@ class ChatStore {
       }
 
       if (isAdmin) {
-        this.setChatPage(ChatPage.LOBBY);
+        this.setChatPage(T.ChatPage.LOBBY);
         this.getChatRoomList();
       } else {
-        this.setChatPage(ChatPage.ROOM);
+        this.setChatPage(T.ChatPage.ROOM);
         this.loading(() => this.loadChatList(0));
       }
     }
@@ -175,7 +137,7 @@ class ChatStore {
     this.chatSocket.on('receive_message', this.receiveChat);
   };
 
-  receiveChat = ({ message, fromUserId }: ReceiveMessageType) => {
+  receiveChat = ({ message, fromUserId }: T.ReceiveMessage) => {
     if (this.toUserId === fromUserId && this.isChatOpen) {
       this.chatTempId -= 1;
       this.chatList = [
@@ -190,9 +152,9 @@ class ChatStore {
         },
       ];
       this.scrollToBottom();
-    } else if (this.chatPage === ChatPage.LOBBY) {
+    } else if (this.chatPage === T.ChatPage.LOBBY) {
       this.insertChatRoom(fromUserId, message);
-    } else if (this.chatPage === ChatPage.ROOM) {
+    } else if (this.chatPage === T.ChatPage.ROOM) {
       this.chatRoom[fromUserId].notReadChatCount = Number(
         this.chatRoom[fromUserId].notReadChatCount,
       ) + 1;
@@ -218,9 +180,9 @@ class ChatStore {
 
   moveChatPage = async (page: number, userId: number, userName: string) => {
     this.toUserName = userName;
-    if (page === ChatPage.LOBBY) {
+    if (page === T.ChatPage.LOBBY) {
       await this.getChatRoomList();
-    } else if (page === ChatPage.ROOM) {
+    } else if (page === T.ChatPage.ROOM) {
       await this.loadChatList(userId);
     }
     this.chatPage = page;
@@ -303,7 +265,7 @@ class ChatStore {
       url: '/api/chat/room',
       success: (response) => {
         const { result } = response.data;
-        result.forEach((data: ChatRoomListType) => {
+        result.forEach((data: T.ChatRoomList) => {
           const { opponentUserId } = data;
 
           this.chatRoom[Number(opponentUserId)] = data;
@@ -314,7 +276,7 @@ class ChatStore {
   };
 
   // util
-  setChatPage = (page: ChatPage) => {
+  setChatPage = (page: T.ChatPage) => {
     this.chatPage = page;
   };
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { PostListType } from '@store/PostStore';
 import useStores from '../../stores/useStores';
 import { RootStore } from '../../stores';
-import { PostListType } from '../../stores/PostStore';
 import BoardPost from './BoardPost';
 import BoardPostNone from './BoardPostNone';
 

@@ -70,7 +70,8 @@
     "./util",
     "./config",
     "./next.config.js",
-    "./server.js"
+    "./server.js",
+    "./Type.ts",
   ],
   "exclude": [
     "node_modules",

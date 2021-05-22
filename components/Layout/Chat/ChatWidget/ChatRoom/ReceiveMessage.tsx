@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { ChatType } from '../../../../../stores/ChatStore';
+import { Chat } from '../../../../../Type';
 import DefaultUserProfile from './DefaultUserProfile';
 
-interface ReceiveMessageProps {
-  data: ChatType;
+interface Props {
+  data: Chat;
 }
 
-const ReceiveMessage = ({ data }: ReceiveMessageProps) => {
+const ReceiveMessage = ({ data }: Props) => {
   const {
     fromUserName, fromUserId, message, time,
     isSimple,
@@ -16,7 +16,7 @@ const ReceiveMessage = ({ data }: ReceiveMessageProps) => {
   const ProfileComponent = fromUserId === 0 ? <ProfileImage /> : <DefaultUserProfile />;
 
   return (
-    <Wrapper isSimple={isSimple}>
+    <Wrapper isSimple={Boolean(isSimple)}>
       <Profile>
         {!isSimple && ProfileComponent}
       </Profile>
