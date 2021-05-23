@@ -1,12 +1,12 @@
 import React from 'react';
-import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import useStores from '../../stores/useStores';
-import { RootStore } from '../../stores';
-import { PostListType } from '../../stores/PostStore';
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+
+import useStores from '@stores/useStores';
+import { PostListType } from '@stores/PostStore';
 
 interface BoardPostProps {
   data: PostListType;
@@ -14,13 +14,16 @@ interface BoardPostProps {
 
 const BoardPost = ({ data }: BoardPostProps) => {
   const router = useRouter();
-  const routerParams = router.query.board as Array<string>;
-  const { SidebarStore } = useStores() as RootStore;
+  if (!router.query.board) return null;
+
+  const { SidebarStore } = useStores();
   const { getCategoryName } = SidebarStore;
   const {
     id, title, category,
     commentCnt, tags, time, likeCnt,
   } = data;
+
+  const boardPath = router.query.board[0];
 
   return (
     <Article>
@@ -32,7 +35,7 @@ const BoardPost = ({ data }: BoardPostProps) => {
       </Vote>
       <ArticleContent>
         <PostTitle>
-          <Link href={`/category/${routerParams[0]}/post/${id}`}>
+          <Link href={`/category/${boardPath}/post/${id}`}>
             <PostLinkSpan>
               <span>{title}</span>
               {commentCnt > 0 && (

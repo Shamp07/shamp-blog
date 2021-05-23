@@ -1,22 +1,23 @@
 import React from 'react';
 import Link from 'next/link';
-import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+import styled from '@emotion/styled';
 
-interface BoardTagProps {
-  tags: string;
+interface Props {
+  tag: string;
 }
 
-const BoardTag = ({ tags }: BoardTagProps) => {
+const BoardTag = ({ tag }: Props) => {
   const router = useRouter();
-  const boardParams = router.query.board as Array<string>;
-  const boardPath = boardParams[0];
-  const boardTag = boardParams[1];
+  if (!router.query.board) return null;
+
+  const boardPath = router.query.board[0];
+  const boardTag = router.query.board[1];
 
   return (
-    <CategoryTag active={boardTag === tags}>
-      <Link href={`/category/${boardPath}/${tags}`}>
-        {tags}
+    <CategoryTag active={boardTag === tag}>
+      <Link href={`/category/${boardPath}/${tag}`}>
+        {tag}
       </Link>
     </CategoryTag>
   );

@@ -69,9 +69,7 @@ class SidebarStore {
     this.isOpenSidebar = !this.isOpenSidebar;
   };
 
-  getCategoryName = (path: string): string => {
-    return this.boardCategoryName[path] ? this.boardCategoryName[path] : '';
-  };
+  getCategoryName = (path: string): string => (this.boardCategoryName[path] ? this.boardCategoryName[path] : '');
 }
 
 export default SidebarStore;

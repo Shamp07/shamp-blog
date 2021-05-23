@@ -2,10 +2,10 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 import { TextField } from '@material-ui/core';
+import { RootStore } from '@store';
 import useStores from '../../../stores/useStores';
 import CommentWrite from './CommentWrite';
 import CommentMenu from './CommentMenu';
-import { RootStore } from '../../../stores';
 import { CommentDataProps } from './CommentMenu/CommentNormalMenu';
 
 const CommentRow = ({ data }: CommentDataProps) => {

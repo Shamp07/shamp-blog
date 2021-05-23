@@ -1,34 +1,32 @@
 import React from 'react';
 import Link from 'next/link';
-import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
-import styled from '@emotion/styled';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { observer } from 'mobx-react-lite';
+import styled from '@emotion/styled';
 import { Button } from '@material-ui/core';
-import useStores from '../../stores/useStores';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
+
+import useStores from '@stores/useStores';
 import BoardTag from './BoardTag';
-import { RootStore } from '../../stores';
-import { TagType } from '../../stores/CategoryStore';
 
 const BoardHead = () => {
   const router = useRouter();
+  if (!router.query.board) return null;
+
   const {
     SidebarStore, CategoryStore, SignStore,
     PostStore,
-  } = useStores() as RootStore;
+  } = useStores();
   const { getCategoryName } = SidebarStore;
   const { categoryTags } = CategoryStore;
   const { userData } = SignStore;
   const { clearPost } = PostStore;
-  const boardParams = router.query.board as Array<string>;
-  const boardPath = boardParams[0];
-  const boardTag = boardParams[1];
 
-  let isAdmin = false;
-  if (userData) {
-    isAdmin = userData.adminFl;
-  }
+  const boardPath = router.query.board[0];
+  const boardTag = router.query.board[1];
+
+  const isAdmin = Boolean(userData?.adminFl);
 
   return (
     <Wrapper>
@@ -65,7 +63,7 @@ const BoardHead = () => {
             </Link>
           </CategoryTagList>
           {categoryTags.map(
-            (data: TagType) => <BoardTag key={data.tags} tags={data.tags} />,
+            (data) => <BoardTag key={data.tag} tag={data.tag} />,
           )}
         </CategoryTag>
       </HeadSection>

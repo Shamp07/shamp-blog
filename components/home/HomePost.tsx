@@ -1,14 +1,16 @@
 import React from 'react';
-import styled from '@emotion/styled';
 import Link from 'next/link';
-import { HomePostType } from '../../stores/HomeStore';
+import styled from '@emotion/styled';
 
-export interface HomePostProps {
+import { HomePostType } from '@stores/HomeStore';
+
+export interface Props {
   data: HomePostType;
 }
 
-const HomePost = ({ data }: HomePostProps) => {
+const HomePost = ({ data }: Props) => {
   const { id, title } = data;
+
   return (
     <Link href={`/post/${id}`}>
       <Wrapper>

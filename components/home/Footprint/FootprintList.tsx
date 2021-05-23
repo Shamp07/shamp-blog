@@ -1,27 +1,23 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
+
+import useStores from '@stores/useStores';
 import FootprintMore from './FootprintMore';
-import useStores from '../../../stores/useStores';
 import FootPrintRow from './FootprintRow';
 import FootprintNone from './FootprintNone';
-import { RootStore } from '../../../stores';
-import { FootPrintType } from '../../../stores/HomeStore';
 
 const FootprintList = () => {
-  const { HomeStore } = useStores() as RootStore;
+  const { HomeStore } = useStores();
   const { footprintList, footprintSize } = HomeStore;
 
-  let isMoreFootprint = false;
-  if (footprintList.length && footprintList[0].total > footprintSize) {
-    isMoreFootprint = true;
-  }
+  const isMoreFootprint = footprintList.length && footprintList[0].total > footprintSize;
 
   return (
     <FootprintListWrapper>
       <ul>
         {footprintList.length ? footprintList.map(
-          (data: FootPrintType) => <FootPrintRow data={data} key={data.id} />,
+          (data) => <FootPrintRow data={data} key={data.id} />,
         ) : <FootprintNone />}
         {isMoreFootprint && <FootprintMore />}
       </ul>

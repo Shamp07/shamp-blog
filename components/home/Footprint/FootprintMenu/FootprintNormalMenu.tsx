@@ -1,27 +1,23 @@
 import React from 'react';
-import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
-import useStores from '../../../../stores/useStores';
-import { RootStore } from '../../../../stores';
-import { FootPrintType } from '../../../../stores/HomeStore';
+import styled from '@emotion/styled';
 
-export interface FootprintDataProps {
+import useStores from '@stores/useStores';
+import { FootPrintType } from '@stores/HomeStore';
+
+export interface Props {
   data: FootPrintType;
 }
 
-const FootprintNormalMenu = ({ data }: FootprintDataProps) => {
-  const { HomeStore, SignStore, UtilStore } = useStores() as RootStore;
+const FootprintNormalMenu = ({ data }: Props) => {
+  const { HomeStore, SignStore, UtilStore } = useStores();
   const { setModifierFootprintId, deleteFootprint } = HomeStore;
   const { userData } = SignStore;
   const { toggleConfirmModal } = UtilStore;
 
   const { id, userId, content } = data;
 
-  let isMine = false;
-  if (userData) {
-    const { id: userIdToken } = userData;
-    isMine = userId === userIdToken;
-  }
+  const isMine = userData?.id === userId;
 
   return (
     <FootprintMenu>

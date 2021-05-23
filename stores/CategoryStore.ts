@@ -3,7 +3,7 @@ import Axios from '../util/Axios';
 import makeAnnotations from '../util/Mobx';
 
 export interface TagType {
-  tags: string
+  tag: string
 }
 
 class CategoryStore {

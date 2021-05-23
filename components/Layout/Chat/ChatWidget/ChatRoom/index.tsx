@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import ReceiveMessage from './ReceiveMessage';
 import SendMessage from './SendMessage';
 import useStores from '../../../../../stores/useStores';
-import { ChatType } from '../../../../../stores/ChatStore';
+import { Chat } from '@types';
 import { RootStore } from '../../../../../stores';
 import Footer from './Footer';
 
@@ -28,7 +28,7 @@ const ChatRoom = () => {
   return (
     <>
       <ChatListWrapper ref={scrollRef}>
-        {displayedChatList.map((data: ChatType) => (
+        {displayedChatList.map((data: Chat) => (
           data.fromUserId === id ? <SendMessage key={data.id} data={data} /> : <ReceiveMessage key={data.id} data={data} />))}
       </ChatListWrapper>
       <Footer />

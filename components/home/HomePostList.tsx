@@ -1,14 +1,15 @@
 import React from 'react';
-import HomePost from './HomePost';
-import { HomePostType } from '../../stores/HomeStore';
 
-interface HomePostListProps {
-  array: Array<HomePostType>;
+import { HomePostType } from '@stores/HomeStore';
+import HomePost from './HomePost';
+
+interface Props {
+  list: HomePostType[];
 }
 
-const HomePostList = ({ array }: HomePostListProps) => (
+const HomePostList = ({ list }: Props) => (
   <div>
-    {array.map(
+    {list.map(
       (data: HomePostType) => <HomePost data={data} key={data.id} />,
     )}
   </div>

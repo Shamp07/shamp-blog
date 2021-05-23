@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
+import { RootStore } from '@store';
 import CommentMore from './CommentMore';
 import useStores from '../../../stores/useStores';
-import CommentRow, { CommentRowInterface } from './CommentRow';
+import CommentRow from './CommentRow';
 import CommentNone from './CommentNone';
-import { RootStore } from '../../../stores';
 
 const CommentList = () => {
   const { CommentStore } = useStores() as RootStore;
@@ -20,7 +20,7 @@ const CommentList = () => {
     <CommentListWrapper>
       <ul>
         {commentList.length ? commentList.map(
-          (data: CommentRowInterface) => <CommentRow data={data} key={data.id} />,
+          (data) => <CommentRow data={data} key={data.id} />,
         ) : <CommentNone />}
         {isMoreComment && <CommentMore />}
       </ul>

@@ -2,12 +2,12 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import styled from '@emotion/styled';
-import { ChatRoomType } from '../../../../../stores/ChatStore';
-import { RootStore } from '../../../../../stores';
+import { RootStore } from '@store';
+import { ChatRoomList } from '@types';
 import useStores from '../../../../../stores/useStores';
 
 interface ChatRoomProps {
-  data: ChatRoomType;
+  data: ChatRoomList;
 }
 
 const ChatRoom = ({ data }: ChatRoomProps) => {

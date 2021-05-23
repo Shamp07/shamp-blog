@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 interface AxiosType {
   method: 'get' | 'post' | 'put' | 'delete',
   url: string,
-  data?: { [key: string]: number | string },
+  data?: any,
   success?: (response: AxiosResponse) => void,
   fail?: (response: AxiosResponse) => void,
   complete?: (response: AxiosResponse) => void,

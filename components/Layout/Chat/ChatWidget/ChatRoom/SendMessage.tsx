@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { ChatType } from '../../../../../stores/ChatStore';
+import { Chat } from '@types';
 
 interface SendMessageProps {
-  data: ChatType;
+  data: Chat;
 }
 
 const SendMessage = ({ data }: SendMessageProps) => {

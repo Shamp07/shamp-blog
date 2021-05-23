@@ -1,3 +1,7 @@
+import { RootStore } from '@stores';
+
+export type Store = RootStore;
+
 export interface Chat {
   id: number;
   fromUserName: string;

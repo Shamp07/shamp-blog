@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { faPencilRuler } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencilRuler } from '@fortawesome/free-solid-svg-icons';
 
 const BoardPostNone = () => (
   <Wrapper>

@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import makeAnnotations from '../util/Mobx';
 import Axios from '../util/Axios';
 import AlertStore from './AlertStore';
-import * as T from '../Type';
+import * as T from '@types';
 
 class ChatStore {
   AlertStore: AlertStore;

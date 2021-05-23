@@ -10,19 +10,7 @@ module.exports = (phase) => {
     })(),
   };
 
-  const webpack = (config) => {
-    config.resolve = {
-      alias: {
-        '@src': path.join(__dirname, 'src'),
-        '@store': path.join(__dirname, 'stores'),
-      },
-      ...config.resolve,
-    };
-    return config;
-  };
-
   return {
     env,
-    webpack,
   };
 };

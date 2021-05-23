@@ -1,14 +1,14 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { TextField } from '@material-ui/core';
-import { observer } from 'mobx-react-lite';
-import FootprintMenu from './FootprintMenu';
-import useStores from '../../../stores/useStores';
-import { RootStore } from '../../../stores';
-import { FootprintDataProps } from './FootprintMenu/FootprintNormalMenu';
 
-const FootprintRow = ({ data }: FootprintDataProps) => {
-  const { HomeStore } = useStores() as RootStore;
+import FootprintMenu from './FootprintMenu';
+import useStores from '@stores/useStores';
+import { Props } from './FootprintMenu/FootprintNormalMenu';
+
+const FootprintRow = ({ data }: Props) => {
+  const { HomeStore } = useStores();
   const { modifierFootprintId, footprintInfo, footprintHandleChange } = HomeStore;
   const { modifierFootprint } = footprintInfo;
 

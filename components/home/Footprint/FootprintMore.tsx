@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import useStores from '../../../stores/useStores';
-import { RootStore } from '../../../stores';
+
+import useStores from '@stores/useStores';
 
 const FootprintMore = () => {
-  const { HomeStore } = useStores() as RootStore;
+  const { HomeStore } = useStores();
   const { moreFootprint } = HomeStore;
 
   return (

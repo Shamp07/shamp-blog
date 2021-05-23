@@ -1,12 +1,12 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { TextField } from '@material-ui/core';
-import { observer } from 'mobx-react-lite';
-import useStores from '../../../stores/useStores';
-import { RootStore } from '../../../stores';
+
+import useStores from '@stores/useStores';
 
 const FootprintWrite = () => {
-  const { HomeStore } = useStores() as RootStore;
+  const { HomeStore } = useStores();
   const { footprintInfo, footprintHandleChange, addFootprint } = HomeStore;
   const { footprint } = footprintInfo;
 
