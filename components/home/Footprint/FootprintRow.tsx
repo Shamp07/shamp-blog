@@ -3,8 +3,8 @@ import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { TextField } from '@material-ui/core';
 
-import FootprintMenu from './FootprintMenu';
 import useStores from '@stores/useStores';
+import FootprintMenu from './FootprintMenu';
 import { Props } from './FootprintMenu/FootprintNormalMenu';
 
 const FootprintRow = ({ data }: Props) => {

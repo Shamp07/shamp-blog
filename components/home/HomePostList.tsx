@@ -9,9 +9,7 @@ interface Props {
 
 const HomePostList = ({ list }: Props) => (
   <div>
-    {list.map(
-      (data: HomePostType) => <HomePost data={data} key={data.id} />,
-    )}
+    {list.map((data: HomePostType) => <HomePost data={data} key={data.id} />)}
   </div>
 );
 

@@ -1,22 +1,20 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink, faCode, faCaretRight } from '@fortawesome/free-solid-svg-icons';
-import { observer } from 'mobx-react-lite';
 import TextareaAutosize from 'react-textarea-autosize';
-import useStores from '../../../../../stores/useStores';
-import { RootStore } from '../../../../../stores';
+
+import useStores from '@stores/useStores';
 
 const Footer = () => {
-  const { ChatStore, SignStore } = useStores() as RootStore;
+  const { ChatStore, SignStore } = useStores();
   const {
     chat, onChangeChat, sendChat, onKeyPressChat,
   } = ChatStore;
   const { userData } = SignStore;
 
-  if (!userData) {
-    return null;
-  }
+  if (!userData) return null;
 
   const { id } = userData;
 
@@ -37,7 +35,7 @@ const Footer = () => {
           }
         />
       </ChatInputWrapper>
-      <ChatEnter active={!!chat} onClick={() => sendChat(id)}>
+      <ChatEnter active={Boolean(chat)} onClick={() => sendChat(id)}>
         <FontAwesomeIcon icon={faCaretRight} />
       </ChatEnter>
     </Wrapper>

@@ -1,46 +1,46 @@
 import React from 'react';
+import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import styled from '@emotion/styled';
-import { RootStore } from '@store';
-import { ChatRoomList } from '@types';
-import useStores from '../../../../../stores/useStores';
 
-interface ChatRoomProps {
-  data: ChatRoomList;
+import * as T from '@types';
+import useStores from '@stores/useStores';
+
+interface Props {
+  data: T.ChatRoomList;
 }
 
-const ChatRoom = ({ data }: ChatRoomProps) => {
-  const { SignStore, ChatStore } = useStores() as RootStore;
+const ChatRoom = ({ data }: Props) => {
+  const { SignStore, ChatStore } = useStores();
   const { userData } = SignStore;
   const { moveChatPage } = ChatStore;
 
-  if (!userData) return null;
-
-  const { id } = userData;
   const {
     fromUserId, toUserId,
     toUserName, fromUserName,
     message, time, notReadChatCount,
   } = data;
 
-  const otherUserId = fromUserId === id ? toUserId : fromUserId;
-  const otherUserName = fromUserId === id ? toUserName : fromUserName;
+  const isMine = userData?.id === fromUserId;
+  const opponentUserId = isMine ? toUserId : fromUserId;
+  const opponentUserName = isMine ? toUserName : fromUserName;
 
   return (
-    <ChatRoomWrapper onClick={() => moveChatPage(1, otherUserId, otherUserName)}>
+    <ChatRoomWrapper
+      onClick={() => moveChatPage(T.ChatPage.ROOM, opponentUserId, opponentUserName)}
+    >
       <Profile>
         <div>
           <FontAwesomeIcon icon={faUser} />
         </div>
       </Profile>
       <ChatRoomContent>
-        <div>{fromUserId === id ? toUserName : fromUserName}</div>
+        <div>{opponentUserName}</div>
         <div>{message}</div>
       </ChatRoomContent>
       <ChatRoomDateAndCount>
         <div>{time}</div>
-        {!!Number(notReadChatCount) && <ChatRoomCount>{notReadChatCount}</ChatRoomCount>}
+        {Boolean(Number(notReadChatCount)) && <ChatRoomCount>{notReadChatCount}</ChatRoomCount>}
       </ChatRoomDateAndCount>
     </ChatRoomWrapper>
   );

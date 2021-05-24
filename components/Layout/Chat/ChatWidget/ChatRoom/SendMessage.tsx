@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from '@emotion/styled';
+
 import { Chat } from '@types';
 
-interface SendMessageProps {
+interface Props {
   data: Chat;
 }
 
-const SendMessage = ({ data }: SendMessageProps) => {
+const SendMessage = ({ data }: Props) => {
   const { message, isSimple, displayedTime } = data;
 
   return (

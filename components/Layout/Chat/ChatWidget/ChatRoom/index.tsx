@@ -1,35 +1,30 @@
 import React, {useEffect, useRef} from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
-import ReceiveMessage from './ReceiveMessage';
-import SendMessage from './SendMessage';
-import useStores from '../../../../../stores/useStores';
-import { Chat } from '@types';
-import { RootStore } from '../../../../../stores';
+
+import useStores from '@stores/useStores';
 import Footer from './Footer';
+import SendMessage from './SendMessage';
+import ReceiveMessage from './ReceiveMessage';
+import { Chat } from '@types';
 
 const ChatRoom = () => {
-  const { ChatStore, SignStore } = useStores() as RootStore;
+  const { ChatStore, SignStore } = useStores();
   const { displayedChatList, setScrollRef } = ChatStore;
   const { userData } = SignStore;
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  if (!userData) {
-    return null;
-  }
-
-  const { id } = userData;
 
   useEffect(() => {
     setScrollRef(scrollRef);
   }, [setScrollRef, scrollRef])
 
-  console.log(displayedChatList);
   return (
     <>
       <ChatListWrapper ref={scrollRef}>
         {displayedChatList.map((data: Chat) => (
-          data.fromUserId === id ? <SendMessage key={data.id} data={data} /> : <ReceiveMessage key={data.id} data={data} />))}
+          data.fromUserId === userData?.id ?
+            <SendMessage key={data.id} data={data} /> : <ReceiveMessage key={data.id} data={data} />))
+        }
       </ChatListWrapper>
       <Footer />
     </>

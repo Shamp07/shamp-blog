@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
+
 import { Chat } from '@types';
 import DefaultUserProfile from './DefaultUserProfile';
 
