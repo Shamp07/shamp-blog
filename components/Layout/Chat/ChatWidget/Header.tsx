@@ -1,24 +1,25 @@
 import React from 'react';
-import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
+import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { RootStore } from '../../../../stores';
-import useStores from '../../../../stores/useStores';
+
+import useStores from '@stores/useStores';
+import * as T from '@types';
 
 const Header = () => {
-  const { ChatStore, SignStore } = useStores() as RootStore;
+  const { ChatStore, SignStore } = useStores();
   const { chatPage, moveChatPage, toUserName } = ChatStore;
   const { userData } = SignStore;
 
   return (
     <HeaderWrapper>
-      {(chatPage === 1 && userData && userData.adminFl) && (
-        <button type="button" onClick={() => moveChatPage(0, 0, toUserName)}>
+      {(chatPage === T.ChatPage.ROOM && userData?.adminFl) && (
+        <button type="button" onClick={() => moveChatPage(T.ChatPage.LOBBY, 0, toUserName)}>
           <FontAwesomeIcon icon={faArrowLeft} />
         </button>
       )}
-      {chatPage === 0 ? '채팅 방 목록' : `${toUserName} 님 과의 채팅`}
+      {chatPage === T.ChatPage.LOBBY ? '채팅 방 목록' : `${toUserName} 님 과의 채팅`}
     </HeaderWrapper>
   );
 };

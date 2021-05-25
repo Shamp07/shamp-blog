@@ -1,18 +1,19 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
-import { RootStore } from '../../../../stores';
-import useStores from '../../../../stores/useStores';
+
+import * as T from '@types';
+import useStores from '@stores/useStores';
 import ChatRoom from './ChatRoom';
 import ChatLobby from './ChatLobby';
-import Header from './Header';
 import ChatSpinner from './ChatSpinner';
+import Header from './Header';
 
 const ChatWidget = () => {
-  const { ChatStore } = useStores() as RootStore;
+  const { ChatStore } = useStores();
   const { chatPage, isChatLoading } = ChatStore;
 
-  const ChatPage = chatPage === 0 ? <ChatLobby /> : <ChatRoom />;
+  const ChatPage = chatPage === T.ChatPage.LOBBY ? <ChatLobby /> : <ChatRoom />;
   return (
     <Wrapper>
       <Header />

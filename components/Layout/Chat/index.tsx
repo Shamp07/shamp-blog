@@ -1,24 +1,24 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCommentDots } from '@fortawesome/free-solid-svg-icons';
+import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import Fab from '@material-ui/core/Fab';
-import { observer } from 'mobx-react-lite';
-import useStores from '../../../stores/useStores';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCommentDots } from '@fortawesome/free-solid-svg-icons';
+
+import useStores from '@stores/useStores';
 import ChatWidget from './ChatWidget';
-import { RootStore } from '../../../stores';
 
 const Chat = () => {
-  const { ChatStore, SignStore } = useStores() as RootStore;
+  const { ChatStore, SignStore } = useStores();
   const { userData } = SignStore;
   const { openChat, isChatOpen, notReadChatCount } = ChatStore;
 
   return (
     <Wrapper>
       {isChatOpen && <ChatWidget />}
-      <ButtonWrapper onClick={() => openChat(!!userData, !!userData?.adminFl)}>
-        <span>{(userData?.adminFl) ? '채팅하기' : '질문하기'}</span>
-        {(!!notReadChatCount && !isChatOpen) && <div>{notReadChatCount}</div>}
+      <ButtonWrapper onClick={() => openChat(Boolean(userData), Boolean(userData?.adminFl))}>
+        <span>{userData?.adminFl ? '채팅하기' : '질문하기'}</span>
+        {(notReadChatCount && !isChatOpen) && <div>{notReadChatCount}</div>}
         <ChatFloatButton color="primary" aria-label="add">
           <FontAwesomeIcon icon={faCommentDots} />
         </ChatFloatButton>
