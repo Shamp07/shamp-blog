@@ -1,10 +1,10 @@
 import React from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
-import useStores from '../../../../stores/useStores';
-import { RootStore } from '../../../../stores';
+
+import useStores from '@stores/useStores';
 
 const AlertMore = () => {
-  const { AlertStore } = useStores() as RootStore;
+  const { AlertStore } = useStores();
   const { moreAlert } = AlertStore;
 
   return (

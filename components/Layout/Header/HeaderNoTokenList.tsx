@@ -1,11 +1,11 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
-import useStores from '../../../stores/useStores';
-import { RootStore } from '../../../stores';
+
+import useStores from '@stores/useStores';
 
 const HeaderNoTokenList = () => {
-  const { SignStore } = useStores() as RootStore;
+  const { SignStore } = useStores();
   const { toggleSignModal, toggleRegisterModal } = SignStore;
 
   return (

@@ -1,19 +1,20 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import { MenuItem } from '@material-ui/core';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
-import { AlertType } from '../../../../stores/AlertStore';
-import useStores from '../../../../stores/useStores';
-import { RootStore } from '../../../../stores';
 
-interface AlertProps {
+import useStores from '@stores/useStores';
+import { AlertType } from '@stores/AlertStore';
+
+interface Props {
   data: AlertType;
 }
 
-const Alert = ({ data }: AlertProps) => {
+const Alert = ({ data }: Props) => {
   const router = useRouter();
-  const { AlertStore } = useStores() as RootStore;
+  const { AlertStore } = useStores();
   const { movePost } = AlertStore;
+
   const {
     id,
     content, postId, readFl, time,

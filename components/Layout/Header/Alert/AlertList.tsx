@@ -1,25 +1,22 @@
 import React from 'react';
-import { MenuItem } from '@material-ui/core';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
-import { AlertType } from '../../../../stores/AlertStore';
-import Alert from './index';
-import useStores from '../../../../stores/useStores';
+import { MenuItem } from '@material-ui/core';
+
+import { AlertType } from '@stores/AlertStore';
+import useStores from '@stores/useStores';
+import Alert from '.';
 import AlertMore from './AlertMore';
-import { RootStore } from '../../../../stores';
 
 const AlertList = () => {
-  const { AlertStore } = useStores() as RootStore;
+  const { AlertStore } = useStores();
   const { alertList, alertSize } = AlertStore;
 
-  let isMoreAlert = false;
-  if (alertList.length && alertList[0].total > alertSize) {
-    isMoreAlert = true;
-  }
+  const isMoreAlert = alertList[0]?.total > alertSize;
 
   return (
     <>
-      {alertList.length > 0 ? alertList.map((data: AlertType) => (
+      {alertList.length ? alertList.map((data: AlertType) => (
         <Alert key={data.id} data={data} />
       )) : (
         <MenuItemNone>
@@ -33,6 +30,7 @@ const AlertList = () => {
 
 const MenuItemNone = styled(MenuItem)`
   font-size: 14px !important;
+  
   & > span {
     margin: auto !important;  
   }

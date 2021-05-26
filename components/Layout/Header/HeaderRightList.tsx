@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { faGithubAlt } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithubAlt } from '@fortawesome/free-brands-svg-icons';
+
 import HeaderSidebarButton from './HeaderSidebarButton';
 import HeaderTokenMenu from './HeaderTokenMenu';
 

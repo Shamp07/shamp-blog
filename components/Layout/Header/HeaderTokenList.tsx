@@ -1,17 +1,17 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
+import styled from '@emotion/styled';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { observer } from 'mobx-react-lite';
 import { faUserCircle, faBell } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styled from '@emotion/styled';
+
+import useStores from '@stores/useStores';
 import AlertSpinner from './Alert/AlertSpinner';
-import useStores from '../../../stores/useStores';
-import { RootStore } from '../../../stores';
 import AlertList from './Alert/AlertList';
 
 const HeaderTokenList = () => {
-  const { SignStore, UtilStore, AlertStore } = useStores() as RootStore;
+  const { SignStore, UtilStore, AlertStore } = useStores();
   const { logout, togglePasswordChangeModal, toggleDeleteUserModal } = SignStore;
   const {
     headerMenu, headerMenuElement, openHeaderMenu, closeHeaderMenu,
@@ -38,7 +38,7 @@ const HeaderTokenList = () => {
       <li>
         <AlertButton type="button" onClick={openHeaderMenu} name="alert">
           <FontAwesomeIcon icon={faBell} />
-          {alertNotReadSize > 0 && <div>{alertNotReadSize}</div>}
+          {Boolean(alertNotReadSize) && <div>{alertNotReadSize}</div>}
         </AlertButton>
         <MenuCustom
           anchorEl={headerMenuElement}

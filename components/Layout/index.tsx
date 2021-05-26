@@ -1,22 +1,23 @@
 import React, { ReactNode, useEffect } from 'react';
 import { css, Global } from '@emotion/react';
 import styled from '@emotion/styled';
+
+import useStores from '@stores/useStores';
 import Header from './Header';
 import SideBar from './Sidebar';
 import Content from './Content';
 import Backdrop from './Sidebar/Backdrop';
-import useStores from '../../stores/useStores';
-import { RootStore } from '../../stores';
 import Chat from './Chat';
 
-interface LayoutProps {
+interface Props {
   children: ReactNode;
 }
 
-const Layout = ({ children }: LayoutProps) => {
-  const { SignStore, AlertStore } = useStores() as RootStore;
+const Layout = ({ children }: Props) => {
+  const { SignStore, AlertStore } = useStores();
   const { cookieCheck } = SignStore;
   const { getAlertList } = AlertStore;
+
   useEffect(() => {
     cookieCheck();
     getAlertList();

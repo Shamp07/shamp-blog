@@ -1,32 +1,25 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-import useStores from '../../../stores/useStores';
-import { RootStore } from '../../../stores';
 
-interface CategoryProps {
+import useStores from '@stores/useStores';
+
+interface Props {
   path: string;
   name: string;
   isBoard: boolean;
 }
 
-const Category = ({ path, name, isBoard }: CategoryProps) => {
-  const { SidebarStore } = useStores() as RootStore;
-  const { toggleSidebar } = SidebarStore;
+const Category = ({ path, name, isBoard }: Props) => {
   const router = useRouter();
-  let baseUrl = '';
-  let currentPath;
+  if (!router.query.board) return null;
 
-  // 게시판의 경우
-  if (isBoard) {
-    baseUrl = baseUrl.concat('/category');
-    const routerParams = router.query.board as Array<string>;
-    currentPath = routerParams ? routerParams[0] : '';
-  } else {
-    // 상단 카테고리
-    currentPath = router.asPath.replace('/', '');
-  }
+  const { SidebarStore } = useStores();
+  const { toggleSidebar } = SidebarStore;
+
+  const baseUrl = isBoard ? '/category' : '';
+  const currentPath = isBoard ? router.query.board[0] : router.asPath.replace('/', '');
 
   return (
     <CategoryList active={currentPath === path} onClick={toggleSidebar}>

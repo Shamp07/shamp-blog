@@ -1,15 +1,15 @@
 import React from 'react';
-import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
+import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import useStores from '../../../stores/useStores';
+
+import useStores from '@stores/useStores';
 import Category from './Category';
 import SideTokenMenu from './SideTokenMenu';
-import { RootStore } from '../../../stores';
 
 const Sidebar = () => {
-  const { SidebarStore } = useStores() as RootStore;
+  const { SidebarStore } = useStores();
   const {
     boardCategoryList, topCategoryList,
     isOpenSidebar, toggleSidebar,

@@ -10,8 +10,8 @@ import ChatWidget from './ChatWidget';
 
 const Chat = () => {
   const { ChatStore, SignStore } = useStores();
-  const { userData } = SignStore;
   const { openChat, isChatOpen, notReadChatCount } = ChatStore;
+  const { userData } = SignStore;
 
   return (
     <Wrapper>

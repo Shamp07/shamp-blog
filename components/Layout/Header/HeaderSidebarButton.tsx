@@ -1,12 +1,12 @@
 import React from 'react';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
 import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import useStores from '../../../stores/useStores';
-import { RootStore } from '../../../stores';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+
+import useStores from '@stores/useStores';
 
 const HeaderSidebarButton = () => {
-  const { SidebarStore } = useStores() as RootStore;
+  const { SidebarStore } = useStores();
   const { toggleSidebar } = SidebarStore;
 
   return (

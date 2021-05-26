@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import useStores from '../../../stores/useStores';
-import { RootStore } from '../../../stores';
+
+import useStores from '@stores/useStores';
 
 const SideNoTokenList = () => {
-  const { SignStore } = useStores() as RootStore;
+  const { SignStore } = useStores();
   const { toggleSignModal, toggleRegisterModal } = SignStore;
 
   return (

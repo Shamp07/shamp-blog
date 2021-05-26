@@ -1,18 +1,15 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import useStores from '../../../stores/useStores';
-import { RootStore } from '../../../stores';
+
+import useStores from '@stores/useStores';
 
 const SideTokenList = () => {
-  const { SignStore } = useStores() as RootStore;
+  const { SignStore } = useStores();
   const { userData, logout } = SignStore;
-  if (!userData) return null;
-
-  const { name } = userData;
 
   return (
     <MobileMenu>
-      <TopMenu>{name}</TopMenu>
+      <TopMenu>{userData?.name}</TopMenu>
       <TopMenu onClick={() => logout(false)}>로그아웃</TopMenu>
     </MobileMenu>
   );
