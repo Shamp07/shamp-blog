@@ -1,23 +1,20 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
-import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { observer } from 'mobx-react-lite';
-import useStores from '../../stores/useStores';
-import { RootStore } from '../../stores';
+import styled from '@emotion/styled';
+import { Button } from '@material-ui/core';
+
+import useStores from '@stores/useStores';
 
 const ArticleFooter = () => {
   const router = useRouter();
-  const { PostStore, UtilStore, SignStore } = useStores() as RootStore;
+  const { PostStore, UtilStore, SignStore } = useStores();
   const { postView, deletePost } = PostStore;
   const { id } = postView;
   const { toggleConfirmModal } = UtilStore;
   const { userData } = SignStore;
-  let isAdmin = false;
-  if (userData) {
-    isAdmin = userData.adminFl;
-  }
-  if (!isAdmin) return null;
+
+  if (userData?.adminFl) return null;
 
   return (
     <ArticleFooterWrapper>

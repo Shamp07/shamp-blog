@@ -1,21 +1,21 @@
 import React from 'react';
-import { faReply } from '@fortawesome/free-solid-svg-icons';
+import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { observer } from 'mobx-react-lite';
-import useStores from '../../../../stores/useStores';
-import { RootStore } from '../../../../stores';
-import { CommentType } from '../../../../stores/CommentStore';
+import { faReply } from '@fortawesome/free-solid-svg-icons';
 
-export interface CommentDataProps {
-  data: CommentType
+import { CommentType } from '@stores/CommentStore';
+import useStores from '../../../../stores/useStores';
+
+export interface Props {
+  data: CommentType;
 }
 
-const CommentNormalMenu = ({ data }: CommentDataProps) => {
+const CommentNormalMenu = ({ data }: Props) => {
   const {
     PostStore, CommentStore, SignStore,
     UtilStore,
-  } = useStores() as RootStore;
+  } = useStores();
   const { postView } = PostStore;
   const { id: postId } = postView;
   const { setReplyCommentId, setModifierCommentId, deleteComment } = CommentStore;
@@ -24,12 +24,7 @@ const CommentNormalMenu = ({ data }: CommentDataProps) => {
 
   const { id, userId, content } = data;
 
-  let isMine = false;
-
-  if (userData) {
-    const { id: userIdToken } = userData;
-    isMine = userId === userIdToken;
-  }
+  const isMine = userData?.id === userId;
 
   return (
     <CommentMenu>
@@ -56,7 +51,7 @@ const CommentNormalMenu = ({ data }: CommentDataProps) => {
           </span>
         </>
       )}
-      {!!userData && (
+      {Boolean(userData) && (
         <span
           role="button"
           tabIndex={0}

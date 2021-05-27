@@ -1,14 +1,14 @@
 import React from 'react';
-import { faSync } from '@fortawesome/free-solid-svg-icons';
+import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { Button } from '@material-ui/core';
+import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { observer } from 'mobx-react-lite';
-import useStores from '../../../stores/useStores';
-import { RootStore } from '../../../stores';
+
+import useStores from '@stores/useStores';
 
 const CommentHeader = () => {
-  const { PostStore, CommentStore } = useStores() as RootStore;
+  const { PostStore, CommentStore } = useStores();
   const { postView } = PostStore;
   const { getComment } = CommentStore;
   const { id, commentCnt } = postView;

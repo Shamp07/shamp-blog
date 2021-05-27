@@ -8,10 +8,9 @@ import useStores from '../stores/useStores';
 import HomePostList from '../components/home/HomePostList';
 import Footprint from '../components/home/Footprint';
 import { MyNextPageContext } from './_app';
-import { RootStore } from '../stores';
 
 const Home = () => {
-  const { HomeStore } = useStores() as RootStore;
+  const { HomeStore } = useStores();
   const { noticePostList, recentlyPostList, getFootprint } = HomeStore;
   return (
     <GridWrapper>

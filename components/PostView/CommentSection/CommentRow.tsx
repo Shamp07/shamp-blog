@@ -1,15 +1,15 @@
 import React from 'react';
-import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
+import styled from '@emotion/styled';
 import { TextField } from '@material-ui/core';
-import { RootStore } from '@store';
-import useStores from '../../../stores/useStores';
+
+import useStores from '@stores/useStores';
 import CommentWrite from './CommentWrite';
 import CommentMenu from './CommentMenu';
-import { CommentDataProps } from './CommentMenu/CommentNormalMenu';
+import { Props } from './CommentMenu/CommentNormalMenu';
 
-const CommentRow = ({ data }: CommentDataProps) => {
-  const { CommentStore } = useStores() as RootStore;
+const CommentRow = ({ data }: Props) => {
+  const { CommentStore } = useStores();
   const {
     commentInfo,
     replyCommentId, modifierCommentId, commentHandleChange,
@@ -25,8 +25,8 @@ const CommentRow = ({ data }: CommentDataProps) => {
   return (
     <>
       <li>
-        <CommentWrapper isReply={!!commentId}>
-          {!!commentId && (<ReplyBorder />)}
+        <CommentWrapper isReply={Boolean(commentId)}>
+          {Boolean(commentId) && (<ReplyBorder />)}
           <CommentWriter>
             <span>{userName}</span>
             <span>{modifiedTime || time}</span>

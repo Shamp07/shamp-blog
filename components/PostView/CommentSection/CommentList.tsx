@@ -1,20 +1,17 @@
 import React from 'react';
-import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
-import { RootStore } from '@store';
+import styled from '@emotion/styled';
+
+import useStores from '@stores/useStores';
 import CommentMore from './CommentMore';
-import useStores from '../../../stores/useStores';
 import CommentRow from './CommentRow';
 import CommentNone from './CommentNone';
 
 const CommentList = () => {
-  const { CommentStore } = useStores() as RootStore;
+  const { CommentStore } = useStores();
   const { commentList, commentSize } = CommentStore;
 
-  let isMoreComment = false;
-  if (commentList.length && commentList[0].total > commentSize) {
-    isMoreComment = true;
-  }
+  const isMoreComment = commentList[0]?.total > commentSize;
 
   return (
     <CommentListWrapper>

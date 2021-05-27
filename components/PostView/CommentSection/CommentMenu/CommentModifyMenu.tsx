@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import useStores from '../../../../stores/useStores';
-import { RootStore } from '../../../../stores';
+
+import useStores from '@stores/useStores';
 
 const CommentModifyMenu = () => {
-  const { PostStore, CommentStore } = useStores() as RootStore;
+  const { PostStore, CommentStore } = useStores();
   const { postView } = PostStore;
   const { id: postId } = postView;
   const { modifierCommentId: id, setModifierCommentId, modifyComment } = CommentStore;

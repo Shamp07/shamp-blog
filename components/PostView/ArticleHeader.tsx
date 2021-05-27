@@ -1,14 +1,15 @@
 import React from 'react';
-import styled from '@emotion/styled';
 import Head from 'next/head';
 import { observer } from 'mobx-react-lite';
-import useStores from '../../stores/useStores';
-import { RootStore } from '../../stores';
+import styled from '@emotion/styled';
+
+import useStores from '@stores/useStores';
 
 const ArticleHeader = () => {
-  const { PostStore, SidebarStore } = useStores() as RootStore;
+  const { PostStore, SidebarStore } = useStores();
   const { getCategoryName } = SidebarStore;
   const { postView } = PostStore;
+
   const {
     title, category, tags, time,
     commentCnt, likeCnt, viewCnt, modifiedTime,

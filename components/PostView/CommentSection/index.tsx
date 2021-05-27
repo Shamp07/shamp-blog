@@ -1,20 +1,20 @@
 import React from 'react';
-import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
+import styled from '@emotion/styled';
+
+import useStores from '@stores/useStores';
 import CommentHeader from './CommentHeader';
 import CommentList from './CommentList';
 import CommentWrite from './CommentWrite';
-import useStores from '../../../stores/useStores';
-import { RootStore } from '../../../stores';
 
 const CommentSection = () => {
-  const { SignStore } = useStores() as RootStore;
+  const { SignStore } = useStores();
   const { userData } = SignStore;
 
   return (
     <Wrapper>
       <CommentHeader />
-      {!!userData && <CommentWrite isReply={false} />}
+      {Boolean(userData) && <CommentWrite isReply={false} />}
       <CommentList />
     </Wrapper>
   );

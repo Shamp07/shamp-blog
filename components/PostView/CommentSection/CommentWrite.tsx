@@ -1,16 +1,16 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { TextField } from '@material-ui/core';
-import { observer } from 'mobx-react-lite';
-import useStores from '../../../stores/useStores';
-import { RootStore } from '../../../stores';
 
-interface CommentWriteProps {
+import useStores from '@stores/useStores';
+
+interface Props {
   isReply: boolean;
 }
 
-const CommentWrite = ({ isReply }: CommentWriteProps) => {
-  const { PostStore, CommentStore } = useStores() as RootStore;
+const CommentWrite = ({ isReply }: Props) => {
+  const { PostStore, CommentStore } = useStores();
   const { postView } = PostStore;
   const { id } = postView;
   const {
@@ -21,7 +21,7 @@ const CommentWrite = ({ isReply }: CommentWriteProps) => {
 
   return (
     <CommentWriteWrapper isReply={isReply}>
-      { isReply && <ReplyBorder />}
+      {isReply && <ReplyBorder />}
       <CommentWriterInner>
         <CustomTextField
           type="text"
@@ -49,7 +49,7 @@ const CommentWrite = ({ isReply }: CommentWriteProps) => {
   );
 };
 
-const CommentWriteWrapper = styled.div<CommentWriteProps>`
+const CommentWriteWrapper = styled.div<Props>`
   position: relative;
   padding: ${(props) => (props.isReply ? '24px 16px 24px 64px' : '24px 16px')};
   background-color: #f8f9fa;

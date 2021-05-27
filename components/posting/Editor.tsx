@@ -1,22 +1,18 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
 import { observer } from 'mobx-react-lite';
-import hljs from 'highlight.js';
 import styled from '@emotion/styled';
-import useStores from '../../stores/useStores';
-import { RootStore } from '../../stores';
+import hljs from 'highlight.js';
 
-hljs.configure({
-  languages: ['javascript'],
-});
+import useStores from '@stores/useStores';
 
-const QuillNoSSRWRapper = dynamic(import('react-quill'), {
+const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
   loading: () => <span>loading...</span>,
 });
 
 const Editor = () => {
-  const { PostStore } = useStores() as RootStore;
+  const { PostStore } = useStores();
   const { post, postHandleChange } = PostStore;
   const { content } = post;
   return (
@@ -47,7 +43,11 @@ Editor.modules = {
   },
 };
 
-const CustomQuill = styled(QuillNoSSRWRapper)`
+hljs.configure({
+  languages: ['javascript'],
+});
+
+const CustomQuill = styled(QuillNoSSRWrapper)`
   & .ql-editor {
     font-size: 16px;  
     line-height: 2;
@@ -57,7 +57,7 @@ const CustomQuill = styled(QuillNoSSRWRapper)`
     font-family: 'JetBrains Mono', 'Noto Sans KR', serif;
     font-size: 14px;
     line-height: 1.5;
-    background: #2e3440 !important;
+    background-color: #2e3440 !important;
   }
 `;
 
