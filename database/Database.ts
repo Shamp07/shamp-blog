@@ -14,6 +14,7 @@ class Database {
     return new Promise((resolve, reject) => {
       this.connection.query(sql, args, (err, result) => {
         if (err) {
+          // eslint-disable-next-line no-console
           console.log(err);
           logger.error(err.toString());
           reject(err);

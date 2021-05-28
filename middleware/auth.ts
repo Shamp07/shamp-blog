@@ -16,11 +16,16 @@ export interface Token {
   exp: number;
 }
 
+export enum Auth {
+  USER = 'user',
+  ADMIN = 'admin',
+}
+
 // type
 // 0: user
 // 1: admin
 const authMiddleware = (
-  handler: Function, type: number,
+  handler: Function, type: Auth,
 ) => async (request: NextApiRequestToken, response: NextApiResponse) => {
   if (!('token' in request.cookies)) {
     response.status(200).json({
@@ -43,7 +48,7 @@ const authMiddleware = (
 
   if (decodedToken) {
     request.decodedToken = decodedToken;
-    if (type === 1) {
+    if (type === Auth.ADMIN) {
       if (decodedToken.adminFl) {
         await handler(request, response);
       } else {
