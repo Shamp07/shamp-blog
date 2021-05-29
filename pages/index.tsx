@@ -1,27 +1,29 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
 import styled from '@emotion/styled';
-import { faSync } from '@fortawesome/free-solid-svg-icons';
+import Grid from '@material-ui/core/Grid';
 import { Button } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import useStores from '../stores/useStores';
-import HomePostList from '../components/home/HomePostList';
-import Footprint from '../components/home/Footprint';
+import { faSync } from '@fortawesome/free-solid-svg-icons';
+
+import useStores from '@stores/useStores';
+import HomePostList from '@components/home/HomePostList';
+import Footprint from '@components/home/Footprint';
 import { MyNextPageContext } from './_app';
 
 const Home = () => {
   const { HomeStore } = useStores();
   const { noticePostList, recentlyPostList, getFootprint } = HomeStore;
+
   return (
     <GridWrapper>
       <CustomGrid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <h2>공지사항</h2>
-          <HomePostList array={noticePostList} />
+          <HomePostList list={noticePostList} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <h2>최근 글</h2>
-          <HomePostList array={recentlyPostList} />
+          <HomePostList list={recentlyPostList} />
         </Grid>
         <RelativeGrid item xs={12}>
           <h2>발자취</h2>
@@ -40,11 +42,16 @@ const Home = () => {
 };
 
 Home.getInitialProps = async ({ store }: MyNextPageContext) => {
-  if (store) {
-    const { HomeStore } = store;
-    const { getRecentlyPostList, getNoticePostList, getFootprint } = HomeStore;
-    await Promise.all([getRecentlyPostList(), getNoticePostList(), getFootprint()]);
-  }
+  if (!store) return null;
+
+  const { HomeStore } = store;
+  const { getRecentlyPostList, getNoticePostList, getFootprint } = HomeStore;
+
+  await Promise.all([
+    getRecentlyPostList(),
+    getNoticePostList(),
+    getFootprint(),
+  ]);
 
   return {
     props: {},

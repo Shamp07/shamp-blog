@@ -36,6 +36,7 @@ const Axios = async ({
       if (success) success(response);
     } else if (fail) fail(response);
     if (complete) complete(response);
+    // eslint-disable-next-line no-console
   }).catch((response) => console.error(response));
 };
 

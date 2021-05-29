@@ -1,10 +1,11 @@
 import React from 'react';
+import { NextComponentType, NextPageContext } from 'next';
+import App, { AppContext, AppProps } from 'next/app';
 import Head from 'next/head';
 import { Provider } from 'mobx-react';
-import App, { AppContext, AppProps } from 'next/app';
-import { NextComponentType, NextPageContext } from 'next';
-import Layout from '../components/Layout';
-import initializeStore, { RootStore } from '../stores';
+
+import Layout from '@components/Layout';
+import initializeStore, { RootStore } from '@stores';
 import 'react-quill/dist/quill.snow.css';
 import 'highlight.js/styles/nord.css';
 

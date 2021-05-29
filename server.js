@@ -10,8 +10,8 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const port = 80;
-const sslPort = 443;
+const PORT = 80;
+const SSL_PORT = 443;
 
 let options;
 if (!dev) {
@@ -32,9 +32,10 @@ app.prepare().then(() => {
       const parsedUrl = parse(req.url, true);
       handle(req, res, parsedUrl);
     }
-  }).listen(port, (err) => {
+  }).listen(PORT, (err) => {
     if (err) throw err;
-    console.log(`> Ready on http://localhost:${port}`);
+    // eslint-disable-next-line no-console
+    console.log(`> Ready on http://localhost:${PORT}`);
   });
 
   const ioServer = io(server);
@@ -63,9 +64,10 @@ app.prepare().then(() => {
     https.createServer(options, (req, res) => {
       const parsedUrl = parse(req.url, true);
       handle(req, res, parsedUrl);
-    }).listen(sslPort, (err) => {
+    }).listen(SSL_PORT, (err) => {
       if (err) throw err;
-      console.log(`> Ready on https://localhost:${sslPort}`);
+      // eslint-disable-next-line no-console
+      console.log(`> Ready on https://localhost:${SSL_PORT}`);
     });
   }
 });

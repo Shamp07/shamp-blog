@@ -1,9 +1,9 @@
 import { observable, action, computed } from 'mobx';
 
 interface AnnotationType<T> {
-  observables?: Array<keyof T>,
-  actions?: Array<keyof T>,
-  computeds?: Array<keyof T>,
+  observables?: Array<keyof T>;
+  actions?: Array<keyof T>;
+  computeds?: Array<keyof T>;
 }
 
 type AnnotationsReturnType<T> = {

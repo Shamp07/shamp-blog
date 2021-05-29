@@ -1,23 +1,23 @@
 import React from 'react';
+import { useRouter } from 'next/router';
+import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { Button, TextField } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
-import { observer } from 'mobx-react-lite';
-import { useRouter } from 'next/router';
-import Editor from '../../components/posting/Editor';
-import useStores from '../../stores/useStores';
-import { RootStore } from '../../stores';
 
-interface PostProps {
+import Editor from '@components/posting/Editor';
+import useStores from '@stores/useStores';
+
+interface Props {
   isModify: boolean;
 }
 
-const Post = ({ isModify }: PostProps) => {
+const Post = ({ isModify }: Props) => {
   const router = useRouter();
   const {
     SidebarStore, PostStore,
     SignStore, AlertStore,
-  } = useStores() as RootStore;
+  } = useStores();
   const { boardCategoryList } = SidebarStore;
   const {
     post, postHandleChange, addPost, modifyPost,
@@ -26,10 +26,8 @@ const Post = ({ isModify }: PostProps) => {
   const { toggleAlertModal } = AlertStore;
   const { category, tags, title } = post;
 
-  if (!userData || !userData.adminFl) {
-    router.push('/').then(() => {
-      toggleAlertModal('글 작성 권한이 없습니다.');
-    });
+  if (!userData?.adminFl) {
+    router.push('/').then(() => toggleAlertModal('글 작성 권한이 없습니다.'));
     return null;
   }
 
@@ -63,7 +61,7 @@ const Post = ({ isModify }: PostProps) => {
         <Editor />
       </Article>
       <Footer>
-        <Button variant="contained" color="primary" onClick={() => router.back()}>
+        <Button variant="contained" color="primary" onClick={router.back}>
           취소
         </Button>
         { isModify ? (

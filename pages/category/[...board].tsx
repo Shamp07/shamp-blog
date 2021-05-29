@@ -33,19 +33,22 @@ const Board = () => {
 };
 
 Board.getInitialProps = async ({ query, store }: MyNextPageContext) => {
-  if (!query.board) return null;
+  if (!query.board || !store) return null;
 
   const board = query.board[0];
   const category = query.board[1];
-  if (category === 'post' && store) {
+  if (category === 'post') {
     const { PostStore, CommentStore } = store;
     const { getPost } = PostStore;
     const { getComment } = CommentStore;
 
     const id = Number(query.board[2]);
 
-    await Promise.all([getPost(id, false), getComment(id)]);
-  } else if (store) {
+    await Promise.all([
+      getPost(id, false),
+      getComment(id),
+    ]);
+  } else {
     const { CategoryStore, PostStore } = store;
     const { getCategoryTags } = CategoryStore;
     const { getPostList } = PostStore;

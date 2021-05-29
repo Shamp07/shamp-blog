@@ -1,5 +1,6 @@
 import React from 'react';
-import PrepareCategory from '../components/util/PrepareCategory';
+
+import PrepareCategory from '@components/util/PrepareCategory';
 
 const Life = () => <PrepareCategory />;
 
