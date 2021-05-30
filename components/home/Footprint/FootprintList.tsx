@@ -11,7 +11,7 @@ const FootprintList = () => {
   const { HomeStore } = useStores();
   const { footprintList, footprintSize } = HomeStore;
 
-  const isMoreFootprint = footprintList.length && footprintList[0].total > footprintSize;
+  const isMoreFootprint = footprintList[0]?.total > footprintSize;
 
   return (
     <FootprintListWrapper>

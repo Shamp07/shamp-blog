@@ -1,16 +1,18 @@
 import { Client } from 'pg';
 import { NextApiResponse } from 'next';
-import Database from '../../../database/Database';
-import logger from '../../../config/log.config';
-import authMiddleware, { NextApiRequestToken } from '../../../middleware/auth';
-import cors from '../../../middleware/cors';
+
+import Database from '@database/Database';
+import authMiddleware, { NextApiRequestToken } from '@middleware/auth';
+import cors from '@middleware/cors';
+import logger from '@config/log.config';
+import * as T from '@types';
 
 const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
 
-  if (request.method === 'GET') {
+  if (request.method === T.RequestMethod.GET) {
     await getChatList(request, response);
-  } else if (request.method === 'POST') {
+  } else if (request.method === T.RequestMethod.POST) {
     await sendChat(request, response);
   }
 };
@@ -95,4 +97,4 @@ const INSERT_CHAT = `
   );
 `;
 
-export default authMiddleware(handler, 0);
+export default authMiddleware(handler, T.Auth.USER);

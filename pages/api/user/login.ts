@@ -2,14 +2,16 @@ import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
-import Database from '../../../database/Database';
-import config from '../../../config/jwt.config.json';
-import logger from '../../../config/log.config';
-import cors from '../../../middleware/cors';
+
+import Database from '@database/Database';
+import cors from '@middleware/cors';
+import config from '@config/jwt.config.json';
+import logger from '@config/log.config';
+import * as T from '@types';
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   await cors(request, response);
-  if (request.method === 'POST') {
+  if (request.method === T.RequestMethod.POST) {
     const { email, password } = request.body;
     const values = [email];
     let message: string;

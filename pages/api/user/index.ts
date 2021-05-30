@@ -1,17 +1,19 @@
 import { Client } from 'pg';
 import { NextApiResponse } from 'next';
 import crypto from 'crypto';
-import Database from '../../../database/Database';
-import logger from '../../../config/log.config';
-import cors from '../../../middleware/cors';
-import authMiddleware, { NextApiRequestToken } from '../../../middleware/auth';
+
+import Database from '@database/Database';
+import cors from '@middleware/cors';
+import authMiddleware, { NextApiRequestToken } from '@middleware/auth';
+import logger from '@config/log.config';
+import * as T from '@types';
 
 const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
-  if (request.method === 'POST') {
+  if (request.method === T.RequestMethod.POST) {
     await addUser(request, response);
-  } else if (request.method === 'DELETE') {
-    await authMiddleware(deleteUser, 0)(request, response);
+  } else if (request.method === T.RequestMethod.DELETE) {
+    await authMiddleware(deleteUser, T.Auth.USER)(request, response);
   }
 };
 

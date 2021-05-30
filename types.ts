@@ -1,5 +1,17 @@
 import { RootStore } from '@stores';
 
+export enum RequestMethod {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
+}
+
+export enum Auth {
+  USER = 'user',
+  ADMIN = 'admin',
+}
+
 export type Store = RootStore;
 
 export interface Chat {

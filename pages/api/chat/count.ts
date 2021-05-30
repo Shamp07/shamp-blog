@@ -1,9 +1,11 @@
 import { Client } from 'pg';
 import { NextApiResponse } from 'next';
-import Database from '../../../database/Database';
-import logger from '../../../config/log.config';
-import authMiddleware, { NextApiRequestToken } from '../../../middleware/auth';
-import cors from '../../../middleware/cors';
+
+import Database from '@database/Database';
+import cors from '@middleware/cors';
+import authMiddleware, { NextApiRequestToken } from '@middleware/auth';
+import logger from '@config/log.config';
+import * as T from '@types';
 
 const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
@@ -46,4 +48,4 @@ const SELECT_CHAT_COUNT = `
     )
 `;
 
-export default authMiddleware(handler, 0);
+export default authMiddleware(handler, T.Auth.USER);

@@ -1,13 +1,16 @@
 import { Client } from 'pg';
 import { NextApiResponse } from 'next';
-import Database from '../../../database/Database';
-import logger from '../../../config/log.config';
-import authMiddleware, { NextApiRequestToken } from '../../../middleware/auth';
-import cors from '../../../middleware/cors';
+
+import Database from '@database/Database';
+import authMiddleware, { NextApiRequestToken } from '@middleware/auth';
+import cors from '@middleware/cors';
+import logger from '@config/log.config';
+import * as T from '@types';
 
 const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
-  if (request.method === 'POST') {
+
+  if (request.method === T.RequestMethod.POST) {
     await addLike(request, response);
   }
 };
@@ -67,4 +70,4 @@ const SELECT_POST_LIKE = `
     AND user_id = $2
 `;
 
-export default authMiddleware(handler, 0);
+export default authMiddleware(handler, T.Auth.USER);

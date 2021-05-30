@@ -15,6 +15,9 @@
     "forceConsistentCasingInFileNames": false,
     "baseUrl": ".",
     "paths": {
+      "@database/*": ["database/*"],
+      "@middleware/*": ["middleware/*"],
+      "@config/*": ["config/*"],
       "@components/*": ["components/*"],
       "@stores/*": ["stores/*"],
       "@util/*": ["util/*"],

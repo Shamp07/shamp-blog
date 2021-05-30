@@ -1,20 +1,23 @@
 import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
-import Database from '../../../database/Database';
-import logger from '../../../config/log.config';
-import authMiddleware, { NextApiRequestToken } from '../../../middleware/auth';
-import cors from '../../../middleware/cors';
+
+import Database from '@database/Database';
+import authMiddleware, { NextApiRequestToken } from '@middleware/auth';
+import cors from '@middleware/cors';
+import logger from '@config/log.config';
+import * as T from '@types';
 
 const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
-  if (request.method === 'POST') {
-    await authMiddleware(addPost, 1)(request, response);
-  } else if (request.method === 'GET') {
+
+  if (request.method === T.RequestMethod.POST) {
+    await authMiddleware(addPost, T.Auth.ADMIN)(request, response);
+  } else if (request.method === T.RequestMethod.GET) {
     await getPost(request, response);
-  } else if (request.method === 'PUT') {
-    await authMiddleware(modifyPost, 1)(request, response);
-  } else if (request.method === 'DELETE') {
-    await authMiddleware(deletePost, 1)(request, response);
+  } else if (request.method === T.RequestMethod.PUT) {
+    await authMiddleware(modifyPost, T.Auth.ADMIN)(request, response);
+  } else if (request.method === T.RequestMethod.DELETE) {
+    await authMiddleware(deletePost, T.Auth.ADMIN)(request, response);
   }
 };
 

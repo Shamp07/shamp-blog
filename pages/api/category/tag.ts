@@ -1,8 +1,9 @@
 import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
-import Database from '../../../database/Database';
-import logger from '../../../config/log.config';
-import cors from '../../../middleware/cors';
+
+import Database from '@database/Database';
+import logger from '@config/log.config';
+import cors from '@middleware/cors';
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   await cors(request, response);

@@ -1,16 +1,18 @@
 import { Client } from 'pg';
 import { NextApiResponse } from 'next';
-import Database from '../../../database/Database';
-import logger from '../../../config/log.config';
-import authMiddleware, { NextApiRequestToken } from '../../../middleware/auth';
-import cors from '../../../middleware/cors';
+
+import Database from '@database/Database';
+import authMiddleware, { NextApiRequestToken } from '@middleware/auth';
+import cors from '@middleware/cors';
+import logger from '@config/log.config';
+import * as T from '@types';
 
 const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
 
-  if (request.method === 'GET') {
+  if (request.method === T.RequestMethod.GET) {
     await getSocketId(request, response);
-  } else if (request.method === 'PUT') {
+  } else if (request.method === T.RequestMethod.PUT) {
     await modifySocketId(request, response);
   }
 };
@@ -18,6 +20,7 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
 const getSocketId = async (request: NextApiRequestToken, response: NextApiResponse) => {
   const { userId } = request.query;
   const values = [userId];
+
   await Database.execute(
     (database: Client) => database.query(
       SELECT_USER_SOCKET_ID,
@@ -67,4 +70,4 @@ const UPDATE_USER_SOCKET_ID = `
   WHERE id = $2
 `;
 
-export default authMiddleware(handler, 0);
+export default authMiddleware(handler, T.Auth.USER);

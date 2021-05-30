@@ -1,12 +1,14 @@
 import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
-import config from '../config/jwt.config.json';
+
+import config from '@config/jwt.config.json';
+import * as T from '@types';
 
 export interface NextApiRequestToken extends NextApiRequest {
-  decodedToken: Token;
+  decodedToken: AuthToken;
 }
 
-export interface Token {
+export interface AuthToken {
   id: number;
   email: string;
   name: string;
@@ -16,16 +18,8 @@ export interface Token {
   exp: number;
 }
 
-export enum Auth {
-  USER = 'user',
-  ADMIN = 'admin',
-}
-
-// type
-// 0: user
-// 1: admin
 const authMiddleware = (
-  handler: Function, type: Auth,
+  handler: Function, type: T.Auth,
 ) => async (request: NextApiRequestToken, response: NextApiResponse) => {
   if (!('token' in request.cookies)) {
     response.status(200).json({

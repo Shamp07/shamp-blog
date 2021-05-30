@@ -1,13 +1,15 @@
 import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
-import Database from '../../../../database/Database';
-import logger from '../../../../config/log.config';
-import cors from '../../../../middleware/cors';
+
+import Database from '@database/Database';
+import logger from '@config/log.config';
+import cors from '@middleware/cors';
+import * as T from '@types';
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   await cors(request, response);
 
-  if (request.method === 'PUT') {
+  if (request.method === T.RequestMethod.PUT) {
     await verifyUser(request, response);
   }
 };
