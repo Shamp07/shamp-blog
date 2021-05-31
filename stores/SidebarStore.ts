@@ -1,5 +1,6 @@
 import { makeObservable } from 'mobx';
-import makeAnnotations from '../util/Mobx';
+
+import makeAnnotations from '@util/Mobx';
 
 class SidebarStore {
   topCategoryList = [{
@@ -69,7 +70,7 @@ class SidebarStore {
     this.isOpenSidebar = !this.isOpenSidebar;
   };
 
-  getCategoryName = (path: string): string => (this.boardCategoryName[path] ? this.boardCategoryName[path] : '');
+  getCategoryName = (path: string): string => (this.boardCategoryName[path] ?? '');
 }
 
 export default SidebarStore;

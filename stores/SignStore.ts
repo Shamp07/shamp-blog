@@ -1,20 +1,13 @@
 import React from 'react';
 import { makeObservable } from 'mobx';
 import cookie from 'js-cookie';
+
+import Axios from '@util/Axios';
+import makeAnnotations from '@util/Mobx';
+import * as T from '@types';
 import AlertStore from './AlertStore';
 import UtilStore from './UtilStore';
-import Axios from '../util/Axios';
-import makeAnnotations from '../util/Mobx';
 import ChatStore from './ChatStore';
-
-interface UserDataType {
-  id: number;
-  name: string;
-  verifyFl: boolean;
-  adminFl: boolean;
-  exp: number;
-  iat: number;
-}
 
 class SignStore {
   AlertStore: AlertStore;
@@ -25,7 +18,7 @@ class SignStore {
 
   cookieChecked = false;
 
-  userData: UserDataType | undefined;
+  userData: T.User | undefined;
 
   loginInfo = {
     email: '',

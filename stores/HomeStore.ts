@@ -1,25 +1,10 @@
 import React from 'react';
 import { makeObservable } from 'mobx';
+
+import Axios from '@util/Axios';
+import makeAnnotations from '@util/Mobx';
+import * as T from '@types';
 import AlertStore from './AlertStore';
-import Axios from '../util/Axios';
-import makeAnnotations from '../util/Mobx';
-
-export interface FootPrintType {
-  rownum: number;
-  total: number;
-  id: number;
-  userId: number;
-  userName: string;
-  content: string;
-  time: string;
-  modifiedTime: string;
-}
-
-export interface HomePostType {
-  id: number,
-  title: string,
-  commentCnt: number,
-}
 
 class HomeStore {
   AlertStore: AlertStore;
@@ -28,7 +13,7 @@ class HomeStore {
 
   noticePostList = [];
 
-  footprintList: Array<FootPrintType> = [];
+  footprintList: T.FootPrint[] = [];
 
   footprintSize = 20;
 
@@ -160,7 +145,7 @@ class HomeStore {
 export const initialHome = {
   recentlyPostList: [],
   noticePostList: [],
-  footprintList: [] as Array<FootPrintType>,
+  footprintList: [],
 };
 
 export default HomeStore;

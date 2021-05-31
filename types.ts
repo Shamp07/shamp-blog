@@ -14,6 +14,97 @@ export enum Auth {
 
 export type Store = RootStore;
 
+export interface Alert {
+  total: number;
+  id: number;
+  content: string;
+  postId: number;
+  readFl: boolean;
+  time: string;
+}
+
+export interface Tag {
+  tag: string;
+}
+
+export interface Comment {
+  rownum: number;
+  total: number;
+  id: number;
+  userId: number;
+  upperId: number;
+  commentId: number;
+  commentUserName: string;
+  userName: string;
+  content: string;
+  isTag: boolean;
+  time: string;
+  modifiedTime: string;
+}
+
+export interface FootPrint {
+  rownum: number;
+  total: number;
+  id: number;
+  userId: number;
+  userName: string;
+  content: string;
+  time: string;
+  modifiedTime: string;
+}
+
+export interface HomePost {
+  id: number;
+  title: string;
+  commentCnt: number;
+}
+
+export interface Post {
+  id: number,
+  category: string,
+  tags: string
+  title: string,
+  content: string,
+  count: number,
+  page: number,
+}
+
+export interface PostList {
+  rownum: number;
+  page: number;
+  id: number;
+  category: string;
+  tags: string;
+  title: string;
+  content: string;
+  crtDttm: string;
+  likeCnt: number;
+  commentCnt: number;
+  time: string;
+}
+
+export interface PostView {
+  id: number;
+  category: string;
+  tags: string;
+  title: string;
+  content: string;
+  viewCnt: string;
+  likeCnt: string;
+  commentCnt: string;
+  time: string;
+  modifiedTime: string;
+}
+
+export interface User {
+  id: number;
+  name: string;
+  verifyFl: boolean;
+  adminFl: boolean;
+  exp: number;
+  iat: number;
+}
+
 export interface Chat {
   id: number;
   fromUserName: string;

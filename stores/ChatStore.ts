@@ -1,11 +1,12 @@
-import { makeObservable } from 'mobx';
 import React, { RefObject } from 'react';
+import { makeObservable } from 'mobx';
 import socketio from 'socket.io-client';
 import dayjs from 'dayjs';
-import makeAnnotations from '../util/Mobx';
-import Axios from '../util/Axios';
-import AlertStore from './AlertStore';
+
+import makeAnnotations from '@util/Mobx';
 import * as T from '@types';
+import Axios from '@util/Axios';
+import AlertStore from './AlertStore';
 
 class ChatStore {
   AlertStore: AlertStore;
@@ -20,7 +21,7 @@ class ChatStore {
 
   chatRoom: T.ChatRoomType = {};
 
-  chatList: Array<T.Chat> = [];
+  chatList: T.Chat[] = [];
 
   toUserId = -1;
 
@@ -65,7 +66,7 @@ class ChatStore {
     return count;
   }
 
-  get displayedChatList(): Array<T.Chat> {
+  get displayedChatList(): T.Chat[] {
     let beforeTime = '';
     let beforeFromUserId = -1;
 

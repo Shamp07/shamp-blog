@@ -1,24 +1,11 @@
 import React from 'react';
 import { makeObservable } from 'mobx';
+
+import Axios from '@util/Axios';
+import makeAnnotations from '@util/Mobx';
+import * as T from '@types';
 import PostStore from './PostStore';
 import AlertStore from './AlertStore';
-import Axios from '../util/Axios';
-import makeAnnotations from '../util/Mobx';
-
-export interface CommentType {
-  rownum: number;
-  total: number;
-  id: number;
-  userId: number;
-  upperId: number;
-  commentId: number;
-  commentUserName: string;
-  userName: string;
-  content: string;
-  isTag: boolean;
-  time: string;
-  modifiedTime: string;
-}
 
 class CommentStore {
   PostStore: PostStore;
@@ -31,7 +18,7 @@ class CommentStore {
     modifierComment: '',
   };
 
-  commentList: Array<CommentType> = [];
+  commentList: T.Comment[] = [];
 
   commentSize = 15;
 
@@ -40,7 +27,7 @@ class CommentStore {
   replyCommentId = 0;
 
   constructor(initialData = initialComment, root: {
-    PostStore: PostStore, AlertStore: AlertStore
+    PostStore: PostStore, AlertStore: AlertStore,
   }) {
     this.PostStore = root.PostStore;
     this.AlertStore = root.AlertStore;
@@ -155,7 +142,7 @@ class CommentStore {
 }
 
 export const initialComment = {
-  commentList: [] as Array<CommentType>,
+  commentList: [],
 };
 
 export default CommentStore;

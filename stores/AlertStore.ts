@@ -1,16 +1,9 @@
 import { makeObservable } from 'mobx';
 import { NextRouter } from 'next/dist/next-server/lib/router/router';
-import makeAnnotations from '../util/Mobx';
-import Axios from '../util/Axios';
 
-export interface AlertType {
-  total: number;
-  id: number;
-  content: string;
-  postId: number;
-  readFl: boolean;
-  time: string;
-}
+import makeAnnotations from '@util/Mobx';
+import Axios from '@util/Axios';
+import * as T from '@types';
 
 class AlertStore {
   isOpenAlertModal = false;
@@ -19,7 +12,7 @@ class AlertStore {
 
   alertLoading = true;
 
-  alertList: Array<AlertType> = [];
+  alertList: Array<T.Alert> = [];
 
   alertSize = 10;
 
@@ -48,7 +41,7 @@ class AlertStore {
       success: (response) => {
         const { result } = response.data;
         this.alertList = result;
-        this.alertNotReadSize = this.alertList.filter((data: AlertType) => !data.readFl).length;
+        this.alertNotReadSize = this.alertList.filter((data) => !data.readFl).length;
         this.alertLoading = false;
       },
     });

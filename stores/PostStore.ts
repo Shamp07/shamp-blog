@@ -1,55 +1,20 @@
 import React from 'react';
 import { makeObservable } from 'mobx';
 import { NextRouter } from 'next/dist/next-server/lib/router/router';
+
+import Axios from '@util/Axios';
+import makeAnnotations from '@util/Mobx';
+import * as T from '@types';
 import AlertStore from './AlertStore';
-import Axios from '../util/Axios';
-import makeAnnotations from '../util/Mobx';
-
-interface PostType {
-  id: number,
-  category: string,
-  tags: string
-  title: string,
-  content: string,
-  count: number,
-  page: number,
-}
-
-export interface PostListType {
-  rownum: number;
-  page: number;
-  id: number;
-  category: string;
-  tags: string;
-  title: string;
-  content: string;
-  crtDttm: string;
-  likeCnt: number;
-  commentCnt: number;
-  time: string;
-}
-
-export interface PostViewType {
-  id: number;
-  category: string;
-  tags: string;
-  title: string;
-  content: string;
-  viewCnt: string;
-  likeCnt: string;
-  commentCnt: string;
-  time: string;
-  modifiedTime: string;
-}
 
 class PostStore {
   AlertStore: AlertStore;
 
-  post: PostType;
+  post: T.Post;
 
-  postView: PostViewType;
+  postView: T.PostView | {};
 
-  postList: Array<PostListType>;
+  postList: T.PostList[] = [];
 
   constructor(initialData = initialPost, root: { AlertStore: AlertStore }) {
     this.AlertStore = root.AlertStore;
@@ -173,8 +138,8 @@ class PostStore {
 }
 
 export const initialPost = {
-  postList: [] as Array<PostListType>,
-  postView: {} as PostViewType,
+  postList: [],
+  postView: {},
   post: {
     id: 0,
     category: '',

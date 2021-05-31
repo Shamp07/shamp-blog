@@ -1,13 +1,11 @@
 import { makeObservable } from 'mobx';
-import Axios from '../util/Axios';
-import makeAnnotations from '../util/Mobx';
 
-export interface TagType {
-  tag: string
-}
+import Axios from '@util/Axios';
+import makeAnnotations from 'util/Mobx';
+import * as T from '@types';
 
 class CategoryStore {
-  categoryTags: Array<TagType> = [];
+  categoryTags: T.Tag[] = [];
 
   constructor(initialData = initialCategory) {
     this.categoryTags = initialData.categoryTags;
@@ -31,7 +29,7 @@ class CategoryStore {
 }
 
 export const initialCategory = {
-  categoryTags: [] as Array<TagType>,
+  categoryTags: [],
 };
 
 export default CategoryStore;

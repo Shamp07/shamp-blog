@@ -1,6 +1,7 @@
 import { makeObservable } from 'mobx';
 import React from 'react';
-import makeAnnotations from '../util/Mobx';
+
+import makeAnnotations from '@util/Mobx';
 import AlertStore from './AlertStore';
 
 class UtilStore {
@@ -12,7 +13,7 @@ class UtilStore {
 
   isOpenConfirmModal = false;
 
-  callback: Function | undefined;
+  callback: (() => void | undefined) | undefined;
 
   text = '';
 
@@ -24,13 +25,13 @@ class UtilStore {
     }));
   }
 
-  toggleConfirmModal = (text: string, callback: Function | undefined): void => {
+  toggleConfirmModal = (text: string, callback: () => void): void => {
     this.isOpenConfirmModal = !this.isOpenConfirmModal;
     this.text = text;
     this.callback = callback;
   };
 
-  callFunction = (callback: Function | undefined): void => {
+  callFunction = (callback: () => void): void => {
     if (callback) callback();
     this.closeConfirmModal();
   };
