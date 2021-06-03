@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { observer } from 'mobx-react-lite';
@@ -28,6 +28,10 @@ const BoardHead = () => {
 
   const isAdmin = Boolean(userData?.adminFl);
 
+  const goPost = useCallback(() => {
+    router.push('/post').then(clearPost);
+  }, [router, clearPost]);
+
   return (
     <Wrapper>
       <HeadSection>
@@ -38,7 +42,7 @@ const BoardHead = () => {
           { isAdmin && (
             <AbsoluteUl>
               <li>
-                <Button variant="contained" color="primary" onClick={() => router.push('/post').then(clearPost)}>
+                <Button variant="contained" color="primary" onClick={goPost}>
                   <span>
                     <CustomIcon icon={faPen} />
                   </span>

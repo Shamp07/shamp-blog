@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styled from '@emotion/styled';
@@ -6,10 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 
 import useStores from '@stores/useStores';
-import { PostListType } from '@stores/PostStore';
+import * as T from '@types';
 
 interface BoardPostProps {
-  data: PostListType;
+  data: T.PostList;
 }
 
 const BoardPost = ({ data }: BoardPostProps) => {
@@ -25,6 +25,16 @@ const BoardPost = ({ data }: BoardPostProps) => {
 
   const boardPath = router.query.board[0];
 
+  const commentCount = useMemo(() => (commentCnt ? (
+    <span>
+      [
+      {commentCnt}
+      ]
+    </span>
+  ) : null), [commentCnt]);
+
+  const CategoryName = useMemo(() => (getCategoryName(category)), [category]);
+
   return (
     <Article>
       <Vote>
@@ -38,20 +48,14 @@ const BoardPost = ({ data }: BoardPostProps) => {
           <Link href={`/category/${boardPath}/post/${id}`}>
             <PostLinkSpan>
               <span>{title}</span>
-              {commentCnt > 0 && (
-                <span>
-                  [
-                  {commentCnt}
-                  ]
-                </span>
-              )}
+              {commentCount}
             </PostLinkSpan>
           </Link>
         </PostTitle>
         <div>
           <PostInfoUl>
             <li>
-              <span>{getCategoryName(category)}</span>
+              <span>{CategoryName}</span>
             </li>
             <li>
               <span>{tags}</span>

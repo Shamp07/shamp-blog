@@ -2,7 +2,6 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import useStores from '@stores/useStores';
-import { PostListType } from '@stores/PostStore';
 import BoardPost from './BoardPost';
 import BoardPostNone from './BoardPostNone';
 
@@ -12,11 +11,9 @@ const BoardContent = () => {
 
   return (
     <ArticleWrapper>
-      {postList.length > 0 ? postList.map(
-        (data: PostListType) => (
-          <BoardPost data={data} key={data.id} />
-        ),
-      ) : <BoardPostNone />}
+      {postList.length ? postList.map((data) => (
+        <BoardPost data={data} key={data.id} />
+      )) : <BoardPostNone />}
     </ArticleWrapper>
   );
 };
