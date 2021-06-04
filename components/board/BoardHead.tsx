@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { observer } from 'mobx-react-lite';
@@ -28,43 +28,43 @@ const BoardHead = () => {
 
   const isAdmin = Boolean(userData?.adminFl);
 
+  const categoryName = useMemo(() => getCategoryName(boardPath), [boardPath]);
+
   const goPost = useCallback(() => {
     router.push('/post').then(clearPost);
   }, [router, clearPost]);
+
+  const postButton = useMemo(() => (
+    isAdmin ? (
+      <AbsoluteUl>
+        <li>
+          <Button variant="contained" color="primary" onClick={goPost}>
+            <span>
+              <CustomIcon icon={faPen} />
+            </span>
+          </Button>
+        </li>
+      </AbsoluteUl>
+    ) : null),
+  [isAdmin]);
 
   return (
     <Wrapper>
       <HeadSection>
         <SubTitle>
-          <h2>
-            {getCategoryName(boardPath)}
-          </h2>
-          { isAdmin && (
-            <AbsoluteUl>
-              <li>
-                <Button variant="contained" color="primary" onClick={goPost}>
-                  <span>
-                    <CustomIcon icon={faPen} />
-                  </span>
-                </Button>
-              </li>
-            </AbsoluteUl>
-          )}
+          <h2>{categoryName}</h2>
+          {postButton}
         </SubTitle>
       </HeadSection>
       <HeadSection>
         <CategoryTag>
           {((boardPath !== 'best') && (boardPath !== 'all')) && (
             <CategoryTagBest active={boardTag === 'best'}>
-              <Link href={`/category/${boardPath}/best`}>
-                인기글
-              </Link>
+              <Link href={`/category/${boardPath}/best`}>인기글</Link>
             </CategoryTagBest>
           )}
           <CategoryTagList active={boardTag === undefined}>
-            <Link href={`/category/${boardPath}/`}>
-              전체
-            </Link>
+            <Link href={`/category/${boardPath}/`}>전체</Link>
           </CategoryTagList>
           {categoryTags.map(
             (data) => <BoardTag key={data.tag} tag={data.tag} />,
@@ -129,25 +129,27 @@ const CategoryTag = styled.ul`
   }
 `;
 
-interface TagInterface {
-  active: boolean;
+interface ActiveProp {
+  isActive: boolean;
 }
 
-const CategoryTagList = styled.li<TagInterface>`
-  & > a {
-    ${(props) => (props.active ? 'color: #fff !important;' : null)}
-    ${(props) => (props.active ? 'background-color: #2d79c7 !important;' : null)}
-  }
-`;
+const CategoryTagList = styled.li<ActiveProp>(({ isActive }) => ({
+  '& > a': {
+    ...(isActive ? ({
+      color: '#fff',
+      backgroundColor: '#2d79c7',
+    }) : undefined),
+  },
+}));
 
-const CategoryTagBest = styled.li<TagInterface>`
+const CategoryTagBest = styled.li<ActiveProp>`
   & > a {
     border: #eeee00 1.5px solid;
     background-color: white !important;
     color: #eeee00 !important;
 
-    ${(props) => (props.active ? 'color: #fff !important;' : null)}
-    ${(props) => (props.active ? 'background-color: #eeee00 !important;' : null)}
+    ${(props) => (props.isActive ? 'color: #fff !important;' : null)}
+    ${(props) => (props.isActive ? 'background-color: #eeee00 !important;' : null)}
   }
 `;
 
