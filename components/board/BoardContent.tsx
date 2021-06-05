@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from '@emotion/styled';
 
 import useStores from '@stores/useStores';
@@ -9,17 +9,21 @@ const BoardContent = () => {
   const { PostStore } = useStores();
   const { postList } = PostStore;
 
+  const posts = useMemo(() => (
+    postList.length ? postList.map((data) => (
+      <BoardPost data={data} key={data.id} />
+    )) : <BoardPostNone />
+  ), [postList.length]);
+
   return (
-    <ArticleWrapper>
-      {postList.length ? postList.map((data) => (
-        <BoardPost data={data} key={data.id} />
-      )) : <BoardPostNone />}
-    </ArticleWrapper>
+    <Wrapper>
+      {posts}
+    </Wrapper>
   );
 };
 
-const ArticleWrapper = styled.section`
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
+const Wrapper = styled.section`
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
   
   & > article:first-of-type {
     border-top-right-radius: 4px;

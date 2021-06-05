@@ -5,7 +5,7 @@ import makeAnnotations from 'util/Mobx';
 import * as T from '@types';
 
 class CategoryStore {
-  categoryTags: T.Tag[] = [];
+  categoryTags: string[] = [];
 
   constructor(initialData = initialCategory) {
     this.categoryTags = initialData.categoryTags;
@@ -22,7 +22,7 @@ class CategoryStore {
       data: { category },
       success: (response) => {
         const { result } = response.data;
-        this.categoryTags = result;
+        this.categoryTags = result.map((row: T.Tag) => row.tag);
       },
     });
   };

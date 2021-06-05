@@ -39,7 +39,7 @@ const SELECT_POST_LIST = `
       SELECT
         p.id,
         p.category,
-        p.tags,
+        p.tags AS tag,
         p.title,
         p.content,
         p.crt_dttm AS "crtDttm",

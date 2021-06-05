@@ -23,12 +23,13 @@ const BoardHead = () => {
   const { userData } = SignStore;
   const { clearPost } = PostStore;
 
-  const boardPath = router.query.board[0];
-  const boardTag = router.query.board[1];
+  const categoryPath = router.query.board[0];
+  const categoryTag = router.query.board[1];
 
   const isAdmin = Boolean(userData?.adminFl);
+  const isBestOrAll = categoryPath === 'best' || categoryPath === 'all';
 
-  const categoryName = useMemo(() => getCategoryName(boardPath), [boardPath]);
+  const categoryName = useMemo(() => getCategoryName(categoryPath), [categoryPath]);
 
   const goPost = useCallback(() => {
     router.push('/post').then(clearPost);
@@ -45,8 +46,14 @@ const BoardHead = () => {
           </Button>
         </li>
       </AbsoluteUl>
-    ) : null),
-  [isAdmin]);
+    ) : null), [isAdmin]);
+
+  const bestTag = useMemo(() => (
+    isBestOrAll ? null : (
+      <CategoryTagBest isActive={categoryTag === 'best'}>
+        <Link href={`/category/${categoryPath}/best`}>인기글</Link>
+      </CategoryTagBest>
+    )), [isBestOrAll]);
 
   return (
     <Wrapper>
@@ -58,17 +65,11 @@ const BoardHead = () => {
       </HeadSection>
       <HeadSection>
         <CategoryTag>
-          {((boardPath !== 'best') && (boardPath !== 'all')) && (
-            <CategoryTagBest active={boardTag === 'best'}>
-              <Link href={`/category/${boardPath}/best`}>인기글</Link>
-            </CategoryTagBest>
-          )}
-          <CategoryTagList active={boardTag === undefined}>
-            <Link href={`/category/${boardPath}/`}>전체</Link>
+          {bestTag}
+          <CategoryTagList isActive={categoryTag === undefined}>
+            <Link href={`/category/${categoryPath}`}>전체</Link>
           </CategoryTagList>
-          {categoryTags.map(
-            (data) => <BoardTag key={data.tag} tag={data.tag} />,
-          )}
+          {categoryTags.map((tag) => <BoardTag key={tag} tag={tag} />)}
         </CategoryTag>
       </HeadSection>
     </Wrapper>
@@ -134,7 +135,7 @@ interface ActiveProp {
 }
 
 const CategoryTagList = styled.li<ActiveProp>(({ isActive }) => ({
-  '& > a': {
+  '> a': {
     ...(isActive ? ({
       color: '#fff',
       backgroundColor: '#2d79c7',
@@ -142,16 +143,16 @@ const CategoryTagList = styled.li<ActiveProp>(({ isActive }) => ({
   },
 }));
 
-const CategoryTagBest = styled.li<ActiveProp>`
-  & > a {
-    border: #eeee00 1.5px solid;
-    background-color: white !important;
-    color: #eeee00 !important;
-
-    ${(props) => (props.isActive ? 'color: #fff !important;' : null)}
-    ${(props) => (props.isActive ? 'background-color: #eeee00 !important;' : null)}
-  }
-`;
+const CategoryTagBest = styled.li<ActiveProp>(({ isActive }) => ({
+  '> a': {
+    border: '#eeee00 1.5px solid',
+    backgroundColor: isActive ? '#fff' : '#eeee00',
+    color: '#eeee00 !important',
+    ...(isActive ? ({
+      color: '#fff',
+    }) : undefined),
+  },
+}));
 
 const HeadSection = styled.div`
   &:first-of-type {

@@ -7,6 +7,7 @@ import cors from '@middleware/cors';
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   await cors(request, response);
+
   if (request.method === 'GET') {
     const { category } = request.query;
     const values = [category];
@@ -29,7 +30,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 };
 
 const SELECT_CATEGORY_TAGS = `
-  SELECT DISTINCT a.tags FROM (
+  SELECT DISTINCT a.tags AS tag FROM (
     SELECT
       tags,
       (SELECT COUNT(*) FROM post_like WHERE post_id = p.id) AS like_cnt
