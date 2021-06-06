@@ -24,11 +24,11 @@ const Board = () => {
   if (router.query.board[1] === 'post') return <PostView />;
 
   return (
-    <div>
+    <>
       <BoardHead />
       <BoardContent />
       <BoardPagination />
-    </div>
+    </>
   );
 };
 
@@ -53,7 +53,7 @@ Board.getInitialProps = async ({ query, store }: MyNextPageContext) => {
     const { getCategoryTags } = CategoryStore;
     const { getPostList } = PostStore;
 
-    const page = Number(query.page);
+    const page = Number(query.page ?? 1);
 
     await Promise.all([
       getPostList(board, category, page),

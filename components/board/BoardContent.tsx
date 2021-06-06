@@ -9,11 +9,13 @@ const BoardContent = () => {
   const { PostStore } = useStores();
   const { postList } = PostStore;
 
+  const isMoreThanOne = postList.length >= 1;
+
   const posts = useMemo(() => (
-    postList.length ? postList.map((data) => (
+    isMoreThanOne ? postList.map((data) => (
       <BoardPost data={data} key={data.id} />
     )) : <BoardPostNone />
-  ), [postList.length]);
+  ), [isMoreThanOne]);
 
   return (
     <Wrapper>

@@ -18,7 +18,7 @@ const Chat = () => {
       {isChatOpen && <ChatWidget />}
       <ButtonWrapper onClick={() => openChat(Boolean(userData), Boolean(userData?.adminFl))}>
         <span>{userData?.adminFl ? '채팅하기' : '질문하기'}</span>
-        {(notReadChatCount && !isChatOpen) && <div>{notReadChatCount}</div>}
+        {(Boolean(notReadChatCount) && !isChatOpen) && <div>{notReadChatCount}</div>}
         <ChatFloatButton color="primary" aria-label="add">
           <FontAwesomeIcon icon={faCommentDots} />
         </ChatFloatButton>

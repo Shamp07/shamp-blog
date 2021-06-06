@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import React, { useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { observer } from 'mobx-react-lite';
@@ -13,7 +13,6 @@ import BoardTag from './BoardTag';
 const BoardHead = () => {
   const router = useRouter();
   if (!router.query.board) return null;
-
   const {
     SidebarStore, CategoryStore, SignStore,
     PostStore,
@@ -28,6 +27,7 @@ const BoardHead = () => {
 
   const isAdmin = Boolean(userData?.adminFl);
   const isBestOrAll = categoryPath === 'best' || categoryPath === 'all';
+  const isBest = categoryTag === 'best';
 
   const categoryName = useMemo(() => getCategoryName(categoryPath), [categoryPath]);
 
@@ -50,10 +50,10 @@ const BoardHead = () => {
 
   const bestTag = useMemo(() => (
     isBestOrAll ? null : (
-      <CategoryTagBest isActive={categoryTag === 'best'}>
+      <BestTag isActive={isBest}>
         <Link href={`/category/${categoryPath}/best`}>인기글</Link>
-      </CategoryTagBest>
-    )), [isBestOrAll]);
+      </BestTag>
+    )), [isBestOrAll, isBest]);
 
   return (
     <Wrapper>
@@ -66,9 +66,9 @@ const BoardHead = () => {
       <HeadSection>
         <CategoryTag>
           {bestTag}
-          <CategoryTagList isActive={categoryTag === undefined}>
+          <Tag isActive={categoryTag === undefined}>
             <Link href={`/category/${categoryPath}`}>전체</Link>
-          </CategoryTagList>
+          </Tag>
           {categoryTags.map((tag) => <BoardTag key={tag} tag={tag} />)}
         </CategoryTag>
       </HeadSection>
@@ -85,7 +85,7 @@ const CategoryTag = styled.ul`
   list-style: none;
   overflow-x: visible;
   overflow-y: hidden;
-  white-space:nowrap;
+  white-space: nowrap;
 
   &::-webkit-scrollbar {
     width: 10px;
@@ -105,56 +105,56 @@ const CategoryTag = styled.ul`
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
   }
-
-  & > li {
-    display: inline-block;
-    padding: 10px 0 10px 12px;
-  }
-
-  & > li:last-child {
-    padding-right: 10px;
-  }
-
-  & > li > a {
-    display: inline-block;
-    min-width: 45px;
-    padding: 4px 15px;
-    text-align: center;
-    text-decoration: none;
-    background-color: #e6e6e6;
-    border-radius: 12px;
-    font-size: 15px;
-    font-weight: bold;
-    color: #616161;
-    transition: all 0.2s;
-  }
 `;
 
 interface ActiveProp {
   isActive: boolean;
 }
 
-const CategoryTagList = styled.li<ActiveProp>(({ isActive }) => ({
+const Tag = styled.li<ActiveProp>(({ isActive }) => ({
+  display: 'inline-block',
+  padding: '10px 0 10px 12px',
+
+  ':last-child': {
+    paddingRight: '10px',
+  },
+
   '> a': {
+    display: 'inline-block',
+    minWidth: '45px',
+    padding: '4px 15px',
+    textAlign: 'center',
+    textDecoration: 'none',
+    borderRadius: '12px',
+    fontSize: '15px',
+    fontWeight: 'bold',
+    transition: 'all 0.2s',
+    color: '#616161',
+    backgroundColor: '#e6e6e6',
+
     ...(isActive ? ({
       color: '#fff',
       backgroundColor: '#2d79c7',
-    }) : undefined),
+    }) : null),
   },
 }));
 
-const CategoryTagBest = styled.li<ActiveProp>(({ isActive }) => ({
+const BestTag = styled(Tag)<ActiveProp>(({ isActive }) => ({
   '> a': {
     border: '#eeee00 1.5px solid',
-    backgroundColor: isActive ? '#fff' : '#eeee00',
-    color: '#eeee00 !important',
+    backgroundColor: '#fff',
+    color: '#eeee00',
+
     ...(isActive ? ({
-      color: '#fff',
-    }) : undefined),
+      color: '#fff !important',
+      backgroundColor: '#eeee00 !important',
+    }) : null),
   },
 }));
 
 const HeadSection = styled.div`
+  background-color: #fff;
+  
   &:first-of-type {
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
@@ -164,7 +164,6 @@ const HeadSection = styled.div`
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
   }
-  background-color: #fff;
 `;
 
 const SubTitle = styled.div`
