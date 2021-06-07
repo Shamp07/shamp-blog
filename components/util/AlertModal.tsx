@@ -30,7 +30,7 @@ const ConfirmModal = () => {
           {/* eslint-disable-next-line react/no-danger */}
           <div dangerouslySetInnerHTML={{ __html: text }} />
           <div>
-            <RightButton variant="contained" color="primary" onClick={closeAlertModal}>확인</RightButton>
+            <RightButton variant="contained" color="primary" onClick={closeAlertModal}>확인하기</RightButton>
           </div>
         </Paper>
       </Fade>
@@ -46,12 +46,13 @@ const CustomModal = styled(Modal)`
 
 const Paper = styled.div`
   margin: 0 40px;
+  min-width: 300px;
   max-width: 100%;
   background-color: #fff;
   border: 1px solid #e6e6e6;
-  border-radius: 4px;
+  border-radius: 16px;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
-  padding: 15px;
+  padding: 36px;
   line-height: 25px;
 
   &:focus {
@@ -65,7 +66,6 @@ const Paper = styled.div`
 
   & > div:first-of-type {
     padding: 20px 15px 20px 0;
-    border-bottom: 1px solid #e6e6e6;
     border-top: 1px solid #e6e6e6;
     margin-bottom: 10px;
   }
@@ -77,6 +77,10 @@ const Paper = styled.div`
 `;
 
 const RightButton = styled(Button)`
+  height: 44px;
+  border-radius: 10px !important;
+  padding-left: 18px !important;
+  padding-right: 18px !important;
   margin-left: auto !important;
 `;
 

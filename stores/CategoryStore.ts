@@ -29,7 +29,7 @@ class CategoryStore {
 }
 
 export const initialCategory = {
-  categoryTags: [],
+  categoryTags: [] as string[],
 };
 
 export default CategoryStore;

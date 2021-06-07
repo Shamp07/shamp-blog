@@ -15,7 +15,6 @@ const Sidebar = () => {
     isOpenSidebar, toggleSidebar,
   } = SidebarStore;
 
-  console.log(topCategoryList);
   return (
     <Wrapper isOpenSidebar={isOpenSidebar}>
       <MobileMenu>

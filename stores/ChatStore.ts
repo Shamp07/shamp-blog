@@ -102,6 +102,9 @@ class ChatStore {
   }
 
   openChat = async (loggedIn: boolean, isAdmin: boolean) => {
+    this.AlertStore.toggleAlertModal('지원 준비 중 이에요!');
+    return;
+
     if (!this.isChatOpen) {
       if (!loggedIn) {
         this.AlertStore.toggleAlertModal('채팅은 로그인 이후 이용하실 수 있습니다! 비회원은 곧 지원 예정입니다.');
@@ -133,9 +136,10 @@ class ChatStore {
   };
 
   connectSocket = (userId: number) => {
-    this.chatSocket = socketio.connect('http://localhost');
-    this.chatSocket.emit('connect_client', userId);
-    this.chatSocket.on('receive_message', this.receiveChat);
+    // TODO: CHATTING
+    // this.chatSocket = socketio.connect('http://localhost');
+    // this.chatSocket.emit('connect_client', userId);
+    // this.chatSocket.on('receive_message', this.receiveChat);
   };
 
   receiveChat = ({ message, fromUserId }: T.ReceiveMessage) => {

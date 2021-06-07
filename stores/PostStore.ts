@@ -138,7 +138,7 @@ class PostStore {
 }
 
 export const initialPost = {
-  postList: [],
+  postList: [] as T.PostList[],
   postView: {},
   post: {
     id: 0,

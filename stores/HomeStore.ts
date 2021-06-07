@@ -145,7 +145,7 @@ class HomeStore {
 export const initialHome = {
   recentlyPostList: [],
   noticePostList: [],
-  footprintList: [],
+  footprintList: [] as T.FootPrint[],
 };
 
 export default HomeStore;

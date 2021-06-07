@@ -142,7 +142,7 @@ class CommentStore {
 }
 
 export const initialComment = {
-  commentList: [],
+  commentList: [] as T.Comment[],
 };
 
 export default CommentStore;
