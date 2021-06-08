@@ -8,18 +8,19 @@ import ArticleContent from './ArticleContent';
 
 const PostView = () => (
   <div>
-    <ArticleSection>
+    <Section>
       <ArticleHeader />
       <ArticleContent />
       <ArticleFooter />
-    </ArticleSection>
+    </Section>
     <CommentSection />
   </div>
 );
 
-const ArticleSection = styled.article`
+const Section = styled.section`
+  overflow: hidden;
   background-color: #fff;
-  border-radius: 4px;
+  border-radius: 14px;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
 `;
 

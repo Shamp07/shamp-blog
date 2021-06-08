@@ -85,7 +85,7 @@ const CloseIcon = styled(FontAwesomeIcon)`
 const CategoryWrapper = styled.div`
   width: 100%;
   background-color: #fff;
-  border-radius: 4px;
+  border-radius: 14px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
   padding: 7px 0;
   
@@ -131,7 +131,7 @@ const CategoryWrapper = styled.div`
 `;
 
 const BottomCategory = styled(CategoryWrapper)`
-  margin-top: 10px;
+  margin-top: 16px;
   @media (max-width: 1064px) {
     margin-top: 0;
   }

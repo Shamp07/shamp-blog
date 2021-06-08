@@ -1,10 +1,10 @@
 import { NextApiResponse } from 'next';
 
-import authMiddleware, { NextApiRequestToken } from '@middleware/auth';
+import authMiddleware from '@middleware/auth';
 import cors from '@middleware/cors';
 import * as T from '@types';
 
-const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
+const handler = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
 
   if (request.method === T.RequestMethod.GET) {

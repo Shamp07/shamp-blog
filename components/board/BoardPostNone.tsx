@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   background-color: #fff;
   height: 100px;
   padding: 180px 0;
-  border-radius: 4px;
+  border-radius: 14px;
 
   & > div {
     text-align: center;

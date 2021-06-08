@@ -26,15 +26,16 @@ const BoardContent = () => {
 
 const Wrapper = styled.section`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
+  border-radius: 14px;
   
   & > article:first-of-type {
-    border-top-right-radius: 4px;
-    border-top-left-radius: 4px;
+    border-top-right-radius: 14px;
+    border-top-left-radius: 14px;
   }
 
   & > article:last-child {
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
   }
 `;
 

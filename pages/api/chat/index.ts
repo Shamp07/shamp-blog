@@ -2,12 +2,12 @@ import { Client } from 'pg';
 import { NextApiResponse } from 'next';
 
 import Database from '@database/Database';
-import authMiddleware, { NextApiRequestToken } from '@middleware/auth';
+import authMiddleware from '@middleware/auth';
 import cors from '@middleware/cors';
 import logger from '@config/log.config';
 import * as T from '@types';
 
-const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
+const handler = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
 
   if (request.method === T.RequestMethod.GET) {
@@ -17,7 +17,7 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
   }
 };
 
-const getChatList = async (request: NextApiRequestToken, response: NextApiResponse) => {
+const getChatList = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
   const { userId } = request.query;
   const { id } = request.decodedToken;
   const values = [id, userId];
@@ -42,7 +42,7 @@ const getChatList = async (request: NextApiRequestToken, response: NextApiRespon
   });
 };
 
-const sendChat = async (request: NextApiRequestToken, response: NextApiResponse) => {
+const sendChat = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
   const { userId, message } = request.body;
   const { id } = request.decodedToken;
   const values = [id, userId, message];

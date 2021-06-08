@@ -1,4 +1,19 @@
 import { RootStore } from '@stores';
+import { NextApiRequest } from 'next';
+
+export interface NextApiRequestToken extends NextApiRequest {
+  decodedToken: AuthToken;
+}
+
+export interface AuthToken {
+  id: number;
+  email: string;
+  name: string;
+  adminFl: boolean;
+  verifyFl: boolean;
+  iat: number;
+  exp: number;
+}
 
 export enum RequestMethod {
   GET = 'GET',

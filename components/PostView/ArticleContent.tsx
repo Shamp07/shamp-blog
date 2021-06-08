@@ -33,14 +33,14 @@ const ArticleContent = () => {
   );
 };
 
-const ArticleText = styled.div`
+const ArticleText = styled.article`
   width: 100%;
   box-sizing: border-box;
   padding: 24px 16px;
   line-height: 2;
   font-size: 14px;
   color: #1e2022;
-  word-break: break-all;
+  word-break: keep-all;
 
   @media (min-width: 1064px) {
     font-size: 16px;

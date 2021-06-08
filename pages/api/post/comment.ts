@@ -2,12 +2,12 @@ import { Client, QueryResult } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import Database from '@database/Database';
-import authMiddleware, { NextApiRequestToken } from '@middleware/auth';
+import authMiddleware from '@middleware/auth';
 import cors from '@middleware/cors';
 import logger from '@config/log.config';
 import * as T from '@types';
 
-const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
+const handler = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
 
   if (request.method === T.RequestMethod.POST) {
@@ -21,7 +21,7 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
   }
 };
 
-const addComment = async (request: NextApiRequestToken, response: NextApiResponse) => {
+const addComment = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
   const { postId, commentId, comment } = request.body;
   const { id, adminFl } = request.decodedToken;
   const values = [postId, commentId, id, comment];
@@ -105,7 +105,7 @@ const getComment = async (request: NextApiRequest, response: NextApiResponse) =>
   });
 };
 
-const modifyComment = async (request: NextApiRequestToken, response: NextApiResponse) => {
+const modifyComment = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
   const { commentId, comment } = request.body;
   const { id } = request.decodedToken;
   const values = [comment, commentId, id];
@@ -126,7 +126,7 @@ const modifyComment = async (request: NextApiRequestToken, response: NextApiResp
   });
 };
 
-const deleteComment = async (request: NextApiRequestToken, response: NextApiResponse) => {
+const deleteComment = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
   const { commentId } = request.query;
   const { id } = request.decodedToken;
   const values = [commentId, id];

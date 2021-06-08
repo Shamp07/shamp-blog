@@ -13,9 +13,7 @@ const Content = ({ children }: Props) => {
   const { cookieChecked } = SignStore;
 
   // 쿠키 내의 토큰 체크가 되기 전
-  if (!cookieChecked) {
-    return null;
-  }
+  if (!cookieChecked) return null;
 
   return (
     <Wrapper>
@@ -27,7 +25,7 @@ const Content = ({ children }: Props) => {
 const Wrapper = styled.div`
   margin-left: auto;
   box-sizing: border-box;
-  width: 754px;
+  width: 744px;
   margin-bottom: 20px;
   
   @media (max-width: 1064px) {

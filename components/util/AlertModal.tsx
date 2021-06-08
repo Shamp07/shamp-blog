@@ -82,6 +82,7 @@ const RightButton = styled(Button)`
   padding-left: 18px !important;
   padding-right: 18px !important;
   margin-left: auto !important;
+  box-shadow: none !important;
 `;
 
 export default observer(ConfirmModal);

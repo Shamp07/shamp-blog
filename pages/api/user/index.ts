@@ -4,11 +4,11 @@ import crypto from 'crypto';
 
 import Database from '@database/Database';
 import cors from '@middleware/cors';
-import authMiddleware, { NextApiRequestToken } from '@middleware/auth';
+import authMiddleware from '@middleware/auth';
 import logger from '@config/log.config';
 import * as T from '@types';
 
-const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
+const handler = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
   if (request.method === T.RequestMethod.POST) {
     await addUser(request, response);
@@ -17,7 +17,7 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
   }
 };
 
-const addUser = async (request: NextApiRequestToken, response: NextApiResponse) => {
+const addUser = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
   const { email, name, password } = request.body;
   const salt = String(Math.round((new Date().valueOf() * Math.random())));
   const hashPassword = crypto.createHash('sha512').update(password + salt).digest('hex');
@@ -64,7 +64,7 @@ const addUser = async (request: NextApiRequestToken, response: NextApiResponse) 
   });
 };
 
-const deleteUser = async (request: NextApiRequestToken, response: NextApiResponse) => {
+const deleteUser = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
   const { deleteEmail } = request.query;
   const { email, id } = request.decodedToken;
 

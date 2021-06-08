@@ -22,7 +22,7 @@ const CommentSection = () => {
 
 const Wrapper = styled.div`
   background-color: #fff;
-  border-radius: 4px;
+  border-radius: 14px;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
   margin-top: 16px;
 `;

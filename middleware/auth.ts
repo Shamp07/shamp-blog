@@ -1,26 +1,14 @@
 import jwt from 'jsonwebtoken';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiResponse } from 'next';
 
 import config from '@config/jwt.config.json';
 import * as T from '@types';
 
-export interface NextApiRequestToken extends NextApiRequest {
-  decodedToken: AuthToken;
-}
 
-export interface AuthToken {
-  id: number;
-  email: string;
-  name: string;
-  adminFl: boolean;
-  verifyFl: boolean;
-  iat: number;
-  exp: number;
-}
 
 const authMiddleware = (
   handler: Function, type: T.Auth,
-) => async (request: NextApiRequestToken, response: NextApiResponse) => {
+) => async (request: T.NextApiRequestToken, response: NextApiResponse) => {
   if (!('token' in request.cookies)) {
     response.status(200).json({
       success: false,
@@ -28,11 +16,11 @@ const authMiddleware = (
     });
   }
 
-  let decodedToken: Token | undefined;
+  let decodedToken: T.AuthToken | undefined;
   const { token } = request.cookies;
   if (token) {
     try {
-      decodedToken = jwt.verify(token, config.secret) as Token;
+      decodedToken = jwt.verify(token, config.secret) as T.AuthToken;
     } catch (e) {
       response.status(200).json({
         success: false,
@@ -42,7 +30,7 @@ const authMiddleware = (
 
   if (decodedToken) {
     request.decodedToken = decodedToken;
-    if (type === Auth.ADMIN) {
+    if (type === T.Auth.ADMIN) {
       if (decodedToken.adminFl) {
         await handler(request, response);
       } else {

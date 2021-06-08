@@ -36,7 +36,6 @@ const FootprintListWrapper = styled.div`
 
   & > ul > li {
     padding: 10px 0;
-    border-bottom: 1px solid #e6e6e6;
   }
 
   &::-webkit-scrollbar {

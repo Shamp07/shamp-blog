@@ -57,11 +57,11 @@ const ArticleHeader = () => {
 };
 
 const Wrapper = styled.div`
-  padding: 24px 16px;
+  padding: 24px;
   border-bottom: 1px solid #ebeef1;
 `;
 
-const ArticleTitle = styled.div`
+const ArticleTitle = styled.h1`
   line-height: 36px;
   font-size: 24px;
   font-weight: bold;
@@ -73,7 +73,7 @@ const ArticleTitle = styled.div`
 
 const ArticleMeta = styled.div`
   margin-top: 9px;
-  line-height: 20px;
+  line-height: 25px;
   font-size: 14px;
   color: #7b858e;
   display: flex;

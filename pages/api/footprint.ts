@@ -2,12 +2,12 @@ import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import Database from '@database/Database';
-import authMiddleware, { NextApiRequestToken } from '@middleware/auth';
+import authMiddleware from '@middleware/auth';
 import cors from '@middleware/cors';
 import logger from '@config/log.config';
 import * as T from '@types';
 
-const handler = async (request: NextApiRequestToken, response: NextApiResponse) => {
+const handler = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
 
   if (request.method === T.RequestMethod.POST) {
@@ -21,7 +21,7 @@ const handler = async (request: NextApiRequestToken, response: NextApiResponse) 
   }
 };
 
-const addFootprint = async (request: NextApiRequestToken, response: NextApiResponse) => {
+const addFootprint = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
   const { content } = request.body;
   const { id: userId } = request.decodedToken;
   const values = [userId, content];

@@ -16,7 +16,7 @@ const FootPrintNone = () => (
 
 const NoneWrapper = styled.div`
   text-align: center;
-  padding: 32px 0;
+  padding: 51px 0;
   color: #7b858e;
   font-size: 14px;
 `;
