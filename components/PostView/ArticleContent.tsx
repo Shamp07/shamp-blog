@@ -20,7 +20,7 @@ const ArticleContent = () => {
         <div dangerouslySetInnerHTML={{ __html: content }} />
       </ArticleText>
       <ArticleBox>
-        <Button size="small" color="primary" variant="outlined" onClick={() => addPostLike(id)} disabled={!userData}>
+        <Button color="primary" variant="outlined" onClick={() => addPostLike(id)} disabled={!userData}>
           <ThumbsUpIcon icon={faThumbsUp} />
           <span>
             좋아요 (

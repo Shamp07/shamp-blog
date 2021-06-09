@@ -19,7 +19,6 @@ const ArticleFooter = () => {
   return (
     <ArticleFooterWrapper>
       <Button
-        size="small"
         variant="outlined"
         color="secondary"
         onClick={() => toggleConfirmModal(
@@ -29,7 +28,7 @@ const ArticleFooter = () => {
       >
         삭제
       </Button>
-      <Button size="small" variant="outlined" onClick={() => router.push(`/post/modify/${id}`, undefined, { shallow: false })}>
+      <Button variant="outlined" onClick={() => router.push(`/post/modify/${id}`, undefined, { shallow: false })}>
         수정
       </Button>
     </ArticleFooterWrapper>

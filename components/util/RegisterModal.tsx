@@ -7,6 +7,7 @@ import Fade from '@material-ui/core/Fade';
 import { Button, TextField } from '@material-ui/core';
 
 import useStores from '@stores/useStores';
+import PopupButton from '@atoms/PopupButton';
 
 const RegisterModal = () => {
   const { SignStore } = useStores();
@@ -67,11 +68,15 @@ const RegisterModal = () => {
             />
             <br />
           </div>
-          <div>
-            <RightButton variant="contained" color="primary" onClick={register}>
-              가입
-            </RightButton>
-          </div>
+          <ButtonWrapper>
+            <PopupButton
+              variant="contained"
+              color="primary"
+              onClick={register}
+            >
+              가입하기
+            </PopupButton>
+          </ButtonWrapper>
         </Paper>
       </Fade>
     </CustomModal>
@@ -90,9 +95,9 @@ const Paper = styled.div`
   max-width: 100%;
   background-color: #fff;
   border: 1px solid #e6e6e6;
-  border-radius: 4px;
+  border-radius: 14px;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
-  padding: 15px;
+  padding: 36px;
 
   &:focus {
     outline: 0;
@@ -105,7 +110,6 @@ const Paper = styled.div`
 
   & > div:first-of-type {
     padding: 20px 0;
-    border-bottom: 1px solid #e6e6e6;
     border-top: 1px solid #e6e6e6;
     margin-bottom: 10px;
   }
@@ -115,16 +119,18 @@ const Paper = styled.div`
   }
 `;
 
-const RightButton = styled(Button)`
-  margin-left: auto !important;
-`;
-
 const CustomTextField = styled(TextField)`
   width: 100%;
   margin-bottom: 10px !important;
   
   &:nth-of-type(3) > .MuiFormHelperText-root {
     color: #dc143c;
+  }
+`;
+
+const ButtonWrapper = styled.div`
+  & > button {
+    margin-left: auto;
   }
 `;
 

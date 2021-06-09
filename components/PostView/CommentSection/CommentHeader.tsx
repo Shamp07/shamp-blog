@@ -25,7 +25,7 @@ const CommentHeader = () => {
         {' '}
         개
       </span>
-      <RightButton size="small" variant="outlined" onClick={() => getComment(id)}>
+      <RightButton variant="outlined" onClick={() => getComment(id)}>
         <span>
           <ReloadICon icon={faSync} />
           {' '}

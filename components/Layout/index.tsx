@@ -95,7 +95,11 @@ const GlobalStyle = css`
 
   .MuiPaginationItem-textPrimary.Mui-selected,
   .MuiButton-containedPrimary {
-    background-color: #2d79c7 !important;
+    background-color: #3b8bdd !important;
+  }
+
+  .MuiButton-containedPrimary:hover {
+    background-color: #3886d7 !important; 
   }
 
   @font-face {

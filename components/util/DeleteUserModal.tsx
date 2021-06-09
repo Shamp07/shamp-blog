@@ -73,9 +73,9 @@ const Paper = styled.div`
   max-width: 100%;
   background-color: #fff;
   border: 1px solid #e6e6e6;
-  border-radius: 4px;
+  border-radius: 14px;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
-  padding: 15px;
+  padding: 36px;
 
   &:focus {
     outline: 0;
@@ -100,7 +100,6 @@ const Paper = styled.div`
   & > div > button:last-of-type {
     margin-left: auto;
   }
-
 `;
 
 const CustomTextField = styled(TextField)`

@@ -19,6 +19,7 @@
       "@middleware/*": ["middleware/*"],
       "@config/*": ["config/*"],
       "@components/*": ["components/*"],
+      "@atoms/*": ["components/atoms/*"],
       "@stores/*": ["stores/*"],
       "@util/*": ["util/*"],
       "@stores": ["stores"],

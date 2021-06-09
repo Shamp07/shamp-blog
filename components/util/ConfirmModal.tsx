@@ -35,8 +35,21 @@ const ConfirmModal = () => {
           </div>
           <div>
             <span>
-              <RightButton type="button" variant="contained" color="primary" onClick={() => callFunction(callback)} href="">확인</RightButton>
-              <RightButton type="button" variant="contained" onClick={closeConfirmModal} href="">취소</RightButton>
+              <RightButton
+                type="button"
+                variant="contained"
+                onClick={closeConfirmModal}
+              >
+                취소
+              </RightButton>
+              <RightButton
+                type="button"
+                variant="contained"
+                color="primary"
+                onClick={() => callFunction(callback)}
+              >
+                확인하기
+              </RightButton>
             </span>
           </div>
         </Paper>
@@ -57,9 +70,9 @@ const Paper = styled.div`
   max-width: 100%;
   background-color: #fff;
   border: 1px solid #e6e6e6;
-  border-radius: 4px;
+  border-radius: 14px;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
-  padding: 15px;
+  padding: 36px;
   
   &:focus {
     outline: 0;
@@ -72,7 +85,6 @@ const Paper = styled.div`
   
   & > div:first-of-type {
     padding: 20px 0;
-    border-bottom: 1px solid #e6e6e6;
     border-top: 1px solid #e6e6e6;
     margin-bottom: 10px;
   }
@@ -86,7 +98,12 @@ const Paper = styled.div`
 `;
 
 const RightButton = styled(Button)`
+  height: 44px;
   margin-left: 5px !important;
+  border-radius: 10px !important;
+  padding-left: 18px !important;
+  padding-right: 18px !important;
+  box-shadow: none !important;
 `;
 
 export default observer(ConfirmModal);
