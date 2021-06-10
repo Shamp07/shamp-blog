@@ -156,3 +156,9 @@ export enum ChatPage {
   LOBBY = 0,
   ROOM = 1,
 }
+
+export enum ButtonSize {
+  SMALL = 'small',
+  MEDIUM = 'medium',
+  LARGE = 'large',
+}

@@ -2,9 +2,10 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
-import { Button } from '@material-ui/core';
 
 import useStores from '@stores/useStores';
+import Button from '@atoms/Button';
+import * as T from '@types';
 
 const ArticleFooter = () => {
   const router = useRouter();
@@ -19,6 +20,7 @@ const ArticleFooter = () => {
   return (
     <ArticleFooterWrapper>
       <Button
+        size={T.ButtonSize.SMALL}
         variant="outlined"
         color="secondary"
         onClick={() => toggleConfirmModal(
@@ -28,7 +30,12 @@ const ArticleFooter = () => {
       >
         삭제
       </Button>
-      <Button variant="outlined" onClick={() => router.push(`/post/modify/${id}`, undefined, { shallow: false })}>
+      <Button
+        size={T.ButtonSize.SMALL}
+        variant="outlined"
+        color="default"
+        onClick={() => router.push(`/post/modify/${id}`, undefined, { shallow: false })}
+      >
         수정
       </Button>
     </ArticleFooterWrapper>

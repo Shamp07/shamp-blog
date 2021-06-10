@@ -1,11 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
-import { Button } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 
 import useStores from '@stores/useStores';
+import Button from '@atoms/Button';
+import * as T from '@types';
 
 const ArticleContent = () => {
   const { PostStore, SignStore } = useStores();
@@ -20,12 +21,18 @@ const ArticleContent = () => {
         <div dangerouslySetInnerHTML={{ __html: content }} />
       </ArticleText>
       <ArticleBox>
-        <Button color="primary" variant="outlined" onClick={() => addPostLike(id)} disabled={!userData}>
+        <Button
+          size={T.ButtonSize.SMALL}
+          color="primary"
+          variant="outlined"
+          onClick={() => addPostLike(id)}
+          disabled={!userData}
+        >
           <ThumbsUpIcon icon={faThumbsUp} />
           <span>
-            좋아요 (
+            좋아요
+            {' '}
             {likeCnt}
-            )
           </span>
         </Button>
       </ArticleBox>

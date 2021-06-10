@@ -5,9 +5,10 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { TextField } from '@material-ui/core';
-import PopupButton from '@atoms/PopupButton';
+import Button from '@atoms/Button';
 
 import useStores from '@stores/useStores';
+import * as T from '@types';
 
 const SignModal = () => {
   const { SignStore } = useStores();
@@ -40,20 +41,22 @@ const SignModal = () => {
             <br />
           </div>
           <div>
-            <PopupButton
+            <Button
+              size={T.ButtonSize.MEDIUM}
               variant="contained"
               color="default"
               onClick={changeRegister}
             >
               회원가입
-            </PopupButton>
-            <PopupButton
+            </Button>
+            <Button
+              size={T.ButtonSize.MEDIUM}
               variant="contained"
               color="primary"
               onClick={login}
             >
               로그인
-            </PopupButton>
+            </Button>
           </div>
         </Paper>
       </Fade>

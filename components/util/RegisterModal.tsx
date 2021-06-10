@@ -4,10 +4,11 @@ import styled from '@emotion/styled';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import { Button, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 
 import useStores from '@stores/useStores';
-import PopupButton from '@atoms/PopupButton';
+import Button from '@atoms/Button';
+import * as T from '@types';
 
 const RegisterModal = () => {
   const { SignStore } = useStores();
@@ -69,13 +70,14 @@ const RegisterModal = () => {
             <br />
           </div>
           <ButtonWrapper>
-            <PopupButton
+            <Button
+              size={T.ButtonSize.MEDIUM}
               variant="contained"
               color="primary"
               onClick={register}
             >
               가입하기
-            </PopupButton>
+            </Button>
           </ButtonWrapper>
         </Paper>
       </Fade>

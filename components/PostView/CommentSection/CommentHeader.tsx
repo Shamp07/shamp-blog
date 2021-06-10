@@ -1,11 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
-import { Button } from '@material-ui/core';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import useStores from '@stores/useStores';
+import Button from '@atoms/Button';
+import * as T from '@types';
 
 const CommentHeader = () => {
   const { PostStore, CommentStore } = useStores();
@@ -25,13 +26,17 @@ const CommentHeader = () => {
         {' '}
         개
       </span>
-      <RightButton variant="outlined" onClick={() => getComment(id)}>
-        <span>
+      <ButtonWrapper>
+        <Button
+          size={T.ButtonSize.SMALL}
+          color="default"
+          variant="outlined"
+          onClick={() => getComment(id)}
+        >
           <ReloadICon icon={faSync} />
-          {' '}
           새로고침
-        </span>
-      </RightButton>
+        </Button>
+      </ButtonWrapper>
     </CommentHeaderWrapper>
   );
 };
@@ -56,10 +61,16 @@ const CommentHeaderWrapper = styled.div`
   }
 `;
 
-const RightButton = styled(Button)`
-  position: absolute !important;
-  top: 11px;
-  right: 14px;
+const ButtonWrapper = styled.div`
+  & > button {
+    position: absolute;
+    top: 11px;
+    right: 14px;
+  }
+  
+  & svg {
+    margin-right: 5px;
+  }
 `;
 
 const ReloadICon = styled(FontAwesomeIcon)`

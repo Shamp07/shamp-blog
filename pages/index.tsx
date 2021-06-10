@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import Grid from '@material-ui/core/Grid';
-import { Button } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 
@@ -9,6 +8,8 @@ import useStores from '@stores/useStores';
 import HomePostList from '@components/home/HomePostList';
 import Footprint from '@components/home/Footprint';
 import { MyNextPageContext } from './_app';
+import Button from '@atoms/Button';
+import * as T from '@types';
 
 const Home = () => {
   const { HomeStore } = useStores();
@@ -27,13 +28,18 @@ const Home = () => {
         </Grid>
         <RelativeGrid item xs={12}>
           <h2>발자취</h2>
-          <RightButton size="small" variant="outlined" onClick={getFootprint}>
-            <span>
-              <ReloadICon icon={faSync} />
+          <ButtonWrapper>
+            <Button
+              size={T.ButtonSize.SMALL}
+              variant="outlined"
+              onClick={getFootprint}
+              color="default"
+            >
+              <ReloadIcon icon={faSync} />
               {' '}
               새로고침
-            </span>
-          </RightButton>
+            </Button>
+          </ButtonWrapper>
           <Footprint />
         </RelativeGrid>
       </CustomGrid>
@@ -73,7 +79,7 @@ const CustomGrid = styled(Grid)`
     padding: 20px !important;
     
     @media (max-width: 1064px) {
-      padding: 15px !important;
+      padding: 20px 15px !important;
     }
   }
   
@@ -84,18 +90,23 @@ const CustomGrid = styled(Grid)`
   }
 `;
 
+const ButtonWrapper = styled.div`
+  & > button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+  
+  & svg {
+    margin-right: 5px;
+  }
+`;
+
 const RelativeGrid = styled(Grid)`
   position: relative;
 `;
 
-const RightButton = styled(Button)`
-  position: absolute !important;
-  top: 20px;
-  right: 20px;
-`;
-
-const ReloadICon = styled(FontAwesomeIcon)`
-  vertical-align: baseline;
+const ReloadIcon = styled(FontAwesomeIcon)`
   width: 12px;
   height: 12px;
 `;
