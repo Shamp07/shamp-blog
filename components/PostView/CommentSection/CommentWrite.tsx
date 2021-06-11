@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 import { TextField } from '@material-ui/core';
 
 import useStores from '@stores/useStores';
+import Button from '@atoms/Button';
+import * as T from '@types';
 
 interface Props {
   isReply: boolean;
@@ -32,19 +34,24 @@ const CommentWrite = ({ isReply }: Props) => {
           value={isReply ? replyComment : comment}
           placeholder="포스팅에 관련된 의견이나 질문을 자유롭게 남겨주세요!"
         />
-        <CommentWriteFooter>
-          <span>
-            <span>
-              (
-              {isReply ? replyComment.length : comment.length}
-              /1000)
-            </span>
-            <CommentWriteButton onClick={() => addComment(id, replyCommentId, isReply)}>
-              작성
-            </CommentWriteButton>
-          </span>
-        </CommentWriteFooter>
       </CommentWriterInner>
+      <CommentWriteFooter>
+        <span>
+          <span>
+            (
+            {isReply ? replyComment.length : comment.length}
+            /1000)
+          </span>
+          <Button
+            size={T.ButtonSize.SMALL}
+            color="primary"
+            variant="contained"
+            onClick={() => addComment(id, replyCommentId, isReply)}
+          >
+            작성
+          </Button>
+        </span>
+      </CommentWriteFooter>
     </CommentWriteWrapper>
   );
 };
@@ -57,12 +64,14 @@ const CommentWriteWrapper = styled.div<Props>`
 
 const CommentWriterInner = styled.div`
   border: 1px solid #dddfe4;
+  border-radius: 10px;
+  overflow: hidden;
 `;
 
 const CommentWriteFooter = styled.div`
   height: 36px;
-  background-color: #fff;
   display: flex;
+  margin-top: 5px;
   
   & > span {
     margin-left: auto;  
@@ -87,6 +96,7 @@ const CommentWriteButton = styled.div`
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.2s;
+  border-radius: 10px;
   
   &:hover {
     background-color: #1e73c9;
