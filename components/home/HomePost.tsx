@@ -2,10 +2,10 @@ import React from 'react';
 import Link from 'next/link';
 import styled from '@emotion/styled';
 
-import { HomePostType } from '@stores/HomeStore';
+import { HomePost as Post } from '@types';
 
 export interface Props {
-  data: HomePostType;
+  data: Post;
 }
 
 const HomePost = ({ data }: Props) => {
@@ -27,10 +27,10 @@ const Wrapper = styled.div`
   line-height: 35px;
   color: #2d79c7;
   font-size: 16px;
-  padding: 0 5px;
+  padding: 0 10px;
   cursor: pointer;
   transition: background-color 0.2s;
-  border-radius: 4px;
+  border-radius: 10px;
   font-weight: 500;
   
   & > div {

@@ -148,10 +148,7 @@ const Wrapper = styled.div`
   }
 
   & ul {
-    margin-left: 20px;
-    & ul {
-      margin-left: 40px;
-    }
+    margin-left: 30px;
   }
 `;
 

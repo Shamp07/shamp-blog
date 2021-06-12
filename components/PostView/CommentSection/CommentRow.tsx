@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
-import { TextField } from '@material-ui/core';
+import TextareaAutosize from 'react-textarea-autosize';
 
 import useStores from '@stores/useStores';
 import CommentWrite from './CommentWrite';
@@ -33,15 +33,16 @@ const CommentRow = ({ data }: Props) => {
           </CommentWriter>
           <CommentContent>
             {modifierCommentId === id ? (
-              <CustomTextField
-                type="text"
-                multiline
-                rows={3}
-                onChange={commentHandleChange}
-                name="modifierComment"
-                value={modifierComment}
-                placeholder="포스팅에 관련된 의견이나 질문을 자유롭게 남겨주세요!"
-              />
+              <CommentWriterInner>
+                <Textarea
+                  minRows={2}
+                  maxRows={50}
+                  onChange={commentHandleChange}
+                  name="modifierComment"
+                  value={modifierComment}
+                  placeholder="포스팅에 관련된 의견이나 질문을 자유롭게 남겨주세요!"
+                />
+              </CommentWriterInner>
             ) : (
               <>
                 {isTag && (<NameTag>{commentUserName}</NameTag>)}
@@ -63,7 +64,7 @@ interface CommentWrapperProps {
 
 const CommentWrapper = styled.div<CommentWrapperProps>`
   position: relative;
-  padding: ${(props) => (props.isReply ? '12px 12px 12px 64px' : '12px')};
+  padding: ${(props) => (props.isReply ? '16px 16px 16px 64px' : '16px')};
   background-color: ${(props) => (props.isReply ? '#f8f9fa' : '#ffffff')};
 `;
 
@@ -114,21 +115,24 @@ const NameTag = styled.span`
   margin-right: 5px;
 `;
 
-const CustomTextField = styled(TextField)`
+const Textarea = styled(TextareaAutosize)`
   display: block !important;
+  width: 100%;
+  resize: none;
+  max-width: 100%;
+  font-size: 14px;
+  line-height: 20px;
+  font-family: inherit;
+  border: 0;
+  outline: 0;
+`;
+
+const CommentWriterInner = styled.div`
+  border: 1px solid #dddfe4;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 20px;
   background-color: #fff;
-  
-  & .MuiInputBase-multiline {
-    display: block !important;
-    width: 100%;
-    padding-left:10px;
-    padding-right: 10px;
-    max-width: 100%;
-  }
-  
-  & textarea {
-    font-size: 14px;
-  }
 `;
 
 export default observer(CommentRow);

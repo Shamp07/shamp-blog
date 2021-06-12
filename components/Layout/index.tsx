@@ -34,7 +34,7 @@ const Layout = ({ children }: Props) => {
           {children}
         </Content>
       </CenterContent>
-      <Chat />
+      {/* <Chat /> */}
     </Wrapper>
   );
 };
@@ -45,7 +45,7 @@ const Wrapper = styled.div`
 `;
 
 const CenterContent = styled.div`
-  margin: -128px auto 0 auto;
+  margin: -100px auto 0 auto;
   max-width: 1044px;
   display: flex;
 

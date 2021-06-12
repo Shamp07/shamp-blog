@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 import useStores from '@stores/useStores';
-import BoardTag from './BoardTag';
+import BoardTag, { Tag } from './BoardTag';
 
 const BoardHead = () => {
   const router = useRouter();
@@ -78,7 +78,9 @@ const BoardHead = () => {
 
 const Wrapper = styled.header`
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
-  margin-bottom: 8px;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 16px;
 `;
 
 const CategoryTag = styled.ul`
@@ -107,43 +109,12 @@ const CategoryTag = styled.ul`
   }
 `;
 
-interface ActiveProp {
-  isActive: boolean;
-}
-
-const Tag = styled.li<ActiveProp>(({ isActive }) => ({
-  display: 'inline-block',
-  padding: '10px 0 10px 12px',
-
-  ':last-child': {
-    paddingRight: '10px',
-  },
-
-  '> a': {
-    display: 'inline-block',
-    minWidth: '45px',
-    padding: '4px 15px',
-    textAlign: 'center',
-    textDecoration: 'none',
-    borderRadius: '12px',
-    fontSize: '15px',
-    fontWeight: 'bold',
-    transition: 'all 0.2s',
-    color: '#616161',
-    backgroundColor: '#e6e6e6',
-
-    ...(isActive ? ({
-      color: '#fff',
-      backgroundColor: '#2d79c7',
-    }) : null),
-  },
-}));
-
-const BestTag = styled(Tag)<ActiveProp>(({ isActive }) => ({
+const BestTag = styled(Tag)(({ isActive }) => ({
   '> a': {
     border: '#eeee00 1.5px solid',
     backgroundColor: '#fff',
     color: '#eeee00',
+    height: '21px',
 
     ...(isActive ? ({
       color: '#fff !important',

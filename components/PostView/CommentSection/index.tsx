@@ -25,6 +25,7 @@ const Wrapper = styled.div`
   border-radius: 14px;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
   margin-top: 16px;
+  overflow: hidden;
 `;
 
 export default observer(CommentSection);

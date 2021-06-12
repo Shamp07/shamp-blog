@@ -71,10 +71,7 @@ const TextAreaCustom = styled(TextareaAutosize)`
   font-family: inherit;
   font-size: 15px;
   white-space: pre-wrap;
-
-  &:focus {
-    outline: 0;
-  }
+  outline: 0;
 `;
 
 const ChatButton = styled.button`

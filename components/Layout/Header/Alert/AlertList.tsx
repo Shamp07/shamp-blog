@@ -30,9 +30,11 @@ const AlertList = () => {
 
 const MenuItemNone = styled(MenuItem)`
   font-size: 14px !important;
+  text-align: center;
+  cursor: default !important;
   
   & > span {
-    margin: auto !important;  
+    padding: 10px 0;  
   }
 `;
 

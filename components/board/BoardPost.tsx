@@ -20,7 +20,7 @@ const BoardPost = ({ data }: BoardPostProps) => {
   const { getCategoryName } = SidebarStore;
   const {
     id, title, category,
-    commentCnt, tags, time, likeCnt,
+    commentCnt, tag, time, likeCnt,
   } = data;
 
   const boardPath = router.query.board[0];
@@ -58,7 +58,7 @@ const BoardPost = ({ data }: BoardPostProps) => {
               <span>{CategoryName}</span>
             </li>
             <li>
-              <span>{tags}</span>
+              <span>{tag}</span>
             </li>
             <li>
               <span>{time}</span>
@@ -73,6 +73,7 @@ const BoardPost = ({ data }: BoardPostProps) => {
 const PostLinkSpan = styled.span`
   cursor: pointer;
   display: flex;
+  line-height: 20px;
 
   & > span:first-of-type {
     color: #000;

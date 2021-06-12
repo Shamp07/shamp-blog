@@ -24,23 +24,23 @@ const HeaderTokenList = () => {
         <button type="button" onClick={openHeaderMenu} name="profile">
           <FontAwesomeIcon icon={faUserCircle} />
         </button>
-        <Menu
+        <UserMenu
           anchorEl={headerMenuElement}
           keepMounted
           open={headerMenu === 'profile'}
           onClose={closeHeaderMenu}
         >
+          <MenuItem onClick={() => logout(false)}>로그아웃</MenuItem>
           <MenuItem onClick={togglePasswordChangeModal}>비밀번호 변경</MenuItem>
           <MenuItem onClick={toggleDeleteUserModal}>탈퇴하기</MenuItem>
-          <MenuItem onClick={() => logout(false)}>로그아웃</MenuItem>
-        </Menu>
+        </UserMenu>
       </li>
       <li>
         <AlertButton type="button" onClick={openHeaderMenu} name="alert">
           <FontAwesomeIcon icon={faBell} />
           {Boolean(alertNotReadSize) && <div>{alertNotReadSize}</div>}
         </AlertButton>
-        <MenuCustom
+        <AlertMenu
           anchorEl={headerMenuElement}
           keepMounted
           open={headerMenu === 'alert'}
@@ -48,7 +48,7 @@ const HeaderTokenList = () => {
         >
           <MenuItem>알림 목록</MenuItem>
           {alertLoading ? <AlertSpinner /> : <AlertList />}
-        </MenuCustom>
+        </AlertMenu>
       </li>
     </>
   );
@@ -68,16 +68,39 @@ const AlertButton = styled.button`
   }
 `;
 
-const MenuCustom = styled(Menu)`
-  white-space: normal !important;
+const UserMenu = styled(Menu)`
+  & > .MuiPaper-root {
+    border-radius: 10px;
+  }
   
   & ul {
+    & > li {
+      font-size: 14px;
+      font-family: inherit;
+      padding: 8px 14px;
+    }
+  }
+`;
+
+const AlertMenu = styled(Menu)`
+  white-space: normal !important;
+  font-size: 14px;
+  
+  & > .MuiPaper-root {
+    border-radius: 10px;
+  }
+
+  & ul {
     padding: 0;
+    & > li {
+      font-family: inherit;
+    }
   }
 
   & li:first-of-type {
     font-weight: bold;
     font-size: 15px !important;
+    padding: 10px;
   }
   
   & li:first-of-type, & li:last-of-type {
@@ -89,6 +112,7 @@ const MenuCustom = styled(Menu)`
   }
   
   & li:last-of-type {
+    
     cursor: pointer;
     font-weight: 300;
     & > span {

@@ -1,11 +1,11 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
-import { TextField } from '@material-ui/core';
 
 import useStores from '@stores/useStores';
 import Button from '@atoms/Button';
 import * as T from '@types';
+import TextareaAutosize from 'react-textarea-autosize';
 
 interface Props {
   isReply: boolean;
@@ -25,53 +25,54 @@ const CommentWrite = ({ isReply }: Props) => {
     <CommentWriteWrapper isReply={isReply}>
       {isReply && <ReplyBorder />}
       <CommentWriterInner>
-        <CustomTextField
+        <Textarea
           type="text"
-          multiline
-          rows={3}
+          minRows={2}
+          maxRows={50}
           onChange={commentHandleChange}
           name={isReply ? 'replyComment' : 'comment'}
           value={isReply ? replyComment : comment}
           placeholder="포스팅에 관련된 의견이나 질문을 자유롭게 남겨주세요!"
         />
-      </CommentWriterInner>
-      <CommentWriteFooter>
-        <span>
+        <CommentWriteFooter>
           <span>
-            (
-            {isReply ? replyComment.length : comment.length}
-            /1000)
+            <span>
+              (
+              {isReply ? replyComment.length : comment.length}
+              /1000)
+            </span>
+            <Button
+              size={T.ButtonSize.SMALL}
+              color="primary"
+              variant="contained"
+              onClick={() => addComment(id, replyCommentId, isReply)}
+            >
+              작성
+            </Button>
           </span>
-          <Button
-            size={T.ButtonSize.SMALL}
-            color="primary"
-            variant="contained"
-            onClick={() => addComment(id, replyCommentId, isReply)}
-          >
-            작성
-          </Button>
-        </span>
-      </CommentWriteFooter>
+        </CommentWriteFooter>
+      </CommentWriterInner>
     </CommentWriteWrapper>
   );
 };
 
 const CommentWriteWrapper = styled.div<Props>`
   position: relative;
-  padding: ${(props) => (props.isReply ? '24px 16px 24px 64px' : '24px 16px')};
+  padding: ${(props) => (props.isReply ? '24px 16px 24px 64px' : '16px')};
   background-color: #f8f9fa;
 `;
 
 const CommentWriterInner = styled.div`
   border: 1px solid #dddfe4;
   border-radius: 10px;
-  overflow: hidden;
+  padding: 20px;
+  background-color: #fff;
 `;
 
 const CommentWriteFooter = styled.div`
   height: 36px;
   display: flex;
-  margin-top: 5px;
+  margin-top: 12px;
   
   & > span {
     margin-left: auto;  
@@ -86,38 +87,16 @@ const CommentWriteFooter = styled.div`
   }
 `;
 
-const CommentWriteButton = styled.div`
-  display: inline-block;
-  background-color: #2d79c7;
-  text-align: center;
-  padding: 10px;
-  width: 50px;
-  color: white;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  border-radius: 10px;
-  
-  &:hover {
-    background-color: #1e73c9;
-  }
-`;
-
-const CustomTextField = styled(TextField)`
+const Textarea = styled(TextareaAutosize)`
   display: block !important;
-  background-color: #fff;
-  
-  & .MuiInputBase-multiline {
-    display: block !important;
-    width: 100%;
-    padding-left:10px;
-    padding-right: 10px;
-    max-width: 100%;
-  }
-  
-  & textarea {
-    font-size: 14px;
-  }
+  width: 100%;
+  resize: none;
+  max-width: 100%;
+  font-size: 14px;
+  line-height: 20px;
+  font-family: inherit;
+  border: 0;
+  outline: 0;
 `;
 
 const ReplyBorder = styled.div`

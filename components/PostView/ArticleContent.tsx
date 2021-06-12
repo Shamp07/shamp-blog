@@ -78,8 +78,8 @@ const ArticleText = styled.article`
     overflow: auto;
     margin-bottom: 5px;
     margin-top: 5px;
-    padding: 5px 10px;
-    border-radius: 3px;
+    padding: 16px;
+    border-radius: 10px;
     font-size: 14px;
     font-family: 'JetBrains Mono', 'Noto Sans KR', serif !important;
     line-height: 1.5;

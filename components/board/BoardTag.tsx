@@ -15,23 +15,45 @@ const BoardTag = ({ tag }: Props) => {
   const boardTag = router.query.board[1];
 
   return (
-    <CategoryTag active={boardTag === tag}>
+    <Tag isActive={boardTag === tag}>
       <Link href={`/category/${boardPath}/${tag}`}>
         {tag}
       </Link>
-    </CategoryTag>
+    </Tag>
   );
 };
 
-interface CategoryTagProps {
-  active: boolean;
+interface ActiveProp {
+  isActive: boolean;
 }
 
-const CategoryTag = styled.li<CategoryTagProps>`
-  & > a {
-    ${(props) => (props.active ? 'color: #fff !important' : null)};
-    ${(props) => (props.active ? 'background-color: #2d79c7 !important' : null)};
-  }
-`;
+export const Tag = styled.li<ActiveProp>(({ isActive }) => ({
+  display: 'inline-block',
+  padding: '10px 0 10px 12px',
+
+  ':last-child': {
+    paddingRight: '10px',
+  },
+
+  '> a': {
+    display: 'inline-block',
+    minWidth: '45px',
+    padding: '4px 15px',
+    textAlign: 'center',
+    textDecoration: 'none',
+    borderRadius: '12px',
+    fontSize: '15px',
+    fontWeight: 'bold',
+    transition: 'all 0.2s',
+    color: '#616161',
+    backgroundColor: '#e6e6e6',
+    height: '24px',
+
+    ...(isActive ? ({
+      color: '#fff',
+      backgroundColor: '#2d79c7',
+    }) : null),
+  },
+}));
 
 export default BoardTag;
