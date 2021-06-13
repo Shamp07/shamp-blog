@@ -6,6 +6,8 @@ import useStores from '@stores/useStores';
 const CommentModifyMenu = () => {
   const { PostStore, CommentStore } = useStores();
   const { postView } = PostStore;
+  if (!postView) return null;
+
   const { id: postId } = postView;
   const { modifierCommentId: id, setModifierCommentId, modifyComment } = CommentStore;
 

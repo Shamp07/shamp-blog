@@ -3,12 +3,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
-import { Button } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 import useStores from '@stores/useStores';
 import BoardTag, { Tag } from './BoardTag';
+import * as T from '@types';
+import Button from '@atoms/Button';
 
 const BoardHead = () => {
   const router = useRouter();
@@ -39,10 +40,13 @@ const BoardHead = () => {
     isAdmin ? (
       <AbsoluteUl>
         <li>
-          <Button variant="contained" color="primary" onClick={goPost}>
-            <span>
-              <CustomIcon icon={faPen} />
-            </span>
+          <Button
+            size={T.ButtonSize.SMALL}
+            variant="contained"
+            color="primary"
+            onClick={goPost}
+          >
+            <CustomIcon icon={faPen} />
           </Button>
         </li>
       </AbsoluteUl>
@@ -57,21 +61,17 @@ const BoardHead = () => {
 
   return (
     <Wrapper>
-      <HeadSection>
-        <SubTitle>
-          <h2>{categoryName}</h2>
-          {postButton}
-        </SubTitle>
-      </HeadSection>
-      <HeadSection>
-        <CategoryTag>
-          {bestTag}
-          <Tag isActive={categoryTag === undefined}>
-            <Link href={`/category/${categoryPath}`}>전체</Link>
-          </Tag>
-          {categoryTags.map((tag) => <BoardTag key={tag} tag={tag} />)}
-        </CategoryTag>
-      </HeadSection>
+      <SubTitle>
+        <h2>{categoryName}</h2>
+        {postButton}
+      </SubTitle>
+      <CategoryTag>
+        {bestTag}
+        <Tag isActive={categoryTag === undefined}>
+          <Link href={`/category/${categoryPath}`}>전체</Link>
+        </Tag>
+        {categoryTags.map((tag) => <BoardTag key={tag} tag={tag} />)}
+      </CategoryTag>
     </Wrapper>
   );
 };
@@ -81,6 +81,7 @@ const Wrapper = styled.header`
   border-radius: 14px;
   overflow: hidden;
   margin-bottom: 16px;
+  background-color: #fff;
 `;
 
 const CategoryTag = styled.ul`
@@ -114,7 +115,7 @@ const BestTag = styled(Tag)(({ isActive }) => ({
     border: '#eeee00 1.5px solid',
     backgroundColor: '#fff',
     color: '#eeee00',
-    height: '21px',
+    padding: '4.5px 13.5px',
 
     ...(isActive ? ({
       color: '#fff !important',
@@ -122,20 +123,6 @@ const BestTag = styled(Tag)(({ isActive }) => ({
     }) : null),
   },
 }));
-
-const HeadSection = styled.div`
-  background-color: #fff;
-  
-  &:first-of-type {
-    border-top-right-radius: 14px;
-    border-top-left-radius: 14px;
-  }
-
-  &:last-child {
-    border-bottom-left-radius: 14px;
-    border-bottom-right-radius: 14px;
-  }
-`;
 
 const SubTitle = styled.div`
   position: relative;
@@ -146,6 +133,7 @@ const SubTitle = styled.div`
   & > h2 {
     padding-left: 16px;
     font-size: 18px;
+    line-height: 1;
   }
 
   & > li {

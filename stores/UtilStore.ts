@@ -13,7 +13,7 @@ class UtilStore {
 
   isOpenConfirmModal = false;
 
-  callback: (() => void | undefined) | undefined;
+  callback: (() => void) | undefined;
 
   text = '';
 
@@ -25,22 +25,22 @@ class UtilStore {
     }));
   }
 
-  toggleConfirmModal = (text: string, callback: () => void): void => {
+  toggleConfirmModal = (text: string, callback: (() => void) | undefined) => {
     this.isOpenConfirmModal = !this.isOpenConfirmModal;
     this.text = text;
     this.callback = callback;
   };
 
-  callFunction = (callback: () => void): void => {
+  callFunction = (callback: (() => void) | undefined) => {
     if (callback) callback();
     this.closeConfirmModal();
   };
 
-  closeConfirmModal = (): void => {
+  closeConfirmModal = () => {
     this.isOpenConfirmModal = false;
   };
 
-  openHeaderMenu = (event: React.MouseEvent<HTMLElement>): void => {
+  openHeaderMenu = (event: React.MouseEvent<HTMLElement>) => {
     if (!this.headerMenu) {
       this.AlertStore.getAlertList();
     }

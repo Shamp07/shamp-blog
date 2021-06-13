@@ -4,9 +4,11 @@ import styled from '@emotion/styled';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import { Button, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 
-import useStores from '../../stores/useStores';
+import useStores from '@stores/useStores';
+import Button from '@atoms/Button';
+import * as T from '@types';
 
 const PasswordChangeModal = () => {
   const { SignStore } = useStores();
@@ -60,8 +62,22 @@ const PasswordChangeModal = () => {
             <br />
           </div>
           <div>
-            <Button variant="contained" onClick={togglePasswordChangeModal}>취소</Button>
-            <Button variant="contained" color="primary" onClick={changePassword}>변경하기</Button>
+            <Button
+              size={T.ButtonSize.MEDIUM}
+              color="default"
+              variant="contained"
+              onClick={togglePasswordChangeModal}
+            >
+              취소
+            </Button>
+            <Button
+              size={T.ButtonSize.MEDIUM}
+              variant="contained"
+              color="primary"
+              onClick={changePassword}
+            >
+              변경하기
+            </Button>
           </div>
         </Paper>
       </Fade>
@@ -76,14 +92,14 @@ const CustomModal = styled(Modal)`
 `;
 
 const Paper = styled.div`
-  margin: 0 40px;
+  margin: 0 20px;
   width: 300px;
   max-width: 100%;
   background-color: #fff;
   border: 1px solid #e6e6e6;
-  border-radius: 4px;
+  border-radius: 14px;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
-  padding: 15px;
+  padding: 36px;
 
   &:focus {
     outline: 0;
@@ -96,7 +112,6 @@ const Paper = styled.div`
 
   & > div:first-of-type {
     padding: 20px 0;
-    border-bottom: 1px solid #e6e6e6;
     border-top: 1px solid #e6e6e6;
     margin-bottom: 10px;
   }
@@ -113,6 +128,10 @@ const Paper = styled.div`
 const CustomTextField = styled(TextField)`
   width: 100%;
   margin-bottom: 15px !important;
+  
+  &&& * {
+    font-family: inherit;
+  }
 `;
 
 export default observer(PasswordChangeModal);

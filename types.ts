@@ -75,13 +75,13 @@ export interface HomePost {
 }
 
 export interface Post {
-  id: number,
-  category: string,
-  tags: string
-  title: string,
-  content: string,
-  count: number,
-  page: number,
+  id: number;
+  category: string;
+  tags: string;
+  title: string;
+  content: string;
+  count: number;
+  page: number;
 }
 
 export interface PostList {
@@ -89,7 +89,7 @@ export interface PostList {
   page: number;
   id: number;
   category: string;
-  tags: string;
+  tag: string;
   title: string;
   content: string;
   crtDttm: string;
@@ -148,8 +148,8 @@ export interface ChatRoomType {
 }
 
 export interface ReceiveMessage {
-  message: string,
-  fromUserId: number,
+  message: string;
+  fromUserId: number;
 }
 
 export enum ChatPage {

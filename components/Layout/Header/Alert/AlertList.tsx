@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 import { MenuItem } from '@material-ui/core';
 
-import { AlertType } from '@stores/AlertStore';
 import useStores from '@stores/useStores';
 import Alert from '.';
 import AlertMore from './AlertMore';
@@ -16,7 +15,7 @@ const AlertList = () => {
 
   return (
     <>
-      {alertList.length ? alertList.map((data: AlertType) => (
+      {alertList.length ? alertList.map((data) => (
         <Alert key={data.id} data={data} />
       )) : (
         <MenuItemNone>

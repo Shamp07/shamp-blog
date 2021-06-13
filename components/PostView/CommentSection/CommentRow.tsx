@@ -33,7 +33,7 @@ const CommentRow = ({ data }: Props) => {
           </CommentWriter>
           <CommentContent>
             {modifierCommentId === id ? (
-              <CommentWriterInner>
+              <TextAreaWrapper>
                 <Textarea
                   minRows={2}
                   maxRows={50}
@@ -42,7 +42,7 @@ const CommentRow = ({ data }: Props) => {
                   value={modifierComment}
                   placeholder="포스팅에 관련된 의견이나 질문을 자유롭게 남겨주세요!"
                 />
-              </CommentWriterInner>
+              </TextAreaWrapper>
             ) : (
               <>
                 {isTag && (<NameTag>{commentUserName}</NameTag>)}
@@ -127,7 +127,7 @@ const Textarea = styled(TextareaAutosize)`
   outline: 0;
 `;
 
-const CommentWriterInner = styled.div`
+const TextAreaWrapper = styled.div`
   border: 1px solid #dddfe4;
   border-radius: 10px;
   overflow: hidden;

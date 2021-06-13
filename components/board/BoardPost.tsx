@@ -8,11 +8,11 @@ import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import useStores from '@stores/useStores';
 import * as T from '@types';
 
-interface BoardPostProps {
+interface Props {
   data: T.PostList;
 }
 
-const BoardPost = ({ data }: BoardPostProps) => {
+const BoardPost = ({ data }: Props) => {
   const router = useRouter();
   if (!router.query.board) return null;
 
@@ -94,7 +94,6 @@ const Article = styled.article`
   min-height: 78px;
   box-sizing: border-box;
   border-top: 1px solid #ebeef1;
-  background-color: #fff;
   padding: 8px 0;
   &:hover {
     background-color: #f8f9fa;

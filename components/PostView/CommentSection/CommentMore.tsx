@@ -7,6 +7,8 @@ const CommentMore = () => {
   const { CommentStore, PostStore } = useStores();
   const { moreComment } = CommentStore;
   const { postView } = PostStore;
+  if (!postView) return null;
+
   const { id } = postView;
 
   return (

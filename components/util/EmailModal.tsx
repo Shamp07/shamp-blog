@@ -4,9 +4,11 @@ import styled from '@emotion/styled';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import { Button, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 
-import useStores from '../../stores/useStores';
+import useStores from '@stores/useStores';
+import Button from '@atoms/Button';
+import * as T from '@types';
 
 const EmailModal = () => {
   const { SignStore } = useStores();
@@ -30,20 +32,24 @@ const EmailModal = () => {
     >
       <Fade in={isOpenEmailModal}>
         <Paper>
-          <h2 id="transition-modal-title">이메일 인증 코드 입력</h2>
-          <div>
-            입력하신 이메일로 인증번호가 전송되었습니다.
-            <br />
-            메일에서 인증번호를 조회하여 아래 입력해주세요.
-            <br />
-            <br />
+          <h2 id="transition-modal-title">이메일 인증</h2>
+          <ContentWrapper>
+            <div>
+              입력하신 이메일로 인증번호가 전송되었습니다.
+              메일에서 인증번호를 조회하여 아래 입력해주세요.
+            </div>
             <TextField label="인증번호" variant="outlined" value={emailVerifyCode} onChange={verifyHandleChange} size="small" />
-          </div>
-          <div>
-            <RightButton variant="contained" color="primary" onClick={verifyCode}>
+          </ContentWrapper>
+          <ButtonWrapper>
+            <Button
+              size={T.ButtonSize.MEDIUM}
+              variant="contained"
+              color="primary"
+              onClick={verifyCode}
+            >
               완료
-            </RightButton>
-          </div>
+            </Button>
+          </ButtonWrapper>
         </Paper>
       </Fade>
     </CustomModal>
@@ -57,14 +63,14 @@ const CustomModal = styled(Modal)`
 `;
 
 const Paper = styled.div`
-  margin: 0 40px;
-  width: 500px;
+  margin: 0 20px;
+  width: 400px;
   max-width: 100%;
   background-color: #fff;
   border: 1px solid #e6e6e6;
-  border-radius: 4px;
+  border-radius: 14px;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
-  padding: 15px;
+  padding: 36px;
   line-height: 25px;
 
   &:focus {
@@ -78,18 +84,34 @@ const Paper = styled.div`
 
   & > div:first-of-type {
     padding: 20px 0;
-    border-bottom: 1px solid #e6e6e6;
     border-top: 1px solid #e6e6e6;
-    margin-bottom: 10px;
   }
-  
+
   & > div:last-of-type {
     display: flex;
   }
 `;
 
-const RightButton = styled(Button)`
-  margin-left: auto !important;
+const ButtonWrapper = styled.div`
+  & > button {
+    margin-left: auto;
+  }
+`;
+
+const ContentWrapper = styled.div`
+  word-break: keep-all;
+
+  & .MuiInputBase-root {
+    border-radius: 10px;
+  }
+  
+  & > div {
+    margin-bottom: 10px;
+  }
+
+  &&& * {
+    font-family: inherit;
+  }
 `;
 
 export default observer(EmailModal);

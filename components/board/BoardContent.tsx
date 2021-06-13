@@ -15,7 +15,7 @@ const BoardContent = () => {
     isMoreThanOne ? postList.map((data) => (
       <BoardPost data={data} key={data.id} />
     )) : <BoardPostNone />
-  ), [isMoreThanOne]);
+  ), [isMoreThanOne, postList]);
 
   return (
     <Wrapper>
@@ -27,16 +27,7 @@ const BoardContent = () => {
 const Wrapper = styled.section`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
   border-radius: 14px;
-  
-  & > article:first-of-type {
-    border-top-right-radius: 14px;
-    border-top-left-radius: 14px;
-  }
-
-  & > article:last-child {
-    border-bottom-left-radius: 14px;
-    border-bottom-right-radius: 14px;
-  }
+  background-color: #fff;
 `;
 
 export default BoardContent;

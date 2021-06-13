@@ -25,8 +25,6 @@ const Header = () => {
 };
 
 const HeaderWrapper = styled.header`
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
   height: 30px;
   text-align: center;
   padding: 10px;

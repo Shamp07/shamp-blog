@@ -7,14 +7,14 @@ import ArticleHeader from './ArticleHeader';
 import ArticleContent from './ArticleContent';
 
 const PostView = () => (
-  <div>
+  <>
     <Section>
       <ArticleHeader />
       <ArticleContent />
       <ArticleFooter />
     </Section>
     <CommentSection />
-  </div>
+  </>
 );
 
 const Section = styled.section`

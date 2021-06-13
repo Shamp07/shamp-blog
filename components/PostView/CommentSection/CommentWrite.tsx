@@ -14,6 +14,8 @@ interface Props {
 const CommentWrite = ({ isReply }: Props) => {
   const { PostStore, CommentStore } = useStores();
   const { postView } = PostStore;
+  if (!postView) return null;
+
   const { id } = postView;
   const {
     commentInfo, addComment,
@@ -26,7 +28,6 @@ const CommentWrite = ({ isReply }: Props) => {
       {isReply && <ReplyBorder />}
       <CommentWriterInner>
         <Textarea
-          type="text"
           minRows={2}
           maxRows={50}
           onChange={commentHandleChange}

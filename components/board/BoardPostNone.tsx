@@ -19,7 +19,7 @@ const BoardPostNone = () => (
 const Wrapper = styled.div`
   background-color: #fff;
   height: 100px;
-  padding: 180px 0;
+  padding: 181px 0;
   border-radius: 14px;
 
   & > div {

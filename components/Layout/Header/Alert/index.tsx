@@ -4,10 +4,10 @@ import { MenuItem } from '@material-ui/core';
 import styled from '@emotion/styled';
 
 import useStores from '@stores/useStores';
-import { AlertType } from '@stores/AlertStore';
+import * as T from '@types';
 
 interface Props {
-  data: AlertType;
+  data: T.Alert;
 }
 
 const Alert = ({ data }: Props) => {

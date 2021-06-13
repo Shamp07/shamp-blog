@@ -3,10 +3,10 @@ import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
 import useStores from '@stores/useStores';
-import { FootPrintType } from '@stores/HomeStore';
+import * as T from '@types';
 
 export interface Props {
-  data: FootPrintType;
+  data: T.FootPrint;
 }
 
 const FootprintNormalMenu = ({ data }: Props) => {

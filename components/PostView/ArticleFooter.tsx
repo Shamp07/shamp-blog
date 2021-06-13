@@ -11,6 +11,8 @@ const ArticleFooter = () => {
   const router = useRouter();
   const { PostStore, UtilStore, SignStore } = useStores();
   const { postView, deletePost } = PostStore;
+  if (!postView) return null;
+
   const { id } = postView;
   const { toggleConfirmModal } = UtilStore;
   const { userData } = SignStore;

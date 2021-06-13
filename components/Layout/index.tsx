@@ -7,7 +7,6 @@ import Header from './Header';
 import SideBar from './Sidebar';
 import Content from './Content';
 import Backdrop from './Sidebar/Backdrop';
-import Chat from './Chat';
 
 interface Props {
   children: ReactNode;
@@ -45,7 +44,7 @@ const Wrapper = styled.div`
 `;
 
 const CenterContent = styled.div`
-  margin: -100px auto 0 auto;
+  margin: -80px auto 0 auto;
   max-width: 1044px;
   display: flex;
 
@@ -100,6 +99,12 @@ const GlobalStyle = css`
 
   .MuiButton-containedPrimary:hover {
     background-color: #3886d7 !important; 
+  }
+
+  .MuiButton-contained.Mui-disabled {
+    color: rgba(0, 0, 0, 0.26) !important;
+    box-shadow: none !important;
+    background-color: rgba(0, 0, 0, 0.12) !important;
   }
 
   @font-face {

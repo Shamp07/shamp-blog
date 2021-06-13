@@ -9,6 +9,7 @@ const ArticleHeader = () => {
   const { PostStore, SidebarStore } = useStores();
   const { getCategoryName } = SidebarStore;
   const { postView } = PostStore;
+  if (!postView) return null;
 
   const {
     title, category, tags, time,

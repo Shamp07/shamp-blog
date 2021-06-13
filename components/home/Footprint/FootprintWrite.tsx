@@ -16,8 +16,6 @@ const FootprintWrite = () => {
     <FootprintWriteWrapper>
       <TextareaWrapper>
         <Textarea
-          type="text"
-          multiline
           rows={3}
           onChange={footprintHandleChange}
           name="footprint"

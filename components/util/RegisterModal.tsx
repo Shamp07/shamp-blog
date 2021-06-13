@@ -92,7 +92,7 @@ const CustomModal = styled(Modal)`
 `;
 
 const Paper = styled.div`
-  margin: 0 40px;
+  margin: 0 20px;
   width: 400px;
   max-width: 100%;
   background-color: #fff;
@@ -124,6 +124,10 @@ const Paper = styled.div`
 const CustomTextField = styled(TextField)`
   width: 100%;
   margin-bottom: 10px !important;
+  
+  &&& * {
+    font-family: inherit;
+  }
   
   &:nth-of-type(3) > .MuiFormHelperText-root {
     color: #dc143c;

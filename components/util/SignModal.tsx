@@ -71,7 +71,7 @@ const CustomModal = styled(Modal)`
 `;
 
 const Paper = styled.div`
-  margin: 0 40px;
+  margin: 0 20px;
   width: 300px;
   max-width: 100%;
   background-color: #fff;
@@ -107,6 +107,10 @@ const Paper = styled.div`
 const CustomTextField = styled(TextField)`
   width: 100%;
   margin-bottom: 15px !important;
+
+  &&& * {
+    font-family: inherit;
+  }
 `;
 
 export default observer(SignModal);

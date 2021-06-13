@@ -12,7 +12,7 @@ class PostStore {
 
   post: T.Post;
 
-  postView: T.PostView | {};
+  postView: T.PostView | undefined;
 
   postList: T.PostList[] = [];
 
@@ -76,7 +76,7 @@ class PostStore {
   };
 
   getPostList = async (
-    category: string, tag: string | undefined, page: number = 1,
+    category: string, tag: string, page: number,
   ): Promise<void> => {
     await Axios({
       method: 'get',
@@ -139,7 +139,7 @@ class PostStore {
 
 export const initialPost = {
   postList: [] as T.PostList[],
-  postView: {},
+  postView: {} as T.PostView | undefined,
   post: {
     id: 0,
     category: '',

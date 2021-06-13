@@ -45,7 +45,7 @@ const CustomModal = styled(Modal)`
 `;
 
 const Paper = styled.div`
-  margin: 0 40px;
+  margin: 0 20px;
   min-width: 300px;
   max-width: 100%;
   background-color: #fff;

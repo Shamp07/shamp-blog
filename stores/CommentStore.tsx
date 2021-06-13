@@ -45,7 +45,7 @@ class CommentStore {
     }));
   }
 
-  commentHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  commentHandleChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
     if (event.target.value.length <= 1000) {
       this.commentInfo = {
         ...this.commentInfo,

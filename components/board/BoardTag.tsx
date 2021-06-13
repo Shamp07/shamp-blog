@@ -29,16 +29,17 @@ interface ActiveProp {
 
 export const Tag = styled.li<ActiveProp>(({ isActive }) => ({
   display: 'inline-block',
-  padding: '10px 0 10px 12px',
+  margin: '10px 0 10px 10px',
 
-  ':last-child': {
-    paddingRight: '10px',
+  '&:last-child': {
+    marginRight: '10px',
   },
 
-  '> a': {
+  '& > a': {
     display: 'inline-block',
+    padding: '6px 15px',
+    lineHeight: 1,
     minWidth: '45px',
-    padding: '4px 15px',
     textAlign: 'center',
     textDecoration: 'none',
     borderRadius: '12px',
@@ -47,7 +48,6 @@ export const Tag = styled.li<ActiveProp>(({ isActive }) => ({
     transition: 'all 0.2s',
     color: '#616161',
     backgroundColor: '#e6e6e6',
-    height: '24px',
 
     ...(isActive ? ({
       color: '#fff',

@@ -48,7 +48,7 @@ class HomeStore {
     this.footprintInfo.modifierFootprint = content;
   };
 
-  footprintHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  footprintHandleChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
     if (event.target.value.length <= 1000) {
       this.footprintInfo = {
         ...this.footprintInfo,

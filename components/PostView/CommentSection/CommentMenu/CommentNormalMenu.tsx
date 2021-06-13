@@ -4,11 +4,11 @@ import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReply } from '@fortawesome/free-solid-svg-icons';
 
-import { CommentType } from '@stores/CommentStore';
-import useStores from '../../../../stores/useStores';
+import * as T from '@types';
+import useStores from '@stores/useStores';
 
 export interface Props {
-  data: CommentType;
+  data: T.Comment;
 }
 
 const CommentNormalMenu = ({ data }: Props) => {
@@ -17,6 +17,8 @@ const CommentNormalMenu = ({ data }: Props) => {
     UtilStore,
   } = useStores();
   const { postView } = PostStore;
+  if (!postView) return null;
+
   const { id: postId } = postView;
   const { setReplyCommentId, setModifierCommentId, deleteComment } = CommentStore;
   const { userData } = SignStore;

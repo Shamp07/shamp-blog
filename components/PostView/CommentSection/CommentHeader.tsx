@@ -11,6 +11,8 @@ import * as T from '@types';
 const CommentHeader = () => {
   const { PostStore, CommentStore } = useStores();
   const { postView } = PostStore;
+  if (!postView) return null;
+
   const { getComment } = CommentStore;
   const { id, commentCnt } = postView;
 

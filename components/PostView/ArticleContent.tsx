@@ -11,6 +11,8 @@ import * as T from '@types';
 const ArticleContent = () => {
   const { PostStore, SignStore } = useStores();
   const { postView, addPostLike } = PostStore;
+  if (!postView) return null;
+
   const { id, likeCnt, content } = postView;
   const { userData } = SignStore;
 
