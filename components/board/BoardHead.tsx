@@ -7,9 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 import useStores from '@stores/useStores';
-import BoardTag, { Tag } from './BoardTag';
 import * as T from '@types';
 import Button from '@atoms/Button';
+import BoardTag, { Tag } from './BoardTag';
 
 const BoardHead = () => {
   const router = useRouter();
@@ -82,6 +82,10 @@ const Wrapper = styled.header`
   overflow: hidden;
   margin-bottom: 16px;
   background-color: #fff;
+
+  @media (max-width: 1064px) {
+    border-radius: 0;
+  }
 `;
 
 const CategoryTag = styled.ul`

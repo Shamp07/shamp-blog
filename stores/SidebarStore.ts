@@ -4,7 +4,7 @@ import makeAnnotations from '@util/Mobx';
 
 class SidebarStore {
   topCategoryList = [{
-    name: 'Home',
+    name: '홈',
     path: '',
   }, {
     name: '프로필',

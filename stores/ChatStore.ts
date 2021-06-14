@@ -1,6 +1,5 @@
 import React, { RefObject } from 'react';
 import { makeObservable } from 'mobx';
-import socketio from 'socket.io-client';
 import dayjs from 'dayjs';
 
 import makeAnnotations from '@util/Mobx';

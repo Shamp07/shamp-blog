@@ -68,7 +68,7 @@ const Wrapper = styled.div<WrapperProps>`
 
 const MobileMenu = styled.div`
   display: none;
-  height: 40px;
+  height: 44px;
   @media (max-width: 1064px) {
     display: block;
   }
@@ -92,6 +92,7 @@ const CategoryWrapper = styled.div`
   @media (max-width: 1064px) {
     box-shadow: none !important;
     border-top: 1px solid #e6e6e6;
+    border-radius: 0;
   }
   
   & > ul {

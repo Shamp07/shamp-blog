@@ -29,6 +29,10 @@ const Wrapper = styled.section`
   border-radius: 14px;
   background-color: #fff;
   overflow: hidden;
+
+  @media (max-width: 1064px) {
+    border-radius: 0;
+  }
 `;
 
 export default BoardContent;

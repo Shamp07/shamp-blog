@@ -116,7 +116,12 @@ const Profile = () => (
 const Wrapper = styled.div`
   background-color: #fff;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
-  border-radius: 4px;
+  border-radius: 14px;
+  word-break: break-all;
+
+  @media (max-width: 1064px) {
+    border-radius: 0;
+  }
 
   & > h1 {
     padding: 20px;

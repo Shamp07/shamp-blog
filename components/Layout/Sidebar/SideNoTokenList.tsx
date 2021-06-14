@@ -17,7 +17,7 @@ const SideNoTokenList = () => {
 
 const MobileMenu = styled.div`
   display: none;
-  height: 40px;
+  height: 44px;
   @media (max-width: 1064px) {
     display: block;
   }

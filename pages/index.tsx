@@ -7,9 +7,9 @@ import { faSync } from '@fortawesome/free-solid-svg-icons';
 import useStores from '@stores/useStores';
 import HomePostList from '@components/home/HomePostList';
 import Footprint from '@components/home/Footprint';
-import { MyNextPageContext } from './_app';
 import Button from '@atoms/Button';
 import * as T from '@types';
+import { MyNextPageContext } from './_app';
 
 const Home = () => {
   const { HomeStore } = useStores();
@@ -69,6 +69,10 @@ const GridWrapper = styled.div`
   background-color: #fff;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
   border-radius: 14px;
+
+  @media (max-width: 1064px) {
+    border-radius: 0;
+  }
 `;
 
 const CustomGrid = styled(Grid)`

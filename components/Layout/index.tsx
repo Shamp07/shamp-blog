@@ -57,7 +57,8 @@ const CenterContent = styled.div`
   @media (max-width: 1064px) {
     padding-left: 0 !important;
     padding-right: 0 !important;
-    margin-top: 0;
+    max-width: 100%;
+    margin: 0;
   }
 `;
 
