@@ -17,7 +17,7 @@ const ArticleFooter = () => {
   const { toggleConfirmModal } = UtilStore;
   const { userData } = SignStore;
 
-  if (userData?.adminFl) return null;
+  if (!userData?.adminFl) return null;
 
   return (
     <ArticleFooterWrapper>

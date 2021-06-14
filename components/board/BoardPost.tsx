@@ -25,7 +25,7 @@ const BoardPost = ({ data }: Props) => {
 
   const boardPath = router.query.board[0];
 
-  const commentCount = useMemo(() => (commentCnt ? (
+  const commentCount = useMemo(() => (Number(commentCnt) ? (
     <span>
       [
       {commentCnt}

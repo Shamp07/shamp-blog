@@ -28,6 +28,7 @@ const Wrapper = styled.section`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
   border-radius: 14px;
   background-color: #fff;
+  overflow: hidden;
 `;
 
 export default BoardContent;
