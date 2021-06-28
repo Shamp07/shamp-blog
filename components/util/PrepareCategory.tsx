@@ -22,6 +22,10 @@ const Wrapper = styled.div`
   height: 94px;
   padding: 243px 0;
   border-radius: 14px;
+
+  @media (max-width: 1064px) {
+    border-radius: 0;
+  }
   
   & > div {
     text-align: center;

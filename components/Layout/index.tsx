@@ -108,6 +108,18 @@ const GlobalStyle = css`
     background-color: rgba(0, 0, 0, 0.12) !important;
   }
 
+  .MuiInputLabel-formControl {
+    z-index: 0 !important;
+    font-family: inherit !important;
+  }
+  
+  .MuiPaper-root {
+    border-radius: 10px !important;
+    &&& * {
+      font-family: inherit;
+    }
+  }
+  
   @font-face {
     font-family: 'Roboto';
     font-style: normal;

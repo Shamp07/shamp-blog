@@ -48,6 +48,17 @@ hljs.configure({
 });
 
 const CustomQuill = styled(QuillNoSSRWrapper)`
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  
+  & > div {
+    border: 0 !important;
+  }
+
+  & > div:first-of-type {
+    border-bottom: 1px solid #ccc !important;
+  }
+  
   & .ql-editor {
     font-size: 16px;  
     line-height: 2;

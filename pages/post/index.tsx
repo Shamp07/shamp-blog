@@ -2,11 +2,13 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
-import { Button, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import Editor from '@components/posting/Editor';
+import Button from '@atoms/Button';
 import useStores from '@stores/useStores';
+import * as T from '@types';
 
 interface Props {
   isModify: boolean;
@@ -61,18 +63,22 @@ const Post = ({ isModify }: Props) => {
         <Editor />
       </Article>
       <Footer>
-        <Button variant="contained" color="primary" onClick={router.back}>
+        <Button
+          size={T.ButtonSize.SMALL}
+          variant="contained"
+          color="default"
+          onClick={router.back}
+        >
           취소
         </Button>
-        { isModify ? (
-          <Button variant="contained" color="primary" onClick={() => modifyPost(router)}>
-            수정
-          </Button>
-        ) : (
-          <Button variant="contained" color="primary" onClick={() => addPost(router)}>
-            등록
-          </Button>
-        )}
+        <Button
+          size={T.ButtonSize.SMALL}
+          variant="contained"
+          color="primary"
+          onClick={() => (isModify ? modifyPost(router) : addPost(router))}
+        >
+          {isModify ? '수정' : '등록'}
+        </Button>
       </Footer>
     </Wrapper>
   );
@@ -81,10 +87,26 @@ const Post = ({ isModify }: Props) => {
 const Wrapper = styled.div`
   background-color: #fff;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
+  border-radius: 14px;
+  overflow: hidden;
+
+  & .MuiInputBase-root {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  & .MuiPaper-rounded {
+    border-radius: 10px;
+  }
+
+  @media (max-width: 1064px) {
+    border-radius: 0;
+  }
 `;
 
 const HeadSection = styled.div`
   background-color: #fff;
+  line-height: 1;
 `;
 
 const SubTitle = styled.div`
@@ -101,10 +123,11 @@ const SubTitle = styled.div`
 const TitleInput = styled(TextField)`
   width: 100%;
   margin-bottom: 10px !important;
+  border-radius: 10px;
 `;
 
 const Article = styled.article`
-  padding: 10px 10px;
+  padding: 24px;
 `;
 
 const Footer = styled(Article)`

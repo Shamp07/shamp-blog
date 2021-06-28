@@ -66,11 +66,11 @@ class SidebarStore {
     }));
   }
 
-  toggleSidebar = (): void => {
+  toggleSidebar = () => {
     this.isOpenSidebar = !this.isOpenSidebar;
   };
 
-  getCategoryName = (path: string): string => (this.boardCategoryName[path] ?? '');
+  getCategoryName = (path: string) => (this.boardCategoryName[path] ?? '');
 }
 
 export default SidebarStore;
