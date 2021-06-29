@@ -24,6 +24,7 @@
       "@util/*": ["util/*"],
       "@stores": ["stores"],
       "@types": ["types"],
+      "@styles": ["styles"]
     },
     "lib": [
       "dom",
@@ -44,7 +45,8 @@
     "./config",
     "./next.config.js",
     "./server.js",
-    "./types.ts"
+    "./types.ts",
+    "./styles.ts"
   ],
   "exclude": [
     "node_modules",

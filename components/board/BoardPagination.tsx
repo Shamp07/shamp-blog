@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useCallback, useMemo} from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-import { Pagination, PaginationItem } from '@material-ui/lab';
+import { Pagination, PaginationItem, PaginationRenderItemParams } from '@material-ui/lab';
 
 import useStores from '@stores/useStores';
 
@@ -13,19 +13,25 @@ const BoardPagination = () => {
   const page = router.query.page ? Number(router.query.page) : 1;
   const count = postList.length ? Number(postList[0].page) : 0;
 
+  const renderItem = useCallback((item: PaginationRenderItemParams) => {
+    const moveBoardPage = () => movePage(router, item.page);
+
+    return (
+      <PaginationItem
+        {...item}
+        component="div"
+        onClick={moveBoardPage}
+      />
+    );
+  }, []);
+
   return (
     <PaginationWrapper>
       <CustomPagination
         page={page}
         count={count}
         color="primary"
-        renderItem={(item) => (
-          <PaginationItem
-            {...item}
-            component="div"
-            onClick={() => movePage(router, item.page)}
-          />
-        )}
+        renderItem={renderItem}
       />
     </PaginationWrapper>
   );

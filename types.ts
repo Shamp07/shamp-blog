@@ -162,3 +162,6 @@ export enum ButtonSize {
   MEDIUM = 'medium',
   LARGE = 'large',
 }
+export enum Device {
+  LARGE = 'large',
+}

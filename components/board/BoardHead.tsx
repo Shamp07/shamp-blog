@@ -9,11 +9,13 @@ import { faPen } from '@fortawesome/free-solid-svg-icons';
 import useStores from '@stores/useStores';
 import * as T from '@types';
 import Button from '@atoms/Button';
+import { MediaQuery } from '@styles';
 import BoardTag, { Tag } from './BoardTag';
 
 const BoardHead = () => {
   const router = useRouter();
   if (!router.query.board) return null;
+
   const {
     SidebarStore, CategoryStore, SignStore,
     PostStore,
@@ -27,14 +29,14 @@ const BoardHead = () => {
   const categoryTag = router.query.board[1];
 
   const isAdmin = Boolean(userData?.adminFl);
-  const isBestOrAll = categoryPath === 'best' || categoryPath === 'all';
+  const isBestOrAll = ['best', 'all'].includes(categoryPath);
   const isBest = categoryTag === 'best';
 
   const categoryName = useMemo(() => getCategoryName(categoryPath), [categoryPath]);
 
   const goPost = useCallback(() => {
     router.push('/post').then(clearPost);
-  }, [router, clearPost]);
+  }, [router]);
 
   const postButton = useMemo(() => (
     isAdmin ? (
@@ -50,14 +52,16 @@ const BoardHead = () => {
           </Button>
         </li>
       </AbsoluteUl>
-    ) : null), [isAdmin]);
+    ) : null
+  ), [isAdmin]);
 
   const bestTag = useMemo(() => (
     isBestOrAll ? null : (
       <BestTag isActive={isBest}>
         <Link href={`/category/${categoryPath}/best`}>인기글</Link>
       </BestTag>
-    )), [isBestOrAll, isBest]);
+    )
+  ), [isBestOrAll, isBest]);
 
   return (
     <Wrapper>
@@ -76,17 +80,17 @@ const BoardHead = () => {
   );
 };
 
-const Wrapper = styled.header`
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
-  border-radius: 14px;
-  overflow: hidden;
-  margin-bottom: 16px;
-  background-color: #fff;
+const Wrapper = styled.header({
+  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, .15)',
+  borderRadius: '14px',
+  overflow: 'hidden',
+  marginBottom: '16px',
+  backgroundColor: '#fff',
 
-  @media (max-width: 1064px) {
-    border-radius: 0;
-  }
-`;
+  [MediaQuery[T.Device.LARGE]]: {
+    borderRadius: 0,
+  },
+});
 
 const CategoryTag = styled.ul`
   list-style: none;

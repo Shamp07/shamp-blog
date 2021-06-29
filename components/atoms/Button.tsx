@@ -8,13 +8,13 @@ interface Props {
   readonly children: ReactNode;
   readonly variant: 'text' | 'outlined' | 'contained';
   readonly color: PropTypes.Color;
-  readonly size: T.ButtonSize;
+  readonly size?: T.ButtonSize;
   readonly disabled?: boolean;
   onClick(): void;
 }
 
 const Button = ({
-  children, variant, color, size, disabled = false, onClick,
+  children, variant, color, size, disabled, onClick,
 }: Props) => (
   <StyledButton
     variant={variant}
@@ -26,6 +26,11 @@ const Button = ({
     {children}
   </StyledButton>
 );
+
+Button.defaultProps = {
+  size: T.ButtonSize.MEDIUM,
+  disabled: false,
+};
 
 const StyledButton = styled(RowButton)(({ size }) => ({
   '&&&': {

@@ -2,6 +2,8 @@ import React, { useMemo } from 'react';
 import styled from '@emotion/styled';
 
 import useStores from '@stores/useStores';
+import { MediaQuery } from '@styles';
+import * as T from '@types';
 import BoardPost from './BoardPost';
 import BoardPostNone from './BoardPostNone';
 
@@ -24,15 +26,15 @@ const BoardContent = () => {
   );
 };
 
-const Wrapper = styled.section`
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
-  border-radius: 14px;
-  background-color: #fff;
-  overflow: hidden;
+const Wrapper = styled.section({
+  backgroundColor: '#fff',
+  borderRadius: '14px',
+  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, .15)',
+  overflow: 'hidden',
 
-  @media (max-width: 1064px) {
-    border-radius: 0;
-  }
-`;
+  [MediaQuery[T.Device.LARGE]]: {
+    borderRadius: 0,
+  },
+});
 
 export default BoardContent;
