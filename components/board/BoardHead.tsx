@@ -36,7 +36,7 @@ const BoardHead = () => {
 
   const goPost = useCallback(() => {
     router.push('/post').then(clearPost);
-  }, [router]);
+  }, []);
 
   const postButton = useMemo(() => (
     isAdmin ? (

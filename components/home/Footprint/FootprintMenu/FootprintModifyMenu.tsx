@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from '@emotion/styled';
 
 import useStores from '@stores/useStores';
@@ -7,21 +7,29 @@ const FootprintModifyMenu = () => {
   const { HomeStore } = useStores();
   const { modifierFootprintId, setModifierFootprintId, modifyFootprint } = HomeStore;
 
+  const modifyCancel = useCallback(() => {
+    setModifierFootprintId(0, '');
+  }, []);
+
+  const modify = useCallback(() => {
+    modifyFootprint(modifierFootprintId);
+  }, [modifierFootprintId]);
+
   return (
     <FootprintMenu>
       <span
         role="button"
         tabIndex={0}
-        onClick={() => setModifierFootprintId(0, '')}
-        onKeyDown={() => setModifierFootprintId(0, '')}
+        onClick={modifyCancel}
+        onKeyDown={modifyCancel}
       >
         취소
       </span>
       <span
         role="button"
         tabIndex={0}
-        onClick={() => modifyFootprint(modifierFootprintId)}
-        onKeyDown={() => modifyFootprint(modifierFootprintId)}
+        onClick={modify}
+        onKeyDown={modify}
       >
         수정
       </span>

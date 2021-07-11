@@ -24,16 +24,17 @@ const BoardPost = ({ data }: Props) => {
   } = data;
 
   const boardPath = router.query.board[0];
+  const isExistComment = Number(commentCnt) > 0;
 
-  const commentCount = useMemo(() => (Number(commentCnt) ? (
+  const commentCount = useMemo(() => (isExistComment ? (
     <span>
       [
       {commentCnt}
       ]
     </span>
-  ) : null), [commentCnt]);
+  ) : null), [isExistComment]);
 
-  const CategoryName = useMemo(() => (getCategoryName(category)), [category]);
+  const CategoryName = useMemo(() => getCategoryName(category), [category]);
 
   return (
     <Article>

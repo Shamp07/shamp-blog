@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
@@ -17,33 +17,36 @@ const FootprintNormalMenu = ({ data }: Props) => {
 
   const { id, userId, content } = data;
 
-  const isMine = userData?.id === userId;
+  const onDelete = useCallback(() => {
+    deleteFootprint(id);
+  }, [id]);
+
+  const onConfirm = useCallback(() => {
+    toggleConfirmModal('해당 발자취를 삭제하시겠습니까?', onDelete);
+  }, []);
+
+  const onModify = useCallback(() => {
+    setModifierFootprintId(id, content);
+  }, [id, content]);
 
   return (
     <FootprintMenu>
-      {isMine && (
-        <>
-          <span
-            role="button"
-            tabIndex={0}
-            onClick={() => toggleConfirmModal(
-              '해당 발자취를 삭제하시겠습니까?',
-              () => deleteFootprint(id),
-            )}
-            onKeyDown={() => deleteFootprint(id)}
-          >
-            삭제
-          </span>
-          <span
-            role="button"
-            tabIndex={0}
-            onClick={() => setModifierFootprintId(id, content)}
-            onKeyDown={() => setModifierFootprintId(id, content)}
-          >
-            수정
-          </span>
-        </>
-      )}
+      <span
+        role="button"
+        tabIndex={0}
+        onClick={onConfirm}
+        onKeyDown={onConfirm}
+      >
+        삭제
+      </span>
+      <span
+        role="button"
+        tabIndex={0}
+        onClick={onModify}
+        onKeyDown={onModify}
+      >
+        수정
+      </span>
     </FootprintMenu>
   );
 };

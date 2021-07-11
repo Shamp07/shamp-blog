@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { Pagination, PaginationItem, PaginationRenderItemParams } from '@material-ui/lab';

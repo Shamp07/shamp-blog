@@ -3,8 +3,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 
+import * as T from '@types';
+
 interface Props {
-  tag: string;
+  tag: T.Tag['tag'];
 }
 
 const BoardTag = ({ tag }: Props) => {
