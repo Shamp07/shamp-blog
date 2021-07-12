@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { KeyboardEvent } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -31,7 +31,7 @@ const Footer = () => {
           value={chat}
           onChange={onChangeChat}
           onKeyPress={
-            (event: React.KeyboardEvent<HTMLTextAreaElement>) => onKeyPressChat(event, id)
+            (event: KeyboardEvent<HTMLTextAreaElement>) => onKeyPressChat(event, id)
           }
         />
       </ChatInputWrapper>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import Modal from '@material-ui/core/Modal';
@@ -11,6 +11,10 @@ import useStores from '@stores/useStores';
 const ConfirmModal = () => {
   const { AlertStore } = useStores();
   const { isOpenAlertModal, text, closeAlertModal } = AlertStore;
+
+  const focusRef = useCallback((node: HTMLButtonElement) => {
+    node?.focus();
+  }, []);
 
   return (
     <CustomModal
@@ -30,7 +34,14 @@ const ConfirmModal = () => {
           {/* eslint-disable-next-line react/no-danger */}
           <div dangerouslySetInnerHTML={{ __html: text }} />
           <div>
-            <RightButton variant="contained" color="primary" onClick={closeAlertModal}>확인하기</RightButton>
+            <RightButton
+              variant="contained"
+              color="primary"
+              onClick={closeAlertModal}
+              ref={focusRef}
+            >
+              확인하기
+            </RightButton>
           </div>
         </Paper>
       </Fade>

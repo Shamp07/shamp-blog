@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, KeyboardEvent } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import Modal from '@material-ui/core/Modal';
@@ -19,6 +19,10 @@ const SignModal = () => {
   } = SignStore;
   const { email, password } = loginInfo;
 
+  const onEnter = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter') login();
+  }, []);
+
   return (
     <CustomModal
       aria-labelledby="transition-modal-title"
@@ -35,9 +39,22 @@ const SignModal = () => {
         <Paper>
           <h2 id="transition-modal-title">로그인</h2>
           <div>
-            <CustomTextField label="e-mail" name="email" onChange={loginHandleChange} value={email} />
+            <CustomTextField
+              label="e-mail"
+              name="email"
+              onChange={loginHandleChange}
+              value={email}
+              onKeyPress={onEnter}
+            />
             <br />
-            <CustomTextField label="비밀번호" name="password" onChange={loginHandleChange} value={password} type="password" />
+            <CustomTextField
+              label="비밀번호"
+              name="password"
+              onChange={loginHandleChange}
+              value={password}
+              type="password"
+              onKeyPress={onEnter}
+            />
             <br />
           </div>
           <div>
@@ -54,6 +71,7 @@ const SignModal = () => {
               variant="contained"
               color="primary"
               onClick={login}
+
             >
               로그인
             </Button>

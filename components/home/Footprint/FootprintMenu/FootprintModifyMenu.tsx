@@ -13,7 +13,7 @@ const FootprintModifyMenu = () => {
 
   const modify = useCallback(() => {
     modifyFootprint(modifierFootprintId);
-  }, [modifierFootprintId]);
+  }, []);
 
   return (
     <FootprintMenu>

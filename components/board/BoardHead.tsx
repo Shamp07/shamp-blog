@@ -119,7 +119,7 @@ const CategoryTag = styled.ul`
 `;
 
 const BestTag = styled(Tag)(({ isActive }) => ({
-  '> a': {
+  '& > a': {
     border: '#eeee00 1.5px solid',
     backgroundColor: '#fff',
     color: '#eeee00',
