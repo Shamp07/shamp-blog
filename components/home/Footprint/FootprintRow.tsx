@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
@@ -17,6 +17,23 @@ const FootprintRow = ({ data }: Props) => {
     content, time, modifiedTime,
   } = data;
 
+  const isModify = modifierFootprintId === id;
+
+  const modifyArea = useMemo(() => (
+    isModify ? (
+      <TextAreaWrapper>
+        <Textarea
+          minRows={2}
+          maxRows={50}
+          onChange={footprintHandleChange}
+          name="modifierFootprint"
+          value={modifierFootprint}
+          placeholder="블로그에 관련된 건의사항이나 의견들을 자유롭게 작성해주세요!"
+        />
+      </TextAreaWrapper>
+    ) : content
+  ), [isModify]);
+
   return (
     <li>
       <FootprintWrapper>
@@ -25,18 +42,7 @@ const FootprintRow = ({ data }: Props) => {
           <RightTime>{modifiedTime || time}</RightTime>
         </FootprintWriter>
         <FootprintContent>
-          {modifierFootprintId === id ? (
-            <TextAreaWrapper>
-              <Textarea
-                minRows={2}
-                maxRows={50}
-                onChange={footprintHandleChange}
-                name="modifierFootprint"
-                value={modifierFootprint}
-                placeholder="블로그에 관련된 건의사항이나 의견들을 자유롭게 작성해주세요!"
-              />
-            </TextAreaWrapper>
-          ) : content}
+          {modifyArea}
         </FootprintContent>
         <FootprintMenu data={data} />
       </FootprintWrapper>

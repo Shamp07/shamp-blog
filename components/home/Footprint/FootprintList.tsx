@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 
@@ -13,12 +13,16 @@ const FootprintList = () => {
 
   const isMoreFootprint = footprintList[0]?.total > footprintSize;
 
+  const footprints = useMemo(() => (
+    footprintList.length ? footprintList.map(
+      (data) => <FootPrintRow data={data} key={data.id} />,
+    ) : <FootprintNone />
+  ), [footprintList]);
+
   return (
     <FootprintListWrapper>
       <ul>
-        {footprintList.length ? footprintList.map(
-          (data) => <FootPrintRow data={data} key={data.id} />,
-        ) : <FootprintNone />}
+        {footprints}
         {isMoreFootprint && <FootprintMore />}
       </ul>
     </FootprintListWrapper>
