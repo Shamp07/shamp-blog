@@ -7,6 +7,8 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import useStores from '@stores/useStores';
 import Category from './Category';
 import SideTokenMenu from './SideTokenMenu';
+import { MediaQuery } from "@styles";
+import * as T from '@types';
 
 const Sidebar = () => {
   const { SidebarStore } = useStores();
@@ -43,36 +45,37 @@ const Sidebar = () => {
   );
 };
 
-interface WrapperProps {
+interface SidebarProp {
   isOpenSidebar: boolean;
 }
 
-const Wrapper = styled.div<WrapperProps>`
-  display: block;
-  width: 280px;
-  will-change: min-height;
-  
-  @media (max-width: 1064px) {
-    background-color: #fff;
-    display: ${(props) => (props.isOpenSidebar ? 'block' : 'none')};
-    position: fixed;
-    z-index: 1;
-    height: 100%;
-    width: 250px;
-    top: 0;
-    right: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-`;
+const Wrapper = styled.div<SidebarProp>(({ isOpenSidebar }) => ({
+  display: 'block',
+  width: '280px',
+  willChange: 'min-height',
 
-const MobileMenu = styled.div`
-  display: none;
-  height: 44px;
-  @media (max-width: 1064px) {
-    display: block;
-  }
-`;
+  [MediaQuery[T.Device.LARGE]]: {
+    backgroundColor: '#fff',
+    display: isOpenSidebar ? 'block' : 'none',
+    position: 'fixed',
+    zIndex: 1,
+    height: '100%',
+    width: '250px',
+    top: 0,
+    right: 0,
+    overflowY: 'auto',
+    overflowX: 'hidden',
+  },
+}));
+
+const MobileMenu = styled.div({
+  display: 'none',
+  height: '44px',
+
+  [MediaQuery[T.Device.LARGE]]: {
+    display: 'block',
+  },
+});
 
 const CloseIcon = styled(FontAwesomeIcon)`
   position: absolute;
@@ -82,60 +85,60 @@ const CloseIcon = styled(FontAwesomeIcon)`
   color: #616161;
 `;
 
-const CategoryWrapper = styled.div`
-  width: 100%;
-  padding: 7px 0;
-  background-color: #fff;
-  border-radius: 14px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
-  
-  @media (max-width: 1064px) {
-    box-shadow: none !important;
-    border-top: 1px solid #e6e6e6;
-    border-radius: 0;
-  }
-  
-  & > ul {
-    list-style: none;
-  }
+const CategoryWrapper = styled.div({
+  width: '100%',
+  padding: '7px 0',
+  backgroundColor: '#fff',
+  borderRadius: '14px',
+  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, .15)',
 
-  & > ul > li {
-    height: 40px;
-    line-height: 41px;
-    margin: 4px 0 4px 15px;
-    cursor: pointer;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    color: #616161;
-    font-size: 14px;
-    font-weight: bold;
-    transition: all 0.3s;
+  [MediaQuery[T.Device.LARGE]]: {
+    boxShadow: 'none !important',
+    borderTop: '1px solid #e6e6e6',
+    borderRadius: 0,
+  },
 
-    @media (max-width: 1064px) {
-      outline: none;
-    }
+  '& > ul': {
+    listStyle: 'none',
+  },
 
-    &:hover {
-      background-color: #e6e6e6;
-      transition: all 0.3s;
-    }
-    
-    & > a {
-      display: inline-block;
-      color: #616161;
-      padding-left: 14px;
-      text-decoration: none;
-      width: 270px;
-      height: 100%;
-    }
-  }
-`;
+  '& > ul > li': {
+    height: '40px',
+    lineHeight: '41px',
+    margin: '4px 0 4px 15px',
+    cursor: 'pointer',
+    borderTopLeftRadius: '10px',
+    borderBottomLeftRadius: '10px',
+    color: '#616161',
+    fontSize: '14px',
+    fontWeight: 'bold',
+    transition: 'all 0.3s',
 
-const BottomCategory = styled(CategoryWrapper)`
-  margin-top: 16px;
-  @media (max-width: 1064px) {
-    margin-top: 0;
-  }
-`;
+    [MediaQuery[T.Device.LARGE]]: {
+      outline: 'none',
+    },
+
+    '&:hover': {
+      backgroundColor: '#e6e6e6',
+      transition: 'all 0.3s',
+    },
+
+    '& > a': {
+      display: 'inline-block',
+      color: '#616161',
+      paddingLeft: '14px',
+      textDecoration: 'none',
+      width: '270px',
+      height: '100%',
+    },
+  },
+});
+
+const BottomCategory = styled(CategoryWrapper)({
+  marginTop: '16px',
+  [MediaQuery[T.Device.LARGE]]: {
+    marginTop: 0,
+  },
+});
 
 export default observer(Sidebar);

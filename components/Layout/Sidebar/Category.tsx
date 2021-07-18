@@ -27,16 +27,20 @@ const Category = ({ path, name, isBoard }: Props) => {
   );
 };
 
-interface CategoryListProps {
+interface ActiveProp {
   isActive: boolean;
 }
 
-const CategoryList = styled.li<CategoryListProps>`
-  ${(props) => (props.isActive ? 'background-color: #2d79c7 !important;' : null)};
-  & > a {
-    ${(props) => (props.isActive ? 'transition: all 0.3s;' : null)};
-    ${(props) => (props.isActive ? 'color: #ffffff !important;' : null)};
-  }
-`;
+const CategoryList = styled.li<ActiveProp>(({ isActive }) => ({
+  '&&&': {
+    ...(isActive ? ({
+      backgroundColor: '#2d79c7',
+      '& > a': {
+        transition: 'all 0.3s',
+        color: '#ffffff',
+      },
+    }) : null),
+  },
+}));
 
 export default Category;

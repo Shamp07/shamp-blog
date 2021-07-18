@@ -40,14 +40,14 @@ const ReceiveMessage = ({ data }: Props) => {
   );
 };
 
-interface WrapperProps {
+interface SimpleProp {
   isSimple: boolean;
 }
 
-const Wrapper = styled.div<WrapperProps>`
-  display: flex;
-  margin-top: ${(props) => (props.isSimple ? '5px' : '12px')};
-`;
+const Wrapper = styled.div<SimpleProp>(({ isSimple }) => ({
+  display: 'flex',
+  marginTop: isSimple ? '5px' : '12px',
+}));
 
 const Profile = styled.div`
   width: 40px;
@@ -77,7 +77,7 @@ const NameAndTime = styled.div`
   font-size: 12px;
   margin: 4px 20% 4px 0;
   color: rgb(36, 36, 40);
-  
+
   & > div:first-of-type {
     flex: 0 1 auto;
     font-size: 13px;
@@ -86,7 +86,7 @@ const NameAndTime = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  
+
   & > div:last-of-type {
     margin-left: 7px;
     font-size: 11px;
@@ -105,7 +105,7 @@ const MessageContentInner = styled.div`
   border-radius: 12px;
   background-color: rgb(240, 240, 241);
   color: rgb(36, 36, 40);
-  
+
   & > div {
     max-width: 300px;
     line-height: 20px !important;

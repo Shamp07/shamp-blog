@@ -103,24 +103,31 @@ const ChatInputWrapper = styled.div`
   padding: 18px 0;
   flex: 1 1 0;
   display: flex;
-  
 `;
 
-interface ChatEnterProps {
+interface ActiveProp {
   active: boolean;
 }
 
-const ChatEnter = styled.div<ChatEnterProps>`
-  margin-left: auto;
-  color: ${(props) => (props.active ? '#2d79c7' : '#e6e6e6')};
-  cursor: ${(props) => (props.active ? 'pointer' : 'not-allowed')};
-  cursor: ${(props) => (props.active ? '&:hover { color: #2d79c7; }' : null)};
-  transition: color 0.2s;
-  
-  & > svg {
-    width: 25px;
-    height: 35px
-  }
-`;
+const ChatEnter = styled.div<ActiveProp>(({ active }) => ({
+  marginLeft: 'auto',
+  transition: 'color 0.2s',
+
+  ...(active ? ({
+    color: '#2d7927',
+    cursor: 'pointer',
+    '&:hover': {
+      color: '#2d79c7',
+    }
+  }): ({
+    color: '#e6e6e6',
+    cursor: 'not-allowed',
+  })),
+
+ '& > svg': {
+    width: '25px',
+    height: '35px',
+  },
+}));
 
 export default observer(Footer);

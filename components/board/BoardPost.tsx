@@ -7,6 +7,7 @@ import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 
 import useStores from '@stores/useStores';
 import * as T from '@types';
+import {MediaQuery} from "@styles";
 
 interface Props {
   data: T.PostList;
@@ -103,37 +104,37 @@ const Article = styled.article`
   }
 `;
 
-const Vote = styled.div`
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
-  color: #7b858e;
-  width: 72px;
-  @media (max-width: 1064px) {
-    width: 48px;
-  }
-    
-  & > div:last-child {
-    margin-top: 5px;
-    line-height: 17px;
-    font-size: 14px;
-    color: #7b858e;
-  }
-`;
+const Vote = styled.div({
+  display: 'table-cell',
+  verticalAlign: 'middle',
+  textAlign: 'center',
+  color: '#7b858e',
+  width: '72px',
+
+  [MediaQuery[T.Device.LARGE]]: {
+    width: '48px',
+  },
+
+  '& > div:last-child': {
+    marginTop: '5px',
+    lineHeight: '17px',
+    fontSize: '14px',
+    color: '#7b858e',
+  },
+});
 
 const ArticleContent = styled.div`
   vertical-align: middle;
   display: table-cell;
-
 `;
 
 const PostTitle = styled.div`
   & > span:first-of-type {
     padding-right: 5px;
   }
-  
+
   & > span:last-child {
-    color: #2d79c7;    
+    color: #2d79c7;
   }
 `;
 
@@ -143,14 +144,14 @@ const PostInfoUl = styled.ul`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  
-  & > li { 
+
+  & > li {
     display: inline-block;
     color: #98a0a7;
     padding: 0 8px;
     border-left: 1px solid #e6e6e6;
     font-size: 14px;
-    
+
     &:first-of-type {
       border: none;
       padding-left: 0;

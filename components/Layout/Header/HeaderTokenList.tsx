@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import Menu from '@material-ui/core/Menu';
@@ -18,6 +18,10 @@ const HeaderTokenList = () => {
   } = UtilStore;
   const { alertNotReadSize, alertLoading } = AlertStore;
 
+  const onLogout = useCallback(() => {
+    logout(false);
+  }, []);
+
   return (
     <>
       <li>
@@ -30,7 +34,7 @@ const HeaderTokenList = () => {
           open={headerMenu === 'profile'}
           onClose={closeHeaderMenu}
         >
-          <MenuItem onClick={() => logout(false)}>로그아웃</MenuItem>
+          <MenuItem onClick={onLogout}>로그아웃</MenuItem>
           <MenuItem onClick={togglePasswordChangeModal}>비밀번호 변경</MenuItem>
           <MenuItem onClick={toggleDeleteUserModal}>탈퇴하기</MenuItem>
         </UserMenu>

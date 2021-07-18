@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import { useRouter } from 'next/router';
 import { MenuItem } from '@material-ui/core';
 import styled from '@emotion/styled';
@@ -15,13 +15,17 @@ const Alert = ({ data }: Props) => {
   const { AlertStore } = useStores();
   const { movePost } = AlertStore;
 
+  const goPost = useCallback(() => {
+    movePost(router, postId, id);
+  }, []);
+
   const {
     id,
     content, postId, readFl, time,
   } = data;
 
   return (
-    <MenuItemCustom onClick={() => movePost(router, postId, id)}>
+    <MenuItemCustom onClick={goPost}>
       <MenuItemInner isRead={readFl}>
         <div>
           &quot;
@@ -47,15 +51,17 @@ const MenuItemCustom = styled(MenuItem)`
   border-bottom: 1px solid #e6e6e6 !important;
 `;
 
-const MenuItemInner = styled.div<MenuItemInnerProps>`
-  display: block;
-  width: 100%;
-  font-weight: 300;
-  font-size: 15px;
-  word-break: break-all;
-  text-decoration: none;
-  color: ${(props) => (props.isRead ? '#C1C1C1' : '#000')} !important;
-`;
+const MenuItemInner = styled.div<MenuItemInnerProps>(({ isRead }) => ({
+  display: 'block',
+  width: '100%',
+  fontWeight: 300,
+  fontSize: '15px',
+  wordBreak: 'break-all',
+  textDecoration: 'none',
+  '&&&': {
+    color: isRead ? '#C1C1C1' : '#000',
+  },
+}));
 
 const MenuItemTime = styled.div`
   display: flex;
