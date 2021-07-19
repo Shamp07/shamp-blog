@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
@@ -13,12 +13,16 @@ const CommentList = () => {
 
   const isMoreComment = commentList[0]?.total > commentSize;
 
+  const comments = useMemo(() => (
+    commentList.length ? commentList.map(
+      (data) => <CommentRow data={data} key={data.id} />,
+    ) : <CommentNone />
+  ), [commentList]);
+
   return (
     <CommentListWrapper>
       <ul>
-        {commentList.length ? commentList.map(
-          (data) => <CommentRow data={data} key={data.id} />,
-        ) : <CommentNone />}
+        {comments}
         {isMoreComment && <CommentMore />}
       </ul>
     </CommentListWrapper>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from '@emotion/styled';
 
 import useStores from '@stores/useStores';
@@ -11,21 +11,29 @@ const CommentModifyMenu = () => {
   const { id: postId } = postView;
   const { modifierCommentId: id, setModifierCommentId, modifyComment } = CommentStore;
 
+  const modifyCancel = useCallback(() => {
+    setModifierCommentId(0, '');
+  }, []);
+
+  const modify = useCallback(() => {
+    modifyComment(id, postId);
+  }, []);
+
   return (
     <CommentMenu>
       <span
         role="button"
         tabIndex={0}
-        onClick={() => setModifierCommentId(0, '')}
-        onKeyDown={() => setModifierCommentId(0, '')}
+        onClick={modifyCancel}
+        onKeyDown={modifyCancel}
       >
         취소
       </span>
       <span
         role="button"
         tabIndex={0}
-        onClick={() => modifyComment(id, postId)}
-        onKeyDown={() => modifyComment(id, postId)}
+        onClick={modify}
+        onKeyDown={modify}
       >
         수정
       </span>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,41 +24,48 @@ const CommentNormalMenu = ({ data }: Props) => {
   const { userData } = SignStore;
   const { toggleConfirmModal } = UtilStore;
 
-  const { id, userId, content } = data;
+  const { id, content } = data;
 
-  const isMine = userData?.id === userId;
+  const onDelete = useCallback(() => {
+    deleteComment(id, postId);
+  }, []);
+
+  const onModify = useCallback(() => {
+    setModifierCommentId(id, content);
+  }, []);
+
+  const onReply = useCallback(() => {
+    setReplyCommentId(id);
+  }, []);
+
+  const onDeleteConfirm = useCallback(() => {
+    toggleConfirmModal('해당 댓글을 삭제하시겠습니까?', onDelete);
+  }, []);
 
   return (
     <CommentMenu>
-      {isMine && (
-        <>
-          <span
-            role="button"
-            tabIndex={0}
-            onClick={() => toggleConfirmModal(
-              '해당 댓글을 삭제하시겠습니까?',
-              () => deleteComment(id, postId),
-            )}
-            onKeyDown={() => deleteComment(id, postId)}
-          >
-            삭제
-          </span>
-          <span
-            role="button"
-            tabIndex={0}
-            onClick={() => setModifierCommentId(id, content)}
-            onKeyDown={() => setModifierCommentId(id, content)}
-          >
-            수정
-          </span>
-        </>
-      )}
+      <span
+        role="button"
+        tabIndex={0}
+        onClick={onDeleteConfirm}
+        onKeyDown={onDeleteConfirm}
+      >
+        삭제
+      </span>
+      <span
+        role="button"
+        tabIndex={0}
+        onClick={onModify}
+        onKeyDown={onModify}
+      >
+        수정
+      </span>
       {Boolean(userData) && (
         <span
           role="button"
           tabIndex={0}
-          onClick={() => setReplyCommentId(id)}
-          onKeyDown={() => setReplyCommentId(id)}
+          onClick={onReply}
+          onKeyDown={onReply}
         >
           <ReplyIcon icon={faReply} />
           답글 쓰기

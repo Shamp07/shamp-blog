@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -22,6 +22,31 @@ const CommentRow = ({ data }: Props) => {
     isTag, commentUserName,
   } = data;
 
+  const isModify = modifierCommentId === id;
+  const isReply = id === replyCommentId;
+
+  const contentArea = useMemo(() => (
+    <>
+      {isTag && (<NameTag>{commentUserName}</NameTag>)}
+      {content}
+    </>
+  ), [isTag, content]);
+
+  const modifyArea = useMemo(() => (
+    isModify ? (
+      <TextAreaWrapper>
+        <Textarea
+          minRows={2}
+          maxRows={50}
+          onChange={commentHandleChange}
+          name="modifierComment"
+          value={modifierComment}
+          placeholder="포스팅에 관련된 의견이나 질문을 자유롭게 남겨주세요!"
+        />
+      </TextAreaWrapper>
+    ) : contentArea
+  ), [isModify]);
+
   return (
     <>
       <li>
@@ -32,47 +57,36 @@ const CommentRow = ({ data }: Props) => {
             <span>{modifiedTime || time}</span>
           </CommentWriter>
           <CommentContent>
-            {modifierCommentId === id ? (
-              <TextAreaWrapper>
-                <Textarea
-                  minRows={2}
-                  maxRows={50}
-                  onChange={commentHandleChange}
-                  name="modifierComment"
-                  value={modifierComment}
-                  placeholder="포스팅에 관련된 의견이나 질문을 자유롭게 남겨주세요!"
-                />
-              </TextAreaWrapper>
-            ) : (
-              <>
-                {isTag && (<NameTag>{commentUserName}</NameTag>)}
-                {content}
-              </>
-            )}
+            {modifyArea}
           </CommentContent>
           <CommentMenu data={data} />
         </CommentWrapper>
       </li>
-      {id === replyCommentId && <CommentWrite isReply />}
+      {isReply && <CommentWrite isReply />}
     </>
   );
 };
 
-interface CommentWrapperProps {
+interface ReplyProp {
   isReply: boolean;
 }
 
-const CommentWrapper = styled.div<CommentWrapperProps>`
-  position: relative;
-  padding: ${(props) => (props.isReply ? '16px 16px 16px 64px' : '16px')};
-  background-color: ${(props) => (props.isReply ? '#f8f9fa' : '#ffffff')};
-`;
+const CommentWrapper = styled.div<ReplyProp>(({ isReply }) => ({
+  position: 'relative',
+  ...(isReply ? ({
+    padding: '16px 16px 16px 64px',
+    backgroundColor: '#f8f9fa',
+  }) : ({
+    padding: '16px',
+    backgroundColor: '#ffffff',
+  })),
+}));
 
 const CommentWriter = styled.div`
   line-height: 17px;
   font-weight: 700;
   color: #1e2022;
-  
+
   & > span {
     padding: 0 10px;
   }
@@ -80,7 +94,7 @@ const CommentWriter = styled.div`
   & > span:first-of-type {
     padding-left: 0;
   }
-  
+
   & > span:last-child {
     font-size: 14px;
     color: #7b858e;

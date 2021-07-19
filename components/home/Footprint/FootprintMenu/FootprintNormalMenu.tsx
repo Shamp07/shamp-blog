@@ -10,12 +10,11 @@ export interface Props {
 }
 
 const FootprintNormalMenu = ({ data }: Props) => {
-  const { HomeStore, SignStore, UtilStore } = useStores();
+  const { HomeStore, UtilStore } = useStores();
   const { setModifierFootprintId, deleteFootprint } = HomeStore;
-  const { userData } = SignStore;
   const { toggleConfirmModal } = UtilStore;
 
-  const { id, userId, content } = data;
+  const { id, content } = data;
 
   const onDelete = useCallback(() => {
     deleteFootprint(id);

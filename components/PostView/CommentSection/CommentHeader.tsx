@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +15,10 @@ const CommentHeader = () => {
 
   const { getComment } = CommentStore;
   const { id, commentCnt } = postView;
+
+  const onRefresh = useCallback(() => {
+    getComment(id);
+  }, []);
 
   return (
     <CommentHeaderWrapper>
@@ -33,7 +37,7 @@ const CommentHeader = () => {
           size={T.ButtonSize.SMALL}
           color="default"
           variant="outlined"
-          onClick={() => getComment(id)}
+          onClick={onRefresh}
         >
           <ReloadICon icon={faSync} />
           새로고침

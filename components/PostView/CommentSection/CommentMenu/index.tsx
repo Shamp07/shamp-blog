@@ -10,9 +10,7 @@ const CommentMenu = ({ data }: Props) => {
   const { modifierCommentId } = CommentStore;
   const { id } = data;
 
-  if (id === modifierCommentId) {
-    return <CommentModifyMenu />;
-  }
+  if (id === modifierCommentId) return <CommentModifyMenu />;
 
   return <CommentNormalMenu data={data} />;
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from '@emotion/styled';
 
 import useStores from '@stores/useStores';
@@ -11,8 +11,12 @@ const CommentMore = () => {
 
   const { id } = postView;
 
+  const onMore = useCallback(() => {
+    moreComment(id);
+  }, []);
+
   return (
-    <Wrapper onClick={() => moreComment(id)}>
+    <Wrapper onClick={onMore}>
       댓글 더보기
     </Wrapper>
   );
