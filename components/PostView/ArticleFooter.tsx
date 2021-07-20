@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
@@ -17,6 +17,18 @@ const ArticleFooter = () => {
   const { toggleConfirmModal } = UtilStore;
   const { userData } = SignStore;
 
+  const onDelete = useCallback(() => {
+    deletePost(id, router);
+  }, []);
+
+  const onDeleteConfirm = useCallback(() => {
+    toggleConfirmModal('해당 게시글을 삭제하시겠습니까?', onDelete);
+  }, []);
+
+  const onModify = useCallback(() => {
+    router.push(`/post/modify/${id}`, undefined, { shallow: false });
+  }, []);
+
   if (!userData?.adminFl) return null;
 
   return (
@@ -25,10 +37,7 @@ const ArticleFooter = () => {
         size={T.ButtonSize.SMALL}
         variant="outlined"
         color="secondary"
-        onClick={() => toggleConfirmModal(
-          '해당 게시글을 삭제하시겠습니까?',
-          () => deletePost(id, router),
-        )}
+        onClick={onDeleteConfirm}
       >
         삭제
       </Button>
@@ -36,7 +45,7 @@ const ArticleFooter = () => {
         size={T.ButtonSize.SMALL}
         variant="outlined"
         color="default"
-        onClick={() => router.push(`/post/modify/${id}`, undefined, { shallow: false })}
+        onClick={onModify}
       >
         수정
       </Button>

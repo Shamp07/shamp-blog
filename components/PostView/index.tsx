@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
+import * as T from '@types';
+import { MediaQuery } from '@styles';
 import CommentSection from './CommentSection';
 import ArticleFooter from './ArticleFooter';
 import ArticleHeader from './ArticleHeader';
@@ -17,15 +19,15 @@ const PostView = () => (
   </>
 );
 
-const Section = styled.section`
-  overflow: hidden;
-  background-color: #fff;
-  border-radius: 14px;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
+const Section = styled.section({
+  overflow: 'hidden',
+  backgroundColor: '#fff',
+  borderRadius: '14px',
+  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, .15)',
 
-  @media (max-width: 1064px) {
-    border-radius: 0;
-  }
-`;
+  [MediaQuery[T.Device.LARGE]]: {
+    borderRadius: 0,
+  },
+});
 
 export default PostView;

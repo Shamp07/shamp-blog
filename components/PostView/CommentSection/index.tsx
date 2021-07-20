@@ -6,6 +6,8 @@ import useStores from '@stores/useStores';
 import CommentHeader from './CommentHeader';
 import CommentList from './CommentList';
 import CommentWrite from './CommentWrite';
+import { MediaQuery } from "@styles";
+import * as  T from '@types';
 
 const CommentSection = () => {
   const { SignStore } = useStores();
@@ -20,16 +22,16 @@ const CommentSection = () => {
   );
 };
 
-const Wrapper = styled.div`
-  background-color: #fff;
-  border-radius: 14px;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
-  margin-top: 16px;
-  overflow: hidden;
+const Wrapper = styled.div({
+  backgroundColor: '#fff',
+  borderRadius: '14px',
+  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, .15)',
+  marginTop: '16px',
+  overflow: 'hidden',
 
-  @media (max-width: 1064px) {
-    border-radius: 0;
-  }
-`;
+  [MediaQuery[T.Device.LARGE]]: {
+    borderRadius: 0,
+  },
+});
 
 export default observer(CommentSection);
