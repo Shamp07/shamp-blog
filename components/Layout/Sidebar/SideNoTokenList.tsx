@@ -2,6 +2,8 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import useStores from '@stores/useStores';
+import { MediaQuery } from '@styles';
+import * as T from '@types';
 
 const SideNoTokenList = () => {
   const { SignStore } = useStores();
@@ -15,13 +17,14 @@ const SideNoTokenList = () => {
   );
 };
 
-const MobileMenu = styled.div`
-  display: none;
-  height: 44px;
-  @media (max-width: 1064px) {
-    display: block;
-  }
-`;
+const MobileMenu = styled.div({
+  display: 'none',
+  height: '44px',
+
+  [MediaQuery[T.Device.LARGE]]: {
+    display: 'block',
+  },
+});
 
 const TopMenu = styled.div`
   width: 40%;
