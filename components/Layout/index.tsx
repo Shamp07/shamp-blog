@@ -7,6 +7,8 @@ import Header from './Header';
 import SideBar from './Sidebar';
 import Content from './Content';
 import Backdrop from './Sidebar/Backdrop';
+import * as T from '@types';
+import { MediaQuery } from '@styles';
 
 interface Props {
   children: ReactNode;
@@ -43,24 +45,24 @@ const Wrapper = styled.div`
   min-height: 100vh;
 `;
 
-const CenterContent = styled.div`
-  margin: -80px auto 0 auto;
-  max-width: 1044px;
-  display: flex;
+const CenterContent = styled.div({
+  margin: '-80px auto 0 auto',
+  maxWidth: '1044px',
+  display: 'flex',
 
-  &:after {
-    content: "";
-    display: block;
-    clear: both;
-  }
+  '&:after': {
+    content: '',
+    display: 'block',
+    clear: 'both',
+  },
 
-  @media (max-width: 1064px) {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    max-width: 100%;
-    margin: 0;
-  }
-`;
+  [MediaQuery[T.Device.LARGE]]: {
+    paddingLeft: '0 !important',
+    paddingRight: '0 !important',
+    maxWidth: '100%',
+    margin: 0,
+  },
+});
 
 const GlobalStyle = css`
   header, body, span, div, nav, ul, li, h1, h2, h3, h4, pre {
@@ -99,7 +101,7 @@ const GlobalStyle = css`
   }
 
   .MuiButton-containedPrimary:hover {
-    background-color: #3886d7 !important; 
+    background-color: #3886d7 !important;
   }
 
   .MuiButton-contained.Mui-disabled {
@@ -112,14 +114,14 @@ const GlobalStyle = css`
     z-index: 0 !important;
     font-family: inherit !important;
   }
-  
+
   .MuiPaper-root {
     border-radius: 10px !important;
     &&& * {
       font-family: inherit;
     }
   }
-  
+
   @font-face {
     font-family: 'Roboto';
     font-style: normal;

@@ -3,11 +3,11 @@ import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
 import useStores from '@stores/useStores';
+import { MediaQuery } from '@styles';
+import * as T from '@types';
 import CommentHeader from './CommentHeader';
 import CommentList from './CommentList';
 import CommentWrite from './CommentWrite';
-import { MediaQuery } from "@styles";
-import * as  T from '@types';
 
 const CommentSection = () => {
   const { SignStore } = useStores();

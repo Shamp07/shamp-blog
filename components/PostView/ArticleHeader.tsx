@@ -4,6 +4,9 @@ import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
 import useStores from '@stores/useStores';
+import * as T from '@types';
+import { MediaQuery } from '@styles';
+import {die} from "mobx/dist/errors";
 
 const ArticleHeader = () => {
   const { PostStore, SidebarStore } = useStores();
@@ -72,65 +75,67 @@ const ArticleTitle = styled.h1`
   overflow: auto;
 `;
 
-const ArticleMeta = styled.div`
-  margin-top: 9px;
-  line-height: 25px;
-  font-size: 14px;
-  color: #7b858e;
-  display: flex;
-  @media (max-width: 1064px) {
-    display: block;
-  }
-`;
+const ArticleMeta = styled.div({
+  marginTop: '9px',
+  lineHeight: '25px',
+  fontSize: '14px',
+  color: '#7b858e',
+  display: 'flex',
 
-const ArticleMetaUl = styled.ul`
-  @media (max-width: 1064px) {
-    display: block;
-  }
-  list-style: none;
-  
-  & > li {
-    display: inline-block;
-    vertical-align: middle;
-    padding: 0 10px;
-    color: #98a0a7;
-    word-break: break-all;
-  }
-`;
+  [MediaQuery[T.Device.LARGE]]: {
+    display: 'block',
+  },
+});
 
-const ArticleMetaLeft = styled(ArticleMetaUl)`
-  @media (max-width: 1064px) {
-    margin-right: auto;
-  }
+const ArticleMetaUl = styled.ul({
+  listStyle: 'none',
 
-  & > li {
-    border-left: 1px solid #e6e6e6;
-  }
+  [MediaQuery[T.Device.LARGE]]: {
+    display: 'block',
+  },
 
-  & > li:first-of-type {
-    border-left: none;
-    padding-left: 0;
-    color: #2d79c7;
-  }
-`;
+  '& > li': {
+    display: 'inline-block',
+    verticalAlign: 'middle',
+    padding: '0 10px',
+    color: '#98a0a7',
+    wordBreak: 'break-all',
+  },
+});
 
-const ArticleMetaRight = styled(ArticleMetaUl)`
-  @media (min-width: 768px) {
-    margin-left: auto;
-  }
+const ArticleMetaLeft = styled(ArticleMetaUl)({
+  [MediaQuery[T.Device.LARGE]]: {
+    marginRight: 'auto',
+  },
 
-  & > li:first-of-type {
-    padding-left: 0;
-  }
+  '& > li': {
+    borderLeft: '1px solid #e6e6e6',
+  },
 
-  & > li:last-child {
-    padding-right: 0;
-    border-right: none;
-  }
-  
-  & > li {
-    border-right: 1px solid #e6e6e6;
-  }
-`;
+  '& > li:first-of-type': {
+    borderLeft: 'none',
+    paddingLeft: 0,
+    color: '#2d79c7',
+  },
+});
+
+const ArticleMetaRight = styled(ArticleMetaUl)({
+  [MediaQuery[T.Device.LARGE]]: {
+    marginLeft: 'auto',
+  },
+
+  '& > li:first-of-type': {
+    paddingLeft: 0,
+  },
+
+  '& > li:last-child': {
+    paddingRight: 0,
+    borderRight: 'none',
+  },
+
+  '& > li': {
+    borderRight: '1px solid #e6e6e6',
+  },
+})
 
 export default observer(ArticleHeader);

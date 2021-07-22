@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
@@ -23,6 +23,10 @@ const CommentWrite = ({ isReply }: Props) => {
   } = CommentStore;
   const { comment, replyComment } = commentInfo;
 
+  const onAddComment = useCallback(() => {
+    addComment(id, replyCommentId, isReply);
+  }, []);
+
   return (
     <CommentWriteWrapper isReply={isReply}>
       {isReply && <ReplyBorder />}
@@ -46,7 +50,7 @@ const CommentWrite = ({ isReply }: Props) => {
               size={T.ButtonSize.SMALL}
               color="primary"
               variant="contained"
-              onClick={() => addComment(id, replyCommentId, isReply)}
+              onClick={onAddComment}
             >
               작성
             </Button>
@@ -57,11 +61,11 @@ const CommentWrite = ({ isReply }: Props) => {
   );
 };
 
-const CommentWriteWrapper = styled.div<Props>`
-  position: relative;
-  padding: ${(props) => (props.isReply ? '24px 16px 24px 64px' : '16px')};
-  background-color: #f8f9fa;
-`;
+const CommentWriteWrapper = styled.div<Props>(({ isReply }) => ({
+  position: 'relative',
+  backgroundColor: '#f8f9fa',
+  padding: isReply ? '24px 16px 24px 64px' : '16px',
+}));
 
 const CommentWriterInner = styled.div`
   border: 1px solid #dddfe4;
@@ -74,11 +78,11 @@ const CommentWriteFooter = styled.div`
   height: 36px;
   display: flex;
   margin-top: 12px;
-  
+
   & > span {
-    margin-left: auto;  
+    margin-left: auto;
   }
-  
+
   & > span > span {
     display: inline-block;
     line-height: 36px;

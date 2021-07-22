@@ -5,6 +5,8 @@ import { faGithubAlt } from '@fortawesome/free-brands-svg-icons';
 
 import HeaderSidebarButton from './HeaderSidebarButton';
 import HeaderTokenMenu from './HeaderTokenMenu';
+import * as T from '@types';
+import { MediaQuery } from '@styles';
 
 const HeaderRightList = () => (
   <Wrapper>
@@ -27,22 +29,22 @@ const Wrapper = styled.div`
   margin-left: auto;
 `;
 
-const ListWrapper = styled.div`
-  display: inline-block;
-  width: 165px;
-  height: 70px;
-  
-  @media (max-width: 1064px) {
-    display: none;
-  }
-`;
+const ListWrapper = styled.div({
+  display: 'inline-block',
+  width: '165px',
+  height: '70px',
+
+  [MediaQuery[T.Device.LARGE]]: {
+    display: 'none',
+  },
+});
 
 const RightList = styled.ul`
   list-style: none;
   display: inline-flex;
   width: 100%;
   height: 70px;
-  
+
   & > li {
     width: 55px;
     height: 70px;
@@ -50,7 +52,7 @@ const RightList = styled.ul`
     display: inline-block;
     text-align: center;
   }
-  
+
   & > li > a, & > li > button {
     display: inline-block;
     width: 50px;
@@ -70,12 +72,12 @@ const RightList = styled.ul`
     border: 0;
     padding: 0;
     background-color: transparent;
-    
+
     &:focus {
       outline: 0;
     }
   }
-  
+
   & svg {
     padding: 12px;
     width: 25px;

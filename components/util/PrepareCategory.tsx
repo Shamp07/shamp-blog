@@ -3,6 +3,9 @@ import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBusinessTime } from '@fortawesome/free-solid-svg-icons';
 
+import { MediaQuery } from '@styles';
+import * as T from '@types';
+
 const PrepareCategory = () => (
   <Wrapper>
     <div>
@@ -16,22 +19,22 @@ const PrepareCategory = () => (
   </Wrapper>
 );
 
-const Wrapper = styled.div`
-  background-color: #fff;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
-  height: 94px;
-  padding: 243px 0;
-  border-radius: 14px;
+const Wrapper = styled.div({
+  backgroundColor: '#fff',
+  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, .15)',
+  height: '94px',
+  padding: '243px 0',
+  borderRadius: '14px',
 
-  @media (max-width: 1064px) {
-    border-radius: 0;
-  }
-  
-  & > div {
-    text-align: center;
-    color: #7b858e;
-  }
-`;
+  [MediaQuery[T.Device.LARGE]]: {
+    borderRadius: 0,
+  },
+
+  '& > div': {
+    textAlign: 'center',
+    color: '#7b858e',
+  },
+});
 
 const Icon = styled(FontAwesomeIcon)`
   color: #e6e6e6;

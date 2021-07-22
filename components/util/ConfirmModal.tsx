@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import Modal from '@material-ui/core/Modal';
@@ -14,6 +14,10 @@ const ConfirmModal = () => {
     isOpenConfirmModal, callback,
     text, closeConfirmModal, callFunction,
   } = UtilStore;
+
+  const call = useCallback(() => {
+    callFunction(callback);
+  }, []);
 
   return (
     <CustomModal
@@ -46,7 +50,7 @@ const ConfirmModal = () => {
                 type="button"
                 variant="contained"
                 color="primary"
-                onClick={() => callFunction(callback)}
+                onClick={call}
               >
                 확인하기
               </RightButton>
