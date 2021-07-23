@@ -9,6 +9,7 @@ import HomePostList from '@components/home/HomePostList';
 import Footprint from '@components/home/Footprint';
 import Button from '@atoms/Button';
 import * as T from '@types';
+import { MediaQuery } from '@styles';
 import { MyNextPageContext } from './_app';
 
 const Home = () => {
@@ -64,35 +65,35 @@ Home.getInitialProps = async ({ store }: MyNextPageContext) => {
   };
 };
 
-const GridWrapper = styled.div`
-  flex-grow: 1;
-  background-color: #fff;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
-  border-radius: 14px;
+const GridWrapper = styled.div({
+  flexGrow: 1,
+  backgroundColor: '#fff',
+  boxShadow: '0 1px 3px 0 rgba(0,0,0,.15)',
+  borderRadius: '14px',
 
-  @media (max-width: 1064px) {
-    border-radius: 0;
-  }
-`;
+  [MediaQuery[T.Device.LARGE]]: {
+    borderRadius: 0,
+  },
+});
 
-const CustomGrid = styled(Grid)`
-  margin: 0 !important;
-  width: 100% !important;
-  
-  & > div {
-    padding: 20px !important;
-    
-    @media (max-width: 1064px) {
-      padding: 20px 15px !important;
-    }
-  }
-  
-  & > div > h2 {
-    padding-bottom: 15px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #e6e6e6;
-  }
-`;
+const CustomGrid = styled(Grid)({
+  margin: '0 !important',
+  width: '100% !important',
+
+  '& > div': {
+    padding: '20px !important',
+
+    [MediaQuery[T.Device.LARGE]]: {
+      padding: '20px 15px !important',
+    },
+  },
+
+  '& > div > h2': {
+    paddingBottom: '15px',
+    marginBottom: '15px',
+    borderBottom: '1px solid #e6e6e6',
+  },
+});
 
 const ButtonWrapper = styled.div`
   & > button {
@@ -100,7 +101,7 @@ const ButtonWrapper = styled.div`
     top: 20px;
     right: 20px;
   }
-  
+
   & svg {
     margin-right: 5px;
   }

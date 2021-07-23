@@ -9,6 +9,7 @@ import Editor from '@components/posting/Editor';
 import Button from '@atoms/Button';
 import useStores from '@stores/useStores';
 import * as T from '@types';
+import { MediaQuery } from '@styles';
 
 interface Props {
   isModify: boolean;
@@ -84,25 +85,25 @@ const Post = ({ isModify }: Props) => {
   );
 };
 
-const Wrapper = styled.div`
-  background-color: #fff;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
-  border-radius: 14px;
-  overflow: hidden;
+const Wrapper = styled.div({
+  backgroundColor: '#fff',
+  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, .15)',
+  borderRadius: '14px',
+  overflow: 'hidden',
 
-  & .MuiInputBase-root {
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  
-  & .MuiPaper-rounded {
-    border-radius: 10px;
-  }
+  '& .MuiInputBase-root': {
+    borderRadius: '10px',
+    overflow: 'hidden',
+  },
 
-  @media (max-width: 1064px) {
-    border-radius: 0;
-  }
-`;
+  '& .MuiPaper-rounded': {
+    borderRadius: '10px',
+  },
+
+  [MediaQuery[T.Device.LARGE]]: {
+    borderRadius: 0,
+  },
+});
 
 const HeadSection = styled.div`
   background-color: #fff;
@@ -113,7 +114,7 @@ const SubTitle = styled.div`
   font-size: 18px;
   padding: 18px 0;
   border-bottom: solid 1px #e6e6e6;
-  
+
   & > h2 {
     padding-left: 16px;
     font-size: 18px;
@@ -133,7 +134,7 @@ const Article = styled.article`
 const Footer = styled(Article)`
   display: flex;
   padding-top: 0 !important;
-  
+
   & > button:last-child {
     margin-left: auto;
   }

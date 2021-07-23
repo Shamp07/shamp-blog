@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
+import { MediaQuery } from '@styles';
+import * as T from '@types';
+
 const Profile = () => (
   <Wrapper>
     <h1>Shamp Profile</h1>
@@ -113,48 +116,48 @@ const Profile = () => (
   </Wrapper>
 );
 
-const Wrapper = styled.div`
-  background-color: #fff;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
-  border-radius: 14px;
-  word-break: break-all;
+const Wrapper = styled.div({
+  backgroundColor: '#fff',
+  boxShadow: '0 1px 3px 0 rgba(0,0,0,.15)',
+  borderRadius: '14px',
+  wordBreak: 'break-all',
 
-  @media (max-width: 1064px) {
-    border-radius: 0;
-  }
+  [MediaQuery[T.Device.LARGE]]: {
+    borderRadius: 0,
+  },
 
-  & > h1 {
-    padding: 20px;
-    border-bottom: 1px solid #e6e6e6;
-  }
+  '& > h1': {
+    padding: '20px',
+    borderBottom: '1px solid #e6e6e6',
+  },
 
-  & h2, h3 {
-    margin-bottom: 10px;
-  }
+  '& h2, h3': {
+    marginBottom: '10px',
+  },
 
-  & > article {
-    padding: 20px;
-    & > div {
-      margin-bottom: 10px;
-    }
+  '& > article': {
+    padding: '20px',
 
-    & div > ul > li {
-      line-height: 30px;
-    }
+    '& > div': {
+      marginBottom: '10px',
+    },
 
-    & li {
-      list-style-type: disc;
-    }
+    '& div > ul > li': {
+      lineHeight: '30px',
+    },
 
-    & li li {
-      list-style-type: circle;
-    }
+    '& li': {
+      listStyleType: 'disc',
+    },
 
-  }
+    '& li li': {
+      listStyleType: 'circle',
+    },
+  },
 
-  & ul {
-    margin-left: 30px;
-  }
-`;
+  '& ul': {
+    marginLeft: '30px',
+  },
+});
 
 export default Profile;
