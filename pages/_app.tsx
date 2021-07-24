@@ -1,33 +1,20 @@
 import React from 'react';
-import { NextComponentType, NextPageContext } from 'next';
-import App, { AppContext, AppProps } from 'next/app';
+import App from 'next/app';
 import Head from 'next/head';
 import { Provider } from 'mobx-react';
 
 import Layout from '@components/Layout';
 import initializeStore, { RootStore } from '@stores';
+import * as T from '@types';
 import 'react-quill/dist/quill.snow.css';
 import 'highlight.js/styles/nord.css';
 
 React.useLayoutEffect = React.useEffect;
 
-interface AppContextStore extends AppContext {
-  Component: NextComponentType;
-  ctx: MyNextPageContext;
-}
-
-export interface MyNextPageContext extends NextPageContext {
-  store?: RootStore;
-}
-
-interface MyAppProps extends AppProps {
-  initialMobxState: RootStore;
-}
-
 class CustomApp extends App {
   mobxStore: RootStore;
 
-  static async getInitialProps(context: AppContextStore) {
+  static async getInitialProps(context: T.AppContextStore) {
     const mobxStore = initializeStore();
     context.ctx.store = mobxStore;
     const appProps = await App.getInitialProps(context);
@@ -38,7 +25,7 @@ class CustomApp extends App {
     };
   }
 
-  constructor(props: MyAppProps) {
+  constructor(props: T.MyAppProps) {
     super(props);
     const isServer = typeof window === 'undefined';
     this.mobxStore = isServer ? props.initialMobxState : initializeStore(props.initialMobxState);

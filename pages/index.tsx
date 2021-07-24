@@ -10,7 +10,6 @@ import Footprint from '@components/home/Footprint';
 import Button from '@atoms/Button';
 import * as T from '@types';
 import { MediaQuery } from '@styles';
-import { MyNextPageContext } from './_app';
 
 const Home = () => {
   const { HomeStore } = useStores();
@@ -48,7 +47,7 @@ const Home = () => {
   );
 };
 
-Home.getInitialProps = async ({ store }: MyNextPageContext) => {
+Home.getInitialProps = async ({ store }: T.MyNextPageContext) => {
   if (!store) return null;
 
   const { HomeStore } = store;

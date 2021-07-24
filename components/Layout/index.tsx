@@ -51,7 +51,7 @@ const CenterContent = styled.div({
   display: 'flex',
 
   '&:after': {
-    content: '',
+    content: '""',
     display: 'block',
     clear: 'both',
   },

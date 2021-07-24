@@ -2,7 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 
 import useStores from '@stores/useStores';
-import { MyNextPageContext } from '../../_app';
+import * as T from '@types';
 import Post from '..';
 
 const ModifyPost = () => {
@@ -19,7 +19,7 @@ const ModifyPost = () => {
   return <Post isModify />;
 };
 
-ModifyPost.getInitialProps = async ({ query, store }: MyNextPageContext) => {
+ModifyPost.getInitialProps = async ({ query, store }: T.MyNextPageContext) => {
   if (!store) return null;
 
   const { PostStore } = store;

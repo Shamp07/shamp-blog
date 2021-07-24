@@ -1,11 +1,11 @@
 import React from 'react';
 
+import * as T from '@types';
 import PostView from '../../components/PostView';
-import { MyNextPageContext } from '../_app';
 
 const Post = () => <PostView />;
 
-Post.getInitialProps = async ({ query, store }: MyNextPageContext) => {
+Post.getInitialProps = async ({ query, store }: T.MyNextPageContext) => {
   if (!store) return null;
 
   const { PostStore, CommentStore } = store;

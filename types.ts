@@ -1,5 +1,19 @@
 import { RootStore } from '@stores';
-import { NextApiRequest } from 'next';
+import { NextApiRequest, NextComponentType, NextPageContext } from 'next';
+import { AppContext, AppProps } from 'next/app';
+
+export interface MyAppProps extends AppProps {
+  initialMobxState: RootStore;
+}
+
+export interface AppContextStore extends AppContext {
+  Component: NextComponentType;
+  ctx: MyNextPageContext;
+}
+
+export interface MyNextPageContext extends NextPageContext {
+  store?: RootStore;
+}
 
 export interface NextApiRequestToken extends NextApiRequest {
   decodedToken: AuthToken;

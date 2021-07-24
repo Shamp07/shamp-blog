@@ -6,9 +6,13 @@ import FootprintModifyMenu from './FootprintModifyMenu';
 import FootprintNormalMenu, { Props } from './FootprintNormalMenu';
 
 const FootprintMenu = ({ data }: Props) => {
-  const { HomeStore } = useStores();
+  const { HomeStore, SignStore } = useStores();
   const { modifierFootprintId } = HomeStore;
-  const { id } = data;
+  const { userData } = SignStore;
+  const { id, userId } = data;
+  const isMine = userData?.id === userId;
+
+  if (!isMine) return null;
 
   return id === modifierFootprintId
     ? <FootprintModifyMenu /> : <FootprintNormalMenu data={data} />;

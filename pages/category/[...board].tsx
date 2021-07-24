@@ -1,12 +1,12 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 
+import * as T from '@types';
 import BoardHead from '../../components/board/BoardHead';
 import BoardContent from '../../components/board/BoardContent';
 import useStores from '../../stores/useStores';
 import BoardPagination from '../../components/board/BoardPagination';
 import PostView from '../../components/PostView';
-import { MyNextPageContext } from '../_app';
 
 const Board = () => {
   const router = useRouter();
@@ -32,7 +32,7 @@ const Board = () => {
   );
 };
 
-Board.getInitialProps = async ({ query, store }: MyNextPageContext) => {
+Board.getInitialProps = async ({ query, store }: T.MyNextPageContext) => {
   if (!query.board || !store) return null;
 
   const board = query.board[0];

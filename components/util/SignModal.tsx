@@ -23,6 +23,10 @@ const SignModal = () => {
     if (event.key === 'Enter') login();
   }, []);
 
+  const focusRef = useCallback((node: HTMLDivElement) => {
+    node?.getElementsByTagName('input')[0]?.focus();
+  }, []);
+
   return (
     <CustomModal
       aria-labelledby="transition-modal-title"
@@ -45,6 +49,7 @@ const SignModal = () => {
               onChange={loginHandleChange}
               value={email}
               onKeyPress={onEnter}
+              ref={focusRef}
             />
             <br />
             <CustomTextField
