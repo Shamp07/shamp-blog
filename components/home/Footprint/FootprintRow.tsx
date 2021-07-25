@@ -32,7 +32,7 @@ const FootprintRow = ({ data }: Props) => {
         />
       </TextAreaWrapper>
     ) : content
-  ), [isModify]);
+  ), [isModify, modifierFootprint, content]);
 
   return (
     <li>

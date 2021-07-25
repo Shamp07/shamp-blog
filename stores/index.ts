@@ -1,3 +1,4 @@
+import { configure } from 'mobx';
 import { enableStaticRendering } from 'mobx-react-lite';
 import SidebarStore from './SidebarStore';
 import SignStore from './SignStore';
@@ -41,6 +42,8 @@ export class RootStore {
   ChatStore: ChatStore;
 
   constructor(initialData = initialRoot) {
+    configure({ enforceActions: 'never' });
+
     this.AlertStore = new AlertStore();
     this.SidebarStore = new SidebarStore();
     this.UtilStore = new UtilStore(this);
