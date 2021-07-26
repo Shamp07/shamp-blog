@@ -127,7 +127,7 @@ const Wrapper = styled.div({
   },
 
   '& > h1': {
-    padding: '20px',
+    padding: '24px',
     borderBottom: '1px solid #e6e6e6',
   },
 
@@ -136,7 +136,7 @@ const Wrapper = styled.div({
   },
 
   '& > article': {
-    padding: '20px',
+    padding: '24px',
 
     '& > div': {
       marginBottom: '10px',

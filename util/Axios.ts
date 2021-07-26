@@ -1,29 +1,22 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
-interface AxiosType {
-  method: 'get' | 'post' | 'put' | 'delete',
-  url: string,
-  data?: any,
-  success?: (response: AxiosResponse) => void,
-  fail?: (response: AxiosResponse) => void,
-  complete?: (response: AxiosResponse) => void,
-}
+import * as T from '@types';
 
 const Axios = async ({
   method, url, data, success, fail, complete,
-}: AxiosType) => {
+}: T.AxiosType) => {
   let axiosRequest;
   switch (method) {
-    case 'get':
+    case T.RequestMethod.GET:
       axiosRequest = axios.get;
       break;
-    case 'post':
+    case T.RequestMethod.POST:
       axiosRequest = axios.post;
       break;
-    case 'put':
+    case T.RequestMethod.PUT:
       axiosRequest = axios.put;
       break;
-    case 'delete':
+    case T.RequestMethod.DELETE:
       axiosRequest = axios.delete;
       break;
     default:
@@ -40,8 +33,9 @@ const Axios = async ({
   }).catch((response) => console.error(response));
 };
 
-const getConfigParams = (method: AxiosType['method'], data: AxiosType['data']) => {
-  if (method === 'get' || method === 'delete') {
+const getConfigParams = (method: T.AxiosType['method'], data: T.AxiosType['data']) => {
+  const { GET, DELETE } = T.RequestMethod;
+  if ([GET, DELETE].includes(method)) {
     return { params: data };
   }
   return data;

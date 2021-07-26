@@ -1,13 +1,15 @@
 import { makeObservable } from 'mobx';
 import { NextRouter } from 'next/dist/next-server/lib/router/router';
 
+
+
 import makeAnnotations from '@util/Mobx';
 import Axios from '@util/Axios';
 import * as T from '@types';
 
 class AlertStore {
   isOpenAlertModal = false;
-
+  IObservableFactory
   text = '';
 
   alertLoading = true;
@@ -20,7 +22,7 @@ class AlertStore {
 
   constructor() {
     makeObservable(this, makeAnnotations<this>({
-      observables: ['isOpenAlertModal', 'text', 'alertList', 'alertLoading'],
+      observables: ['isOpenAlertModal', 'text', 'alertList', 'alertLoading', 'alertSize'],
       actions: ['toggleAlertModal', 'closeAlertModal', 'getAlertList', 'moreAlert'],
     }));
   }

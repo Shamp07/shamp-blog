@@ -1,6 +1,7 @@
 import { RootStore } from '@stores';
 import { NextApiRequest, NextComponentType, NextPageContext } from 'next';
 import { AppContext, AppProps } from 'next/app';
+import {AxiosResponse} from "axios";
 
 export interface MyAppProps extends AppProps {
   initialMobxState: RootStore;
@@ -34,6 +35,15 @@ export enum RequestMethod {
   POST = 'POST',
   PUT = 'PUT',
   DELETE = 'DELETE',
+}
+
+export interface AxiosType {
+  method: RequestMethod,
+  url: string,
+  data?: any,
+  success?: (response: AxiosResponse) => void,
+  fail?: (response: AxiosResponse) => void,
+  complete?: (response: AxiosResponse) => void,
 }
 
 export enum Auth {

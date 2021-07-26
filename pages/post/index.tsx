@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
@@ -10,6 +10,8 @@ import Button from '@atoms/Button';
 import useStores from '@stores/useStores';
 import * as T from '@types';
 import { MediaQuery } from '@styles';
+import {Simulate} from "react-dom/test-utils";
+import submit = Simulate.submit;
 
 interface Props {
   isModify: boolean;
@@ -28,6 +30,21 @@ const Post = ({ isModify }: Props) => {
   const { userData } = SignStore;
   const { toggleAlertModal } = AlertStore;
   const { category, tags, title } = post;
+
+  const boardCategories = useMemo(() => (
+    boardCategoryList.map((data: { name: string, path: string }) => (
+      <MenuItem key={data.path} value={data.path}>
+        {data.name}
+      </MenuItem>
+    ))
+  ), [boardCategoryList]);
+
+  const submitText = useMemo(() => (isModify ? '수정' : '등록'), []);
+
+  const onSubmit = useCallback(() => {
+    if (isModify) modifyPost(router);
+    else addPost(router);
+  }, []);
 
   if (!userData?.adminFl) {
     router.push('/').then(() => toggleAlertModal('글 작성 권한이 없습니다.'));
@@ -53,14 +70,26 @@ const Post = ({ isModify }: Props) => {
           variant="outlined"
           size="small"
         >
-          {boardCategoryList.map((data: { name: string, path: string }) => (
-            <MenuItem key={data.path} value={data.path}>
-              {data.name}
-            </MenuItem>
-          ))}
+          {boardCategories}
         </TitleInput>
-        <TitleInput name="tags" value={tags} onChange={postHandleChange} label="태그" variant="outlined" size="small" inputProps={{ maxLength: 33 }} />
-        <TitleInput name="title" value={title} onChange={postHandleChange} label="제목" variant="outlined" size="small" inputProps={{ maxLength: 100 }} />
+        <TitleInput
+          name="tags"
+          value={tags}
+          onChange={postHandleChange}
+          label="태그"
+          variant="outlined"
+          size="small"
+          inputProps={{ maxLength: 33 }}
+        />
+        <TitleInput
+          name="title"
+          value={title}
+          onChange={postHandleChange}
+          label="제목"
+          variant="outlined"
+          size="small"
+          inputProps={{ maxLength: 100 }}
+        />
         <Editor />
       </Article>
       <Footer>
@@ -76,9 +105,9 @@ const Post = ({ isModify }: Props) => {
           size={T.ButtonSize.SMALL}
           variant="contained"
           color="primary"
-          onClick={() => (isModify ? modifyPost(router) : addPost(router))}
+          onClick={onSubmit}
         >
-          {isModify ? '수정' : '등록'}
+          {submitText}
         </Button>
       </Footer>
     </Wrapper>
