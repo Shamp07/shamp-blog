@@ -44,7 +44,7 @@ class SidebarStore {
   }];
 
   boardCategoryName: {
-    [key: string]: string
+    [key: string]: string;
   } = {
     notice: '공지사항',
     all: '전체 글',

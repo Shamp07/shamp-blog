@@ -1,4 +1,4 @@
-import React from 'react';
+import { ChangeEvent } from 'react';
 import { makeObservable } from 'mobx';
 
 import Axios from '@util/Axios';
@@ -43,12 +43,12 @@ class HomeStore {
     }));
   }
 
-  setModifierFootprintId = (id: number, content: string): void => {
+  setModifierFootprintId = (id: number, content: string) => {
     this.modifierFootprintId = id;
     this.footprintInfo.modifierFootprint = content;
   };
 
-  footprintHandleChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
+  footprintHandleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     if (event.target.value.length <= 1000) {
       this.footprintInfo = {
         ...this.footprintInfo,
@@ -57,9 +57,9 @@ class HomeStore {
     }
   };
 
-  getRecentlyPostList = async (): Promise<void> => {
+  getRecentlyPostList = async () => {
     await Axios({
-      method: 'get',
+      method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/post/list/recently`,
       success: (response) => {
         const { result } = response.data;
@@ -68,9 +68,9 @@ class HomeStore {
     });
   };
 
-  getNoticePostList = async (): Promise<void> => {
+  getNoticePostList = async () => {
     await Axios({
-      method: 'get',
+      method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/post/list/notice`,
       success: (response) => {
         const { result } = response.data;
@@ -79,14 +79,14 @@ class HomeStore {
     });
   };
 
-  addFootprint = (): void => {
+  addFootprint = () => {
     if (!this.footprintInfo.footprint.trim()) {
       this.AlertStore.toggleAlertModal('발자취 내용을 입력해주세요!');
       return;
     }
 
     Axios({
-      method: 'post',
+      method: T.RequestMethod.POST,
       url: '/api/footprint',
       data: {
         content: this.footprintInfo.footprint,
@@ -98,14 +98,14 @@ class HomeStore {
     });
   };
 
-  moreFootprint = (): void => {
+  moreFootprint = () => {
     this.footprintSize += 20;
     this.getFootprint();
   };
 
-  getFootprint = async (): Promise<void> => {
+  getFootprint = async () => {
     await Axios({
-      method: 'get',
+      method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/footprint`,
       data: {
         size: this.footprintSize,
@@ -117,9 +117,9 @@ class HomeStore {
     });
   };
 
-  modifyFootprint = (id: number): void => {
+  modifyFootprint = (id: number) => {
     Axios({
-      method: 'put',
+      method: T.RequestMethod.PUT,
       url: '/api/footprint',
       data: {
         id,
@@ -132,12 +132,12 @@ class HomeStore {
     });
   };
 
-  deleteFootprint = (id: number): void => {
+  deleteFootprint = (id: number) => {
     Axios({
-      method: 'delete',
+      method: T.RequestMethod.DELETE,
       url: '/api/footprint',
       data: { id },
-      success: () => this.getFootprint(),
+      success: this.getFootprint,
     });
   };
 }

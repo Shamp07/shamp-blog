@@ -1,5 +1,5 @@
 import { makeObservable } from 'mobx';
-import React from 'react';
+import { MouseEvent } from 'react';
 
 import makeAnnotations from '@util/Mobx';
 import AlertStore from './AlertStore';
@@ -40,7 +40,7 @@ class UtilStore {
     this.isOpenConfirmModal = false;
   };
 
-  openHeaderMenu = (event: React.MouseEvent<HTMLElement>) => {
+  openHeaderMenu = (event: MouseEvent<HTMLElement>) => {
     if (!this.headerMenu) {
       this.AlertStore.getAlertList();
     }

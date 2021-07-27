@@ -1,15 +1,13 @@
 import { makeObservable } from 'mobx';
 import { NextRouter } from 'next/dist/next-server/lib/router/router';
 
-
-
 import makeAnnotations from '@util/Mobx';
 import Axios from '@util/Axios';
 import * as T from '@types';
 
 class AlertStore {
   isOpenAlertModal = false;
-  IObservableFactory
+
   text = '';
 
   alertLoading = true;
@@ -35,7 +33,7 @@ class AlertStore {
   getAlertList = () => {
     this.alertLoading = true;
     Axios({
-      method: 'get',
+      method: T.RequestMethod.GET,
       data: {
         size: this.alertSize,
       },
@@ -49,9 +47,9 @@ class AlertStore {
     });
   };
 
-  movePost = (router: NextRouter, postId: number, alertId: number): void => {
+  movePost = (router: NextRouter, postId: number, alertId: number) => {
     Axios({
-      method: 'put',
+      method: T.RequestMethod.PUT,
       data: {
         id: alertId,
       },
@@ -61,12 +59,12 @@ class AlertStore {
     router.push(`/post/${postId}`);
   };
 
-  toggleAlertModal = (text: string): void => {
+  toggleAlertModal = (text: string) => {
     this.text = text;
     this.isOpenAlertModal = !this.isOpenAlertModal;
   };
 
-  closeAlertModal = (): void => {
+  closeAlertModal = () => {
     this.isOpenAlertModal = false;
   };
 }

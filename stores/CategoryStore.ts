@@ -15,9 +15,9 @@ class CategoryStore {
     }));
   }
 
-  getCategoryTags = async (category: string): Promise<void> => {
+  getCategoryTags = async (category: string) => {
     await Axios({
-      method: 'get',
+      method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/category/tag`,
       data: { category },
       success: (response) => {

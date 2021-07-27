@@ -1,4 +1,4 @@
-import React, { RefObject } from 'react';
+import { RefObject, ChangeEvent } from 'react';
 import { makeObservable } from 'mobx';
 import dayjs from 'dayjs';
 
@@ -50,13 +50,13 @@ class ChatStore {
     }));
   }
 
-  get chatRoomList(): Array<T.ChatRoomList> {
+  get chatRoomList() {
     return Object.keys(this.chatRoom)
       .map((id) => this.chatRoom[Number(id)])
       .sort(({ timeStamp: pts }, { timeStamp: ts }) => Number(ts) - Number(pts));
   }
 
-  get notReadChatCount(): number {
+  get notReadChatCount() {
     let count = 0;
     Object.keys(this.chatRoom)
       .forEach((id) => {
@@ -65,7 +65,7 @@ class ChatStore {
     return count;
   }
 
-  get displayedChatList(): T.Chat[] {
+  get displayedChatList() {
     let beforeTime = '';
     let beforeFromUserId = -1;
 
@@ -100,25 +100,26 @@ class ChatStore {
     });
   }
 
-  openChat = async (loggedIn: boolean, isAdmin: boolean) => {
+  openChat = async (
+    // loggedIn: boolean, isAdmin: boolean,
+  ) => {
     this.AlertStore.toggleAlertModal('지원 준비 중 이에요!');
-    return;
 
-    if (!this.isChatOpen) {
-      if (!loggedIn) {
-        this.AlertStore.toggleAlertModal('채팅은 로그인 이후 이용하실 수 있습니다! 비회원은 곧 지원 예정입니다.');
-        return;
-      }
-
-      if (isAdmin) {
-        this.setChatPage(T.ChatPage.LOBBY);
-        this.getChatRoomList();
-      } else {
-        this.setChatPage(T.ChatPage.ROOM);
-        this.loading(() => this.loadChatList(0));
-      }
-    }
-    this.isChatOpen = !this.isChatOpen;
+    // if (!this.isChatOpen) {
+    //   if (!loggedIn) {
+    //     this.AlertStore.toggleAlertModal('채팅은 로그인 이후 이용하실 수 있습니다! 비회원은 곧 지원 예정입니다.');
+    //     return;
+    //   }
+    //
+    //   if (isAdmin) {
+    //     this.setChatPage(T.ChatPage.LOBBY);
+    //     this.getChatRoomList();
+    //   } else {
+    //     this.setChatPage(T.ChatPage.ROOM);
+    //     this.loading(() => this.loadChatList(0));
+    //   }
+    // }
+    // this.isChatOpen = !this.isChatOpen;
   };
 
   loadChatList = async (userId: number) => {
@@ -134,7 +135,9 @@ class ChatStore {
     this.chatRoom[userId].notReadChatCount = 0;
   };
 
-  connectSocket = (userId: number) => {
+  connectSocket = (
+  //  userId: number
+  ) => {
     // TODO: CHATTING
     // this.chatSocket = socketio.connect('http://localhost');
     // this.chatSocket.emit('connect_client', userId);
@@ -178,7 +181,7 @@ class ChatStore {
     };
   };
 
-  onChangeChat = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  onChangeChat = (event: ChangeEvent<HTMLTextAreaElement>) => {
     this.chat = event.target.value;
   };
 
@@ -220,10 +223,9 @@ class ChatStore {
     }
   };
 
-  // api call
   addChat = async (userId: number, toUserId: number, time: string) => {
     await Axios({
-      method: 'post',
+      method: T.RequestMethod.POST,
       url: '/api/chat',
       data: {
         userId: toUserId,
@@ -247,7 +249,7 @@ class ChatStore {
   getChatList = async (userId: number) => {
     this.clearChatList();
     await Axios({
-      method: 'get',
+      method: T.RequestMethod.GET,
       url: '/api/chat',
       data: {
         userId,
@@ -265,7 +267,7 @@ class ChatStore {
   getChatRoomList = () => {
     this.isChatLoading = true;
     Axios({
-      method: 'get',
+      method: T.RequestMethod.GET,
       url: '/api/chat/room',
       success: (response) => {
         const { result } = response.data;
@@ -279,7 +281,6 @@ class ChatStore {
     });
   };
 
-  // util
   setChatPage = (page: T.ChatPage) => {
     this.chatPage = page;
   };
@@ -318,7 +319,7 @@ class ChatStore {
     return this.chatTempId;
   };
 
-  setScrollRef = (ref: React.RefObject<HTMLDivElement>) => {
+  setScrollRef = (ref: RefObject<HTMLDivElement>) => {
     this.scrollRef = ref;
   };
 

@@ -7,7 +7,7 @@ export const DeviceWidth: {
 };
 
 export const MediaQuery: {
-  [K in T.Device]: string
+  [K in T.Device]: string;
 } = {
   [T.Device.LARGE]: `@media(max-width: ${DeviceWidth[T.Device.LARGE]}px)`,
 };

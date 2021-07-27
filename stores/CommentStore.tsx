@@ -1,4 +1,4 @@
-import React from 'react';
+import { ChangeEvent } from 'react';
 import { makeObservable } from 'mobx';
 
 import Axios from '@util/Axios';
@@ -45,7 +45,7 @@ class CommentStore {
     }));
   }
 
-  commentHandleChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
+  commentHandleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     if (event.target.value.length <= 1000) {
       this.commentInfo = {
         ...this.commentInfo,
@@ -54,17 +54,17 @@ class CommentStore {
     }
   };
 
-  setModifierCommentId = (id: number, content: string): void => {
+  setModifierCommentId = (id: number, content: string) => {
     this.modifierCommentId = id;
     this.commentInfo.modifierComment = content;
   };
 
-  setReplyCommentId = (id: number): void => {
+  setReplyCommentId = (id: number) => {
     this.replyCommentId = id;
     this.commentInfo.replyComment = '';
   };
 
-  addComment = (postId: number, commentId: number, isReply: boolean): void => {
+  addComment = (postId: number, commentId: number, isReply: boolean) => {
     if (!isReply && !this.commentInfo.comment.trim()) {
       this.AlertStore.toggleAlertModal('댓글 내용을 입력해주세요!');
       return;
@@ -76,7 +76,7 @@ class CommentStore {
     }
 
     Axios({
-      method: 'post',
+      method: T.RequestMethod.POST,
       url: '/api/post/comment',
       data: {
         postId,
@@ -92,14 +92,14 @@ class CommentStore {
     });
   };
 
-  moreComment = (postId: number): void => {
+  moreComment = (postId: number) => {
     this.getComment(postId);
     this.commentSize += 15;
   };
 
-  getComment = async (postId: number): Promise<void> => {
+  getComment = async (postId: number) => {
     await Axios({
-      method: 'get',
+      method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/post/comment`,
       data: {
         postId,
@@ -112,9 +112,9 @@ class CommentStore {
     });
   };
 
-  modifyComment = (commentId: number, postId: number): void => {
+  modifyComment = (commentId: number, postId: number) => {
     Axios({
-      method: 'put',
+      method: T.RequestMethod.PUT,
       url: '/api/post/comment',
       data: {
         commentId,
@@ -128,9 +128,9 @@ class CommentStore {
     });
   };
 
-  deleteComment = (commentId: number, postId: number): void => {
+  deleteComment = (commentId: number, postId: number) => {
     Axios({
-      method: 'delete',
+      method: T.RequestMethod.DELETE,
       url: '/api/post/comment',
       data: { commentId },
       success: () => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import { ChangeEvent } from 'react';
 import { makeObservable } from 'mobx';
 import { NextRouter } from 'next/dist/next-server/lib/router/router';
 
@@ -32,8 +32,8 @@ class PostStore {
   }
 
   postHandleChange = (
-    event: string | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ): void => {
+    event: string | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     if (typeof event === 'string') {
       this.post = {
         ...this.post,
@@ -47,7 +47,7 @@ class PostStore {
     }
   };
 
-  movePage = (router: NextRouter, page: number): void => {
+  movePage = (router: NextRouter, page: number) => {
     const boardParams = router.query.board as Array<string>;
     let pathUrl = `/category/${boardParams[0]}`;
 
@@ -62,13 +62,13 @@ class PostStore {
     });
   };
 
-  clearPost = (): void => {
+  clearPost = () => {
     this.post = initialPost.post;
   };
 
-  addPost = (router: NextRouter): void => {
+  addPost = (router: NextRouter) => {
     Axios({
-      method: 'post',
+      method: T.RequestMethod.POST,
       url: '/api/post',
       data: this.post,
       success: router.back,
@@ -77,9 +77,9 @@ class PostStore {
 
   getPostList = async (
     category: string, tag: string, page: number,
-  ): Promise<void> => {
+  ) => {
     await Axios({
-      method: 'get',
+      method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/post/list`,
       data: { category, tag, page },
       success: (response) => {
@@ -89,9 +89,9 @@ class PostStore {
     });
   };
 
-  getPost = async (id: number, isModify: boolean): Promise<void> => {
+  getPost = async (id: number, isModify: boolean) => {
     await Axios({
-      method: 'get',
+      method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/post`,
       data: { id },
       success: (response) => {
@@ -102,27 +102,27 @@ class PostStore {
     });
   };
 
-  modifyPost = (router: NextRouter): void => {
+  modifyPost = (router: NextRouter) => {
     Axios({
-      method: 'put',
+      method: T.RequestMethod.PUT,
       url: '/api/post',
       data: this.post,
       success: router.back,
     });
   };
 
-  deletePost = (id: number, router: NextRouter): void => {
+  deletePost = (id: number, router: NextRouter) => {
     Axios({
-      method: 'delete',
+      method: T.RequestMethod.DELETE,
       url: '/api/post',
       data: { id },
       success: router.back,
     });
   };
 
-  addPostLike = (postId: number): void => {
+  addPostLike = (postId: number) => {
     Axios({
-      method: 'post',
+      method: T.RequestMethod.POST,
       url: '/api/post/like',
       data: { postId },
       success: (response) => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import { ChangeEvent } from 'react';
 import { makeObservable } from 'mobx';
 import cookie from 'js-cookie';
 
@@ -77,11 +77,11 @@ class SignStore {
     }));
   }
 
-  changeRegister = (): void => {
+  changeRegister = () => {
     this.toggleRegisterModal();
   };
 
-  togglePasswordChangeModal = (): void => {
+  togglePasswordChangeModal = () => {
     if (!this.isOpenPasswordChangeModal) {
       this.UtilStore.closeHeaderMenu();
     }
@@ -94,7 +94,7 @@ class SignStore {
     this.isOpenPasswordChangeModal = !this.isOpenPasswordChangeModal;
   };
 
-  toggleDeleteUserModal = (): void => {
+  toggleDeleteUserModal = () => {
     if (!this.isOpenDeleteUserModal) {
       this.UtilStore.closeHeaderMenu();
     }
@@ -107,7 +107,7 @@ class SignStore {
     this.isOpenDeleteUserModal = !this.isOpenDeleteUserModal;
   };
 
-  toggleSignModal = (): void => {
+  toggleSignModal = () => {
     this.isOpenSignModal = !this.isOpenSignModal;
     this.loginInfo = {
       email: '',
@@ -127,51 +127,51 @@ class SignStore {
     this.isOpenRegisterModal = !this.isOpenRegisterModal;
   };
 
-  toggleEmailModal = (): void => {
+  toggleEmailModal = () => {
     this.isOpenEmailModal = !this.isOpenEmailModal;
     this.emailVerifyCode = '';
   };
 
-  loginHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  loginHandleChange = (event: ChangeEvent<HTMLInputElement>) => {
     this.loginInfo = {
       ...this.loginInfo,
       [event.target.name]: event.target.value,
     };
   };
 
-  registerHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  registerHandleChange = (event: ChangeEvent<HTMLInputElement>) => {
     this.registerInfo = {
       ...this.registerInfo,
       [event.target.name]: event.target.value,
     };
   };
 
-  passwordHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  passwordHandleChange = (event: ChangeEvent<HTMLInputElement>) => {
     this.passwordInfo = {
       ...this.passwordInfo,
       [event.target.name]: event.target.value,
     };
   };
 
-  deleteUserHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  deleteUserHandleChange = (event: ChangeEvent<HTMLInputElement>) => {
     this.deleteUserInfo = {
       ...this.deleteUserInfo,
       [event.target.name]: event.target.value,
     };
   };
 
-  verifyHandleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  verifyHandleChange = (event: ChangeEvent<HTMLInputElement>) => {
     this.emailVerifyCode = event.target.value;
   };
 
-  cookieCheck = (): void => {
+  cookieCheck = () => {
     Axios({
-      method: 'get',
+      method: T.RequestMethod.GET,
       url: '/api/user/cookie',
       success: (response) => {
         const { result } = response.data;
         this.userData = result;
-        this.ChatStore.connectSocket(result.id);
+        this.ChatStore.connectSocket();
         this.ChatStore.getChatRoomList();
       },
       complete: () => {
@@ -180,9 +180,9 @@ class SignStore {
     });
   };
 
-  login = (): void => {
+  login = () => {
     Axios({
-      method: 'post',
+      method: T.RequestMethod.POST,
       url: '/api/user/login',
       data: this.loginInfo,
       success: (response) => {
@@ -202,14 +202,14 @@ class SignStore {
     });
   };
 
-  changePassword = (): void => {
+  changePassword = () => {
     const { changePassword, changePasswordCheck } = this.passwordInfo;
     if (!this.passwordCheck(changePassword, changePasswordCheck)) {
       return;
     }
 
     Axios({
-      method: 'put',
+      method: T.RequestMethod.PUT,
       url: '/api/user/password',
       data: this.passwordInfo,
       success: (response) => {
@@ -223,9 +223,9 @@ class SignStore {
     });
   };
 
-  deleteUser = (): void => {
+  deleteUser = () => {
     Axios({
-      method: 'delete',
+      method: T.RequestMethod.DELETE,
       url: '/api/user',
       data: this.deleteUserInfo,
       success: (response) => {
@@ -239,13 +239,13 @@ class SignStore {
     });
   };
 
-  register = (): void => {
+  register = () => {
     if (!this.registerValidationCheck()) {
       return;
     }
 
     Axios({
-      method: 'post',
+      method: T.RequestMethod.POST,
       url: '/api/user',
       data: this.registerInfo,
       success: (response) => {
@@ -259,9 +259,9 @@ class SignStore {
     });
   };
 
-  verifyEmail = (isFromRegister: boolean): void => {
+  verifyEmail = (isFromRegister: boolean) => {
     Axios({
-      method: 'put',
+      method: T.RequestMethod.PUT,
       url: '/api/user/verify',
       data: { email: this.registerInfo.email },
       success: () => {
@@ -275,9 +275,9 @@ class SignStore {
     });
   };
 
-  verifyCode = (): void => {
+  verifyCode = () => {
     Axios({
-      method: 'put',
+      method: T.RequestMethod.PUT,
       url: '/api/user/verify/code',
       data: {
         email: this.registerInfo.email,
@@ -296,7 +296,7 @@ class SignStore {
     });
   };
 
-  registerValidationCheck = (): boolean => {
+  registerValidationCheck = () => {
     const { toggleAlertModal } = this.AlertStore;
     const { name } = this.registerInfo;
 
@@ -343,12 +343,12 @@ class SignStore {
     return true;
   };
 
-  isEmail = (): boolean => {
+  isEmail = () => {
     const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
     return regExp.test(this.registerInfo.email);
   };
 
-  logout = (isChangePassword: boolean): void => {
+  logout = (isChangePassword: boolean) => {
     this.UtilStore.closeHeaderMenu();
 
     cookie.remove('token');
