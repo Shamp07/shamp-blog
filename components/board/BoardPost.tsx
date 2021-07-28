@@ -7,7 +7,7 @@ import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 
 import useStores from '@stores/useStores';
 import * as T from '@types';
-import {MediaQuery} from "@styles";
+import { MediaQuery } from '@styles';
 
 interface Props {
   data: T.PostList;
@@ -151,6 +151,7 @@ const PostInfoUl = styled.ul`
     padding: 0 8px;
     border-left: 1px solid #e6e6e6;
     font-size: 14px;
+    line-height: 1;
 
     &:first-of-type {
       border: none;

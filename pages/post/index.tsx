@@ -10,8 +10,6 @@ import Button from '@atoms/Button';
 import useStores from '@stores/useStores';
 import * as T from '@types';
 import { MediaQuery } from '@styles';
-import {Simulate} from "react-dom/test-utils";
-import submit = Simulate.submit;
 
 interface Props {
   isModify: boolean;

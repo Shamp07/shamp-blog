@@ -66,8 +66,7 @@ const Wrapper = styled.div`
 `;
 
 const ArticleTitle = styled.h1`
-  line-height: 36px;
-  font-size: 24px;
+  font-size: 2em;
   font-weight: bold;
   color: #1e2022;
   word-wrap: break-word;
@@ -100,6 +99,7 @@ const ArticleMetaUl = styled.ul({
     padding: '0 10px',
     color: '#98a0a7',
     wordBreak: 'break-all',
+    lineHeight: 1,
   },
 });
 
@@ -120,6 +120,7 @@ const ArticleMetaLeft = styled(ArticleMetaUl)({
 });
 
 const ArticleMetaRight = styled(ArticleMetaUl)({
+  marginLeft: 'auto',
   [MediaQuery[T.Device.LARGE]]: {
     marginLeft: 'auto',
   },
@@ -136,6 +137,6 @@ const ArticleMetaRight = styled(ArticleMetaUl)({
   '& > li': {
     borderRight: '1px solid #e6e6e6',
   },
-})
+});
 
 export default observer(ArticleHeader);

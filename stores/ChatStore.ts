@@ -1,4 +1,4 @@
-import { RefObject, ChangeEvent } from 'react';
+import { RefObject, ChangeEvent, KeyboardEvent } from 'react';
 import { makeObservable } from 'mobx';
 import dayjs from 'dayjs';
 
@@ -214,7 +214,7 @@ class ChatStore {
   };
 
   onKeyPressChat = async (
-    event: React.KeyboardEvent<HTMLTextAreaElement>,
+    event: KeyboardEvent<HTMLTextAreaElement>,
     userId: number,
   ) => {
     if (event.key === 'Enter') {
