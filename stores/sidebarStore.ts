@@ -1,9 +1,7 @@
-import { makeObservable } from 'mobx';
+import { observable } from 'mobx';
 
-import makeAnnotations from '@util/Mobx';
-
-class SidebarStore {
-  topCategoryList = [{
+const sidebarStore = observable({
+  topCategoryList: [{
     name: '홈',
     path: '',
   }, {
@@ -12,9 +10,8 @@ class SidebarStore {
   }, {
     name: '일상',
     path: 'life',
-  }];
-
-  boardCategoryList = [{
+  }],
+  boardCategoryList: [{
     name: '공지사항',
     path: 'notice',
   }, {
@@ -41,11 +38,8 @@ class SidebarStore {
   }, {
     name: 'etc',
     path: 'etc',
-  }];
-
+  }],
   boardCategoryName: {
-    [key: string]: string;
-  } = {
     notice: '공지사항',
     all: '전체 글',
     best: '인기 글',
@@ -55,22 +49,14 @@ class SidebarStore {
     rn: 'React Native',
     nodejs: 'NodeJS',
     etc: 'etc',
-  };
-
-  isOpenSidebar = false;
-
-  constructor() {
-    makeObservable(this, makeAnnotations<this>({
-      observables: ['isOpenSidebar'],
-      actions: ['toggleSidebar'],
-    }));
-  }
-
-  toggleSidebar = () => {
+  },
+  isOpenSidebar: false,
+  toggleSidebar() {
     this.isOpenSidebar = !this.isOpenSidebar;
-  };
+  },
+  getCategoryName(path: string) {
+    return this.boardCategoryName[path] ?? '';
+  },
+});
 
-  getCategoryName = (path: string) => (this.boardCategoryName[path] ?? '');
-}
-
-export default SidebarStore;
+export default sidebarStore;

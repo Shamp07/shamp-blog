@@ -1,36 +1,21 @@
-import { makeObservable } from 'mobx';
+import { observable } from 'mobx';
 import { NextRouter } from 'next/dist/next-server/lib/router/router';
 
-import makeAnnotations from '@util/Mobx';
 import Axios from '@util/Axios';
 import * as T from '@types';
 
-class AlertStore {
-  isOpenAlertModal = false;
-
-  text = '';
-
-  alertLoading = true;
-
-  alertList: Array<T.Alert> = [];
-
-  alertSize = 10;
-
-  alertNotReadSize = 0;
-
-  constructor() {
-    makeObservable(this, makeAnnotations<this>({
-      observables: ['isOpenAlertModal', 'text', 'alertList', 'alertLoading', 'alertSize'],
-      actions: ['toggleAlertModal', 'closeAlertModal', 'getAlertList', 'moreAlert'],
-    }));
-  }
-
-  moreAlert = () => {
+const alertStore = observable({
+  isOpenAlertModal: false,
+  text: '',
+  alertLoading: true,
+  alertList: [],
+  alertSize: 10,
+  alertNotReadSize: 0,
+  moreAlert() {
     this.alertSize += 10;
     this.getAlertList();
-  };
-
-  getAlertList = () => {
+  },
+  getAlertList() {
     this.alertLoading = true;
     Axios({
       method: T.RequestMethod.GET,
@@ -45,9 +30,8 @@ class AlertStore {
         this.alertLoading = false;
       },
     });
-  };
-
-  movePost = (router: NextRouter, postId: number, alertId: number) => {
+  },
+  movePost(router: NextRouter, postId: number, alertId: number) {
     Axios({
       method: T.RequestMethod.PUT,
       data: {
@@ -57,16 +41,15 @@ class AlertStore {
     });
 
     router.push(`/post/${postId}`);
-  };
-
-  toggleAlertModal = (text: string) => {
+  },
+  toggleAlertModal(text: string) {
     this.text = text;
     this.isOpenAlertModal = !this.isOpenAlertModal;
-  };
+  },
 
-  closeAlertModal = () => {
+  closeAlertModal() {
     this.isOpenAlertModal = false;
-  };
-}
+  },
+});
 
-export default AlertStore;
+export default alertStore;

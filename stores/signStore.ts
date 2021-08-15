@@ -1,121 +1,73 @@
 import { ChangeEvent } from 'react';
-import { makeObservable } from 'mobx';
+import { observable } from 'mobx';
 import cookie from 'js-cookie';
 
 import Axios from '@util/Axios';
-import makeAnnotations from '@util/Mobx';
 import * as T from '@types';
-import AlertStore from './AlertStore';
-import UtilStore from './UtilStore';
-import ChatStore from './ChatStore';
+import alertStore from './alertStore';
+import utilStore from './utilStore';
 
-class SignStore {
-  AlertStore: AlertStore;
-
-  UtilStore: UtilStore;
-
-  ChatStore: ChatStore;
-
-  cookieChecked = false;
-
-  userData: T.User | undefined;
-
-  loginInfo = {
+const signStore = observable({
+  cookieChecked: false,
+  userData: undefined,
+  loginInfo: {
     email: '',
     password: '',
-  };
-
-  registerInfo = {
+  },
+  registerInfo: {
     email: '',
     password: '',
     passwordCheck: '',
     name: '',
-  };
-
-  passwordInfo = {
+  },
+  passwordInfo: {
     currentPassword: '',
     changePassword: '',
     changePasswordCheck: '',
-  };
-
-  deleteUserInfo = {
+  },
+  deleteUserInfo: {
     deleteEmail: '',
     deleteText: '',
-  };
-
-  emailVerifyCode = '';
-
-  isOpenSignModal = false;
-
-  isOpenRegisterModal = false;
-
-  isOpenEmailModal = false;
-
-  isOpenPasswordChangeModal = false;
-
-  isOpenDeleteUserModal = false;
-
-  constructor(root: { AlertStore: AlertStore, UtilStore: UtilStore, ChatStore: ChatStore }) {
-    this.AlertStore = root.AlertStore;
-    this.UtilStore = root.UtilStore;
-    this.ChatStore = root.ChatStore;
-
-    makeObservable(this, makeAnnotations<this>({
-      observables: [
-        'cookieChecked', 'userData', 'loginInfo', 'registerInfo',
-        'passwordInfo', 'deleteUserInfo', 'isOpenPasswordChangeModal',
-        'isOpenDeleteUserModal', 'isOpenEmailModal', 'emailVerifyCode',
-        'isOpenRegisterModal',
-      ],
-      actions: [
-        'changeRegister', 'toggleSignModal', 'toggleRegisterModal',
-        'toggleEmailModal', 'loginHandleChange', 'registerHandleChange',
-        'verifyHandleChange', 'cookieCheck', 'login',
-        'register', 'verifyEmail', 'verifyCode', 'logout',
-        'togglePasswordChangeModal',
-      ],
-    }));
-  }
-
-  changeRegister = () => {
+  },
+  emailVerifyCode: '',
+  isOpenSignModal: false,
+  isOpenRegisterModal: false,
+  isOpenEmailModal: false,
+  isOpenPasswordChangeModal: false,
+  isOpenDeleteUserModal: false,
+  changeRegister() {
     this.toggleRegisterModal();
-  };
-
-  togglePasswordChangeModal = () => {
+  },
+  togglePasswordChangeModal() {
     if (!this.isOpenPasswordChangeModal) {
-      this.UtilStore.closeHeaderMenu();
+      utilStore.closeHeaderMenu();
     }
     this.passwordInfo = {
       currentPassword: '',
       changePassword: '',
       changePasswordCheck: '',
     };
-
     this.isOpenPasswordChangeModal = !this.isOpenPasswordChangeModal;
-  };
-
-  toggleDeleteUserModal = () => {
+  },
+  toggleDeleteUserModal() {
     if (!this.isOpenDeleteUserModal) {
-      this.UtilStore.closeHeaderMenu();
+      utilStore.closeHeaderMenu();
     }
 
     this.deleteUserInfo = {
       deleteEmail: '',
       deleteText: '',
     };
-
     this.isOpenDeleteUserModal = !this.isOpenDeleteUserModal;
-  };
-
-  toggleSignModal = () => {
+  },
+  toggleSignModal() {
     this.isOpenSignModal = !this.isOpenSignModal;
     this.loginInfo = {
       email: '',
       password: '',
     };
-  };
-
-  toggleRegisterModal = (): void => {
+  },
+  toggleRegisterModal() {
     if (!this.isOpenRegisterModal) {
       this.registerInfo = {
         email: '',
@@ -125,62 +77,54 @@ class SignStore {
       };
     }
     this.isOpenRegisterModal = !this.isOpenRegisterModal;
-  };
-
-  toggleEmailModal = () => {
+  },
+  toggleEmailModal() {
     this.isOpenEmailModal = !this.isOpenEmailModal;
     this.emailVerifyCode = '';
-  };
-
-  loginHandleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  },
+  loginHandleChange(event: ChangeEvent<HTMLInputElement>) {
     this.loginInfo = {
       ...this.loginInfo,
       [event.target.name]: event.target.value,
     };
-  };
-
-  registerHandleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  },
+  registerHandleChange(event: ChangeEvent<HTMLInputElement>) {
     this.registerInfo = {
       ...this.registerInfo,
       [event.target.name]: event.target.value,
     };
-  };
-
-  passwordHandleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  },
+  passwordHandleChange(event: ChangeEvent<HTMLInputElement>) {
     this.passwordInfo = {
       ...this.passwordInfo,
       [event.target.name]: event.target.value,
     };
-  };
-
-  deleteUserHandleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  },
+  deleteUserHandleChange(event: ChangeEvent<HTMLInputElement>) {
     this.deleteUserInfo = {
       ...this.deleteUserInfo,
       [event.target.name]: event.target.value,
     };
-  };
-
-  verifyHandleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  },
+  verifyHandleChange(event: ChangeEvent<HTMLInputElement>) {
     this.emailVerifyCode = event.target.value;
-  };
-
-  cookieCheck = () => {
+  },
+  cookieCheck() {
     Axios({
       method: T.RequestMethod.GET,
       url: '/api/user/cookie',
       success: (response) => {
         const { result } = response.data;
         this.userData = result;
-        this.ChatStore.connectSocket();
-        this.ChatStore.getChatRoomList();
+        // chatStore.connectSocket();
+        // chatStore.getChatRoomList();
       },
       complete: () => {
         this.cookieChecked = true;
       },
     });
-  };
-
-  login = () => {
+  },
+  login() {
     Axios({
       method: T.RequestMethod.POST,
       url: '/api/user/login',
@@ -191,18 +135,17 @@ class SignStore {
           cookie.set('token', result, { expires: 2 });
           this.cookieCheck();
           this.toggleSignModal();
-          this.AlertStore.toggleAlertModal(message);
+          alertStore.toggleAlertModal(message);
         } else if (code === 2) {
-          this.AlertStore.toggleAlertModal(message);
+          alertStore.toggleAlertModal(message);
         } else if (code === 3) {
           this.registerInfo.email = this.loginInfo.email;
           this.verifyEmail(false);
         }
       },
     });
-  };
-
-  changePassword = () => {
+  },
+  changePassword() {
     const { changePassword, changePasswordCheck } = this.passwordInfo;
     if (!this.passwordCheck(changePassword, changePasswordCheck)) {
       return;
@@ -218,12 +161,11 @@ class SignStore {
           this.logout(true);
           this.togglePasswordChangeModal();
         }
-        this.AlertStore.toggleAlertModal(message);
+        alertStore.toggleAlertModal(message);
       },
     });
-  };
-
-  deleteUser = () => {
+  },
+  deleteUser() {
     Axios({
       method: T.RequestMethod.DELETE,
       url: '/api/user',
@@ -234,16 +176,14 @@ class SignStore {
           this.toggleDeleteUserModal();
           this.logout(true);
         }
-        this.AlertStore.toggleAlertModal(message);
+        alertStore.toggleAlertModal(message);
       },
     });
-  };
-
-  register = () => {
+  },
+  register() {
     if (!this.registerValidationCheck()) {
       return;
     }
-
     Axios({
       method: T.RequestMethod.POST,
       url: '/api/user',
@@ -253,13 +193,12 @@ class SignStore {
         if (code === 1) {
           this.verifyEmail(true);
         } else {
-          this.AlertStore.toggleAlertModal(message);
+          alertStore.toggleAlertModal(message);
         }
       },
     });
-  };
-
-  verifyEmail = (isFromRegister: boolean) => {
+  },
+  verifyEmail(isFromRegister: boolean) {
     Axios({
       method: T.RequestMethod.PUT,
       url: '/api/user/verify',
@@ -273,9 +212,8 @@ class SignStore {
         this.toggleEmailModal();
       },
     });
-  };
-
-  verifyCode = () => {
+  },
+  verifyCode() {
     Axios({
       method: T.RequestMethod.PUT,
       url: '/api/user/verify/code',
@@ -291,13 +229,12 @@ class SignStore {
       },
       complete: (response) => {
         const { message } = response.data;
-        this.AlertStore.toggleAlertModal(message);
+        alertStore.toggleAlertModal(message);
       },
     });
-  };
-
-  registerValidationCheck = () => {
-    const { toggleAlertModal } = this.AlertStore;
+  },
+  registerValidationCheck() {
+    const { toggleAlertModal } = alertStore;
     const { name } = this.registerInfo;
 
     if (!this.isEmail()) {
@@ -312,11 +249,11 @@ class SignStore {
 
     const { password, passwordCheck } = this.registerInfo;
     return this.passwordCheck(password, passwordCheck);
-  };
-
-  passwordCheck = (password: string, passwordCheck: string) => {
+  },
+  passwordCheck(password: string, passwordCheck: string) {
+    const { toggleAlertModal } = alertStore;
     if (!password.trim()) {
-      this.AlertStore.toggleAlertModal('패스워드를 제대로 입력해주세요.');
+      toggleAlertModal('패스워드를 제대로 입력해주세요.');
       return false;
     }
 
@@ -325,38 +262,36 @@ class SignStore {
     const spe = password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
     if (password.length < 8 || password.length > 20) {
-      this.AlertStore.toggleAlertModal('비밀번호는 8자리 ~ 20자리 이내로 입력해주세요.');
+      toggleAlertModal('비밀번호는 8자리 ~ 20자리 이내로 입력해주세요.');
       return false;
     } if (password.search(/\s/) !== -1) {
-      this.AlertStore.toggleAlertModal('비밀번호는 공백 없이 입력해주세요.');
+      toggleAlertModal('비밀번호는 공백 없이 입력해주세요.');
       return false;
     } if (num < 0 || eng < 0 || spe < 0) {
-      this.AlertStore.toggleAlertModal('비밀번호는 영문, 숫자, 특수문자를 혼합하여 입력해주세요.');
+      toggleAlertModal('비밀번호는 영문, 숫자, 특수문자를 혼합하여 입력해주세요.');
       return false;
     }
 
     if (password !== passwordCheck) {
-      this.AlertStore.toggleAlertModal('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+      toggleAlertModal('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
       return false;
     }
 
     return true;
-  };
-
-  isEmail = () => {
+  },
+  isEmail() {
     const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
     return regExp.test(this.registerInfo.email);
-  };
-
-  logout = (isChangePassword: boolean) => {
-    this.UtilStore.closeHeaderMenu();
+  },
+  logout(isChangePassword: boolean) {
+    utilStore.closeHeaderMenu();
 
     cookie.remove('token');
     this.userData = undefined;
     if (!isChangePassword) {
-      this.AlertStore.toggleAlertModal('로그아웃 되었습니다.');
+      alertStore.toggleAlertModal('로그아웃 되었습니다.');
     }
-  };
-}
+  },
+});
 
-export default SignStore;
+export default signStore;

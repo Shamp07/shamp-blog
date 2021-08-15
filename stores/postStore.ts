@@ -1,39 +1,18 @@
 import { ChangeEvent } from 'react';
-import { makeObservable } from 'mobx';
+import { observable } from 'mobx';
 import { NextRouter } from 'next/dist/next-server/lib/router/router';
 
 import Axios from '@util/Axios';
-import makeAnnotations from '@util/Mobx';
 import * as T from '@types';
-import AlertStore from './AlertStore';
+import alertStore from './alertStore';
 
-class PostStore {
-  AlertStore: AlertStore;
-
-  post: T.Post;
-
-  postView: T.PostView | undefined;
-
-  postList: T.PostList[] = [];
-
-  constructor(initialData = initialPost, root: { AlertStore: AlertStore }) {
-    this.AlertStore = root.AlertStore;
-    this.postList = initialData.postList;
-    this.postView = initialData.postView;
-    this.post = initialData.post;
-    makeObservable(this, makeAnnotations<this>({
-      observables: ['post', 'postView', 'postList'],
-      actions: [
-        'postHandleChange', 'clearPost', 'addPost',
-        'getPostList', 'getPost', 'modifyPost',
-        'deletePost', 'addPostLike',
-      ],
-    }));
-  }
-
-  postHandleChange = (
+const postStore = observable({
+  post: {},
+  postView: {},
+  postList: [],
+  postHandleChange(
     event: string | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  ) {
     if (typeof event === 'string') {
       this.post = {
         ...this.post,
@@ -45,9 +24,8 @@ class PostStore {
         [event.target.name]: event.target.value,
       };
     }
-  };
-
-  movePage = (router: NextRouter, page: number) => {
+  },
+  movePage(router: NextRouter, page: number) {
     const boardParams = router.query.board as Array<string>;
     let pathUrl = `/category/${boardParams[0]}`;
 
@@ -60,25 +38,23 @@ class PostStore {
       pathname: pathUrl,
       query: { page },
     });
-  };
-
-  clearPost = () => {
+  },
+  clearPost() {
     this.post = initialPost.post;
-  };
-
-  addPost = (router: NextRouter) => {
+  },
+  addPost(router: NextRouter) {
     Axios({
       method: T.RequestMethod.POST,
       url: '/api/post',
       data: this.post,
       success: router.back,
     });
-  };
-
-  getPostList = async (
+  },
+  // async await
+  getPostList(
     category: string, tag: string, page: number,
-  ) => {
-    await Axios({
+  ) {
+    Axios({
       method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/post/list`,
       data: { category, tag, page },
@@ -87,10 +63,10 @@ class PostStore {
         this.postList = result;
       },
     });
-  };
-
-  getPost = async (id: number, isModify: boolean) => {
-    await Axios({
+  },
+  // async await
+  getPost(id: number, isModify: boolean) {
+    Axios({
       method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/post`,
       data: { id },
@@ -100,27 +76,24 @@ class PostStore {
         else this.postView = result;
       },
     });
-  };
-
-  modifyPost = (router: NextRouter) => {
+  },
+  modifyPost(router: NextRouter) {
     Axios({
       method: T.RequestMethod.PUT,
       url: '/api/post',
       data: this.post,
       success: router.back,
     });
-  };
-
-  deletePost = (id: number, router: NextRouter) => {
+  },
+  deletePost(id: number, router: NextRouter) {
     Axios({
       method: T.RequestMethod.DELETE,
       url: '/api/post',
       data: { id },
       success: router.back,
     });
-  };
-
-  addPostLike = (postId: number) => {
+  },
+  addPostLike(postId: number) {
     Axios({
       method: T.RequestMethod.POST,
       url: '/api/post/like',
@@ -129,13 +102,13 @@ class PostStore {
         const { code } = response.data;
         if (code === 2) {
           const { message } = response.data;
-          this.AlertStore.toggleAlertModal(message);
+          alertStore.toggleAlertModal(message);
         }
         this.getPost(postId, false);
       },
     });
-  };
-}
+  },
+});
 
 export const initialPost = {
   postList: [] as T.PostList[],
@@ -151,4 +124,4 @@ export const initialPost = {
   },
 };
 
-export default PostStore;
+export default postStore;

@@ -1,64 +1,35 @@
 import { ChangeEvent } from 'react';
-import { makeObservable } from 'mobx';
+import { observable } from 'mobx';
 
 import Axios from '@util/Axios';
-import makeAnnotations from '@util/Mobx';
 import * as T from '@types';
-import AlertStore from './AlertStore';
+import alertStore from './alertStore';
 
-class HomeStore {
-  AlertStore: AlertStore;
-
-  recentlyPostList = [];
-
-  noticePostList = [];
-
-  footprintList: T.FootPrint[] = [];
-
-  footprintSize = 20;
-
-  footprintInfo = {
+const homeStore = observable({
+  recentlyPostList: [],
+  noticePostList: [],
+  footprintList: [],
+  footprintSize: 20,
+  footprintInfo: {
     footprint: '',
     modifierFootprint: '',
-  };
-
-  modifierFootprintId = 0;
-
-  constructor(initialData = initialHome, root: { AlertStore: AlertStore }) {
-    this.AlertStore = root.AlertStore;
-    this.recentlyPostList = initialData.recentlyPostList;
-    this.noticePostList = initialData.noticePostList;
-    this.footprintList = initialData.footprintList;
-
-    makeObservable(this, makeAnnotations<this>({
-      observables: [
-        'recentlyPostList', 'noticePostList', 'footprintList',
-        'footprintSize', 'footprintInfo', 'modifierFootprintId',
-      ],
-      actions: [
-        'setModifierFootprintId', 'footprintHandleChange', 'getRecentlyPostList',
-        'getNoticePostList', 'addFootprint', 'moreFootprint',
-        'getFootprint', 'modifyFootprint', 'deleteFootprint',
-      ],
-    }));
-  }
-
-  setModifierFootprintId = (id: number, content: string) => {
+  },
+  modifierFootprintId: 0,
+  setModifierFootprintId(id: number, content: string) {
     this.modifierFootprintId = id;
     this.footprintInfo.modifierFootprint = content;
-  };
-
-  footprintHandleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+  },
+  footprintHandleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     if (event.target.value.length <= 1000) {
       this.footprintInfo = {
         ...this.footprintInfo,
         [event.target.name]: event.target.value,
       };
     }
-  };
-
-  getRecentlyPostList = async () => {
-    await Axios({
+  },
+  // async await
+  getRecentlyPostList() {
+    Axios({
       method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/post/list/recently`,
       success: (response) => {
@@ -66,10 +37,10 @@ class HomeStore {
         this.recentlyPostList = result;
       },
     });
-  };
-
-  getNoticePostList = async () => {
-    await Axios({
+  },
+  // async await
+  getNoticePostList() {
+    Axios({
       method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/post/list/notice`,
       success: (response) => {
@@ -77,11 +48,10 @@ class HomeStore {
         this.noticePostList = result;
       },
     });
-  };
-
-  addFootprint = () => {
+  },
+  addFootprint() {
     if (!this.footprintInfo.footprint.trim()) {
-      this.AlertStore.toggleAlertModal('발자취 내용을 입력해주세요!');
+      alertStore.toggleAlertModal('발자취 내용을 입력해주세요!');
       return;
     }
 
@@ -96,15 +66,14 @@ class HomeStore {
         this.footprintInfo.footprint = '';
       },
     });
-  };
-
-  moreFootprint = () => {
+  },
+  moreFootprint() {
     this.footprintSize += 20;
     this.getFootprint();
-  };
-
-  getFootprint = async () => {
-    await Axios({
+  },
+  // async await
+  getFootprint() {
+    Axios({
       method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/footprint`,
       data: {
@@ -115,9 +84,8 @@ class HomeStore {
         this.footprintList = result;
       },
     });
-  };
-
-  modifyFootprint = (id: number) => {
+  },
+  modifyFootprint(id: number) {
     Axios({
       method: T.RequestMethod.PUT,
       url: '/api/footprint',
@@ -130,17 +98,16 @@ class HomeStore {
         this.setModifierFootprintId(0, '');
       },
     });
-  };
-
-  deleteFootprint = (id: number) => {
+  },
+  deleteFootprint(id: number) {
     Axios({
       method: T.RequestMethod.DELETE,
       url: '/api/footprint',
       data: { id },
       success: this.getFootprint,
     });
-  };
-}
+  },
+});
 
 export const initialHome = {
   recentlyPostList: [],
@@ -148,4 +115,4 @@ export const initialHome = {
   footprintList: [] as T.FootPrint[],
 };
 
-export default HomeStore;
+export default homeStore;
