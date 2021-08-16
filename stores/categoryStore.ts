@@ -3,11 +3,15 @@ import { observable } from 'mobx';
 import Axios from '@util/Axios';
 import * as T from '@types';
 
-const categoryStore = observable({
+export interface CategoryStore {
+  categoryTags: string[];
+  getCategoryTags(category: string): Promise<void>;
+}
+
+const categoryStore: CategoryStore = {
   categoryTags: [],
-  // async await
-  getCategoryTags(category: string) {
-    Axios({
+  async getCategoryTags(category) {
+    await Axios({
       method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/category/tag`,
       data: { category },
@@ -17,10 +21,10 @@ const categoryStore = observable({
       },
     });
   },
-});
+};
 
 export const initialCategory = {
   categoryTags: [] as string[],
 };
 
-export default categoryStore;
+export default observable(categoryStore);

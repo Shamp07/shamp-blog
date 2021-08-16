@@ -1,8 +1,11 @@
 import { enableStaticRendering } from 'mobx-react-lite';
-// import { initialPost } from './PostStore';
-// import { initialCategory } from './CategoryStore';
-// import { initialComment } from './CommentStore';
-// import { initialHome } from './HomeStore';
+import alertStore, { AlertStore } from './alertStore';
+import categoryStore, { CategoryStore } from './categoryStore';
+import commentStore, { CommentStore } from './commentStore';
+import homeStore, { HomeStore } from './homeStore';
+import postStore, { PostStore } from './postStore';
+import sidebarStore, { SidebarStore } from './sidebarStore';
+import signStore, { SignStore } from './signStore';
 
 const isServer = typeof window === 'undefined';
 enableStaticRendering(isServer);
@@ -14,6 +17,39 @@ enableStaticRendering(isServer);
 //   HomeStore: initialHome,
 // };
 //
+
+interface RootStore {
+  alertStore: AlertStore;
+  categoryStore: CategoryStore;
+  commentStore: CommentStore;
+  homeStore: HomeStore;
+  postStore: PostStore;
+  sidebarStore: SidebarStore;
+  signStore: SignStore;
+}
+
+const rootStore = (() => {
+  let instance: RootStore | undefined;
+  function initialize() {
+    return {
+      alertStore,
+      categoryStore,
+      commentStore,
+      homeStore,
+      postStore,
+      sidebarStore,
+      signStore,
+    };
+  }
+  return {
+    getInstance() {
+      if (!instance) {
+        instance = initialize();
+      }
+      return instance;
+    },
+  };
+})();
 
 // export function initializeStore(initialData = initialRoot) {
 //   if (isServer) {

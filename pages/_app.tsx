@@ -1,10 +1,8 @@
 import React from 'react';
 import App from 'next/app';
 import Head from 'next/head';
-import { Provider } from 'mobx-react';
 
 import Layout from '@components/Layout';
-import initializeStore, { RootStore } from '@stores';
 import * as T from '@types';
 import 'react-quill/dist/quill.snow.css';
 import 'highlight.js/styles/nord.css';
@@ -34,7 +32,7 @@ class CustomApp extends App {
   render() {
     const { Component, pageProps } = this.props;
     return (
-      <Provider {...this.mobxStore}>
+      <>
         <Head>
           <title>Shamp Blog</title>
           <meta
@@ -67,7 +65,7 @@ class CustomApp extends App {
         <Layout>
           <Component {...pageProps} />
         </Layout>
-      </Provider>
+      </>
     );
   }
 }

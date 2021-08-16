@@ -4,7 +4,21 @@ import { NextRouter } from 'next/dist/next-server/lib/router/router';
 import Axios from '@util/Axios';
 import * as T from '@types';
 
-const alertStore = observable({
+export interface AlertStore {
+  isOpenAlertModal: boolean;
+  text: string;
+  alertLoading: boolean;
+  alertList: T.Alert[];
+  alertSize: number;
+  alertNotReadSize: number;
+  moreAlert(): void;
+  getAlertList(): void;
+  movePost(router: NextRouter, postId: number, alertId: number): void;
+  toggleAlertModal(text: string): void;
+  closeAlertModal(): void;
+}
+
+const alertStore: AlertStore = {
   isOpenAlertModal: false,
   text: '',
   alertLoading: true,
@@ -31,7 +45,7 @@ const alertStore = observable({
       },
     });
   },
-  movePost(router: NextRouter, postId: number, alertId: number) {
+  movePost(router, postId, alertId) {
     Axios({
       method: T.RequestMethod.PUT,
       data: {
@@ -42,14 +56,13 @@ const alertStore = observable({
 
     router.push(`/post/${postId}`);
   },
-  toggleAlertModal(text: string) {
+  toggleAlertModal(text) {
     this.text = text;
     this.isOpenAlertModal = !this.isOpenAlertModal;
   },
-
   closeAlertModal() {
     this.isOpenAlertModal = false;
   },
-});
+};
 
-export default alertStore;
+export default observable(alertStore);

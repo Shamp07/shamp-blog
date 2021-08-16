@@ -6,7 +6,23 @@ import * as T from '@types';
 import alertStore from './alertStore';
 import postStore from './postStore';
 
-const commentStore = observable({
+export interface CommentStore {
+  commentInfo: { comment: string, replyComment: string, modifierComment: string };
+  commentList: T.Comment[];
+  commentSize: number;
+  modifierCommentId: number;
+  replyCommentId: number;
+  commentHandleChange(event: ChangeEvent<HTMLTextAreaElement>): void;
+  setModifierCommentId(id: number, content: string): void;
+  setReplyCommentId(id: number): void;
+  addComment(postId: number, commentId: number, isReply: boolean): void;
+  moreComment(postId: number): void;
+  getComment(postId: number): Promise<void>;
+  modifyComment(commentId: number, postId: number): void;
+  deleteComment(commentId: number, postId: number): void;
+}
+
+const commentStore: CommentStore = {
   commentInfo: {
     comment: '',
     replyComment: '',
@@ -16,7 +32,7 @@ const commentStore = observable({
   commentSize: 15,
   modifierCommentId: 0,
   replyCommentId: 0,
-  commentHandleChange(event: ChangeEvent<HTMLTextAreaElement>) {
+  commentHandleChange(event) {
     if (event.target.value.length <= 1000) {
       this.commentInfo = {
         ...this.commentInfo,
@@ -24,15 +40,15 @@ const commentStore = observable({
       };
     }
   },
-  setModifierCommentId(id: number, content: string) {
+  setModifierCommentId(id, content) {
     this.modifierCommentId = id;
     this.commentInfo.modifierComment = content;
   },
-  setReplyCommentId(id: number) {
+  setReplyCommentId(id) {
     this.replyCommentId = id;
     this.commentInfo.replyComment = '';
   },
-  addComment(postId: number, commentId: number, isReply: boolean) {
+  addComment(postId, commentId, isReply) {
     if (!isReply && !this.commentInfo.comment.trim()) {
       alertStore.toggleAlertModal('댓글 내용을 입력해주세요!');
       return;
@@ -59,13 +75,12 @@ const commentStore = observable({
       },
     });
   },
-  moreComment(postId: number) {
+  moreComment(postId) {
     this.getComment(postId);
     this.commentSize += 15;
   },
-  // async await
-  getComment(postId: number) {
-    Axios({
+  async getComment(postId) {
+    await Axios({
       method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/post/comment`,
       data: {
@@ -78,7 +93,7 @@ const commentStore = observable({
       },
     });
   },
-  modifyComment(commentId: number, postId: number) {
+  modifyComment(commentId, postId) {
     Axios({
       method: T.RequestMethod.PUT,
       url: '/api/post/comment',
@@ -94,7 +109,7 @@ const commentStore = observable({
     });
   },
 
-  deleteComment(commentId: number, postId: number) {
+  deleteComment(commentId, postId) {
     Axios({
       method: T.RequestMethod.DELETE,
       url: '/api/post/comment',
@@ -105,10 +120,10 @@ const commentStore = observable({
       },
     });
   },
-});
+};
 
 export const initialComment = {
   commentList: [] as T.Comment[],
 };
 
-export default commentStore;
+export default observable(commentStore);

@@ -1,7 +1,7 @@
 import { RootStore } from '@stores';
 import { NextApiRequest, NextComponentType, NextPageContext } from 'next';
 import { AppContext, AppProps } from 'next/app';
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from 'axios';
 
 export interface MyAppProps extends AppProps {
   initialMobxState: RootStore;
