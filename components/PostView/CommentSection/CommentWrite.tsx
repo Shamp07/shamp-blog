@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import Button from '@atoms/Button';
 import * as T from '@types';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const CommentWrite = ({ isReply }: Props) => {
-  const { PostStore, CommentStore } = useStores();
+  const { PostStore, CommentStore } = stores();
   const { postView } = PostStore;
   if (!postView) return null;
 

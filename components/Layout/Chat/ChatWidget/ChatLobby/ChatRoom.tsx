@@ -4,16 +4,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 import * as T from '@types';
-import useStores from '@stores/useStores';
+import stores from '@stores';
 
 interface Props {
   data: T.ChatRoomList;
 }
 
 const ChatRoom = ({ data }: Props) => {
-  const { SignStore, ChatStore } = useStores();
-  const { userData } = SignStore;
-  const { moveChatPage } = ChatStore;
+  const { signStore, chatStore } = stores();
+  const { userData } = signStore;
+  const { moveChatPage } = chatStore;
 
   const {
     fromUserId, toUserId,

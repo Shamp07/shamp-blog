@@ -2,10 +2,10 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 
 const HeaderNoTokenList = () => {
-  const { SignStore } = useStores();
+  const { SignStore } = stores();
   const { toggleSignModal, toggleRegisterModal } = SignStore;
 
   return (

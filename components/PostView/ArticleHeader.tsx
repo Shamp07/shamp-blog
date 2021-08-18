@@ -3,13 +3,13 @@ import Head from 'next/head';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import * as T from '@types';
 import { MediaQuery } from '@styles';
 import {die} from "mobx/dist/errors";
 
 const ArticleHeader = () => {
-  const { PostStore, SidebarStore } = useStores();
+  const { PostStore, SidebarStore } = stores();
   const { getCategoryName } = SidebarStore;
   const { postView } = PostStore;
   if (!postView) return null;

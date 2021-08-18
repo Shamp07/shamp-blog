@@ -1,11 +1,11 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import ChatRoom from './ChatRoom';
 
 const ChatLobby = () => {
-  const { ChatStore } = useStores();
+  const { ChatStore } = stores();
   const { chatRoomList } = ChatStore;
 
   return (

@@ -4,12 +4,12 @@ import styled from '@emotion/styled';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import Button from '@atoms/Button';
 import * as T from '@types';
 
 const CommentHeader = () => {
-  const { PostStore, CommentStore } = useStores();
+  const { PostStore, CommentStore } = stores();
   const { postView } = PostStore;
   if (!postView) return null;
 

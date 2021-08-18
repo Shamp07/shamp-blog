@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { MenuItem } from '@material-ui/core';
 import styled from '@emotion/styled';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import * as T from '@types';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 
 const Alert = ({ data }: Props) => {
   const router = useRouter();
-  const { AlertStore } = useStores();
+  const { AlertStore } = stores();
   const { movePost } = AlertStore;
 
   const goPost = useCallback(() => {

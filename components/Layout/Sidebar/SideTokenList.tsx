@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import * as T from '@types';
 import { MediaQuery } from '@styles';
 
 const SideTokenList = () => {
-  const { SignStore } = useStores();
+  const { SignStore } = stores();
   const { userData, logout } = SignStore;
 
   return (

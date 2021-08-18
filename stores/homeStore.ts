@@ -5,7 +5,28 @@ import Axios from '@util/Axios';
 import * as T from '@types';
 import alertStore from './alertStore';
 
-const homeStore = observable({
+export interface HomeStore {
+  recentlyPostList: any[];
+  noticePostList: any[];
+  footprintList: T.FootPrint[];
+  footprintSize: number;
+  footprintInfo: {
+    footprint: string;
+    modifierFootprint: string;
+  };
+  modifierFootprintId: number;
+  setModifierFootprintId(id: number, content: string): void;
+  footprintHandleChange(event: ChangeEvent<HTMLTextAreaElement>): void;
+  getRecentlyPostList(): Promise<void>;
+  getNoticePostList(): Promise<void>;
+  addFootprint(): void;
+  moreFootprint(): void;
+  getFootprint(): Promise<void>;
+  modifyFootprint(id: number): void;
+  deleteFootprint(id: number): void;
+}
+
+const homeStore: HomeStore = {
   recentlyPostList: [],
   noticePostList: [],
   footprintList: [],
@@ -15,11 +36,11 @@ const homeStore = observable({
     modifierFootprint: '',
   },
   modifierFootprintId: 0,
-  setModifierFootprintId(id: number, content: string) {
+  setModifierFootprintId(id, content) {
     this.modifierFootprintId = id;
     this.footprintInfo.modifierFootprint = content;
   },
-  footprintHandleChange(event: ChangeEvent<HTMLTextAreaElement>) {
+  footprintHandleChange(event) {
     if (event.target.value.length <= 1000) {
       this.footprintInfo = {
         ...this.footprintInfo,
@@ -27,9 +48,8 @@ const homeStore = observable({
       };
     }
   },
-  // async await
-  getRecentlyPostList() {
-    Axios({
+  async getRecentlyPostList() {
+    await Axios({
       method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/post/list/recently`,
       success: (response) => {
@@ -38,9 +58,8 @@ const homeStore = observable({
       },
     });
   },
-  // async await
-  getNoticePostList() {
-    Axios({
+  async getNoticePostList() {
+    await Axios({
       method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/post/list/notice`,
       success: (response) => {
@@ -71,9 +90,8 @@ const homeStore = observable({
     this.footprintSize += 20;
     this.getFootprint();
   },
-  // async await
-  getFootprint() {
-    Axios({
+  async getFootprint() {
+    await Axios({
       method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/footprint`,
       data: {
@@ -85,7 +103,7 @@ const homeStore = observable({
       },
     });
   },
-  modifyFootprint(id: number) {
+  modifyFootprint(id) {
     Axios({
       method: T.RequestMethod.PUT,
       url: '/api/footprint',
@@ -99,7 +117,7 @@ const homeStore = observable({
       },
     });
   },
-  deleteFootprint(id: number) {
+  deleteFootprint(id) {
     Axios({
       method: T.RequestMethod.DELETE,
       url: '/api/footprint',
@@ -107,7 +125,7 @@ const homeStore = observable({
       success: this.getFootprint,
     });
   },
-});
+};
 
 export const initialHome = {
   recentlyPostList: [],
@@ -115,4 +133,4 @@ export const initialHome = {
   footprintList: [] as T.FootPrint[],
 };
 
-export default homeStore;
+export default observable(homeStore);

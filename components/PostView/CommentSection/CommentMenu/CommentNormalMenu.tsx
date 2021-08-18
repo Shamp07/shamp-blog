@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReply } from '@fortawesome/free-solid-svg-icons';
 
 import * as T from '@types';
-import useStores from '@stores/useStores';
+import stores from '@stores';
 
 export interface Props {
   data: T.Comment;
@@ -15,7 +15,7 @@ const CommentNormalMenu = ({ data }: Props) => {
   const {
     PostStore, CommentStore, SignStore,
     UtilStore,
-  } = useStores();
+  } = stores();
   const { postView } = PostStore;
   if (!postView) return null;
 

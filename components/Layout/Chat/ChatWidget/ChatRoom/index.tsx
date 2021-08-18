@@ -2,14 +2,14 @@ import React, {useEffect, useRef} from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import Footer from './Footer';
 import SendMessage from './SendMessage';
 import ReceiveMessage from './ReceiveMessage';
 import { Chat } from '@types';
 
 const ChatRoom = () => {
-  const { ChatStore, SignStore } = useStores();
+  const { ChatStore, SignStore } = stores();
   const { displayedChatList, setScrollRef } = ChatStore;
   const { userData } = SignStore;
   const scrollRef = useRef<HTMLDivElement>(null);

@@ -1,12 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import FootprintWrite from './FootprintWrite';
 import FootprintList from './FootprintList';
 
 const Footprint = () => {
-  const { SignStore } = useStores();
+  const { SignStore } = stores();
   const { userData } = SignStore;
 
   return (

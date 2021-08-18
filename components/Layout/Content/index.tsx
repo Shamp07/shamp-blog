@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import * as T from '@types';
 import { MediaQuery } from '@styles';
 
@@ -11,8 +11,8 @@ interface Props {
 }
 
 const Content = ({ children }: Props) => {
-  const { SignStore } = useStores();
-  const { cookieChecked } = SignStore;
+  const { signStore } = stores();
+  const { cookieChecked } = signStore;
 
   if (!cookieChecked) return null;
 

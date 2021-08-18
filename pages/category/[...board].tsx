@@ -12,7 +12,7 @@ const Board = () => {
   const router = useRouter();
   if (!router.query.board) return null;
 
-  const { AlertStore, SidebarStore } = useStores();
+  const { AlertStore, SidebarStore } = stores();
   const { toggleAlertModal } = AlertStore;
   const { boardCategoryName } = SidebarStore;
 

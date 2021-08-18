@@ -5,10 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink, faCode, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 
 const Footer = () => {
-  const { ChatStore, SignStore } = useStores();
+  const { ChatStore, SignStore } = stores();
   const {
     chat, onChangeChat, sendChat, onKeyPressChat,
   } = ChatStore;

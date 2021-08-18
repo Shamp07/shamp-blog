@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import { MediaQuery } from '@styles';
 import * as T from '@types';
 
 const SideNoTokenList = () => {
-  const { SignStore } = useStores();
+  const { SignStore } = stores();
   const { toggleSignModal, toggleRegisterModal } = SignStore;
 
   return (

@@ -3,13 +3,13 @@ import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import * as T from '@types';
 import Button from '@atoms/Button';
 
 const FootprintWrite = () => {
-  const { HomeStore } = useStores();
-  const { footprintInfo, footprintHandleChange, addFootprint } = HomeStore;
+  const { homeStore } = stores();
+  const { footprintInfo, footprintHandleChange, addFootprint } = homeStore;
   const { footprint } = footprintInfo;
 
   return (

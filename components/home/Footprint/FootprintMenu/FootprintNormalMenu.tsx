@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import * as T from '@types';
 
 export interface Props {
@@ -10,9 +10,9 @@ export interface Props {
 }
 
 const FootprintNormalMenu = ({ data }: Props) => {
-  const { HomeStore, UtilStore } = useStores();
-  const { setModifierFootprintId, deleteFootprint } = HomeStore;
-  const { toggleConfirmModal } = UtilStore;
+  const { homeStore, utilStore } = stores();
+  const { setModifierFootprintId, deleteFootprint } = homeStore;
+  const { toggleConfirmModal } = utilStore;
 
   const { id, content } = data;
 

@@ -2,14 +2,14 @@ import React, { useMemo } from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import FootprintMore from './FootprintMore';
 import FootPrintRow from './FootprintRow';
 import FootprintNone from './FootprintNone';
 
 const FootprintList = () => {
-  const { HomeStore } = useStores();
-  const { footprintList, footprintSize } = HomeStore;
+  const { homeStore } = stores();
+  const { footprintList, footprintSize } = homeStore;
 
   const isMoreFootprint = footprintList[0]?.total > footprintSize;
 

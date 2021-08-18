@@ -7,11 +7,11 @@ import Fade from '@material-ui/core/Fade';
 import { TextField } from '@material-ui/core';
 import Button from '@atoms/Button';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import * as T from '@types';
 
 const SignModal = () => {
-  const { SignStore } = useStores();
+  const { SignStore } = stores();
   const {
     isOpenSignModal, toggleSignModal,
     loginInfo, loginHandleChange, login,

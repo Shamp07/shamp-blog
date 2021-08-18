@@ -3,17 +3,17 @@ import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import CommentWrite from './CommentWrite';
 import CommentMenu from './CommentMenu';
 import { Props } from './CommentMenu/CommentNormalMenu';
 
 const CommentRow = ({ data }: Props) => {
-  const { CommentStore } = useStores();
+  const { commentStore } = stores();
   const {
     commentInfo,
     replyCommentId, modifierCommentId, commentHandleChange,
-  } = CommentStore;
+  } = commentStore;
   const { modifierComment } = commentInfo;
 
   const {

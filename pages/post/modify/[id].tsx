@@ -1,15 +1,15 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import * as T from '@types';
 import Post from '..';
 
 const ModifyPost = () => {
   const router = useRouter();
-  const { SignStore, AlertStore } = useStores();
-  const { userData } = SignStore;
-  const { toggleAlertModal } = AlertStore;
+  const { signStore, alertStore } = stores();
+  const { userData } = signStore;
+  const { toggleAlertModal } = alertStore;
 
   if (!userData?.adminFl) {
     router.push('/').then(() => toggleAlertModal('글 수정 권한이 없습니다.'));

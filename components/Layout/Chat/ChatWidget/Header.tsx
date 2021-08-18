@@ -4,11 +4,11 @@ import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import * as T from '@types';
 
 const Header = () => {
-  const { ChatStore, SignStore } = useStores();
+  const { ChatStore, SignStore } = stores();
   const { chatPage, moveChatPage, toUserName } = ChatStore;
   const { userData } = SignStore;
 

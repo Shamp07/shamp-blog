@@ -5,11 +5,11 @@ import Fab from '@material-ui/core/Fab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentDots } from '@fortawesome/free-solid-svg-icons';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import ChatWidget from './ChatWidget';
 
 const Chat = () => {
-  const { ChatStore, SignStore } = useStores();
+  const { ChatStore, SignStore } = stores();
   const { openChat, isChatOpen, notReadChatCount } = ChatStore;
   const { userData } = SignStore;
 

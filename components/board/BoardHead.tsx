@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import * as T from '@types';
 import Button from '@atoms/Button';
 import { MediaQuery } from '@styles';
@@ -19,7 +19,7 @@ const BoardHead = () => {
   const {
     SidebarStore, CategoryStore, SignStore,
     PostStore,
-  } = useStores();
+  } = stores();
   const { getCategoryName } = SidebarStore;
   const { categoryTags } = CategoryStore;
   const { userData } = SignStore;

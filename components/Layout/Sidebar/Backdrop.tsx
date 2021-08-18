@@ -2,12 +2,12 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import { MediaQuery } from "@styles";
 import * as T from '@types';
 
 const Backdrop = () => {
-  const { SidebarStore } = useStores();
+  const { SidebarStore } = stores();
   const { isOpenSidebar, toggleSidebar } = SidebarStore;
 
   return <SidebarBackdrop isOpenSidebar={isOpenSidebar} onClick={toggleSidebar} />;

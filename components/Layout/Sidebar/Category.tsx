@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 
 interface Props {
   path: string;
@@ -14,7 +14,7 @@ interface Props {
 const Category = ({ path, name, isBoard }: Props) => {
   const router = useRouter();
 
-  const { SidebarStore } = useStores();
+  const { SidebarStore } = stores();
   const { toggleSidebar } = SidebarStore;
 
   const baseUrl = isBoard ? '/category' : '';

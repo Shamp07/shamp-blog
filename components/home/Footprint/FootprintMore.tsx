@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 
 const FootprintMore = () => {
-  const { HomeStore } = useStores();
-  const { moreFootprint } = HomeStore;
+  const { homeStore } = stores();
+  const { moreFootprint } = homeStore;
 
   return (
     <Wrapper onClick={moreFootprint}>

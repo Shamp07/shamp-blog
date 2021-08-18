@@ -6,12 +6,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { faUserCircle, faBell } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import AlertSpinner from './Alert/AlertSpinner';
 import AlertList from './Alert/AlertList';
 
 const HeaderTokenList = () => {
-  const { SignStore, UtilStore, AlertStore } = useStores();
+  const { SignStore, UtilStore, AlertStore } = stores();
   const { logout, togglePasswordChangeModal, toggleDeleteUserModal } = SignStore;
   const {
     headerMenu, headerMenuElement, openHeaderMenu, closeHeaderMenu,

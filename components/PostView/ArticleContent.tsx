@@ -4,13 +4,13 @@ import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import Button from '@atoms/Button';
 import * as T from '@types';
 import { MediaQuery } from '@styles';
 
 const ArticleContent = () => {
-  const { PostStore, SignStore } = useStores();
+  const { PostStore, SignStore } = stores();
   const { postView, addPostLike } = PostStore;
   if (!postView) return null;
 

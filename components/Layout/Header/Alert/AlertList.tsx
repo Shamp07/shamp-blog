@@ -3,12 +3,12 @@ import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 import { MenuItem } from '@material-ui/core';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import Alert from '.';
 import AlertMore from './AlertMore';
 
 const AlertList = () => {
-  const { AlertStore } = useStores();
+  const { AlertStore } = stores();
   const { alertList, alertSize } = AlertStore;
 
   const isMoreAlert = alertList[0]?.total > alertSize;

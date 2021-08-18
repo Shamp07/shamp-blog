@@ -2,7 +2,7 @@ import React, { ReactNode, useEffect } from 'react';
 import { css, Global } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import Header from './Header';
 import SideBar from './Sidebar';
 import Content from './Content';
@@ -15,7 +15,7 @@ interface Props {
 }
 
 const Layout = ({ children }: Props) => {
-  const { SignStore, AlertStore } = useStores();
+  const { SignStore, AlertStore } = stores();
   const { cookieCheck } = SignStore;
   const { getAlertList } = AlertStore;
 

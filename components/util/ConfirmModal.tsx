@@ -6,10 +6,10 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { Button } from '@material-ui/core';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 
 const ConfirmModal = () => {
-  const { UtilStore } = useStores();
+  const { UtilStore } = stores();
   const {
     isOpenConfirmModal, callback,
     text, closeConfirmModal, callFunction,

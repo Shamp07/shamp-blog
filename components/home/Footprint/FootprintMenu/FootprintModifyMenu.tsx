@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 import styled from '@emotion/styled';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 
 const FootprintModifyMenu = () => {
-  const { HomeStore } = useStores();
+  const { homeStore } = stores();
   const { modifierFootprintId, setModifierFootprintId, modifyFootprint } = HomeStore;
 
   const modifyCancel = useCallback(() => {

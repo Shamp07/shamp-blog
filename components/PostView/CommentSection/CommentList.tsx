@@ -2,13 +2,13 @@ import React, { useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import CommentMore from './CommentMore';
 import CommentRow from './CommentRow';
 import CommentNone from './CommentNone';
 
 const CommentList = () => {
-  const { CommentStore } = useStores();
+  const { CommentStore } = stores();
   const { commentList, commentSize } = CommentStore;
 
   const isMoreComment = commentList[0]?.total > commentSize;

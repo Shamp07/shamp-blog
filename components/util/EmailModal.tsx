@@ -6,12 +6,12 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { TextField } from '@material-ui/core';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import Button from '@atoms/Button';
 import * as T from '@types';
 
 const EmailModal = () => {
-  const { SignStore } = useStores();
+  const { SignStore } = stores();
   const {
     isOpenEmailModal, toggleEmailModal, emailVerifyCode,
     verifyHandleChange, verifyCode,

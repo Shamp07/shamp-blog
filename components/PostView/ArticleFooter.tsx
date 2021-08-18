@@ -3,13 +3,13 @@ import { useRouter } from 'next/router';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import Button from '@atoms/Button';
 import * as T from '@types';
 
 const ArticleFooter = () => {
   const router = useRouter();
-  const { PostStore, UtilStore, SignStore } = useStores();
+  const { PostStore, UtilStore, SignStore } = stores();
   const { postView, deletePost } = PostStore;
   if (!postView) return null;
 

@@ -3,14 +3,14 @@ import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 
 import * as T from '@types';
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import ChatRoom from './ChatRoom';
 import ChatLobby from './ChatLobby';
 import ChatSpinner from './ChatSpinner';
 import Header from './Header';
 
 const ChatWidget = () => {
-  const { ChatStore } = useStores();
+  const { ChatStore } = stores();
   const { chatPage, isChatLoading } = ChatStore;
 
   const ChatPage = chatPage === T.ChatPage.LOBBY ? <ChatLobby /> : <ChatRoom />;

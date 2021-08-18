@@ -1,12 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import HeaderTokenList from './HeaderTokenList';
 import HeaderNoTokenList from './HeaderNoTokenList';
 
 const HeaderTokenMenu = () => {
-  const { SignStore } = useStores();
+  const { SignStore } = stores();
   const { userData, cookieChecked } = SignStore;
 
   if (!cookieChecked) return null;

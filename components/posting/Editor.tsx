@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import hljs from 'highlight.js';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
@@ -12,8 +12,8 @@ const QuillNoSSRWrapper = dynamic(import('react-quill'), {
 });
 
 const Editor = () => {
-  const { PostStore } = useStores();
-  const { post, postHandleChange } = PostStore;
+  const { postStore } = stores();
+  const { post, postHandleChange } = postStore;
   const { content } = post;
   return (
     <CustomQuill

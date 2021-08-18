@@ -6,13 +6,28 @@ import Axios from '@util/Axios';
 import * as T from '@types';
 import alertStore from './alertStore';
 
-const postStore = observable({
-  post: {},
-  postView: {},
+export interface PostStore {
+  post: T.Post | undefined;
+  postView: T.PostView | undefined;
+  postList: T.PostList[];
+  postHandleChange(event: string | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
+  movePage(router: NextRouter, page: number): void;
+  clearPost(): void;
+  addPost(router: NextRouter): void;
+  getPostList(category: string, tag: string, page: number): void;
+  getPost(id: number, isModify: boolean): void;
+  modifyPost(router: NextRouter): void;
+  deletePost(id: number, router: NextRouter): void;
+  addPostLike(postId: number): void;
+}
+
+const postStore: PostStore = {
+  post: undefined,
+  postView: undefined,
   postList: [],
-  postHandleChange(
-    event: string | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) {
+  postHandleChange(event) {
+    if (this.post === undefined) return;
+
     if (typeof event === 'string') {
       this.post = {
         ...this.post,
@@ -25,7 +40,7 @@ const postStore = observable({
       };
     }
   },
-  movePage(router: NextRouter, page: number) {
+  movePage(router, page) {
     const boardParams = router.query.board as Array<string>;
     let pathUrl = `/category/${boardParams[0]}`;
 
@@ -42,7 +57,7 @@ const postStore = observable({
   clearPost() {
     this.post = initialPost.post;
   },
-  addPost(router: NextRouter) {
+  addPost(router) {
     Axios({
       method: T.RequestMethod.POST,
       url: '/api/post',
@@ -50,11 +65,8 @@ const postStore = observable({
       success: router.back,
     });
   },
-  // async await
-  getPostList(
-    category: string, tag: string, page: number,
-  ) {
-    Axios({
+  async getPostList(category, tag, page) {
+    await Axios({
       method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/post/list`,
       data: { category, tag, page },
@@ -64,9 +76,8 @@ const postStore = observable({
       },
     });
   },
-  // async await
-  getPost(id: number, isModify: boolean) {
-    Axios({
+  async getPost(id, isModify) {
+    await Axios({
       method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/post`,
       data: { id },
@@ -77,7 +88,7 @@ const postStore = observable({
       },
     });
   },
-  modifyPost(router: NextRouter) {
+  modifyPost(router) {
     Axios({
       method: T.RequestMethod.PUT,
       url: '/api/post',
@@ -85,7 +96,7 @@ const postStore = observable({
       success: router.back,
     });
   },
-  deletePost(id: number, router: NextRouter) {
+  deletePost(id, router) {
     Axios({
       method: T.RequestMethod.DELETE,
       url: '/api/post',
@@ -93,7 +104,7 @@ const postStore = observable({
       success: router.back,
     });
   },
-  addPostLike(postId: number) {
+  addPostLike(postId) {
     Axios({
       method: T.RequestMethod.POST,
       url: '/api/post/like',
@@ -108,7 +119,7 @@ const postStore = observable({
       },
     });
   },
-});
+};
 
 export const initialPost = {
   postList: [] as T.PostList[],
@@ -124,4 +135,4 @@ export const initialPost = {
   },
 };
 
-export default postStore;
+export default observable(postStore);

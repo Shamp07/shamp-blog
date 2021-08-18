@@ -2,13 +2,13 @@ import React, { useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import TextareaAutosize from 'react-textarea-autosize';
 import FootprintMenu from './FootprintMenu';
 import { Props } from './FootprintMenu/FootprintNormalMenu';
 
 const FootprintRow = ({ data }: Props) => {
-  const { HomeStore } = useStores();
+  const { homeStore } = stores();
   const { modifierFootprintId, footprintInfo, footprintHandleChange } = HomeStore;
   const { modifierFootprint } = footprintInfo;
 

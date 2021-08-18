@@ -1,6 +1,23 @@
 import { observable } from 'mobx';
 
-const sidebarStore = observable({
+export interface SidebarStore {
+  topCategoryList: {
+    name: string;
+    path: string;
+  }[];
+  boardCategoryList: {
+    name: string;
+    path: string;
+  }[];
+  boardCategoryName: {
+    [name: string]: string;
+  };
+  isOpenSidebar: boolean;
+  toggleSidebar(): void;
+  getCategoryName(path: string): string;
+}
+
+const sidebarStore: SidebarStore = {
   topCategoryList: [{
     name: '홈',
     path: '',
@@ -54,9 +71,9 @@ const sidebarStore = observable({
   toggleSidebar() {
     this.isOpenSidebar = !this.isOpenSidebar;
   },
-  getCategoryName(path: string) {
+  getCategoryName(path) {
     return this.boardCategoryName[path] ?? '';
   },
-});
+};
 
-export default sidebarStore;
+export default observable(sidebarStore);

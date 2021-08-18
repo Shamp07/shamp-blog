@@ -7,7 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import Editor from '@components/posting/Editor';
 import Button from '@atoms/Button';
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import * as T from '@types';
 import { MediaQuery } from '@styles';
 
@@ -20,7 +20,7 @@ const Post = ({ isModify }: Props) => {
   const {
     SidebarStore, PostStore,
     SignStore, AlertStore,
-  } = useStores();
+  } = stores();
   const { boardCategoryList } = SidebarStore;
   const {
     post, postHandleChange, addPost, modifyPost,

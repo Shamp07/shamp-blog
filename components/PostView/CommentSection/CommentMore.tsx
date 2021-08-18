@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 import styled from '@emotion/styled';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 
 const CommentMore = () => {
-  const { CommentStore, PostStore } = useStores();
+  const { CommentStore, PostStore } = stores();
   const { moreComment } = CommentStore;
   const { postView } = PostStore;
   if (!postView) return null;

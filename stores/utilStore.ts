@@ -3,25 +3,38 @@ import { MouseEvent } from 'react';
 
 import alertStore from './alertStore';
 
-const utilStore = observable({
+export interface UtilStore {
+  headerMenu: string | null;
+  headerMenuElement: Element | null;
+  isOpenConfirmModal: boolean;
+  callback: (() => void) | null;
+  text: string;
+  toggleConfirmModal(text: string, callback: (() => void) | null): void;
+  callFunction(callback: (() => void) | null): void;
+  closeConfirmModal(): void;
+  openHeaderMenu(event: MouseEvent<HTMLElement>): void;
+  closeHeaderMenu(): void;
+}
+
+const utilStore: UtilStore = {
   headerMenu: null,
   headerMenuElement: null,
   isOpenConfirmModal: false,
-  callback: undefined,
+  callback: null,
   text: '',
-  toggleConfirmModal(text: string, callback: (() => void) | undefined) {
+  toggleConfirmModal(text, callback) {
     this.isOpenConfirmModal = !this.isOpenConfirmModal;
     this.text = text;
     this.callback = callback;
   },
-  callFunction(callback: (() => void) | undefined) {
+  callFunction(callback) {
     if (callback) callback();
     this.closeConfirmModal();
   },
   closeConfirmModal() {
     this.isOpenConfirmModal = false;
   },
-  openHeaderMenu(event: MouseEvent<HTMLElement>) {
+  openHeaderMenu(event) {
     if (!this.headerMenu) {
       alertStore.getAlertList();
     }
@@ -32,6 +45,6 @@ const utilStore = observable({
   closeHeaderMenu() {
     this.headerMenu = null;
   },
-});
+};
 
-export default utilStore;
+export default observable(utilStore);

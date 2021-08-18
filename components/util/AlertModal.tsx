@@ -3,11 +3,11 @@ import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { Button } from '@material-ui/core';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import Modal from '@atoms/Modal';
 
 const ConfirmModal = () => {
-  const { AlertStore } = useStores();
+  const { AlertStore } = stores();
   const { isOpenAlertModal, text, closeAlertModal } = AlertStore;
 
   const focusRef = useCallback((node: HTMLButtonElement) => {

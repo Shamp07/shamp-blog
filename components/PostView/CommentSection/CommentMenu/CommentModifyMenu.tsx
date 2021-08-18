@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 import styled from '@emotion/styled';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 
 const CommentModifyMenu = () => {
-  const { PostStore, CommentStore } = useStores();
+  const { PostStore, CommentStore } = stores();
   const { postView } = PostStore;
   if (!postView) return null;
 

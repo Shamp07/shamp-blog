@@ -7,9 +7,61 @@ import * as T from '@types';
 import alertStore from './alertStore';
 import utilStore from './utilStore';
 
-const signStore = observable({
+export interface SignStore {
+  cookieChecked: boolean;
+  userData: null;
+  loginInfo: {
+    email: string;
+    password: string;
+  };
+  registerInfo: {
+    email: string;
+    password: string;
+    passwordCheck: string;
+    name: string;
+  };
+  passwordInfo: {
+    currentPassword: string;
+    changePassword: string;
+    changePasswordCheck: string;
+  };
+  deleteUserInfo: {
+    deleteEmail: string;
+    deleteText: string;
+  };
+  emailVerifyCode: string;
+  isOpenSignModal: boolean;
+  isOpenRegisterModal: boolean;
+  isOpenEmailModal: boolean;
+  isOpenPasswordChangeModal: boolean;
+  isOpenDeleteUserModal: boolean;
+  changeRegister(): void;
+  togglePasswordChangeModal(): void;
+  toggleDeleteUserModal(): void;
+  toggleSignModal(): void;
+  toggleRegisterModal(): void;
+  toggleEmailModal(): void;
+  loginHandleChange(event: ChangeEvent<HTMLInputElement>): void;
+  registerHandleChange(event: ChangeEvent<HTMLInputElement>): void;
+  passwordHandleChange(event: ChangeEvent<HTMLInputElement>): void;
+  deleteUserHandleChange(event: ChangeEvent<HTMLInputElement>): void;
+  verifyHandleChange(event: ChangeEvent<HTMLInputElement>): void;
+  cookieCheck(): void;
+  login(): void;
+  changePassword(): void;
+  deleteUser(): void;
+  register(): void;
+  verifyEmail(isFromRegister: boolean): void;
+  verifyCode(): void;
+  registerValidationCheck(): boolean;
+  passwordCheck(password: string, passwordCheck: string): boolean;
+  isEmail(): boolean;
+  logout(isChangePassword: boolean): void;
+}
+
+const signStore: SignStore = {
   cookieChecked: false,
-  userData: undefined,
+  userData: null,
   loginInfo: {
     email: '',
     password: '',
@@ -82,31 +134,31 @@ const signStore = observable({
     this.isOpenEmailModal = !this.isOpenEmailModal;
     this.emailVerifyCode = '';
   },
-  loginHandleChange(event: ChangeEvent<HTMLInputElement>) {
+  loginHandleChange(event) {
     this.loginInfo = {
       ...this.loginInfo,
       [event.target.name]: event.target.value,
     };
   },
-  registerHandleChange(event: ChangeEvent<HTMLInputElement>) {
+  registerHandleChange(event) {
     this.registerInfo = {
       ...this.registerInfo,
       [event.target.name]: event.target.value,
     };
   },
-  passwordHandleChange(event: ChangeEvent<HTMLInputElement>) {
+  passwordHandleChange(event) {
     this.passwordInfo = {
       ...this.passwordInfo,
       [event.target.name]: event.target.value,
     };
   },
-  deleteUserHandleChange(event: ChangeEvent<HTMLInputElement>) {
+  deleteUserHandleChange(event) {
     this.deleteUserInfo = {
       ...this.deleteUserInfo,
       [event.target.name]: event.target.value,
     };
   },
-  verifyHandleChange(event: ChangeEvent<HTMLInputElement>) {
+  verifyHandleChange(event) {
     this.emailVerifyCode = event.target.value;
   },
   cookieCheck() {
@@ -198,7 +250,7 @@ const signStore = observable({
       },
     });
   },
-  verifyEmail(isFromRegister: boolean) {
+  verifyEmail(isFromRegister) {
     Axios({
       method: T.RequestMethod.PUT,
       url: '/api/user/verify',
@@ -250,7 +302,7 @@ const signStore = observable({
     const { password, passwordCheck } = this.registerInfo;
     return this.passwordCheck(password, passwordCheck);
   },
-  passwordCheck(password: string, passwordCheck: string) {
+  passwordCheck(password, passwordCheck) {
     const { toggleAlertModal } = alertStore;
     if (!password.trim()) {
       toggleAlertModal('패스워드를 제대로 입력해주세요.');
@@ -287,11 +339,11 @@ const signStore = observable({
     utilStore.closeHeaderMenu();
 
     cookie.remove('token');
-    this.userData = undefined;
+    this.userData = null;
     if (!isChangePassword) {
       alertStore.toggleAlertModal('로그아웃 되었습니다.');
     }
   },
-});
+};
 
-export default signStore;
+export default observable(signStore);

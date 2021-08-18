@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import { MediaQuery } from '@styles';
 import * as T from '@types';
 import CommentHeader from './CommentHeader';
@@ -10,8 +10,8 @@ import CommentList from './CommentList';
 import CommentWrite from './CommentWrite';
 
 const CommentSection = () => {
-  const { SignStore } = useStores();
-  const { userData } = SignStore;
+  const { signStore } = stores();
+  const { userData } = signStore;
 
   return (
     <Wrapper>

@@ -3,11 +3,11 @@ import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { Pagination, PaginationItem, PaginationRenderItemParams } from '@material-ui/lab';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 
 const BoardPagination = () => {
   const router = useRouter();
-  const { PostStore } = useStores();
+  const { PostStore } = stores();
   const { postList, movePage } = PostStore;
 
   const page = router.query.page ? Number(router.query.page) : 1;

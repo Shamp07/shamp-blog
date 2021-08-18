@@ -1,14 +1,14 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import FootprintModifyMenu from './FootprintModifyMenu';
 import FootprintNormalMenu, { Props } from './FootprintNormalMenu';
 
 const FootprintMenu = ({ data }: Props) => {
-  const { HomeStore, SignStore } = useStores();
-  const { modifierFootprintId } = HomeStore;
-  const { userData } = SignStore;
+  const { homeStore, signStore } = stores();
+  const { modifierFootprintId } = homeStore;
+  const { userData } = signStore;
   const { id, userId } = data;
   const isMine = userData?.id === userId;
 

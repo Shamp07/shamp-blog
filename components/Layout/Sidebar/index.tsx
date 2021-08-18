@@ -4,14 +4,14 @@ import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import Category from './Category';
 import SideTokenMenu from './SideTokenMenu';
 import { MediaQuery } from "@styles";
 import * as T from '@types';
 
 const Sidebar = () => {
-  const { SidebarStore } = useStores();
+  const { SidebarStore } = stores();
   const {
     boardCategoryList, topCategoryList,
     isOpenSidebar, toggleSidebar,

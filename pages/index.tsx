@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import HomePostList from '@components/home/HomePostList';
 import Footprint from '@components/home/Footprint';
 import Button from '@atoms/Button';
@@ -12,8 +12,8 @@ import * as T from '@types';
 import { MediaQuery } from '@styles';
 
 const Home = () => {
-  const { HomeStore } = useStores();
-  const { noticePostList, recentlyPostList, getFootprint } = HomeStore;
+  const { homeStore } = stores();
+  const { noticePostList, recentlyPostList, getFootprint } = homeStore;
 
   return (
     <GridWrapper>

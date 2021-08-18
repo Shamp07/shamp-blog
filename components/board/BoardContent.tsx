@@ -1,15 +1,15 @@
 import React, { useMemo } from 'react';
 import styled from '@emotion/styled';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import { MediaQuery } from '@styles';
 import * as T from '@types';
 import BoardPost from './BoardPost';
 import BoardPostNone from './BoardPostNone';
 
 const BoardContent = () => {
-  const { PostStore } = useStores();
-  const { postList } = PostStore;
+  const { postStore } = stores();
+  const { postList } = postStore;
 
   const isMoreThanOne = postList.length >= 1;
 

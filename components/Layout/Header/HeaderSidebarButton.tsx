@@ -3,12 +3,12 @@ import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 
-import useStores from '@stores/useStores';
+import stores from '@stores';
 import { MediaQuery } from "@styles";
 import * as T from '@types';
 
 const HeaderSidebarButton = () => {
-  const { SidebarStore } = useStores();
+  const { SidebarStore } = stores();
   const { toggleSidebar } = SidebarStore;
 
   return (
