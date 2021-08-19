@@ -5,8 +5,8 @@ import stores from '@stores';
 import ChatRoom from './ChatRoom';
 
 const ChatLobby = () => {
-  const { ChatStore } = stores();
-  const { chatRoomList } = ChatStore;
+  const { chatStore } = stores();
+  const { chatRoomList } = chatStore;
 
   return (
     <>

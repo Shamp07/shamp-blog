@@ -6,8 +6,8 @@ import FootprintWrite from './FootprintWrite';
 import FootprintList from './FootprintList';
 
 const Footprint = () => {
-  const { SignStore } = stores();
-  const { userData } = SignStore;
+  const { signStore } = stores();
+  const { userData } = signStore;
 
   return (
     <div>

@@ -4,8 +4,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import stores from '@stores';
 
 const AlertMore = () => {
-  const { AlertStore } = stores();
-  const { moreAlert } = AlertStore;
+  const { alertStore } = stores();
+  const { moreAlert } = alertStore;
 
   return (
     <MenuItem onClick={moreAlert}>

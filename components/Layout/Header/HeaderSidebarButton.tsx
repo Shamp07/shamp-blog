@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 import stores from '@stores';
-import { MediaQuery } from "@styles";
+import { MediaQuery } from '@styles';
 import * as T from '@types';
 
 const HeaderSidebarButton = () => {
-  const { SidebarStore } = stores();
-  const { toggleSidebar } = SidebarStore;
+  const { sidebarStore } = stores();
+  const { toggleSidebar } = sidebarStore;
 
   return (
     <SidebarWrapper>

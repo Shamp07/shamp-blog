@@ -9,11 +9,11 @@ import { Button } from '@material-ui/core';
 import stores from '@stores';
 
 const ConfirmModal = () => {
-  const { UtilStore } = stores();
+  const { utilStore } = stores();
   const {
     isOpenConfirmModal, callback,
     text, closeConfirmModal, callFunction,
-  } = UtilStore;
+  } = utilStore;
 
   const call = useCallback(() => {
     callFunction(callback);

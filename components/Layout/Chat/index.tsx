@@ -9,9 +9,9 @@ import stores from '@stores';
 import ChatWidget from './ChatWidget';
 
 const Chat = () => {
-  const { ChatStore, SignStore } = stores();
-  const { openChat, isChatOpen, notReadChatCount } = ChatStore;
-  const { userData } = SignStore;
+  const { chatStore, signStore } = stores();
+  const { openChat, isChatOpen, notReadChatCount } = chatStore;
+  const { userData } = signStore;
 
   return (
     <Wrapper>

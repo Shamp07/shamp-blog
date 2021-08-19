@@ -5,8 +5,8 @@ import { faUserPlus, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import stores from '@stores';
 
 const HeaderNoTokenList = () => {
-  const { SignStore } = stores();
-  const { toggleSignModal, toggleRegisterModal } = SignStore;
+  const { signStore } = stores();
+  const { toggleSignModal, toggleRegisterModal } = signStore;
 
   return (
     <>

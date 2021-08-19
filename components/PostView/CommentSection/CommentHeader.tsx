@@ -9,11 +9,11 @@ import Button from '@atoms/Button';
 import * as T from '@types';
 
 const CommentHeader = () => {
-  const { PostStore, CommentStore } = stores();
-  const { postView } = PostStore;
+  const { postStore, commentStore } = stores();
+  const { postView } = postStore;
   if (!postView) return null;
 
-  const { getComment } = CommentStore;
+  const { getComment } = commentStore;
   const { id, commentCnt } = postView;
 
   const onRefresh = useCallback(() => {

@@ -6,8 +6,8 @@ import { MediaQuery } from '@styles';
 import * as T from '@types';
 
 const SideNoTokenList = () => {
-  const { SignStore } = stores();
-  const { toggleSignModal, toggleRegisterModal } = SignStore;
+  const { signStore } = stores();
+  const { toggleSignModal, toggleRegisterModal } = signStore;
 
   return (
     <MobileMenu>

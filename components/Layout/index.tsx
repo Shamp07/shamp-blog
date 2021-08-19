@@ -3,21 +3,21 @@ import { css, Global } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import stores from '@stores';
+import * as T from '@types';
+import { MediaQuery } from '@styles';
 import Header from './Header';
 import SideBar from './Sidebar';
 import Content from './Content';
 import Backdrop from './Sidebar/Backdrop';
-import * as T from '@types';
-import { MediaQuery } from '@styles';
 
 interface Props {
   children: ReactNode;
 }
 
 const Layout = ({ children }: Props) => {
-  const { SignStore, AlertStore } = stores();
-  const { cookieCheck } = SignStore;
-  const { getAlertList } = AlertStore;
+  const { signStore, alertStore } = stores();
+  const { cookieCheck } = signStore;
+  const { getAlertList } = alertStore;
 
   useEffect(() => {
     cookieCheck();

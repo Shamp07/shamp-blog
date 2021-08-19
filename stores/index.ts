@@ -7,6 +7,7 @@ import postStore, { PostStore } from './postStore';
 import sidebarStore, { SidebarStore } from './sidebarStore';
 import signStore, { SignStore } from './signStore';
 import utilStore, { UtilStore } from './utilStore';
+import chatStore, { ChatStore } from './chatStore';
 
 const isServer = typeof window === 'undefined';
 enableStaticRendering(isServer);
@@ -17,7 +18,6 @@ enableStaticRendering(isServer);
 //   CommentStore: initialComment,
 //   HomeStore: initialHome,
 // };
-//
 
 export interface RootStore {
   alertStore: AlertStore;
@@ -28,6 +28,7 @@ export interface RootStore {
   sidebarStore: SidebarStore;
   signStore: SignStore;
   utilStore: UtilStore;
+  chatStore: ChatStore;
 }
 
 export default (() => {
@@ -42,6 +43,7 @@ export default (() => {
       sidebarStore,
       signStore,
       utilStore,
+      chatStore,
     };
   }
   return () => {
@@ -51,13 +53,3 @@ export default (() => {
     return instance;
   };
 })();
-
-// export function initializeStore(initialData = initialRoot) {
-//   if (isServer) {
-//     return new RootStore(initialData);
-//   }
-//   if (store === null) {
-//     store = new RootStore(initialData);
-//   }
-//   return store;
-// }

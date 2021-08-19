@@ -4,9 +4,9 @@ import styled from '@emotion/styled';
 import stores from '@stores';
 
 const CommentMore = () => {
-  const { CommentStore, PostStore } = stores();
-  const { moreComment } = CommentStore;
-  const { postView } = PostStore;
+  const { commentStore, postStore } = stores();
+  const { moreComment } = commentStore;
+  const { postView } = postStore;
   if (!postView) return null;
 
   const { id } = postView;

@@ -6,8 +6,8 @@ import HeaderTokenList from './HeaderTokenList';
 import HeaderNoTokenList from './HeaderNoTokenList';
 
 const HeaderTokenMenu = () => {
-  const { SignStore } = stores();
-  const { userData, cookieChecked } = SignStore;
+  const { signStore } = stores();
+  const { userData, cookieChecked } = signStore;
 
   if (!cookieChecked) return null;
 

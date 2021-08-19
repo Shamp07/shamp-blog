@@ -11,11 +11,11 @@ import Button from '@atoms/Button';
 import * as T from '@types';
 
 const RegisterModal = () => {
-  const { SignStore } = stores();
+  const { signStore } = stores();
   const {
     isOpenRegisterModal, toggleRegisterModal,
     registerInfo, registerHandleChange, register,
-  } = SignStore;
+  } = signStore;
   const {
     email, name, password, passwordCheck,
   } = registerInfo;

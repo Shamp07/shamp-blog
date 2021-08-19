@@ -9,7 +9,7 @@ import { Props } from './FootprintMenu/FootprintNormalMenu';
 
 const FootprintRow = ({ data }: Props) => {
   const { homeStore } = stores();
-  const { modifierFootprintId, footprintInfo, footprintHandleChange } = HomeStore;
+  const { modifierFootprintId, footprintInfo, footprintHandleChange } = homeStore;
   const { modifierFootprint } = footprintInfo;
 
   const {

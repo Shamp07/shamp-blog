@@ -11,11 +11,11 @@ import Button from '@atoms/Button';
 import * as T from '@types';
 
 const EmailModal = () => {
-  const { SignStore } = stores();
+  const { signStore } = stores();
   const {
     isOpenEmailModal, toggleEmailModal, emailVerifyCode,
     verifyHandleChange, verifyCode,
-  } = SignStore;
+  } = signStore;
 
   return (
     <CustomModal

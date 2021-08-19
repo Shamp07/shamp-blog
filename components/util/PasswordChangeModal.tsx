@@ -11,11 +11,11 @@ import Button from '@atoms/Button';
 import * as T from '@types';
 
 const PasswordChangeModal = () => {
-  const { SignStore } = stores();
+  const { signStore } = stores();
   const {
     isOpenPasswordChangeModal, togglePasswordChangeModal,
     changePassword, passwordInfo, passwordHandleChange,
-  } = SignStore;
+  } = signStore;
   const {
     currentPassword, changePassword: changePasswordValue, changePasswordCheck,
   } = passwordInfo;

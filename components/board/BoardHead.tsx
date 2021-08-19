@@ -17,13 +17,13 @@ const BoardHead = () => {
   if (!router.query.board) return null;
 
   const {
-    SidebarStore, CategoryStore, SignStore,
-    PostStore,
+    sidebarStore, categoryStore, signStore,
+    postStore,
   } = stores();
-  const { getCategoryName } = SidebarStore;
-  const { categoryTags } = CategoryStore;
-  const { userData } = SignStore;
-  const { clearPost } = PostStore;
+  const { getCategoryName } = sidebarStore;
+  const { categoryTags } = categoryStore;
+  const { userData } = signStore;
+  const { clearPost } = postStore;
 
   const categoryPath = router.query.board[0];
   const categoryTag = router.query.board[1];

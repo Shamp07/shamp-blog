@@ -2,6 +2,7 @@ import React from 'react';
 import App from 'next/app';
 import Head from 'next/head';
 
+import stores, { RootStore } from '@stores';
 import Layout from '@components/Layout';
 import * as T from '@types';
 import 'react-quill/dist/quill.snow.css';
@@ -10,23 +11,23 @@ import 'highlight.js/styles/nord.css';
 React.useLayoutEffect = React.useEffect;
 
 class CustomApp extends App {
-  mobxStore: RootStore;
+  rootStore: RootStore;
 
   static async getInitialProps(context: T.AppContextStore) {
-    const mobxStore = initializeStore();
-    context.ctx.store = mobxStore;
+    const rootStore = stores();
+    context.ctx.store = rootStore;
     const appProps = await App.getInitialProps(context);
 
     return {
       ...appProps,
-      initialMobxState: mobxStore,
+      initialMobxState: rootStore,
     };
   }
 
   constructor(props: T.MyAppProps) {
     super(props);
     const isServer = typeof window === 'undefined';
-    this.mobxStore = isServer ? props.initialMobxState : initializeStore(props.initialMobxState);
+    this.rootStore = isServer ? props.initialMobxState : stores();
   }
 
   render() {

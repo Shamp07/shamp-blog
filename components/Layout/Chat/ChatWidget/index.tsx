@@ -10,8 +10,8 @@ import ChatSpinner from './ChatSpinner';
 import Header from './Header';
 
 const ChatWidget = () => {
-  const { ChatStore } = stores();
-  const { chatPage, isChatLoading } = ChatStore;
+  const { chatStore } = stores();
+  const { chatPage, isChatLoading } = chatStore;
 
   const ChatPage = chatPage === T.ChatPage.LOBBY ? <ChatLobby /> : <ChatRoom />;
   return (

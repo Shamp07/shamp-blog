@@ -12,8 +12,8 @@ interface Props {
 
 const Alert = ({ data }: Props) => {
   const router = useRouter();
-  const { AlertStore } = stores();
-  const { movePost } = AlertStore;
+  const { alertStore } = stores();
+  const { movePost } = alertStore;
 
   const goPost = useCallback(() => {
     movePost(router, postId, id);

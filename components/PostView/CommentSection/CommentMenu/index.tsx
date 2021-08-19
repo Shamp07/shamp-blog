@@ -6,8 +6,8 @@ import CommentNormalMenu, { Props } from './CommentNormalMenu';
 import CommentModifyMenu from './CommentModifyMenu';
 
 const CommentMenu = ({ data }: Props) => {
-  const { CommentStore } = stores();
-  const { modifierCommentId } = CommentStore;
+  const { commentStore } = stores();
+  const { modifierCommentId } = commentStore;
   const { id } = data;
 
   if (id === modifierCommentId) return <CommentModifyMenu />;

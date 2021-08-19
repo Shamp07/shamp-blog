@@ -9,9 +9,9 @@ import ReceiveMessage from './ReceiveMessage';
 import { Chat } from '@types';
 
 const ChatRoom = () => {
-  const { ChatStore, SignStore } = stores();
-  const { displayedChatList, setScrollRef } = ChatStore;
-  const { userData } = SignStore;
+  const { chatStore, signStore } = stores();
+  const { displayedChatList, setScrollRef } = chatStore;
+  const { userData } = signStore;
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

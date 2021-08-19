@@ -9,7 +9,7 @@ import utilStore from './utilStore';
 
 export interface SignStore {
   cookieChecked: boolean;
-  userData: null;
+  userData: T.User | null;
   loginInfo: {
     email: string;
     password: string;

@@ -7,8 +7,8 @@ import { MediaQuery } from "@styles";
 import * as T from '@types';
 
 const Backdrop = () => {
-  const { SidebarStore } = stores();
-  const { isOpenSidebar, toggleSidebar } = SidebarStore;
+  const { sidebarStore } = stores();
+  const { isOpenSidebar, toggleSidebar } = sidebarStore;
 
   return <SidebarBackdrop isOpenSidebar={isOpenSidebar} onClick={toggleSidebar} />;
 };

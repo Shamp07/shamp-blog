@@ -18,15 +18,15 @@ interface Props {
 const Post = ({ isModify }: Props) => {
   const router = useRouter();
   const {
-    SidebarStore, PostStore,
-    SignStore, AlertStore,
+    sidebarStore, postStore,
+    signStore, alertStore,
   } = stores();
-  const { boardCategoryList } = SidebarStore;
+  const { boardCategoryList } = sidebarStore;
   const {
     post, postHandleChange, addPost, modifyPost,
-  } = PostStore;
-  const { userData } = SignStore;
-  const { toggleAlertModal } = AlertStore;
+  } = postStore;
+  const { userData } = signStore;
+  const { toggleAlertModal } = alertStore;
   const { category, tags, title } = post;
 
   const boardCategories = useMemo(() => (

@@ -14,8 +14,8 @@ interface Props {
 const Category = ({ path, name, isBoard }: Props) => {
   const router = useRouter();
 
-  const { SidebarStore } = stores();
-  const { toggleSidebar } = SidebarStore;
+  const { sidebarStore } = stores();
+  const { toggleSidebar } = sidebarStore;
 
   const baseUrl = isBoard ? '/category' : '';
   const currentPath = (isBoard && router.query.board) ? router.query.board[0] : router.asPath.replace('/', '');

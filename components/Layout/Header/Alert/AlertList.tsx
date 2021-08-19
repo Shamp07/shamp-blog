@@ -8,8 +8,8 @@ import Alert from '.';
 import AlertMore from './AlertMore';
 
 const AlertList = () => {
-  const { AlertStore } = stores();
-  const { alertList, alertSize } = AlertStore;
+  const { alertStore } = stores();
+  const { alertList, alertSize } = alertStore;
 
   const isMoreAlert = alertList[0]?.total > alertSize;
 

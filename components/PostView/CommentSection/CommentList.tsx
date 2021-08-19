@@ -8,8 +8,8 @@ import CommentRow from './CommentRow';
 import CommentNone from './CommentNone';
 
 const CommentList = () => {
-  const { CommentStore } = stores();
-  const { commentList, commentSize } = CommentStore;
+  const { commentStore } = stores();
+  const { commentList, commentSize } = commentStore;
 
   const isMoreComment = commentList[0]?.total > commentSize;
 

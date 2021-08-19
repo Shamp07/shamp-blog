@@ -12,15 +12,15 @@ interface Props {
 }
 
 const CommentWrite = ({ isReply }: Props) => {
-  const { PostStore, CommentStore } = stores();
-  const { postView } = PostStore;
+  const { postStore, commentStore } = stores();
+  const { postView } = postStore;
   if (!postView) return null;
 
   const { id } = postView;
   const {
     commentInfo, addComment,
     commentHandleChange, replyCommentId,
-  } = CommentStore;
+  } = commentStore;
   const { comment, replyComment } = commentInfo;
 
   const onAddComment = useCallback(() => {

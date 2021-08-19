@@ -11,12 +11,12 @@ import AlertSpinner from './Alert/AlertSpinner';
 import AlertList from './Alert/AlertList';
 
 const HeaderTokenList = () => {
-  const { SignStore, UtilStore, AlertStore } = stores();
-  const { logout, togglePasswordChangeModal, toggleDeleteUserModal } = SignStore;
+  const { signStore, utilStore, alertStore } = stores();
+  const { logout, togglePasswordChangeModal, toggleDeleteUserModal } = signStore;
   const {
     headerMenu, headerMenuElement, openHeaderMenu, closeHeaderMenu,
-  } = UtilStore;
-  const { alertNotReadSize, alertLoading } = AlertStore;
+  } = utilStore;
+  const { alertNotReadSize, alertLoading } = alertStore;
 
   const onLogout = useCallback(() => {
     logout(false);

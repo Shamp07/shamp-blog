@@ -6,12 +6,11 @@ import styled from '@emotion/styled';
 import stores from '@stores';
 import * as T from '@types';
 import { MediaQuery } from '@styles';
-import {die} from "mobx/dist/errors";
 
 const ArticleHeader = () => {
-  const { PostStore, SidebarStore } = stores();
-  const { getCategoryName } = SidebarStore;
-  const { postView } = PostStore;
+  const { postStore, sidebarStore } = stores();
+  const { getCategoryName } = sidebarStore;
+  const { postView } = postStore;
   if (!postView) return null;
 
   const {

@@ -11,12 +11,12 @@ import stores from '@stores';
 import * as T from '@types';
 
 const SignModal = () => {
-  const { SignStore } = stores();
+  const { signStore } = stores();
   const {
     isOpenSignModal, toggleSignModal,
     loginInfo, loginHandleChange, login,
     changeRegister,
-  } = SignStore;
+  } = signStore;
   const { email, password } = loginInfo;
 
   const onEnter = useCallback((event: KeyboardEvent<HTMLDivElement>) => {

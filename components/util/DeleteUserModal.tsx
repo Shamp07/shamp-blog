@@ -11,11 +11,11 @@ import Button from '@atoms/Button';
 import * as T from '@types';
 
 const DeleteUserModal = () => {
-  const { SignStore } = stores();
+  const { signStore } = stores();
   const {
     isOpenDeleteUserModal, toggleDeleteUserModal, deleteUserInfo,
     deleteUserHandleChange, deleteUser,
-  } = SignStore;
+  } = signStore;
   const { deleteEmail, deleteText } = deleteUserInfo;
 
   return (

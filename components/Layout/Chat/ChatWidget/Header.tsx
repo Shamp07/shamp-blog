@@ -8,9 +8,9 @@ import stores from '@stores';
 import * as T from '@types';
 
 const Header = () => {
-  const { ChatStore, SignStore } = stores();
-  const { chatPage, moveChatPage, toUserName } = ChatStore;
-  const { userData } = SignStore;
+  const { chatStore, signStore } = stores();
+  const { chatPage, moveChatPage, toUserName } = chatStore;
+  const { userData } = signStore;
 
   return (
     <HeaderWrapper>

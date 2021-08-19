@@ -7,8 +7,8 @@ import stores from '@stores';
 import Modal from '@atoms/Modal';
 
 const ConfirmModal = () => {
-  const { AlertStore } = stores();
-  const { isOpenAlertModal, text, closeAlertModal } = AlertStore;
+  const { alertStore } = stores();
+  const { isOpenAlertModal, text, closeAlertModal } = alertStore;
 
   const focusRef = useCallback((node: HTMLButtonElement) => {
     node?.focus();

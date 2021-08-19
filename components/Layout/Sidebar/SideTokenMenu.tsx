@@ -6,8 +6,8 @@ import SideTokenList from './SideTokenList';
 import SideNoTokenList from './SideNoTokenList';
 
 const SideTokenMenu = () => {
-  const { SignStore } = stores();
-  const { userData, cookieChecked } = SignStore;
+  const { signStore } = stores();
+  const { userData, cookieChecked } = signStore;
 
   // 쿠키 내의 토큰 체크가 되기 전
   if (!cookieChecked) return null;

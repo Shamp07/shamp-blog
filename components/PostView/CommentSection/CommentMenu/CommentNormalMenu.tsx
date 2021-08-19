@@ -13,16 +13,16 @@ export interface Props {
 
 const CommentNormalMenu = ({ data }: Props) => {
   const {
-    PostStore, CommentStore, SignStore,
-    UtilStore,
+    postStore, commentStore, signStore,
+    utilStore,
   } = stores();
-  const { postView } = PostStore;
+  const { postView } = postStore;
   if (!postView) return null;
 
   const { id: postId } = postView;
-  const { setReplyCommentId, setModifierCommentId, deleteComment } = CommentStore;
-  const { userData } = SignStore;
-  const { toggleConfirmModal } = UtilStore;
+  const { setReplyCommentId, setModifierCommentId, deleteComment } = commentStore;
+  const { userData } = signStore;
+  const { toggleConfirmModal } = utilStore;
 
   const { id, content } = data;
 

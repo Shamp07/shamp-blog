@@ -47,22 +47,20 @@ const Home = () => {
   );
 };
 
-Home.getInitialProps = async ({ store }: T.MyNextPageContext) => {
-  if (!store) return null;
-
-  const { HomeStore } = store;
-  const { getRecentlyPostList, getNoticePostList, getFootprint } = HomeStore;
-
-  await Promise.all([
-    getRecentlyPostList(),
-    getNoticePostList(),
-    getFootprint(),
-  ]);
-
-  return {
-    props: {},
-  };
-};
+// Home.getInitialProps = async () => {
+//   const { homeStore } = stores();
+//   const { getRecentlyPostList, getNoticePostList, getFootprint } = homeStore;
+//
+//   await Promise.all([
+//     getRecentlyPostList(),
+//     getNoticePostList(),
+//     getFootprint(),
+//   ]);
+//
+//   return {
+//     props: {},
+//   };
+// };
 
 const GridWrapper = styled.div({
   flexGrow: 1,

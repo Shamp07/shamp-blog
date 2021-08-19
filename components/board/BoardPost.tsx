@@ -17,8 +17,8 @@ const BoardPost = ({ data }: Props) => {
   const router = useRouter();
   if (!router.query.board) return null;
 
-  const { SidebarStore } = stores();
-  const { getCategoryName } = SidebarStore;
+  const { sidebarStore } = stores();
+  const { getCategoryName } = sidebarStore;
   const {
     id, title, category,
     commentCnt, tag, time, likeCnt,

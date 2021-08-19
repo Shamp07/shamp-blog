@@ -3,10 +3,10 @@ import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithubAlt } from '@fortawesome/free-brands-svg-icons';
 
+import { MediaQuery } from '@styles';
+import * as T from '@types';
 import HeaderSidebarButton from './HeaderSidebarButton';
 import HeaderTokenMenu from './HeaderTokenMenu';
-import * as T from '@types';
-import { MediaQuery } from '@styles';
 
 const HeaderRightList = () => (
   <Wrapper>

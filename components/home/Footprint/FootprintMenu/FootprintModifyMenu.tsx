@@ -5,7 +5,7 @@ import stores from '@stores';
 
 const FootprintModifyMenu = () => {
   const { homeStore } = stores();
-  const { modifierFootprintId, setModifierFootprintId, modifyFootprint } = HomeStore;
+  const { modifierFootprintId, setModifierFootprintId, modifyFootprint } = homeStore;
 
   const modifyCancel = useCallback(() => {
     setModifierFootprintId(0, '');

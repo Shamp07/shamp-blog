@@ -11,11 +11,11 @@ import { MediaQuery } from "@styles";
 import * as T from '@types';
 
 const Sidebar = () => {
-  const { SidebarStore } = stores();
+  const { sidebarStore } = stores();
   const {
     boardCategoryList, topCategoryList,
     isOpenSidebar, toggleSidebar,
-  } = SidebarStore;
+  } = sidebarStore;
 
   return (
     <Wrapper isOpenSidebar={isOpenSidebar}>

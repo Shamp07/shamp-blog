@@ -8,11 +8,11 @@ import TextareaAutosize from 'react-textarea-autosize';
 import stores from '@stores';
 
 const Footer = () => {
-  const { ChatStore, SignStore } = stores();
+  const { chatStore, signStore } = stores();
   const {
     chat, onChangeChat, sendChat, onKeyPressChat,
-  } = ChatStore;
-  const { userData } = SignStore;
+  } = chatStore;
+  const { userData } = signStore;
 
   if (!userData) return null;
 
