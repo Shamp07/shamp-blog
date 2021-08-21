@@ -47,20 +47,19 @@ const Home = () => {
   );
 };
 
-// Home.getInitialProps = async () => {
-//   const { homeStore } = stores();
-//   const { getRecentlyPostList, getNoticePostList, getFootprint } = homeStore;
-//
-//   await Promise.all([
-//     getRecentlyPostList(),
-//     getNoticePostList(),
-//     getFootprint(),
-//   ]);
-//
-//   return {
-//     props: {},
-//   };
-// };
+Home.getInitialProps = async () => {
+  const { homeStore } = stores();
+
+  await Promise.all([
+    homeStore.getRecentlyPostList(),
+    homeStore.getNoticePostList(),
+    homeStore.getFootprint(),
+  ]);
+
+  return {
+    props: {},
+  };
+};
 
 const GridWrapper = styled.div({
   flexGrow: 1,

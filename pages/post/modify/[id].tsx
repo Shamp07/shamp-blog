@@ -19,17 +19,16 @@ const ModifyPost = () => {
   return <Post isModify />;
 };
 
-// ModifyPost.getInitialProps = async ({ query }: T.MyNextPageContext) => {
-//   const { postStore } = stores();
-//   const { getPost } = postStore;
-//
-//   const id = Number(query.id);
-//
-//   await getPost(id, true);
-//
-//   return {
-//     props: {},
-//   };
-// };
+ModifyPost.getInitialProps = async ({ query }: T.MyNextPageContext) => {
+  const { postStore } = stores();
+
+  const id = Number(query.id);
+
+  await postStore.getPost(id, true);
+
+  return {
+    props: {},
+  };
+};
 
 export default ModifyPost;

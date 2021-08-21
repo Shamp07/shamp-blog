@@ -32,38 +32,34 @@ const Board = () => {
   );
 };
 
-// Board.getInitialProps = async ({ query }: T.MyNextPageContext) => {
-//   if (!query.board) return null;
-//
-//   const board = query.board[0];
-//   const tag = query.board[1];
-//   if (tag === 'post') {
-//     const { postStore, commentStore } = stores();
-//     const { getPost } = postStore;
-//     const { getComment } = commentStore;
-//
-//     const id = Number(query.board[2]);
-//
-//     await Promise.all([
-//       getPost(id, false),
-//       getComment(id),
-//     ]);
-//   } else {
-//     const { categoryStore, postStore } = stores();
-//     const { getCategoryTags } = categoryStore;
-//     const { getPostList } = postStore;
-//
-//     const page = Number(query.page ?? 1);
-//
-//     await Promise.all([
-//       getPostList(board, tag, page),
-//       getCategoryTags(board),
-//     ]);
-//   }
-//
-//   return {
-//     props: {},
-//   };
-// };
+Board.getInitialProps = async ({ query }: T.MyNextPageContext) => {
+  if (!query.board) return null;
+
+  const board = query.board[0];
+  const tag = query.board[1];
+  if (tag === 'post') {
+    const { postStore, commentStore } = stores();
+
+    const id = Number(query.board[2]);
+
+    await Promise.all([
+      postStore.getPost(id, false),
+      commentStore.getComment(id),
+    ]);
+  } else {
+    const { categoryStore, postStore } = stores();
+
+    const page = Number(query.page ?? 1);
+
+    await Promise.all([
+      postStore.getPostList(board, tag, page),
+      categoryStore.getCategoryTags(board),
+    ]);
+  }
+
+  return {
+    props: {},
+  };
+};
 
 export default Board;

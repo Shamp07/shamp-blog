@@ -16,13 +16,11 @@ interface Props {
 
 const Layout = ({ children }: Props) => {
   const { signStore, alertStore } = stores();
-  const { cookieCheck } = signStore;
-  const { getAlertList } = alertStore;
 
   useEffect(() => {
-    cookieCheck();
-    getAlertList();
-  }, [cookieCheck, getAlertList]);
+    signStore.cookieCheck();
+    alertStore.getAlertList();
+  }, []);
 
   return (
     <Wrapper>
