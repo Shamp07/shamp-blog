@@ -23,8 +23,22 @@ const categoryStore: CategoryStore = {
   },
 };
 
-export const initialCategory = {
-  categoryTags: [] as string[],
+export const initialCategory: {
+  categoryTags: string[],
+} = {
+  categoryTags: [],
 };
 
-export default observable(categoryStore);
+export default (() => {
+  let instance: CategoryStore | undefined;
+  const initialize = (initialState = initialCategory) => ({
+    ...categoryStore,
+    ...initialState,
+  });
+  return (initialState = initialCategory) => {
+    if (!instance) {
+      instance = initialize(initialState);
+    }
+    return observable(instance);
+  };
+})();

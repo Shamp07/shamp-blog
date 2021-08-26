@@ -1,23 +1,19 @@
-import { enableStaticRendering } from 'mobx-react-lite';
 import alertStore, { AlertStore } from './alertStore';
-import categoryStore, { CategoryStore } from './categoryStore';
-import commentStore, { CommentStore } from './commentStore';
-import homeStore, { HomeStore } from './homeStore';
-import postStore, { PostStore } from './postStore';
+import categoryStore, { CategoryStore, initialCategory } from './categoryStore';
+import commentStore, { CommentStore, initialComment } from './commentStore';
+import homeStore, { HomeStore, initialHome } from './homeStore';
+import postStore, { PostStore, initialPost } from './postStore';
 import sidebarStore, { SidebarStore } from './sidebarStore';
 import signStore, { SignStore } from './signStore';
 import utilStore, { UtilStore } from './utilStore';
 import chatStore, { ChatStore } from './chatStore';
 
-const isServer = typeof window === 'undefined';
-enableStaticRendering(isServer);
-
-// export const initialRoot = {
-//   CategoryStore: initialCategory,
-//   PostStore: initialPost,
-//   CommentStore: initialComment,
-//   HomeStore: initialHome,
-// };
+export const initialRoot = {
+  categoryStore: initialCategory,
+  postStore: initialPost,
+  commentStore: initialComment,
+  homeStore: initialHome,
+};
 
 export interface RootStore {
   alertStore: AlertStore;
@@ -33,22 +29,21 @@ export interface RootStore {
 
 export default (() => {
   let instance: RootStore | undefined;
-  function initialize() {
-    return {
-      alertStore,
-      categoryStore,
-      commentStore,
-      homeStore,
-      postStore,
-      sidebarStore,
-      signStore,
-      utilStore,
-      chatStore,
-    };
-  }
-  return () => {
+  const initialize = (initialStore = initialRoot) => ({
+    categoryStore: categoryStore(initialStore.categoryStore),
+    commentStore: commentStore(initialStore.commentStore),
+    postStore: postStore(initialStore.postStore),
+    homeStore: homeStore(initialStore.homeStore),
+    alertStore,
+    sidebarStore,
+    signStore,
+    utilStore,
+    chatStore,
+  });
+
+  return (initialStore = initialRoot) => {
     if (!instance) {
-      instance = initialize();
+      instance = initialize(initialStore);
     }
     return instance;
   };

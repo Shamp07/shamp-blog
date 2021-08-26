@@ -68,7 +68,7 @@ const commentStore: CommentStore = {
         comment: isReply ? this.commentInfo.replyComment : this.commentInfo.comment,
       },
       success: () => {
-        postStore.getPost(postId, false);
+        postStore().getPost(postId, false);
         this.getComment(postId);
         this.setReplyCommentId(0);
         this.commentInfo.comment = '';
@@ -102,7 +102,7 @@ const commentStore: CommentStore = {
         comment: this.commentInfo.modifierComment,
       },
       success: () => {
-        postStore.getPost(postId, false);
+        postStore().getPost(postId, false);
         this.getComment(postId);
         this.setModifierCommentId(0, '');
       },
@@ -115,15 +115,29 @@ const commentStore: CommentStore = {
       url: '/api/post/comment',
       data: { commentId },
       success: () => {
-        postStore.getPost(postId, false);
+        postStore().getPost(postId, false);
         this.getComment(postId);
       },
     });
   },
 };
 
-export const initialComment = {
-  commentList: [] as T.Comment[],
+export const initialComment: {
+  commentList: T.Comment[];
+} = {
+  commentList: [],
 };
 
-export default observable(commentStore);
+export default (() => {
+  let instance: CommentStore | undefined;
+  const initialize = (initialState = initialComment) => ({
+    ...commentStore,
+    ...initialState,
+  });
+  return (initialState = initialComment) => {
+    if (!instance) {
+      instance = initialize(initialState);
+    }
+    return observable(instance);
+  };
+})();

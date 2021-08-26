@@ -6,8 +6,8 @@ import * as T from '@types';
 import alertStore from './alertStore';
 
 export interface HomeStore {
-  recentlyPostList: any[];
-  noticePostList: any[];
+  recentlyPostList: T.RecentPost[];
+  noticePostList: T.NoticePost[];
   footprintList: T.FootPrint[];
   footprintSize: number;
   footprintInfo: {
@@ -127,10 +127,26 @@ const homeStore: HomeStore = {
   },
 };
 
-export const initialHome = {
+export const initialHome: {
+  recentlyPostList: T.RecentPost[];
+  noticePostList: T.NoticePost[];
+  footprintList: T.FootPrint[];
+} = {
   recentlyPostList: [],
   noticePostList: [],
-  footprintList: [] as T.FootPrint[],
+  footprintList: [],
 };
 
-export default observable(homeStore);
+export default (() => {
+  let instance: HomeStore | undefined;
+  const initialize = (initialState = initialHome) => ({
+    ...homeStore,
+    ...initialState,
+  });
+  return (initialState = initialHome) => {
+    if (!instance) {
+      instance = initialize(initialState);
+    }
+    return observable(instance);
+  };
+})();

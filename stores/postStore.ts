@@ -121,18 +121,26 @@ const postStore: PostStore = {
   },
 };
 
-export const initialPost = {
-  postList: [] as T.PostList[],
-  postView: {} as T.PostView | undefined,
-  post: {
-    id: 0,
-    category: '',
-    tags: '',
-    title: '',
-    content: '',
-    count: 0,
-    page: 0,
-  },
+export const initialPost: {
+  post: T.Post | undefined;
+  postView: T.PostView | undefined;
+  postList: T.PostList[],
+} = {
+  post: undefined,
+  postView: undefined,
+  postList: [],
 };
 
-export default observable(postStore);
+export default (() => {
+  let instance: PostStore | undefined;
+  const initialize = (initialState = initialPost) => ({
+    ...postStore,
+    ...initialState,
+  });
+  return (initialState = initialPost) => {
+    if (!instance) {
+      instance = initialize(initialState);
+    }
+    return observable(instance);
+  };
+})();
