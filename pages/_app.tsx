@@ -1,5 +1,5 @@
 import React from 'react';
-import App from 'next/app';
+import App, { AppContext } from 'next/app';
 import Head from 'next/head';
 
 import stores from '@stores';
@@ -11,7 +11,7 @@ import 'highlight.js/styles/nord.css';
 React.useLayoutEffect = React.useEffect;
 
 class CustomApp extends App {
-  static async getInitialProps(context: T.AppContextStore) {
+  static async getInitialProps(context: AppContext) {
     const appProps = await App.getInitialProps(context);
     return {
       ...appProps,
@@ -21,7 +21,9 @@ class CustomApp extends App {
 
   constructor(props: T.MyAppProps) {
     super(props);
-    if (typeof window === 'undefined') stores(props.initialMobxState);
+    if (typeof window !== 'undefined') {
+      stores(props.initialMobxState);
+    }
   }
 
   render() {

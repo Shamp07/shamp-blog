@@ -7,6 +7,7 @@ import BoardHead from '../../components/board/BoardHead';
 import BoardContent from '../../components/board/BoardContent';
 import BoardPagination from '../../components/board/BoardPagination';
 import PostView from '../../components/PostView';
+import {NextPageContext} from "next";
 
 const Board = () => {
   const router = useRouter();
@@ -32,7 +33,7 @@ const Board = () => {
   );
 };
 
-Board.getInitialProps = async ({ query }: T.MyNextPageContext) => {
+Board.getInitialProps = async ({ query }: NextPageContext) => {
   if (!query.board) return null;
 
   const board = query.board[0];

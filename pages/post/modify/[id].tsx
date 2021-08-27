@@ -1,8 +1,8 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { NextPageContext } from 'next';
 
 import stores from '@stores';
-import * as T from '@types';
 import Post from '..';
 
 const ModifyPost = () => {
@@ -19,7 +19,7 @@ const ModifyPost = () => {
   return <Post isModify />;
 };
 
-ModifyPost.getInitialProps = async ({ query }: T.MyNextPageContext) => {
+ModifyPost.getInitialProps = async ({ query }: NextPageContext) => {
   const { postStore } = stores();
 
   const id = Number(query.id);
