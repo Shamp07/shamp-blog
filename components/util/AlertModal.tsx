@@ -8,7 +8,11 @@ import Modal from '@atoms/Modal';
 
 const ConfirmModal = () => {
   const { alertStore } = stores();
-  const { isOpenAlertModal, text, closeAlertModal } = alertStore;
+  const { isOpenAlertModal, text } = alertStore;
+
+  const onClose = useCallback(() => {
+    alertStore.closeAlertModal();
+  }, []);
 
   const focusRef = useCallback((node: HTMLButtonElement) => {
     node?.focus();
@@ -18,7 +22,7 @@ const ConfirmModal = () => {
     <Modal
       title="알림"
       open={isOpenAlertModal}
-      onClose={closeAlertModal}
+      onClose={onClose}
     >
       {/* eslint-disable-next-line react/no-danger */}
       <Content dangerouslySetInnerHTML={{ __html: text }} />
@@ -26,7 +30,7 @@ const ConfirmModal = () => {
         <RightButton
           variant="contained"
           color="primary"
-          onClick={closeAlertModal}
+          onClick={onClose}
           ref={focusRef}
         >
           확인하기

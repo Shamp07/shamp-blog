@@ -1,4 +1,4 @@
-import React, { useCallback, KeyboardEvent } from 'react';
+import React, {useCallback, KeyboardEvent, ChangeEvent} from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import Modal from '@material-ui/core/Modal';
@@ -12,15 +12,27 @@ import * as T from '@types';
 
 const SignModal = () => {
   const { signStore } = stores();
-  const {
-    isOpenSignModal, toggleSignModal,
-    loginInfo, loginHandleChange, login,
-    changeRegister,
-  } = signStore;
+  const { isOpenSignModal, loginInfo } = signStore;
   const { email, password } = loginInfo;
 
+  const onLogin = useCallback(() => {
+    signStore.login();
+  }, []);
+
   const onEnter = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Enter') login();
+    if (event.key === 'Enter') onLogin();
+  }, []);
+
+  const onClose = useCallback(() => {
+    signStore.toggleSignModal();
+  }, []);
+
+  const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    signStore.loginHandleChange(event);
+  }, []);
+
+  const onRegister = useCallback(() => {
+    signStore.changeRegister();
   }, []);
 
   const focusRef = useCallback((node: HTMLDivElement) => {
@@ -32,7 +44,7 @@ const SignModal = () => {
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
       open={isOpenSignModal}
-      onClose={toggleSignModal}
+      onClose={onClose}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
@@ -46,7 +58,7 @@ const SignModal = () => {
             <CustomTextField
               label="e-mail"
               name="email"
-              onChange={loginHandleChange}
+              onChange={onChange}
               value={email}
               onKeyPress={onEnter}
               ref={focusRef}
@@ -55,7 +67,7 @@ const SignModal = () => {
             <CustomTextField
               label="비밀번호"
               name="password"
-              onChange={loginHandleChange}
+              onChange={onChange}
               value={password}
               type="password"
               onKeyPress={onEnter}
@@ -67,7 +79,7 @@ const SignModal = () => {
               size={T.ButtonSize.MEDIUM}
               variant="contained"
               color="default"
-              onClick={changeRegister}
+              onClick={onRegister}
             >
               회원가입
             </Button>
@@ -75,8 +87,7 @@ const SignModal = () => {
               size={T.ButtonSize.MEDIUM}
               variant="contained"
               color="primary"
-              onClick={login}
-
+              onClick={onLogin}
             >
               로그인
             </Button>
