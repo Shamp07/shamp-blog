@@ -1,4 +1,4 @@
-import React, {useCallback, KeyboardEvent, ChangeEvent} from 'react';
+import React, { useCallback, KeyboardEvent, ChangeEvent } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import Modal from '@material-ui/core/Modal';
