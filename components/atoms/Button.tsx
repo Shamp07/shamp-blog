@@ -10,11 +10,13 @@ interface Props {
   readonly color: PropTypes.Color;
   readonly size?: T.ButtonSize;
   readonly disabled?: boolean;
+  ref?(node: HTMLButtonElement): void;
   onClick(): void;
 }
 
 const Button = ({
   children, variant, color, size, disabled, onClick,
+  ref,
 }: Props) => (
   <StyledButton
     variant={variant}
@@ -22,6 +24,7 @@ const Button = ({
     size={size}
     onClick={onClick}
     disabled={disabled}
+    ref={ref}
   >
     {children}
   </StyledButton>
@@ -30,6 +33,7 @@ const Button = ({
 Button.defaultProps = {
   size: T.ButtonSize.MEDIUM,
   disabled: false,
+  ref: null,
 };
 
 const StyledButton = styled(RowButton)(({ size }) => ({

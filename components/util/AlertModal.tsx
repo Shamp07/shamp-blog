@@ -1,10 +1,11 @@
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
-import { Button } from '@material-ui/core';
 
 import stores from '@stores';
 import Modal from '@atoms/Modal';
+import Button from '@atoms/Button';
+import * as T from '@types';
 
 const ConfirmModal = () => {
   const { alertStore } = stores();
@@ -27,14 +28,15 @@ const ConfirmModal = () => {
       {/* eslint-disable-next-line react/no-danger */}
       <Content dangerouslySetInnerHTML={{ __html: text }} />
       <Footer>
-        <RightButton
+        <Button
+          ref={focusRef}
           variant="contained"
           color="primary"
           onClick={onClose}
-          ref={focusRef}
+          size={T.ButtonSize.MEDIUM}
         >
           확인하기
-        </RightButton>
+        </Button>
       </Footer>
     </Modal>
   );
@@ -47,15 +49,6 @@ const Content = styled.div`
 
 const Footer = styled.div`
   display: flex;
-`;
-
-const RightButton = styled(Button)`
-  height: 44px;
-  border-radius: 10px !important;
-  padding-left: 18px !important;
-  padding-right: 18px !important;
-  margin-left: auto !important;
-  box-shadow: none !important;
 `;
 
 export default observer(ConfirmModal);

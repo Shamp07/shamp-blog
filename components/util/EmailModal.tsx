@@ -4,8 +4,8 @@ import styled from '@emotion/styled';
 import { TextField } from '@material-ui/core';
 
 import stores from '@stores';
-import Button from '@atoms/Button';
 import Modal from '@atoms/Modal';
+import Button from '@atoms/Button';
 import * as T from '@types';
 
 const EmailModal = () => {
