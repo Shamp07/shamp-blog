@@ -1,11 +1,11 @@
 import React, { useCallback, KeyboardEvent, ChangeEvent } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
-import { TextField } from '@material-ui/core';
 
 import stores from '@stores';
 import Modal from '@atoms/Modal';
 import Button from '@atoms/Button';
+import TextField from '@atoms/TextField';
 import * as T from '@types';
 
 const SignModal = () => {
@@ -44,26 +44,25 @@ const SignModal = () => {
       title="로그인"
     >
       <div>
-        <CustomTextField
-          label="e-mail"
+        <TextField
           name="email"
-          onChange={onChange}
           value={email}
-          onKeyPress={onEnter}
+          label="e-mail"
           ref={focusRef}
-        />
-        <br />
-        <CustomTextField
-          label="비밀번호"
-          name="password"
           onChange={onChange}
-          value={password}
+          onKeyPress={onEnter}
+        />
+        <TextField
           type="password"
+          name="password"
+          label="비밀번호"
+          value={password}
+          onChange={onChange}
           onKeyPress={onEnter}
         />
         <br />
       </div>
-      <div>
+      <Footer>
         <Button
           size={T.ButtonSize.MEDIUM}
           variant="contained"
@@ -80,18 +79,13 @@ const SignModal = () => {
         >
           로그인
         </Button>
-      </div>
+      </Footer>
     </Modal>
   );
 };
 
-const CustomTextField = styled(TextField)`
-  width: 100%;
-  margin-bottom: 15px !important;
+const Footer = styled.footer`
 
-  &&& * {
-    font-family: inherit;
-  }
 `;
 
 export default observer(SignModal);
