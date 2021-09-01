@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
-import { TextField } from '@material-ui/core';
 
 import stores from '@stores';
 import Modal from '@atoms/Modal';
 import Button from '@atoms/Button';
+import TextField from '@atoms/TextField';
 import * as T from '@types';
 
 const EmailModal = () => {
@@ -30,7 +30,13 @@ const EmailModal = () => {
           입력하신 이메일로 인증번호가 전송되었습니다.
           메일에서 인증번호를 조회하여 아래 입력해주세요.
         </div>
-        <TextField label="인증번호" variant="outlined" value={emailVerifyCode} onChange={verifyHandleChange} size="small" />
+        <TextField
+          label="인증번호"
+          variant="outlined"
+          value={emailVerifyCode}
+          onChange={verifyHandleChange}
+          size="small"
+        />
       </ContentWrapper>
       <ButtonWrapper>
         <Button

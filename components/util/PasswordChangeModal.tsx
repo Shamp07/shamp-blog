@@ -1,11 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import styled from '@emotion/styled';
-import { TextField } from '@material-ui/core';
 
 import stores from '@stores';
 import Modal from '@atoms/Modal';
 import Button from '@atoms/Button';
+import TextField from '@atoms/TextField';
 import * as T from '@types';
 
 const PasswordChangeModal = () => {
@@ -25,7 +24,7 @@ const PasswordChangeModal = () => {
       title="비밀번호 변경"
     >
       <div>
-        <CustomTextField
+        <TextField
           label="현재 비밀번호"
           onChange={passwordHandleChange}
           value={currentPassword}
@@ -33,7 +32,7 @@ const PasswordChangeModal = () => {
           type="password"
         />
         <br />
-        <CustomTextField
+        <TextField
           label="변경할 비밀번호"
           onChange={passwordHandleChange}
           value={changePasswordValue}
@@ -41,7 +40,7 @@ const PasswordChangeModal = () => {
           type="password"
         />
         <br />
-        <CustomTextField
+        <TextField
           label="변경할 비밀번호 확인"
           onChange={passwordHandleChange}
           value={changePasswordCheck}
@@ -71,14 +70,5 @@ const PasswordChangeModal = () => {
     </Modal>
   );
 };
-
-const CustomTextField = styled(TextField)`
-  width: 100%;
-  margin-bottom: 15px !important;
-  
-  &&& * {
-    font-family: inherit;
-  }
-`;
 
 export default observer(PasswordChangeModal);

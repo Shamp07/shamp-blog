@@ -1,11 +1,10 @@
 import React, { useCallback, ChangeEvent } from 'react';
 import { observer } from 'mobx-react-lite';
-import styled from '@emotion/styled';
-import { TextField } from '@material-ui/core';
 
 import stores from '@stores';
 import Button from '@atoms/Button';
 import Modal from '@atoms/Modal';
+import TextField from '@atoms/TextField';
 import * as T from '@types';
 
 const DeleteUserModal = () => {
@@ -34,20 +33,18 @@ const DeleteUserModal = () => {
       <div>
         <div>본인의 이메일과 아래의 내용과 동일하게 적어주세요.</div>
         <br />
-        <CustomTextField
+        <TextField
           label="e-mail"
           onChange={onChange}
           value={deleteEmail}
           name="deleteEmail"
         />
-        <br />
-        <CustomTextField
+        <TextField
           label="'계정을 삭제하겠습니다' 라고 적어주세요."
           onChange={onChange}
           value={deleteText}
           name="deleteText"
         />
-        <br />
       </div>
       <div>
         <Button
@@ -71,14 +68,5 @@ const DeleteUserModal = () => {
     </Modal>
   );
 };
-
-const CustomTextField = styled(TextField)`
-  width: 100%;
-  margin-bottom: 15px !important;
-
-  &&& * {
-    font-family: inherit;
-  }
-`;
 
 export default observer(DeleteUserModal);

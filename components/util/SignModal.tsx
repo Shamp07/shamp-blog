@@ -43,7 +43,7 @@ const SignModal = () => {
       onClose={onClose}
       title="로그인"
     >
-      <div>
+      <Content>
         <TextField
           name="email"
           value={email}
@@ -60,8 +60,7 @@ const SignModal = () => {
           onChange={onChange}
           onKeyPress={onEnter}
         />
-        <br />
-      </div>
+      </Content>
       <Footer>
         <Button
           size={T.ButtonSize.MEDIUM}
@@ -84,8 +83,20 @@ const SignModal = () => {
   );
 };
 
-const Footer = styled.footer`
+const Content = styled.div`
+  max-width: 300px;
+  & > div {
+    margin-bottom: 10px;
+  }
+`;
 
+const Footer = styled.footer`
+  display: flex;
+  padding: 20px 0 10px;
+  
+  & > button:last-of-type {
+    margin-left: auto;
+  }
 `;
 
 export default observer(SignModal);
