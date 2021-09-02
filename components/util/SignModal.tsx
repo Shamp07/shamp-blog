@@ -93,7 +93,6 @@ const Content = styled.div`
 const Footer = styled.footer`
   display: flex;
   padding: 20px 0 10px;
-  
   & > button:last-of-type {
     margin-left: auto;
   }

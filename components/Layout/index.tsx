@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import stores from '@stores';
 import * as T from '@types';
 import { MediaQuery } from '@styles';
+import dsPalette from '@constants/ds-palette';
 import Header from './Header';
 import SideBar from './Sidebar';
 import Content from './Content';
@@ -62,70 +63,75 @@ const CenterContent = styled.div({
   },
 });
 
-const GlobalStyle = css`
-  header, body, span, div, nav, ul, li, h1, h2, h3, h4, pre {
-    font-family: 'Roboto', 'Noto Sans KR', serif;
-    margin: 0;
-    padding: 0;
-    outline: 0;
-  }
+const GlobalStyle = css({
+  '*': {
+    color: dsPalette.typePrimary.toString(),
+  },
 
-  body {
-    min-width: 320px;
-    min-height: 100%;
-    -webkit-overflow-scrolling: touch;
-  }
+  'header, body, span, div, nav, ul, li, h1, h2, h3, h4, pre': {
+    fontFamily: 'Roboto, Noto Sans KR, serif',
+    margin: 0,
+    padding: 0,
+    outline: 0,
+  },
 
-  a, span, div {
-    -webkit-tap-highlight-color: transparent;
-  }
+  body: {
+    minWidth: '320px',
+    minHeight: '100%',
+    webkitOverflowScrolling: 'touch',
+  },
 
-  .MuiButton-outlinedPrimary {
-    color: #2d79c7 !important;
-    border: 1px solid rgba(45, 121, 199, 0.5) !important;
-  }
+  'a, span, div': {
+    webkitTapHighlightColor: 'transparent',
+  },
 
-  .MuiButton-outlined.Mui-disabled  {
-    border: 1px solid rgba(0, 0, 0, 0.12) !important;
-  }
+  '.MuiButton-outlinedPrimary': {
+    color: '#2d79c7 !important',
+    border: '1px solid rgba(45, 121, 199, 0.5) !important',
+  },
 
-  .MuiButton-root.Mui-disabled {
-    color: rgba(0, 0, 0, 0.26) !important;
-  }
+  '.MuiButton-outlined.Mui-disabled': {
+    border: '1px solid rgba(0, 0, 0, 0.12) !important',
+  },
 
-  .MuiPaginationItem-textPrimary.Mui-selected,
-  .MuiButton-containedPrimary {
-    background-color: #3b8bdd !important;
-  }
+  '.MuiButton-root.Mui-disabled': {
+    color: 'rgba(0, 0, 0, 0.26) !important',
+  },
 
-  .MuiButton-containedPrimary:hover {
-    background-color: #3886d7 !important;
-  }
+  '.MuiPaginationItem-textPrimary.Mui-selected, .MuiButton-containedPrimary': {
+    backgroundColor: '#3b8bdd !important',
+  },
 
-  .MuiButton-contained.Mui-disabled {
-    color: rgba(0, 0, 0, 0.26) !important;
-    box-shadow: none !important;
-    background-color: rgba(0, 0, 0, 0.12) !important;
-  }
+  '.MuiButton-containedPrimary:hover': {
+    backgroundColor: '#3886d7 !important',
+  },
 
-  .MuiInputLabel-formControl {
-    z-index: 0 !important;
-    font-family: inherit !important;
-  }
+  '.MuiButton-contained.Mui-disabled': {
+    color: 'rgba(0, 0, 0, 0.26) !important',
+    boxShadow: 'none !important',
+    backgroundColor: 'rgba(0, 0, 0, 0.12) !important',
+  },
 
-  .MuiPaper-root {
-    border-radius: 10px !important;
-    &&& * {
-      font-family: inherit;
-    }
-  }
+  '.MuiInputLabel-formControl': {
+    '&&&': {
+      zIndex: 0,
+      fontFamily: 'inherit',
+    },
+  },
 
-  @font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 300;
-    unicode-range: U+0041-005A, U+0061-007A, U+0030-0039;
-  }
-`;
+  '.MuiPaper-root': {
+    borderRadius: '10px !important',
+    '&&& *': {
+      fontFamily: 'inherit',
+    },
+  },
+
+  '@font-face': {
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 300,
+    unicodeRange: 'U+0041-005A, U+0061-007A, U+0030-0039',
+  },
+});
 
 export default Layout;

@@ -6,6 +6,7 @@ import stores from '@stores';
 import Modal from '@atoms/Modal';
 import Button from '@atoms/Button';
 import TextField from '@atoms/TextField';
+import dsPalette from '@constants/ds-palette';
 import * as T from '@types';
 
 const RegisterModal = () => {
@@ -33,7 +34,7 @@ const RegisterModal = () => {
       onClose={toggle}
       title="회원가입"
     >
-      <div>
+      <Content>
         <TextField
           label="e-mail"
           name="email"
@@ -55,7 +56,7 @@ const RegisterModal = () => {
           type="password"
           value={password}
           onChange={onChange}
-          helperText="8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요. 비밀번호는 단방향 암호화가 되어 블로그 주인도 알 방법이 없으니 안심하세요! 또한 제 블로그는 오픈소스입니다!"
+          helperText="8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요."
         />
         <TextField
           label="비밀번호 확인"
@@ -65,9 +66,13 @@ const RegisterModal = () => {
           onChange={onChange}
           helperText="비밀번호와 동일하게 입력해주세요."
         />
-        <br />
-      </div>
-      <ButtonWrapper>
+        <Description>
+          비밀번호는 단방향 암호화가 진행되어 저도 알 방법이 없습니다.
+          <br />
+          블로그는 오픈 소스로 공개되어있습니다.
+        </Description>
+      </Content>
+      <Footer>
         <Button
           size={T.ButtonSize.MEDIUM}
           variant="contained"
@@ -76,12 +81,28 @@ const RegisterModal = () => {
         >
           가입하기
         </Button>
-      </ButtonWrapper>
+      </Footer>
     </Modal>
   );
 };
 
-const ButtonWrapper = styled.div`
+const Description = styled.div({
+  marginTop: '20px',
+  fontSize: '12px',
+  lineHeight: '20px',
+  color: dsPalette.themeWarning.toString(),
+});
+
+const Content = styled.div`
+  max-width: 360px;
+  & > .MuiFormHelperText-root {
+    color: red;
+  }
+`;
+
+const Footer = styled.footer`
+  display: flex;
+  padding: 20px 0 10px;
   & > button {
     margin-left: auto;
   }
