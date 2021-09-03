@@ -5,6 +5,7 @@ import { faGithubAlt } from '@fortawesome/free-brands-svg-icons';
 
 import { MediaQuery } from '@styles';
 import * as T from '@types';
+import dsPalette from '@constants/ds-palette';
 import HeaderSidebarButton from './HeaderSidebarButton';
 import HeaderTokenMenu from './HeaderTokenMenu';
 
@@ -39,50 +40,51 @@ const ListWrapper = styled.div({
   },
 });
 
-const RightList = styled.ul`
-  list-style: none;
-  display: inline-flex;
-  width: 100%;
-  height: 70px;
+const RightList = styled.ul({
+  listStyle: 'none',
+  display: 'inline-flex',
+  width: '100%',
+  height: '70px',
 
-  & > li {
-    width: 55px;
-    height: 70px;
-    line-height: 70px;
-    display: inline-block;
-    text-align: center;
-  }
+  '& > li': {
+    width: '55px',
+    height: '70px',
+    lineHeight: '70px',
+    display: 'inline-block',
+    textAlign: 'center',
+  },
 
-  & > li > a, & > li > button {
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    margin: 10px 0;
-    color: #fff;
-    border-radius: 25px;
-    transition: background-color 0.2s;
-    cursor: pointer;
+  '& > li > a, & > li > button': {
+    display: 'inline-block',
+    width: '50px',
+    height: '50px',
+    margin: '10px 0',
+    color: '#fff',
+    borderRadius: '25px',
+    transition: 'background-color 0.2s',
+    cursor: 'pointer',
 
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.03);
-    }
-  }
+    '&:hover': {
+      opacity: 0.03,
+    },
+  },
 
-  & > li > button {
-    border: 0;
-    padding: 0;
-    background-color: transparent;
+  '& > li > button': {
+    border: 0,
+    padding: 0,
+    backgroundColor: 'transparent',
 
-    &:focus {
-      outline: 0;
-    }
-  }
+    '&:focus': {
+      outline: 0,
+    },
+  },
 
-  & svg {
-    padding: 12px;
-    width: 25px;
-    height: 25px;
-  }
-`;
+  '& svg': {
+    padding: '12px',
+    width: '25px',
+    height: '25px',
+    color: dsPalette.typeWhite.toString(),
+  },
+});
 
 export default HeaderRightList;

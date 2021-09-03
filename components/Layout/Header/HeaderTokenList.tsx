@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, MouseEvent } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import Menu from '@material-ui/core/Menu';
@@ -12,35 +12,51 @@ import AlertList from './Alert/AlertList';
 
 const HeaderTokenList = () => {
   const { signStore, utilStore, alertStore } = stores();
-  const { logout, togglePasswordChangeModal, toggleDeleteUserModal } = signStore;
+  const { toggleDeleteUserModal } = signStore;
   const {
-    headerMenu, headerMenuElement, openHeaderMenu, closeHeaderMenu,
+    headerMenu, headerMenuElement, closeHeaderMenu,
   } = utilStore;
   const { alertNotReadSize, alertLoading } = alertStore;
 
   const onLogout = useCallback(() => {
-    logout(false);
+    signStore.logout(false);
+  }, []);
+
+  const onTogglePassword = useCallback(() => {
+    signStore.togglePasswordChangeModal();
+  }, []);
+
+  const onToggleDelete = useCallback(() => {
+    signStore.toggleDeleteUserModal();
+  }, []);
+
+  const onProfile = useCallback((event: MouseEvent<HTMLElement>) => {
+    utilStore.openHeaderMenu(event);
+  }, []);
+
+  const onProfileClose = useCallback(() => {
+    utilStore.closeHeaderMenu();
   }, []);
 
   return (
     <>
       <li>
-        <button type="button" onClick={openHeaderMenu} name="profile">
+        <button type="button" onClick={onProfile} name="profile">
           <FontAwesomeIcon icon={faUserCircle} />
         </button>
         <UserMenu
           anchorEl={headerMenuElement}
           keepMounted
           open={headerMenu === 'profile'}
-          onClose={closeHeaderMenu}
+          onClose={onProfileClose}
         >
           <MenuItem onClick={onLogout}>로그아웃</MenuItem>
-          <MenuItem onClick={togglePasswordChangeModal}>비밀번호 변경</MenuItem>
-          <MenuItem onClick={toggleDeleteUserModal}>탈퇴하기</MenuItem>
+          <MenuItem onClick={onTogglePassword}>비밀번호 변경</MenuItem>
+          <MenuItem onClick={onToggleDelete}>탈퇴하기</MenuItem>
         </UserMenu>
       </li>
       <li>
-        <AlertButton type="button" onClick={openHeaderMenu} name="alert">
+        <AlertButton type="button" onClick={onProfile} name="alert">
           <FontAwesomeIcon icon={faBell} />
           {Boolean(alertNotReadSize) && <div>{alertNotReadSize}</div>}
         </AlertButton>

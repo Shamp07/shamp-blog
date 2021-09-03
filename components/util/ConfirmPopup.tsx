@@ -6,7 +6,7 @@ import Button from '@atoms/Button';
 import stores from '@stores';
 import * as T from '@types';
 
-const ConfirmModal = () => {
+const ConfirmPopup = () => {
   const { utilStore } = stores();
   const {
     isOpenConfirmModal, callback,
@@ -54,4 +54,4 @@ const ConfirmModal = () => {
   );
 };
 
-export default observer(ConfirmModal);
+export default observer(ConfirmPopup);

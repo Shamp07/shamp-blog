@@ -5,10 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import stores from '@stores';
+import { MediaQuery } from '@styles';
+import * as T from '@types';
 import Category from './Category';
 import SideTokenMenu from './SideTokenMenu';
-import { MediaQuery } from "@styles";
-import * as T from '@types';
 
 const Sidebar = () => {
   const { sidebarStore } = stores();
@@ -109,7 +109,6 @@ const CategoryWrapper = styled.div({
     cursor: 'pointer',
     borderTopLeftRadius: '10px',
     borderBottomLeftRadius: '10px',
-    color: '#616161',
     fontSize: '14px',
     fontWeight: 'bold',
     transition: 'all 0.3s',
@@ -125,7 +124,6 @@ const CategoryWrapper = styled.div({
 
     '& > a': {
       display: 'inline-block',
-      color: '#616161',
       paddingLeft: '14px',
       textDecoration: 'none',
       width: '270px',

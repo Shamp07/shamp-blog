@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import stores from '@stores';
@@ -7,7 +7,7 @@ import Button from '@atoms/Button';
 import TextField from '@atoms/TextField';
 import * as T from '@types';
 
-const PasswordChangeModal = () => {
+const PasswordChangePopup = () => {
   const { signStore } = stores();
   const {
     isOpenPasswordChangeModal, togglePasswordChangeModal,
@@ -17,10 +17,14 @@ const PasswordChangeModal = () => {
     currentPassword, changePassword: changePasswordValue, changePasswordCheck,
   } = passwordInfo;
 
+  const onClose = useCallback(() => {
+    signStore.togglePasswordChangeModal();
+  }, []);
+
   return (
     <Modal
       open={isOpenPasswordChangeModal}
-      onClose={togglePasswordChangeModal}
+      onClose={onClose}
       title="비밀번호 변경"
     >
       <div>
@@ -71,4 +75,4 @@ const PasswordChangeModal = () => {
   );
 };
 
-export default observer(PasswordChangeModal);
+export default observer(PasswordChangePopup);

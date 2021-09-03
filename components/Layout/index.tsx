@@ -64,10 +64,6 @@ const CenterContent = styled.div({
 });
 
 const GlobalStyle = css({
-  '*': {
-    color: dsPalette.typePrimary.toString(),
-  },
-
   'header, body, span, div, nav, ul, li, h1, h2, h3, h4, pre': {
     fontFamily: 'Roboto, Noto Sans KR, serif',
     margin: 0,
@@ -76,6 +72,7 @@ const GlobalStyle = css({
   },
 
   body: {
+    color: dsPalette.typePrimary.toString(),
     minWidth: '320px',
     minHeight: '100%',
     webkitOverflowScrolling: 'touch',

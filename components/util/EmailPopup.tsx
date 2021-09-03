@@ -8,7 +8,7 @@ import Button from '@atoms/Button';
 import TextField from '@atoms/TextField';
 import * as T from '@types';
 
-const EmailModal = () => {
+const EmailPopup = () => {
   const { signStore } = stores();
   const {
     isOpenEmailModal, emailVerifyCode,
@@ -74,4 +74,4 @@ const ContentWrapper = styled.div`
   }
 `;
 
-export default observer(EmailModal);
+export default observer(EmailPopup);

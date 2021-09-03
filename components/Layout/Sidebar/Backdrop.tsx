@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
 import stores from '@stores';
-import { MediaQuery } from "@styles";
+import { MediaQuery } from '@styles';
 import * as T from '@types';
 
 const Backdrop = () => {
