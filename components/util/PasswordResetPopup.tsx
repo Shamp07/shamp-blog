@@ -7,7 +7,7 @@ import Button from '@atoms/Button';
 import TextField from '@atoms/TextField';
 import * as T from '@types';
 
-const PasswordChangePopup = () => {
+const PasswordResetPopup = () => {
   const { signStore } = stores();
   const {
     isOpenPasswordChangeModal, togglePasswordChangeModal,
@@ -75,4 +75,4 @@ const PasswordChangePopup = () => {
   );
 };
 
-export default observer(PasswordChangePopup);
+export default observer(PasswordResetPopup);

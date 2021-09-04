@@ -7,7 +7,7 @@ import Modal from '@atoms/Modal';
 import TextField from '@atoms/TextField';
 import * as T from '@types';
 
-const DeleteUserPopup = () => {
+const AccountDeletePopup = () => {
   const { signStore } = stores();
   const { isOpenDeleteUserModal, deleteUserInfo, deleteUser } = signStore;
   const { deleteEmail, deleteText } = deleteUserInfo;
@@ -69,4 +69,4 @@ const DeleteUserPopup = () => {
   );
 };
 
-export default observer(DeleteUserPopup);
+export default observer(AccountDeletePopup);

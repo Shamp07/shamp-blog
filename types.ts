@@ -178,6 +178,18 @@ export interface ReceiveMessage {
   fromUserId: number;
 }
 
+export enum Popup {
+  ALERT = 'ALERT',
+  CONFIRM = 'CONFIRM',
+
+  SIGN_IN = 'SIGN_IN',
+  SIGN_UP = 'SIGN_UP',
+
+  PASSWORD_RESET = 'PASSWORD_RESET',
+  EMAIL_VERIFY = 'EMAIL_VERIFY',
+  ACCOUNT_DELETE = 'ACCOUNT_DELETE',
+}
+
 export enum ChatPage {
   LOBBY = 0,
   ROOM = 1,

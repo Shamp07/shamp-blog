@@ -9,7 +9,7 @@ import TextField from '@atoms/TextField';
 import dsPalette from '@constants/ds-palette';
 import * as T from '@types';
 
-const RegisterPopup = () => {
+const SignUpPopup = () => {
   const { signStore } = stores();
   const { isOpenRegisterModal, registerInfo } = signStore;
   const {
@@ -108,4 +108,4 @@ const Footer = styled.footer`
   }
 `;
 
-export default observer(RegisterPopup);
+export default observer(SignUpPopup);

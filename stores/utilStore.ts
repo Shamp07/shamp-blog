@@ -1,9 +1,11 @@
 import { observable } from 'mobx';
 import { MouseEvent } from 'react';
 
+import * as T from '@types';
 import alertStore from './alertStore';
 
 export interface UtilStore {
+  popup: T.Popup;
   headerMenu: string | null;
   headerMenuElement: Element | null;
   isOpenConfirmModal: boolean;

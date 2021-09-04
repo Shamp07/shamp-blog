@@ -8,7 +8,7 @@ import Button from '@atoms/Button';
 import TextField from '@atoms/TextField';
 import * as T from '@types';
 
-const SignPopup = () => {
+const SignInPopup = () => {
   const { signStore } = stores();
   const { isOpenSignModal, loginInfo } = signStore;
   const { email, password } = loginInfo;
@@ -98,4 +98,4 @@ const Footer = styled.footer`
   }
 `;
 
-export default observer(SignPopup);
+export default observer(SignInPopup);
