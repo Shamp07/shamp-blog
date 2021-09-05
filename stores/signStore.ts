@@ -30,17 +30,7 @@ export interface SignStore {
     deleteText: string;
   };
   emailVerifyCode: string;
-  isOpenSignModal: boolean;
-  isOpenRegisterModal: boolean;
-  isOpenEmailModal: boolean;
-  isOpenPasswordChangeModal: boolean;
-  isOpenDeleteUserModal: boolean;
   changeRegister(): void;
-  togglePasswordChangeModal(): void;
-  toggleDeleteUserModal(): void;
-  toggleSignModal(): void;
-  toggleRegisterModal(): void;
-  toggleEmailModal(): void;
   loginHandleChange(event: ChangeEvent<HTMLInputElement>): void;
   registerHandleChange(event: ChangeEvent<HTMLInputElement>): void;
   passwordHandleChange(event: ChangeEvent<HTMLInputElement>): void;
@@ -82,58 +72,6 @@ const signStore: SignStore = {
     deleteText: '',
   },
   emailVerifyCode: '',
-  isOpenSignModal: false,
-  isOpenRegisterModal: false,
-  isOpenEmailModal: false,
-  isOpenPasswordChangeModal: false,
-  isOpenDeleteUserModal: false,
-  changeRegister() {
-    this.toggleRegisterModal();
-  },
-  togglePasswordChangeModal() {
-    if (!this.isOpenPasswordChangeModal) {
-      utilStore.closeHeaderMenu();
-    }
-    this.passwordInfo = {
-      currentPassword: '',
-      changePassword: '',
-      changePasswordCheck: '',
-    };
-    this.isOpenPasswordChangeModal = !this.isOpenPasswordChangeModal;
-  },
-  toggleDeleteUserModal() {
-    if (!this.isOpenDeleteUserModal) {
-      utilStore.closeHeaderMenu();
-    }
-
-    this.deleteUserInfo = {
-      deleteEmail: '',
-      deleteText: '',
-    };
-    this.isOpenDeleteUserModal = !this.isOpenDeleteUserModal;
-  },
-  toggleSignModal() {
-    this.isOpenSignModal = !this.isOpenSignModal;
-    this.loginInfo = {
-      email: '',
-      password: '',
-    };
-  },
-  toggleRegisterModal() {
-    if (!this.isOpenRegisterModal) {
-      this.registerInfo = {
-        email: '',
-        password: '',
-        passwordCheck: '',
-        name: '',
-      };
-    }
-    this.isOpenRegisterModal = !this.isOpenRegisterModal;
-  },
-  toggleEmailModal() {
-    this.isOpenEmailModal = !this.isOpenEmailModal;
-    this.emailVerifyCode = '';
-  },
   loginHandleChange(event) {
     this.loginInfo = {
       ...this.loginInfo,

@@ -8,12 +8,11 @@ import Button from '@atoms/Button';
 import * as T from '@types';
 
 const ConfirmModal = () => {
-  const { alertStore } = stores();
-  const { isOpenAlertModal, text } = alertStore;
+  const { utilStore } = stores();
+  const { popup } = utilStore;
+  const { description, callback } = popup;
 
-  const onClose = useCallback(() => {
-    alertStore.closeAlertModal();
-  }, []);
+
 
   const focusRef = useCallback((node: HTMLButtonElement) => {
     node?.focus();
@@ -22,11 +21,11 @@ const ConfirmModal = () => {
   return (
     <Modal
       title="알림"
-      open={isOpenAlertModal}
+      open
       onClose={onClose}
     >
       {/* eslint-disable-next-line react/no-danger */}
-      <Content dangerouslySetInnerHTML={{ __html: text }} />
+      <Content dangerouslySetInnerHTML={{ __html: description ?? '' }} />
       <Footer>
         <Button
           ref={focusRef}

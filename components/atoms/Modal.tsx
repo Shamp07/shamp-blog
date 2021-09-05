@@ -4,33 +4,38 @@ import RowModal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 
+import stores from '@stores';
+
 interface Props {
   children: ReactNode;
   title: string;
-  open: boolean;
-  onClose(): void;
 }
 
 const Modal = ({
-  children, title, open, onClose,
-}: Props) => (
-  <StyledModal
-    open={open}
-    onClose={onClose}
-    closeAfterTransition
-    BackdropComponent={Backdrop}
-    BackdropProps={{
-      timeout: 500,
-    }}
-  >
-    <Fade in={open}>
-      <Paper>
-        <h2>{title}</h2>
-        {children}
-      </Paper>
-    </Fade>
-  </StyledModal>
-);
+  children, title,
+}: Props) => {
+  const { utilStore } = stores();
+  const onClose = () => utilStore.closePopup();
+
+  return (
+    <StyledModal
+      open
+      onClose={onClose}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
+      }}
+    >
+      <Fade in>
+        <Paper>
+          <h2>{title}</h2>
+          {children}
+        </Paper>
+      </Fade>
+    </StyledModal>
+  );
+}
 
 const StyledModal = styled(RowModal)`
   display: flex;

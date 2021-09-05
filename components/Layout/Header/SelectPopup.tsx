@@ -3,19 +3,20 @@ import { observer } from 'mobx-react-lite';
 
 import stores from '@stores';
 import * as T from '@types';
-import AlertPopup from '@components/util/AlertPopup';
-import ConfirmPopup from '@components/util/ConfirmPopup';
-import SignInPopup from '@components/util/SignInPopup';
-import SignUpPopup from '@components/util/SignUpPopup';
-import PasswordResetPopup from '@components/util/PasswordResetPopup';
-import EmailVerifyPopup from '@components/util/EmailVerifyPopup';
-import AccountDeletePopup from '@components/util/AccountDeletePopup';
+import AlertPopup from '@components/popup/AlertPopup';
+import ConfirmPopup from '@components/popup/ConfirmPopup';
+import SignInPopup from '@components/popup/SignInPopup';
+import SignUpPopup from '@components/popup/SignUpPopup';
+import PasswordResetPopup from '@components/popup/PasswordResetPopup';
+import EmailVerifyPopup from '@components/popup/EmailVerifyPopup';
+import AccountDeletePopup from '@components/popup/AccountDeletePopup';
 
 const SelectPopup = () => {
   const { utilStore } = stores();
   const { popup } = utilStore;
+  const { type } = popup;
 
-  switch (popup) {
+  switch (type) {
     case T.Popup.ALERT:
       return <AlertPopup />;
     case T.Popup.CONFIRM:

@@ -5,36 +5,40 @@ import * as T from '@types';
 import alertStore from './alertStore';
 
 export interface UtilStore {
-  popup: T.Popup;
+  popup: {
+    type: T.Popup | undefined;
+    description: string | undefined;
+    callback: (() => void) | undefined;
+  };
   headerMenu: string | null;
   headerMenuElement: Element | null;
   isOpenConfirmModal: boolean;
-  callback: (() => void) | null;
-  text: string;
-  toggleConfirmModal(text: string, callback: (() => void) | null): void;
-  callFunction(callback: (() => void) | null): void;
-  closeConfirmModal(): void;
+  openPopup(type: T.Popup, description?: string, callback?: (() => void) | undefined): void;
+  closePopup(): void;
+  callFunction(callback: (() => void) | undefined): void;
   openHeaderMenu(event: MouseEvent<HTMLElement>): void;
   closeHeaderMenu(): void;
 }
 
 const utilStore: UtilStore = {
+  popup: {
+    type: undefined,
+    description: undefined,
+    callback: undefined,
+  },
   headerMenu: null,
   headerMenuElement: null,
   isOpenConfirmModal: false,
-  callback: null,
-  text: '',
-  toggleConfirmModal(text, callback) {
-    this.isOpenConfirmModal = !this.isOpenConfirmModal;
-    this.text = text;
-    this.callback = callback;
+  openPopup(type, description, callback) {
+    this.popup = { type, description, callback };
   },
+  closePopup() {
+    this.popup.type = undefined;
+  },
+
   callFunction(callback) {
     if (callback) callback();
     this.closeConfirmModal();
-  },
-  closeConfirmModal() {
-    this.isOpenConfirmModal = false;
   },
   openHeaderMenu(event) {
     if (!this.headerMenu) {

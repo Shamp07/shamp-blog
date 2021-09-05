@@ -5,7 +5,6 @@ import Axios from '@util/Axios';
 import * as T from '@types';
 
 export interface AlertStore {
-  isOpenAlertModal: boolean;
   text: string;
   alertLoading: boolean;
   alertList: T.Alert[];
@@ -14,12 +13,9 @@ export interface AlertStore {
   moreAlert(): void;
   getAlertList(): void;
   movePost(router: NextRouter, postId: number, alertId: number): void;
-  toggleAlertModal(text: string): void;
-  closeAlertModal(): void;
 }
 
 const alertStore: AlertStore = {
-  isOpenAlertModal: false,
   text: '',
   alertLoading: true,
   alertList: [],
@@ -55,13 +51,6 @@ const alertStore: AlertStore = {
     });
 
     router.push(`/post/${postId}`);
-  },
-  toggleAlertModal(text) {
-    this.text = text;
-    this.isOpenAlertModal = !this.isOpenAlertModal;
-  },
-  closeAlertModal() {
-    this.isOpenAlertModal = false;
   },
 };
 

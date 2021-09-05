@@ -10,7 +10,7 @@ import * as T from '@types';
 
 const SignInPopup = () => {
   const { signStore } = stores();
-  const { isOpenSignModal, loginInfo } = signStore;
+  const { loginInfo } = signStore;
   const { email, password } = loginInfo;
 
   const onLogin = useCallback(() => {
@@ -19,10 +19,6 @@ const SignInPopup = () => {
 
   const onEnter = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter') onLogin();
-  }, []);
-
-  const onClose = useCallback(() => {
-    signStore.toggleSignModal();
   }, []);
 
   const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -38,11 +34,7 @@ const SignInPopup = () => {
   }, []);
 
   return (
-    <Modal
-      open={isOpenSignModal}
-      onClose={onClose}
-      title="로그인"
-    >
+    <Modal title="로그인">
       <Content>
         <TextField
           name="email"
