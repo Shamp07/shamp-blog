@@ -3,15 +3,15 @@ import { observer } from 'mobx-react-lite';
 
 import stores from '@stores';
 import * as T from '@types';
-import AlertPopup from '@components/popup/AlertPopup';
-import ConfirmPopup from '@components/popup/ConfirmPopup';
-import SignInPopup from '@components/popup/SignInPopup';
-import SignUpPopup from '@components/popup/SignUpPopup';
-import PasswordResetPopup from '@components/popup/PasswordResetPopup';
-import EmailVerifyPopup from '@components/popup/EmailVerifyPopup';
-import AccountDeletePopup from '@components/popup/AccountDeletePopup';
+import AlertPopup from '@components/Popup/AlertPopup';
+import ConfirmPopup from '@components/Popup/ConfirmPopup';
+import SignInPopup from '@components/Popup/SignInPopup';
+import SignUpPopup from '@components/Popup/SignUpPopup';
+import PasswordResetPopup from '@components/Popup/PasswordResetPopup';
+import EmailVerifyPopup from '@components/Popup/EmailVerifyPopup';
+import AccountDeletePopup from '@components/Popup/AccountDeletePopup';
 
-const SelectPopup = () => {
+const Popup = () => {
   const { utilStore } = stores();
   const { popup } = utilStore;
   const { type } = popup;
@@ -36,4 +36,4 @@ const SelectPopup = () => {
   }
 };
 
-export default observer(SelectPopup);
+export default observer(Popup);

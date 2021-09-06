@@ -6,6 +6,8 @@ import stores from '@stores';
 import * as T from '@types';
 import { MediaQuery } from '@styles';
 import dsPalette from '@constants/ds-palette';
+import Popup from '@components/Popup';
+import NextNprogress from 'nextjs-progressbar';
 import Header from './Header';
 import SideBar from './Sidebar';
 import Content from './Content';
@@ -14,6 +16,10 @@ import Backdrop from './Sidebar/Backdrop';
 interface Props {
   children: ReactNode;
 }
+
+const options = {
+  showSpinner: false,
+};
 
 const Layout = ({ children }: Props) => {
   const { signStore, alertStore } = stores();
@@ -34,15 +40,22 @@ const Layout = ({ children }: Props) => {
           {children}
         </Content>
       </CenterContent>
-      {/* <Chat /> */}
+      <Popup />
+      <NextNprogress
+        color={dsPalette.typeWhite.toString()}
+        startPosition={0.3}
+        stopDelayMs={200}
+        height={3}
+        options={options}
+      />
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div`
-  background-color: #ebeef1;
-  min-height: 100vh;
-`;
+const Wrapper = styled.div({
+  backgroundColor: dsPalette.themeBackground.toString(),
+  minHeight: '100vh',
+});
 
 const CenterContent = styled.div({
   margin: '-80px auto 0 auto',
