@@ -10,19 +10,17 @@ import * as T from '@types';
 
 const SignInPopup = () => {
   const { signStore } = stores();
-  const { loginInfo } = signStore;
-  const { email, password } = loginInfo;
+  const { signInForm, signInHandleChange } = signStore;
+  const { email, password } = signInForm;
 
-  const onLogin = useCallback(() => {
-    signStore.login();
+  const onChange = (event: ) => ()
+
+  const onSignIn = useCallback(() => {
+    signStore.signIn();
   }, []);
 
   const onEnter = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Enter') onLogin();
-  }, []);
-
-  const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    signStore.loginHandleChange(event);
+    if (event.key === 'Enter') onSignIn();
   }, []);
 
   const onRegister = useCallback(() => {
@@ -41,7 +39,7 @@ const SignInPopup = () => {
           value={email}
           label="e-mail"
           ref={focusRef}
-          onChange={onChange}
+          onChange={signInHandleChange.bind(signStore)}
           onKeyPress={onEnter}
         />
         <TextField
@@ -49,7 +47,7 @@ const SignInPopup = () => {
           name="password"
           label="비밀번호"
           value={password}
-          onChange={onChange}
+          onChange={signInHandleChange.bind(signStore)}
           onKeyPress={onEnter}
         />
       </Content>
@@ -66,7 +64,7 @@ const SignInPopup = () => {
           size={T.ButtonSize.MEDIUM}
           variant="contained"
           color="primary"
-          onClick={onLogin}
+          onClick={onSignIn}
         >
           로그인
         </Button>

@@ -11,14 +11,10 @@ import * as T from '@types';
 
 const SignUpPopup = () => {
   const { signStore } = stores();
-  const { isOpenRegisterModal, registerInfo } = signStore;
+  const { registerInfo } = signStore;
   const {
     email, name, password, passwordCheck,
   } = registerInfo;
-
-  const toggle = useCallback(() => {
-    signStore.toggleRegisterModal();
-  }, []);
 
   const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     signStore.registerHandleChange(event);
@@ -29,11 +25,7 @@ const SignUpPopup = () => {
   }, []);
 
   return (
-    <Modal
-      open={isOpenRegisterModal}
-      onClose={toggle}
-      title="회원가입"
-    >
+    <Modal title="회원가입">
       <Content>
         <TextField
           label="e-mail"

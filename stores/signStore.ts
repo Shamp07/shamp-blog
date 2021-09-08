@@ -10,7 +10,7 @@ import utilStore from './utilStore';
 export interface SignStore {
   cookieChecked: boolean;
   userData: T.User | null;
-  loginInfo: {
+  signInForm: {
     email: string;
     password: string;
   };
@@ -31,13 +31,13 @@ export interface SignStore {
   };
   emailVerifyCode: string;
   changeRegister(): void;
-  loginHandleChange(event: ChangeEvent<HTMLInputElement>): void;
+  signInHandleChange(event: ChangeEvent<HTMLInputElement>): void;
   registerHandleChange(event: ChangeEvent<HTMLInputElement>): void;
   passwordHandleChange(event: ChangeEvent<HTMLInputElement>): void;
   deleteUserHandleChange(event: ChangeEvent<HTMLInputElement>): void;
   verifyHandleChange(event: ChangeEvent<HTMLInputElement>): void;
   cookieCheck(): void;
-  login(): void;
+  signIn(): void;
   changePassword(): void;
   deleteUser(): void;
   register(): void;
@@ -52,7 +52,7 @@ export interface SignStore {
 const signStore: SignStore = {
   cookieChecked: false,
   userData: null,
-  loginInfo: {
+  signInForm: {
     email: '',
     password: '',
   },
@@ -72,9 +72,9 @@ const signStore: SignStore = {
     deleteText: '',
   },
   emailVerifyCode: '',
-  loginHandleChange(event) {
-    this.loginInfo = {
-      ...this.loginInfo,
+  signInHandleChange(event) {
+    this.signInForm = {
+      ...this.signInForm,
       [event.target.name]: event.target.value,
     };
   },
@@ -114,7 +114,7 @@ const signStore: SignStore = {
       },
     });
   },
-  login() {
+  signIn() {
     Axios({
       method: T.RequestMethod.POST,
       url: '/api/user/login',
