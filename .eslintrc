@@ -9,6 +9,7 @@
   },
   "rules": {
     "@typescript-eslint/no-use-before-define": 0,
-    "react/jsx-props-no-spreading": 0
+    "react/jsx-props-no-spreading": 0,
+    "react/no-this-in-sfc": 0
   }
 }

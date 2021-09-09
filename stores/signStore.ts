@@ -10,16 +10,6 @@ import utilStore from './utilStore';
 export interface SignStore {
   cookieChecked: boolean;
   userData: T.User | null;
-  signInForm: {
-    email: string;
-    password: string;
-  };
-  registerInfo: {
-    email: string;
-    password: string;
-    passwordCheck: string;
-    name: string;
-  };
   passwordInfo: {
     currentPassword: string;
     changePassword: string;
@@ -31,16 +21,22 @@ export interface SignStore {
   };
   emailVerifyCode: string;
   changeRegister(): void;
-  signInHandleChange(event: ChangeEvent<HTMLInputElement>): void;
-  registerHandleChange(event: ChangeEvent<HTMLInputElement>): void;
   passwordHandleChange(event: ChangeEvent<HTMLInputElement>): void;
   deleteUserHandleChange(event: ChangeEvent<HTMLInputElement>): void;
   verifyHandleChange(event: ChangeEvent<HTMLInputElement>): void;
   cookieCheck(): void;
-  signIn(): void;
+  signIn(signInForm: {
+    email: string;
+    password: string;
+  }): void;
+  signUp(signUpForm: {
+    email: string;
+    name: string;
+    password: string;
+    passwordCheck: string;
+  }): void;
   changePassword(): void;
   deleteUser(): void;
-  register(): void;
   verifyEmail(isFromRegister: boolean): void;
   verifyCode(): void;
   registerValidationCheck(): boolean;
@@ -52,16 +48,6 @@ export interface SignStore {
 const signStore: SignStore = {
   cookieChecked: false,
   userData: null,
-  signInForm: {
-    email: '',
-    password: '',
-  },
-  registerInfo: {
-    email: '',
-    password: '',
-    passwordCheck: '',
-    name: '',
-  },
   passwordInfo: {
     currentPassword: '',
     changePassword: '',
@@ -72,18 +58,6 @@ const signStore: SignStore = {
     deleteText: '',
   },
   emailVerifyCode: '',
-  signInHandleChange(event) {
-    this.signInForm = {
-      ...this.signInForm,
-      [event.target.name]: event.target.value,
-    };
-  },
-  registerHandleChange(event) {
-    this.registerInfo = {
-      ...this.registerInfo,
-      [event.target.name]: event.target.value,
-    };
-  },
   passwordHandleChange(event) {
     this.passwordInfo = {
       ...this.passwordInfo,
@@ -114,23 +88,41 @@ const signStore: SignStore = {
       },
     });
   },
-  signIn() {
+  signIn(signInForm) {
     Axios({
       method: T.RequestMethod.POST,
       url: '/api/user/login',
-      data: this.loginInfo,
+      data: signInForm,
       success: (response) => {
         const { code, message, result } = response.data;
         if (code === 1) {
           cookie.set('token', result, { expires: 2 });
           this.cookieCheck();
-          this.toggleSignModal();
-          alertStore.toggleAlertModal(message);
+          utilStore.closePopup();
+          utilStore.openPopup(T.Popup.ALERT, message);
         } else if (code === 2) {
-          alertStore.toggleAlertModal(message);
+          utilStore.openPopup(T.Popup.ALERT, message);
         } else if (code === 3) {
-          this.registerInfo.email = this.loginInfo.email;
+          this.registerInfo.email = signInform.email;
           this.verifyEmail(false);
+        }
+      },
+    });
+  },
+  signUp(signUpForm) {
+    if (!this.registerValidationCheck()) {
+      return;
+    }
+    Axios({
+      method: T.RequestMethod.POST,
+      url: '/api/user',
+      data: signUpForm,
+      success: (response) => {
+        const { code, message } = response.data;
+        if (code === 1) {
+          this.verifyEmail(true);
+        } else {
+          utilStore.openPopup(T.Popup.ALERT, message);
         }
       },
     });
@@ -167,24 +159,6 @@ const signStore: SignStore = {
           this.logout(true);
         }
         alertStore.toggleAlertModal(message);
-      },
-    });
-  },
-  register() {
-    if (!this.registerValidationCheck()) {
-      return;
-    }
-    Axios({
-      method: T.RequestMethod.POST,
-      url: '/api/user',
-      data: this.registerInfo,
-      success: (response) => {
-        const { code, message } = response.data;
-        if (code === 1) {
-          this.verifyEmail(true);
-        } else {
-          alertStore.toggleAlertModal(message);
-        }
       },
     });
   },

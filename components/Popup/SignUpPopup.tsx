@@ -1,5 +1,5 @@
 import React, { useCallback, ChangeEvent } from 'react';
-import { observer } from 'mobx-react-lite';
+import {observer, useLocalObservable} from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
 import stores from '@stores';
@@ -11,17 +11,23 @@ import * as T from '@types';
 
 const SignUpPopup = () => {
   const { signStore } = stores();
-  const { registerInfo } = signStore;
-  const {
-    email, name, password, passwordCheck,
-  } = registerInfo;
-
-  const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    signStore.registerHandleChange(event);
-  }, []);
+  const signUpForm = useLocalObservable(() => ({
+    values: {
+      email: '',
+      name: '',
+      password: '',
+      passwordCheck: '',
+    },
+    onChange(event: ChangeEvent<HTMLInputElement>) {
+      this.values = {
+        ...this.values,
+        [event.target.name]: event.target.value,
+      };
+    },
+  }));
 
   const onRegister = useCallback(() => {
-    signStore.register();
+    signStore.signUp();
   }, []);
 
   return (
@@ -31,31 +37,31 @@ const SignUpPopup = () => {
           label="e-mail"
           name="email"
           type="email"
-          onChange={onChange}
-          value={email}
+          onChange={signUpForm.onChange}
+          value={signUpForm.values.email}
           helperText="이메일로 인증을 진행하니 사용 중인 이메일을 적어주세요!"
         />
         <TextField
           label="이름"
           name="name"
-          onChange={onChange}
-          value={name}
+          onChange={signUpForm.onChange}
+          value={signUpForm.values.name}
           helperText="블로그에서 사용할 이름을 적어주세요."
         />
         <TextField
           label="비밀번호"
           name="password"
           type="password"
-          value={password}
-          onChange={onChange}
+          value={signUpForm.values.password}
+          onChange={signUpForm.onChange}
           helperText="8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요."
         />
         <TextField
           label="비밀번호 확인"
           name="passwordCheck"
           type="password"
-          value={passwordCheck}
-          onChange={onChange}
+          value={signUpForm.values.passwordCheck}
+          onChange={signUpForm.onChange}
           helperText="비밀번호와 동일하게 입력해주세요."
         />
         <Description>

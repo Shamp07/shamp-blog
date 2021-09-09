@@ -1,5 +1,5 @@
 import React, { useCallback, KeyboardEvent, ChangeEvent } from 'react';
-import { observer } from 'mobx-react-lite';
+import { observer, useLocalObservable } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
 import stores from '@stores';
@@ -10,21 +10,29 @@ import * as T from '@types';
 
 const SignInPopup = () => {
   const { signStore } = stores();
-  const { signInForm, signInHandleChange } = signStore;
-  const { email, password } = signInForm;
-
-  const onChange = (event: ) => ()
+  const signInForm = useLocalObservable(() => ({
+    values: {
+      email: '',
+      password: '',
+    },
+    onChange(event: ChangeEvent<HTMLInputElement>) {
+      this.values = {
+        ...this.values,
+        [event.target.name]: event.target.value,
+      };
+    },
+  }));
 
   const onSignIn = useCallback(() => {
-    signStore.signIn();
+    signStore.signIn(signInForm.values);
+  }, []);
+
+  const onSignUp = useCallback(() => {
+    signStore.changeRegister();
   }, []);
 
   const onEnter = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter') onSignIn();
-  }, []);
-
-  const onRegister = useCallback(() => {
-    signStore.changeRegister();
   }, []);
 
   const focusRef = useCallback((node: HTMLDivElement) => {
@@ -36,18 +44,18 @@ const SignInPopup = () => {
       <Content>
         <TextField
           name="email"
-          value={email}
+          value={signInForm.values.email}
           label="e-mail"
           ref={focusRef}
-          onChange={signInHandleChange.bind(signStore)}
+          onChange={signInForm.onChange}
           onKeyPress={onEnter}
         />
         <TextField
           type="password"
           name="password"
           label="비밀번호"
-          value={password}
-          onChange={signInHandleChange.bind(signStore)}
+          value={signInForm.values.password}
+          onChange={signInForm.onChange}
           onKeyPress={onEnter}
         />
       </Content>
@@ -56,7 +64,7 @@ const SignInPopup = () => {
           size={T.ButtonSize.MEDIUM}
           variant="contained"
           color="default"
-          onClick={onRegister}
+          onClick={onSignUp}
         >
           회원가입
         </Button>
