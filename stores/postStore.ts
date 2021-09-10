@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react';
 import { observable } from 'mobx';
 import { NextRouter } from 'next/dist/next-server/lib/router/router';
 
-import Axios from '@util/Axios';
+import Axios from '@util/axios';
 import * as T from '@types';
 import alertStore from './alertStore';
 

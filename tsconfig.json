@@ -22,7 +22,7 @@
       "@constants/*": ["constants/*"],
       "@atoms/*": ["components/atoms/*"],
       "@stores/*": ["stores/*"],
-      "@util/*": ["util/*"],
+      "@utilities/*": ["utilities/*"],
       "@stores": ["stores"],
       "@types": ["types"],
       "@styles": ["styles"]
@@ -43,7 +43,7 @@
     "./constants",
     "./database",
     "./middleware",
-    "./util",
+    "./utilities",
     "./config",
     "./next.config.js",
     "./server.js",

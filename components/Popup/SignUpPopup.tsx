@@ -1,5 +1,5 @@
 import React, { useCallback, ChangeEvent } from 'react';
-import {observer, useLocalObservable} from 'mobx-react-lite';
+import { observer, useLocalObservable } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
 import stores from '@stores';
@@ -8,9 +8,10 @@ import Button from '@atoms/Button';
 import TextField from '@atoms/TextField';
 import dsPalette from '@constants/ds-palette';
 import * as T from '@types';
+import { emailValidator, passwordValidator } from '@utilities/validators';
 
 const SignUpPopup = () => {
-  const { signStore } = stores();
+  const { signStore, utilStore } = stores();
   const signUpForm = useLocalObservable(() => ({
     values: {
       email: '',
@@ -24,10 +25,33 @@ const SignUpPopup = () => {
         [event.target.name]: event.target.value,
       };
     },
+    onValidate() {
+      const {
+        email, name, password, passwordCheck,
+      } = this.values;
+
+      if (emailValidator(email)) {
+        utilStore.openPopup(T.Popup.ALERT, '이메일을 제대로 입력해주세요');
+        return false;
+      }
+      if (!name.trim()) {
+        utilStore.openPopup(T.Popup.ALERT, '이름을 제대로 입력해주세요');
+        return false;
+      }
+
+      if (!passwordValidator(password, passwordCheck)) {
+        utilStore.openPopup(T.Popup.ALERT, '비밀번호를 제대로 입력해주세요');
+        return false;
+      }
+
+      return true;
+    },
   }));
 
   const onRegister = useCallback(() => {
-    signStore.signUp();
+    if (!signUpForm.onValidate()) return;
+
+    signStore.signUp(signUpForm.values);
   }, []);
 
   return (
