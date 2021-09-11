@@ -9,7 +9,7 @@ import TextField from '@atoms/TextField';
 import * as T from '@types';
 
 const SignInPopup = () => {
-  const { signStore } = stores();
+  const { signStore, utilStore } = stores();
   const signInForm = useLocalObservable(() => ({
     values: {
       email: '',
@@ -28,7 +28,7 @@ const SignInPopup = () => {
   }, []);
 
   const onSignUp = useCallback(() => {
-    signStore.changeRegister();
+    utilStore.openPopup(T.Popup.SIGN_UP);
   }, []);
 
   const onEnter = useCallback((event: KeyboardEvent<HTMLDivElement>) => {

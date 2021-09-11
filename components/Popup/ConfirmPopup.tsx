@@ -22,11 +22,7 @@ const ConfirmPopup = () => {
   }, []);
 
   return (
-    <Modal
-      open={isOpenConfirmModal}
-      onClose={onClose}
-      title="알림"
-    >
+    <Modal title="알림">
       <div>
         {text}
       </div>

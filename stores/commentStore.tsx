@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 import { observable } from 'mobx';
 
-import Axios from '@util/axios';
+import Axios from '@utilities/axios';
 import * as T from '@types';
 import alertStore from './alertStore';
 import postStore from './postStore';

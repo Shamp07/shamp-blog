@@ -54,10 +54,15 @@ const SignUpPopup = () => {
     signStore.signUp(signUpForm.values);
   }, []);
 
+  const focusRef = useCallback((node: HTMLDivElement) => {
+    node?.getElementsByTagName('input')[0]?.focus();
+  }, []);
+
   return (
     <Modal title="회원가입">
       <Content>
         <TextField
+          ref={focusRef}
           label="e-mail"
           name="email"
           type="email"
@@ -119,6 +124,10 @@ const Content = styled.div`
   max-width: 360px;
   & > .MuiFormHelperText-root {
     color: red;
+  }
+  
+  & > div {
+    margin-bottom: 10px;
   }
 `;
 

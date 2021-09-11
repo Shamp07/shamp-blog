@@ -3,7 +3,7 @@ import { observable } from 'mobx';
 import dayjs from 'dayjs';
 
 import * as T from '@types';
-import Axios from '@util/axios';
+import Axios from '@utilities/axios';
 import alertStore from './alertStore';
 
 export interface ChatStore {

@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react';
 import { observable } from 'mobx';
 import cookie from 'js-cookie';
 
-import Axios from '@util/axios';
+import Axios from '@utilities/axios';
 import * as T from '@types';
 import alertStore from './alertStore';
 import utilStore from './utilStore';
@@ -20,7 +20,6 @@ export interface SignStore {
     deleteText: string;
   };
   emailVerifyCode: string;
-  changeRegister(): void;
   passwordHandleChange(event: ChangeEvent<HTMLInputElement>): void;
   deleteUserHandleChange(event: ChangeEvent<HTMLInputElement>): void;
   verifyHandleChange(event: ChangeEvent<HTMLInputElement>): void;
@@ -39,8 +38,6 @@ export interface SignStore {
   deleteUser(): void;
   verifyEmail(isFromRegister: boolean): void;
   verifyCode(): void;
-  registerValidationCheck(): boolean;
-  passwordCheck(password: string, passwordCheck: string): boolean;
   logout(isChangePassword: boolean): void;
 }
 
@@ -102,16 +99,13 @@ const signStore: SignStore = {
         } else if (code === 2) {
           utilStore.openPopup(T.Popup.ALERT, message);
         } else if (code === 3) {
-          this.registerInfo.email = signInform.email;
-          this.verifyEmail(false);
+          // this.registerInfo.email = signInform.email;
+          // this.verifyEmail(false);
         }
       },
     });
   },
   signUp(signUpForm) {
-    if (!this.registerValidationCheck()) {
-      return;
-    }
     Axios({
       method: T.RequestMethod.POST,
       url: '/api/user',
@@ -127,10 +121,10 @@ const signStore: SignStore = {
     });
   },
   changePassword() {
-    const { changePassword, changePasswordCheck } = this.passwordInfo;
-    if (!this.passwordCheck(changePassword, changePasswordCheck)) {
-      return;
-    }
+    // const { changePassword, changePasswordCheck } = this.passwordInfo;
+    // if (!this.passwordCheck(changePassword, changePasswordCheck)) {
+    //   return;
+    // }
 
     Axios({
       method: T.RequestMethod.PUT,
@@ -195,12 +189,6 @@ const signStore: SignStore = {
         alertStore.toggleAlertModal(message);
       },
     });
-  },
-
-  passwordCheck(password, passwordCheck) {
-
-
-    return true;
   },
   logout(isChangePassword: boolean) {
     utilStore.closeHeaderMenu();
