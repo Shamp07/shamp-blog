@@ -7,12 +7,12 @@ import { faUserCircle, faBell } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import stores from '@stores';
+import * as T from '@types';
 import AlertSpinner from './Alert/AlertSpinner';
 import AlertList from './Alert/AlertList';
 
 const HeaderTokenList = () => {
   const { signStore, utilStore, alertStore } = stores();
-  const { toggleDeleteUserModal } = signStore;
   const {
     headerMenu, headerMenuElement, closeHeaderMenu,
   } = utilStore;
@@ -23,11 +23,11 @@ const HeaderTokenList = () => {
   }, []);
 
   const onTogglePassword = useCallback(() => {
-    signStore.togglePasswordChangeModal();
+    utilStore.openPopup(T.Popup.PASSWORD_RESET);
   }, []);
 
   const onToggleDelete = useCallback(() => {
-    signStore.toggleDeleteUserModal();
+    utilStore.openPopup(T.Popup.ACCOUNT_DELETE);
   }, []);
 
   const onProfile = useCallback((event: MouseEvent<HTMLElement>) => {

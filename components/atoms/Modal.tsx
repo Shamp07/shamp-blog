@@ -35,7 +35,7 @@ const Modal = ({
       </Fade>
     </StyledModal>
   );
-}
+};
 
 const StyledModal = styled(RowModal)`
   display: flex;
@@ -61,7 +61,6 @@ const Paper = styled.div`
   & > h2 {
     margin-bottom: 10px;
     padding: 10px 0;
-    border-bottom: 1px solid #e6e6e6;
   }
 `;
 

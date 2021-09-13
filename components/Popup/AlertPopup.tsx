@@ -1,4 +1,4 @@
-import React, { useRef, useEffect }  from 'react';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
@@ -13,18 +13,7 @@ const AlertPopup = () => {
   const { description } = popup;
 
   const onClose = () => utilStore.closePopup();
-  const ref = useRef<HTMLButtonElement>(null);
-
-  // const focusRef = (node: HTMLButtonElement) => {
-  //   setTimeout(() => {
-  //     node?.focus();
-  //     console.log('hi');
-  //   }, 1000);
-  // };
-
-  useEffect(() => {
-    ref.current.focus();
-  }, [])
+  const focusRef = (node: HTMLButtonElement) => node?.focus();
 
   return (
     <Modal title="알림">
@@ -32,7 +21,7 @@ const AlertPopup = () => {
       <Content dangerouslySetInnerHTML={{ __html: description ?? '' }} />
       <Footer>
         <Button
-          ref={ref}
+          ref={focusRef}
           variant="contained"
           color="primary"
           onClick={onClose}
@@ -52,6 +41,10 @@ const Content = styled.div`
 
 const Footer = styled.div`
   display: flex;
+  
+  & > button {
+    margin-left: auto;
+  }
 `;
 
 export default observer(AlertPopup);

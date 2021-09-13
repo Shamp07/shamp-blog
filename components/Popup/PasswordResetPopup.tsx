@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 
 import stores from '@stores';
@@ -9,24 +9,12 @@ import * as T from '@types';
 
 const PasswordResetPopup = () => {
   const { signStore } = stores();
-  const {
-    isOpenPasswordChangeModal, togglePasswordChangeModal,
-    changePassword, passwordInfo, passwordHandleChange,
-  } = signStore;
+  const { changePassword, passwordInfo, passwordHandleChange } = signStore;
   const {
     currentPassword, changePassword: changePasswordValue, changePasswordCheck,
   } = passwordInfo;
-
-  const onClose = useCallback(() => {
-    signStore.togglePasswordChangeModal();
-  }, []);
-
   return (
-    <Modal
-      open={isOpenPasswordChangeModal}
-      onClose={onClose}
-      title="비밀번호 변경"
-    >
+    <Modal title="비밀번호 변경">
       <div>
         <TextField
           label="현재 비밀번호"
@@ -54,14 +42,6 @@ const PasswordResetPopup = () => {
         <br />
       </div>
       <div>
-        <Button
-          size={T.ButtonSize.MEDIUM}
-          color="default"
-          variant="contained"
-          onClick={togglePasswordChangeModal}
-        >
-          취소
-        </Button>
         <Button
           size={T.ButtonSize.MEDIUM}
           variant="contained"
