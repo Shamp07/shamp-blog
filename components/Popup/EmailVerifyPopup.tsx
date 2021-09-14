@@ -10,21 +10,10 @@ import * as T from '@types';
 
 const EmailVerifyPopup = () => {
   const { signStore } = stores();
-  const {
-    isOpenEmailModal, emailVerifyCode,
-    verifyHandleChange, verifyCode,
-  } = signStore;
-
-  const onClose = useCallback(() => {
-    signStore.toggleEmailModal();
-  }, []);
+  const { emailVerifyCode, verifyHandleChange, verifyCode } = signStore;
 
   return (
-    <Modal
-      open={isOpenEmailModal}
-      onClose={onClose}
-      title="이메일 인증"
-    >
+    <Modal title="이메일 인증">
       <ContentWrapper>
         <div>
           입력하신 이메일로 인증번호가 전송되었습니다.

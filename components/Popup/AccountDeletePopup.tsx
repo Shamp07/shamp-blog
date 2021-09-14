@@ -1,57 +1,64 @@
 import React, { useCallback, ChangeEvent } from 'react';
-import { observer } from 'mobx-react-lite';
+import {observer, useLocalObservable} from 'mobx-react-lite';
 
 import stores from '@stores';
 import Button from '@atoms/Button';
 import Modal from '@atoms/Modal';
 import TextField from '@atoms/TextField';
 import * as T from '@types';
+import styled from "@emotion/styled";
 
 const AccountDeletePopup = () => {
-  const { signStore } = stores();
-  const { isOpenDeleteUserModal, deleteUserInfo, deleteUser } = signStore;
-  const { deleteEmail, deleteText } = deleteUserInfo;
+  const { signStore, utilStore } = stores();
 
-  const onClose = useCallback(() => {
-    signStore.toggleDeleteUserModal();
-  }, []);
+  const form = useLocalObservable(() => ({
+    values: {
+      email: '',
+      text: '',
+    },
+    onChange(event: ChangeEvent<HTMLInputElement>) {
+      this.values = {
+        ...this.values,
+        [event.target.name]: event.target.value,
+      };
+    },
+  }));
 
   const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    signStore.deleteUserHandleChange(event);
+    form.onChange(event);
   }, []);
 
   const onDelete = useCallback(() => {
-    signStore.deleteUser();
+    signStore.deleteUser(form.values.email);
+  }, [form.values.email]);
+
+  const onClose = useCallback(() => {
+    utilStore.closePopup();
   }, []);
 
   return (
-    <Modal
-      open={isOpenDeleteUserModal}
-      onClose={onClose}
-      title="회원 탈퇴"
-    >
-      <div>
+    <Modal title="회원 탈퇴">
+      <Content>
         <div>본인의 이메일과 아래의 내용과 동일하게 적어주세요.</div>
-        <br />
         <TextField
           label="e-mail"
           onChange={onChange}
-          value={deleteEmail}
-          name="deleteEmail"
+          value={form.values.email}
+          name="email"
         />
         <TextField
           label="'계정을 삭제하겠습니다' 라고 적어주세요."
           onChange={onChange}
-          value={deleteText}
-          name="deleteText"
+          value={form.values.text}
+          name="text"
         />
-      </div>
-      <div>
+      </Content>
+      <Footer>
         <Button
           size={T.ButtonSize.MEDIUM}
           variant="contained"
           color="default"
-          onClick={onDelete}
+          onClick={onClose}
         >
           취소
         </Button>
@@ -59,14 +66,29 @@ const AccountDeletePopup = () => {
           size={T.ButtonSize.MEDIUM}
           variant="contained"
           color="primary"
-          onClick={deleteUser}
-          disabled={deleteText !== '계정을 삭제하겠습니다'}
+          onClick={onDelete}
+          disabled={form.values.text !== '계정을 삭제하겠습니다'}
         >
           탈퇴하기
         </Button>
-      </div>
+      </Footer>
     </Modal>
   );
 };
+
+const Content = styled.div`
+  & > div {
+    margin-bottom: 10px;
+  }
+`;
+
+const Footer = styled.footer`
+  display: flex;
+  padding: 20px 0 10px;
+  
+  & > button:last-of-type {
+    margin-left: auto;
+  }
+`;
 
 export default observer(AccountDeletePopup);

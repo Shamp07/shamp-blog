@@ -10,32 +10,20 @@ import utilStore from './utilStore';
 export interface SignStore {
   cookieChecked: boolean;
   userData: T.User | null;
-  passwordInfo: {
-    currentPassword: string;
-    changePassword: string;
-    changePasswordCheck: string;
-  };
-  deleteUserInfo: {
-    deleteEmail: string;
-    deleteText: string;
-  };
   emailVerifyCode: string;
-  passwordHandleChange(event: ChangeEvent<HTMLInputElement>): void;
-  deleteUserHandleChange(event: ChangeEvent<HTMLInputElement>): void;
-  verifyHandleChange(event: ChangeEvent<HTMLInputElement>): void;
   cookieCheck(): void;
-  signIn(signInForm: {
+  signIn(form: {
     email: string;
     password: string;
   }): void;
-  signUp(signUpForm: {
+  signUp(fom: {
     email: string;
     name: string;
     password: string;
     passwordCheck: string;
   }): void;
   changePassword(): void;
-  deleteUser(): void;
+  deleteUser(email: string): void;
   verifyEmail(isFromRegister: boolean): void;
   verifyCode(): void;
   logout(isChangePassword: boolean): void;
@@ -44,28 +32,11 @@ export interface SignStore {
 const signStore: SignStore = {
   cookieChecked: false,
   userData: null,
-  passwordInfo: {
-    currentPassword: '',
-    changePassword: '',
-    changePasswordCheck: '',
-  },
   deleteUserInfo: {
     deleteEmail: '',
     deleteText: '',
   },
   emailVerifyCode: '',
-  passwordHandleChange(event) {
-    this.passwordInfo = {
-      ...this.passwordInfo,
-      [event.target.name]: event.target.value,
-    };
-  },
-  deleteUserHandleChange(event) {
-    this.deleteUserInfo = {
-      ...this.deleteUserInfo,
-      [event.target.name]: event.target.value,
-    };
-  },
   verifyHandleChange(event) {
     this.emailVerifyCode = event.target.value;
   },
