@@ -32,10 +32,6 @@ export interface SignStore {
 const signStore: SignStore = {
   cookieChecked: false,
   userData: null,
-  deleteUserInfo: {
-    deleteEmail: '',
-    deleteText: '',
-  },
   emailVerifyCode: '',
   verifyHandleChange(event) {
     this.emailVerifyCode = event.target.value;
@@ -105,24 +101,24 @@ const signStore: SignStore = {
         const { code, message } = response.data;
         if (code === 1) {
           this.logout(true);
-          this.togglePasswordChangeModal();
         }
-        alertStore.toggleAlertModal(message);
+        utilStore.openPopup(T.Popup.ALERT, message);
       },
     });
   },
-  deleteUser() {
+  deleteUser(email) {
     Axios({
       method: T.RequestMethod.DELETE,
       url: '/api/user',
-      data: this.deleteUserInfo,
+      data: {
+        email,
+      },
       success: (response) => {
         const { code, message } = response.data;
         if (code === 1) {
-          this.toggleDeleteUserModal();
           this.logout(true);
         }
-        alertStore.toggleAlertModal(message);
+        utilStore.openPopup(T.Popup.ALERT, message);
       },
     });
   },
@@ -130,14 +126,16 @@ const signStore: SignStore = {
     Axios({
       method: T.RequestMethod.PUT,
       url: '/api/user/verify',
-      data: { email: this.registerInfo.email },
+      data: {
+        email: this.registerInfo.email
+      },
       success: () => {
         if (isFromRegister) {
           this.toggleRegisterModal();
         } else {
           this.toggleSignModal();
         }
-        this.toggleEmailModal();
+        utilStore.openPopup(T.Popup.EMAIL_VERIFY);
       },
     });
   },

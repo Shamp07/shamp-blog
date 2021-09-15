@@ -1,12 +1,12 @@
 import React, { useCallback, ChangeEvent } from 'react';
-import {observer, useLocalObservable} from 'mobx-react-lite';
+import { observer, useLocalObservable } from 'mobx-react-lite';
+import styled from '@emotion/styled';
 
 import stores from '@stores';
 import Button from '@atoms/Button';
 import Modal from '@atoms/Modal';
 import TextField from '@atoms/TextField';
 import * as T from '@types';
-import styled from "@emotion/styled";
 
 const AccountDeletePopup = () => {
   const { signStore, utilStore } = stores();
@@ -47,7 +47,7 @@ const AccountDeletePopup = () => {
           name="email"
         />
         <TextField
-          label="'계정을 삭제하겠습니다' 라고 적어주세요."
+          label="'계정을 삭제하겠습니다' 를 입력해주세요"
           onChange={onChange}
           value={form.values.text}
           name="text"

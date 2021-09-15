@@ -65,17 +65,17 @@ const addUser = async (request: T.NextApiRequestToken, response: NextApiResponse
 };
 
 const deleteUser = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
-  const { deleteEmail } = request.query;
+  const { email: emailText } = request.query;
   const { email, id } = request.decodedToken;
 
-  if (email !== deleteEmail) {
+  if (email !== emailText) {
     response.json({
       success: true,
       code: 2,
       message: '이메일이 올바르지 않습니다.',
     });
   } else {
-    const values = [deleteEmail, id];
+    const values = [emailText, id];
 
     await Database.execute(
       (database: Client) => database.query(
