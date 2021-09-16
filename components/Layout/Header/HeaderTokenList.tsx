@@ -27,7 +27,7 @@ const HeaderTokenList = () => {
   }, []);
 
   const onToggleDelete = useCallback(() => {
-    utilStore.openPopup(T.Popup.ACCOUNT_DELETE);
+    utilStore.openPopup(T.Popup.CONFIRM, 'ㅎㅇ', () => console.log('앙기모띠!'));
   }, []);
 
   const onProfile = useCallback((event: MouseEvent<HTMLElement>) => {

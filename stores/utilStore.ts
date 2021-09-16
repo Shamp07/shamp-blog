@@ -12,10 +12,9 @@ export interface UtilStore {
   };
   headerMenu: string | null;
   headerMenuElement: Element | null;
-  isOpenConfirmModal: boolean;
   openPopup(type: T.Popup, description?: string, callback?: (() => void) | undefined): void;
   closePopup(): void;
-  callFunction(callback: (() => void) | undefined): void;
+  confirm(callback: (() => void) | undefined): void;
   openHeaderMenu(event: MouseEvent<HTMLElement>): void;
   closeHeaderMenu(): void;
 }
@@ -28,17 +27,15 @@ const utilStore: UtilStore = {
   },
   headerMenu: null,
   headerMenuElement: null,
-  isOpenConfirmModal: false,
   openPopup(type, description, callback) {
     this.popup = { type, description, callback };
   },
   closePopup() {
     this.popup.type = undefined;
   },
-
-  callFunction(callback) {
+  confirm(callback) {
     if (callback) callback();
-    this.closeConfirmModal();
+    this.closePopup();
   },
   openHeaderMenu(event) {
     if (!this.headerMenu) {

@@ -11,21 +11,18 @@ export interface Props {
 
 const FootprintNormalMenu = ({ data }: Props) => {
   const { homeStore, utilStore } = stores();
-  const { setModifierFootprintId, deleteFootprint } = homeStore;
-  const { toggleConfirmModal } = utilStore;
-
   const { id, content } = data;
 
   const onDelete = useCallback(() => {
-    deleteFootprint(id);
+    homeStore.deleteFootprint(id);
   }, [id]);
 
   const onConfirm = useCallback(() => {
-    toggleConfirmModal('해당 발자취를 삭제하시겠습니까?', onDelete);
+    utilStore.openPopup(T.Popup.CONFIRM, '해당 발자취를 삭제하시겠습니까?', onDelete);
   }, []);
 
   const onModify = useCallback(() => {
-    setModifierFootprintId(id, content);
+    homeStore.setModifierFootprintId(id, content);
   }, [id, content]);
 
   return (

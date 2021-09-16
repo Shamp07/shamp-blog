@@ -1,5 +1,6 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
+import styled from '@emotion/styled';
 
 import Modal from '@atoms/Modal';
 import Button from '@atoms/Button';
@@ -8,46 +9,51 @@ import * as T from '@types';
 
 const ConfirmPopup = () => {
   const { utilStore } = stores();
-  const {
-    isOpenConfirmModal, callback,
-    text, callFunction,
-  } = utilStore;
+  const { popup } = utilStore;
+  const { description, callback } = popup;
 
-  const call = useCallback(() => {
-    callFunction(callback);
-  }, []);
-
-  const onClose = useCallback(() => {
-    utilStore.closeConfirmModal();
-  }, []);
+  const onClose = () => utilStore.closePopup();
+  const onConfirm = () => utilStore.confirm(callback);
 
   return (
     <Modal title="알림">
-      <div>
-        {text}
-      </div>
-      <div>
-        <span>
-          <Button
-            size={T.ButtonSize.MEDIUM}
-            variant="contained"
-            onClick={onClose}
-            color="default"
-          >
-            취소
-          </Button>
-          <Button
-            size={T.ButtonSize.MEDIUM}
-            variant="contained"
-            onClick={call}
-            color="primary"
-          >
-            확인하기
-          </Button>
-        </span>
-      </div>
+      <Content>
+        {description}
+      </Content>
+      <Footer>
+        <Button
+          size={T.ButtonSize.MEDIUM}
+          variant="contained"
+          onClick={onConfirm}
+          color="primary"
+        >
+          확인
+        </Button>
+        <Button
+          size={T.ButtonSize.MEDIUM}
+          variant="contained"
+          onClick={onClose}
+          color="default"
+        >
+          취소
+        </Button>
+      </Footer>
     </Modal>
   );
 };
+
+const Content = styled.div`
+  padding: 20px 15px 20px 0;
+  margin-bottom: 10px;
+`;
+
+const Footer = styled.div`
+  display: flex;
+
+  & > button:first-of-type {
+    margin-left: auto;
+    margin-right: 5px;
+  }
+`;
 
 export default observer(ConfirmPopup);
