@@ -1,4 +1,3 @@
-import { ChangeEvent } from 'react';
 import { observable } from 'mobx';
 import cookie from 'js-cookie';
 
@@ -10,7 +9,6 @@ import utilStore from './utilStore';
 export interface SignStore {
   cookieChecked: boolean;
   userData: T.User | null;
-  emailVerifyCode: string;
   cookieCheck(): void;
   signIn(form: {
     email: string;
@@ -25,17 +23,13 @@ export interface SignStore {
   changePassword(): void;
   deleteUser(email: string): void;
   verifyEmail(isFromRegister: boolean): void;
-  verifyCode(): void;
+  verifyCode(email: string, code: string): void;
   logout(isChangePassword: boolean): void;
 }
 
 const signStore: SignStore = {
   cookieChecked: false,
   userData: null,
-  emailVerifyCode: '',
-  verifyHandleChange(event) {
-    this.emailVerifyCode = event.target.value;
-  },
   cookieCheck() {
     Axios({
       method: T.RequestMethod.GET,
@@ -127,7 +121,7 @@ const signStore: SignStore = {
       method: T.RequestMethod.PUT,
       url: '/api/user/verify',
       data: {
-        email: this.registerInfo.email
+        email: this.registerInfo.email,
       },
       success: () => {
         if (isFromRegister) {
@@ -139,23 +133,17 @@ const signStore: SignStore = {
       },
     });
   },
-  verifyCode() {
+  verifyCode(email, code) {
     Axios({
       method: T.RequestMethod.PUT,
       url: '/api/user/verify/code',
       data: {
-        email: this.registerInfo.email,
-        code: this.emailVerifyCode,
-      },
-      success: (response) => {
-        const { code } = response.data;
-        if (code === 1) {
-          this.toggleEmailModal();
-        }
+        email,
+        code,
       },
       complete: (response) => {
         const { message } = response.data;
-        alertStore.toggleAlertModal(message);
+        utilStore.openPopup(T.Popup.ALERT, message);
       },
     });
   },

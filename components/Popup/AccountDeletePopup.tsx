@@ -69,7 +69,7 @@ const AccountDeletePopup = () => {
           onClick={onDelete}
           disabled={form.values.text !== '계정을 삭제하겠습니다'}
         >
-          탈퇴하기
+          탈퇴
         </Button>
       </Footer>
     </Modal>
@@ -77,6 +77,8 @@ const AccountDeletePopup = () => {
 };
 
 const Content = styled.div`
+  padding: 20px 0;
+  
   & > div {
     margin-bottom: 10px;
   }
@@ -84,7 +86,6 @@ const Content = styled.div`
 
 const Footer = styled.footer`
   display: flex;
-  padding: 20px 0 10px;
   
   & > button:last-of-type {
     margin-left: auto;

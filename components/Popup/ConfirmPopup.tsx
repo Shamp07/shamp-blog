@@ -43,13 +43,13 @@ const ConfirmPopup = () => {
 };
 
 const Content = styled.div`
-  padding: 20px 15px 20px 0;
+  padding: 20px 0;
   margin-bottom: 10px;
 `;
 
 const Footer = styled.div`
   display: flex;
-
+  
   & > button:first-of-type {
     margin-left: auto;
     margin-right: 5px;

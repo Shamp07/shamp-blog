@@ -27,7 +27,7 @@ const AlertPopup = () => {
           onClick={onClose}
           size={T.ButtonSize.MEDIUM}
         >
-          확인하기
+          확인
         </Button>
       </Footer>
     </Modal>
@@ -35,7 +35,7 @@ const AlertPopup = () => {
 };
 
 const Content = styled.div`
-  padding: 20px 15px 20px 0;
+  padding: 20px 0;
   margin-bottom: 10px;
 `;
 
