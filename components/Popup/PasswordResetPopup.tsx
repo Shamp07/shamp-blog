@@ -1,58 +1,103 @@
-import React from 'react';
-import { observer } from 'mobx-react-lite';
+import React, {ChangeEvent, useCallback} from 'react';
+import { observer, useLocalObservable } from 'mobx-react-lite';
+import styled from '@emotion/styled';
 
 import stores from '@stores';
 import Modal from '@atoms/Modal';
 import Button from '@atoms/Button';
 import TextField from '@atoms/TextField';
 import * as T from '@types';
+import { passwordValidator } from '@utilities/validators';
 
 const PasswordResetPopup = () => {
-  const { signStore } = stores();
-  const { changePassword, passwordInfo, passwordHandleChange } = signStore;
-  const {
-    currentPassword, changePassword: changePasswordValue, changePasswordCheck,
-  } = passwordInfo;
+  const { signStore, utilStore } = stores();
+
+  const form = useLocalObservable(() => ({
+    values: {
+      currentPassword: '',
+      password: '',
+      passwordCheck: '',
+    },
+    onChange(event: ChangeEvent<HTMLInputElement>) {
+      this.values = {
+        ...this.values,
+        [event.target.name]: event.target.value,
+      };
+    },
+    onValidate() {
+      const { password, passwordCheck } = this.values;
+      return passwordValidator(password, passwordCheck);
+    },
+  }));
+
+  const onChange = useCallback(() => {
+    if (!form.onValidate()) return;
+
+    const { currentPassword, password } = form.values;
+    signStore.resetPassword(currentPassword, password);
+  }, [form.values.currentPassword, form.values.password]);
+
   return (
     <Modal title="비밀번호 변경">
-      <div>
+      <Content>
         <TextField
           label="현재 비밀번호"
-          onChange={passwordHandleChange}
-          value={currentPassword}
+          onChange={form.onChange}
+          value={form.values.currentPassword}
           name="currentPassword"
           type="password"
         />
         <br />
         <TextField
           label="변경할 비밀번호"
-          onChange={passwordHandleChange}
-          value={changePasswordValue}
-          name="changePassword"
+          onChange={form.onChange}
+          value={form.values.password}
+          name="password"
           type="password"
         />
         <br />
         <TextField
           label="변경할 비밀번호 확인"
-          onChange={passwordHandleChange}
-          value={changePasswordCheck}
-          name="changePasswordCheck"
+          onChange={form.onChange}
+          value={form.values.passwordCheck}
+          name="passwordCheck"
           type="password"
         />
         <br />
-      </div>
-      <div>
+      </Content>
+      <Footer>
         <Button
           size={T.ButtonSize.MEDIUM}
           variant="contained"
           color="primary"
-          onClick={changePassword}
+          onClick={onChange}
         >
-          변경하기
+          변경
         </Button>
-      </div>
+      </Footer>
     </Modal>
   );
 };
+
+const Content = styled.div`
+  padding: 20px 0;
+  margin-bottom: 10px;
+  word-break: keep-all;
+
+  & .MuiInputBase-root {
+    border-radius: 10px;
+  }
+  & > div {
+    margin-bottom: 10px;
+  }
+`;
+
+const Footer = styled.div`
+  display: flex;
+  
+  & > button {
+    margin-left: auto;
+  }
+`;
 
 export default observer(PasswordResetPopup);

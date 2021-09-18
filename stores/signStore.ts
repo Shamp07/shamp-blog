@@ -3,7 +3,6 @@ import cookie from 'js-cookie';
 
 import Axios from '@utilities/axios';
 import * as T from '@types';
-import alertStore from './alertStore';
 import utilStore from './utilStore';
 
 export interface SignStore {
@@ -20,11 +19,11 @@ export interface SignStore {
     password: string;
     passwordCheck: string;
   }): void;
-  changePassword(): void;
+  resetPassword(currentPassword: string, password: string): void;
   deleteUser(email: string): void;
   verifyEmail(isFromRegister: boolean): void;
   verifyCode(email: string, code: string): void;
-  logout(isChangePassword: boolean): void;
+  logout(openAlert: boolean): void;
 }
 
 const signStore: SignStore = {
@@ -81,20 +80,18 @@ const signStore: SignStore = {
       },
     });
   },
-  changePassword() {
-    // const { changePassword, changePasswordCheck } = this.passwordInfo;
-    // if (!this.passwordCheck(changePassword, changePasswordCheck)) {
-    //   return;
-    // }
-
+  resetPassword(currentPassword: string, password: string) {
     Axios({
       method: T.RequestMethod.PUT,
       url: '/api/user/password',
-      data: this.passwordInfo,
+      data: {
+        currentPassword,
+        password,
+      },
       success: (response) => {
         const { code, message } = response.data;
         if (code === 1) {
-          this.logout(true);
+          this.logout(false);
         }
         utilStore.openPopup(T.Popup.ALERT, message);
       },
@@ -147,13 +144,13 @@ const signStore: SignStore = {
       },
     });
   },
-  logout(isChangePassword: boolean) {
+  logout(openAlert: boolean) {
     utilStore.closeHeaderMenu();
 
     cookie.remove('token');
     this.userData = null;
-    if (!isChangePassword) {
-      alertStore.toggleAlertModal('로그아웃 되었습니다.');
+    if (openAlert) {
+      utilStore.openPopup(T.Popup.ALERT, '로그아웃 되었습니다.');
     }
   },
 };

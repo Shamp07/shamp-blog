@@ -12,7 +12,7 @@ const handler = async (request: T.NextApiRequestToken, response: NextApiResponse
   await cors(request, response);
   if (request.method === T.RequestMethod.PUT) {
     const { id } = request.decodedToken;
-    const { currentPassword, changePassword } = request.body;
+    const { currentPassword, password } = request.body;
     const values = [id];
     await Database.execute(
       (database: Client) => database.query(
@@ -39,7 +39,7 @@ const handler = async (request: T.NextApiRequestToken, response: NextApiResponse
           }
 
           const salt = String(Math.round((new Date().valueOf() * Math.random())));
-          const hashPassword = crypto.createHash('sha512').update(changePassword + salt).digest('hex');
+          const hashPassword = crypto.createHash('sha512').update(password + salt).digest('hex');
           const values3 = [hashPassword, salt, id];
 
           return database.query(
