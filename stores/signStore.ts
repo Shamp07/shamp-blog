@@ -21,7 +21,7 @@ export interface SignStore {
   }): void;
   resetPassword(currentPassword: string, password: string): void;
   deleteUser(email: string): void;
-  verifyEmail(isFromRegister: boolean): void;
+  verifyEmail(email: string): void;
   verifyCode(email: string, code: string): void;
   logout(openAlert: boolean): void;
 }
@@ -73,7 +73,7 @@ const signStore: SignStore = {
       success: (response) => {
         const { code, message } = response.data;
         if (code === 1) {
-          this.verifyEmail(true);
+          this.verifyEmail(signUpForm.email);
         } else {
           utilStore.openPopup(T.Popup.ALERT, message);
         }
@@ -113,19 +113,14 @@ const signStore: SignStore = {
       },
     });
   },
-  verifyEmail(isFromRegister) {
+  verifyEmail(email: string) {
     Axios({
       method: T.RequestMethod.PUT,
       url: '/api/user/verify',
       data: {
-        email: this.registerInfo.email,
+        email,
       },
       success: () => {
-        if (isFromRegister) {
-          this.toggleRegisterModal();
-        } else {
-          this.toggleSignModal();
-        }
         utilStore.openPopup(T.Popup.EMAIL_VERIFY);
       },
     });

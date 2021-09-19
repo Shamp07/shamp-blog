@@ -30,7 +30,7 @@ const SignUpPopup = () => {
         email, name, password, passwordCheck,
       } = this.values;
 
-      if (emailValidator(email)) {
+      if (!email.trim() || !emailValidator(email)) {
         utilStore.openPopup(T.Popup.ALERT, '이메일을 제대로 입력해주세요');
         return false;
       }
@@ -39,12 +39,7 @@ const SignUpPopup = () => {
         return false;
       }
 
-      if (!passwordValidator(password, passwordCheck)) {
-        utilStore.openPopup(T.Popup.ALERT, '비밀번호를 제대로 입력해주세요');
-        return false;
-      }
-
-      return true;
+      return passwordValidator(password, passwordCheck);
     },
   }));
 

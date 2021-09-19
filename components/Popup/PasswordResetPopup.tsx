@@ -25,7 +25,13 @@ const PasswordResetPopup = () => {
       };
     },
     onValidate() {
-      const { password, passwordCheck } = this.values;
+      const { currentPassword, password, passwordCheck } = this.values;
+
+      if (!currentPassword.trim()) {
+        utilStore.openPopup(T.Popup.ALERT, '현재 비밀번호를 제대로 입력해주세요');
+        return false;
+      }
+
       return passwordValidator(password, passwordCheck);
     },
   }));
