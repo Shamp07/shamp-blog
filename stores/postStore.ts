@@ -4,7 +4,7 @@ import { NextRouter } from 'next/dist/next-server/lib/router/router';
 
 import Axios from '@utilities/axios';
 import * as T from '@types';
-import alertStore from './alertStore';
+import utilStore from './utilStore';
 
 export interface PostStore {
   post: T.Post | undefined;
@@ -14,8 +14,8 @@ export interface PostStore {
   movePage(router: NextRouter, page: number): void;
   clearPost(): void;
   addPost(router: NextRouter): void;
-  getPostList(category: string, tag: string, page: number): void;
-  getPost(id: number, isModify: boolean): void;
+  getPostList(category: string, tag: string, page: number): Promise<void>;
+  getPost(id: number, isModify: boolean): Promise<void>;
   modifyPost(router: NextRouter): void;
   deletePost(id: number, router: NextRouter): void;
   addPostLike(postId: number): void;
@@ -113,7 +113,7 @@ const postStore: PostStore = {
         const { code } = response.data;
         if (code === 2) {
           const { message } = response.data;
-          alertStore.toggleAlertModal(message);
+          utilStore.openPopup(T.Popup.ALERT, message);
         }
         this.getPost(postId, false);
       },

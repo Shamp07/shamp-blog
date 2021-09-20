@@ -18,7 +18,6 @@ const BoardPost = ({ data }: Props) => {
   if (!router.query.board) return null;
 
   const { sidebarStore } = stores();
-  const { getCategoryName } = sidebarStore;
   const {
     id, title, category,
     commentCnt, tag, time, likeCnt,
@@ -37,7 +36,7 @@ const BoardPost = ({ data }: Props) => {
     ) : null
   ), [isExistComment]);
 
-  const CategoryName = useMemo(() => getCategoryName(category), [category]);
+  const CategoryName = useMemo(() => sidebarStore.getCategoryName(category), [category]);
 
   return (
     <Article>

@@ -15,13 +15,12 @@ const Category = ({ path, name, isBoard }: Props) => {
   const router = useRouter();
 
   const { sidebarStore } = stores();
-  const { toggleSidebar } = sidebarStore;
 
   const baseUrl = isBoard ? '/category' : '';
   const currentPath = (isBoard && router.query.board) ? router.query.board[0] : router.asPath.replace('/', '');
 
   return (
-    <CategoryList isActive={currentPath === path} onClick={toggleSidebar}>
+    <CategoryList isActive={currentPath === path}>
       <Link href={`${baseUrl}/${path}`}>{name}</Link>
     </CategoryList>
   );

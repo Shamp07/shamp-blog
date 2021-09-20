@@ -14,12 +14,12 @@ import AlertList from './Alert/AlertList';
 const HeaderTokenList = () => {
   const { signStore, utilStore, alertStore } = stores();
   const {
-    headerMenu, headerMenuElement, closeHeaderMenu,
+    headerMenu, headerMenuElement,
   } = utilStore;
   const { alertNotReadSize, alertLoading } = alertStore;
 
   const onLogout = useCallback(() => {
-    signStore.logout(false);
+    signStore.logout(true);
   }, []);
 
   const onTogglePassword = useCallback(() => {
@@ -34,7 +34,7 @@ const HeaderTokenList = () => {
     utilStore.openHeaderMenu(event);
   }, []);
 
-  const onProfileClose = useCallback(() => {
+  const onClose = useCallback(() => {
     utilStore.closeHeaderMenu();
   }, []);
 
@@ -48,7 +48,7 @@ const HeaderTokenList = () => {
           anchorEl={headerMenuElement}
           keepMounted
           open={headerMenu === 'profile'}
-          onClose={onProfileClose}
+          onClose={onClose}
         >
           <MenuItem onClick={onLogout}>로그아웃</MenuItem>
           <MenuItem onClick={onTogglePassword}>비밀번호 변경</MenuItem>
@@ -64,7 +64,7 @@ const HeaderTokenList = () => {
           anchorEl={headerMenuElement}
           keepMounted
           open={headerMenu === 'alert'}
-          onClose={closeHeaderMenu}
+          onClose={onClose}
         >
           <MenuItem>알림 목록</MenuItem>
           {alertLoading ? <AlertSpinner /> : <AlertList />}

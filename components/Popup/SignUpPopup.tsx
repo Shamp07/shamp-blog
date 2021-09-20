@@ -12,7 +12,7 @@ import { emailValidator, passwordValidator } from '@utilities/validators';
 
 const SignUpPopup = () => {
   const { signStore, utilStore } = stores();
-  const signUpForm = useLocalObservable(() => ({
+  const form = useLocalObservable(() => ({
     values: {
       email: '',
       name: '',
@@ -44,9 +44,9 @@ const SignUpPopup = () => {
   }));
 
   const onRegister = useCallback(() => {
-    if (!signUpForm.onValidate()) return;
+    if (!form.onValidate()) return;
 
-    signStore.signUp(signUpForm.values);
+    signStore.signUp(form.values);
   }, []);
 
   const focusRef = useCallback((node: HTMLDivElement) => {
@@ -61,31 +61,31 @@ const SignUpPopup = () => {
           label="e-mail"
           name="email"
           type="email"
-          onChange={signUpForm.onChange}
-          value={signUpForm.values.email}
+          onChange={form.onChange}
+          value={form.values.email}
           helperText="이메일로 인증을 진행하니 사용 중인 이메일을 적어주세요!"
         />
         <TextField
           label="이름"
           name="name"
-          onChange={signUpForm.onChange}
-          value={signUpForm.values.name}
+          onChange={form.onChange}
+          value={form.values.name}
           helperText="블로그에서 사용할 이름을 적어주세요."
         />
         <TextField
           label="비밀번호"
           name="password"
           type="password"
-          value={signUpForm.values.password}
-          onChange={signUpForm.onChange}
+          value={form.values.password}
+          onChange={form.onChange}
           helperText="8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요."
         />
         <TextField
           label="비밀번호 확인"
           name="passwordCheck"
           type="password"
-          value={signUpForm.values.passwordCheck}
-          onChange={signUpForm.onChange}
+          value={form.values.passwordCheck}
+          onChange={form.onChange}
           helperText="비밀번호와 동일하게 입력해주세요."
         />
         <Description>

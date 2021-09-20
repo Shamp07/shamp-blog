@@ -10,19 +10,18 @@ import * as T from '@types';
 const ArticleFooter = () => {
   const router = useRouter();
   const { postStore, utilStore, signStore } = stores();
-  const { postView, deletePost } = postStore;
+  const { postView } = postStore;
   if (!postView) return null;
 
   const { id } = postView;
-  const { toggleConfirmModal } = utilStore;
   const { userData } = signStore;
 
   const onDelete = useCallback(() => {
-    deletePost(id, router);
+    postStore.deletePost(id, router);
   }, []);
 
   const onDeleteConfirm = useCallback(() => {
-    toggleConfirmModal('해당 게시글을 삭제하시겠습니까?', onDelete);
+    utilStore.openPopup(T.Popup.CONFIRM, '해당 게시글을 삭제하시겠습니까?', onDelete);
   }, []);
 
   const onModify = useCallback(() => {

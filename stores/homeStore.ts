@@ -1,25 +1,18 @@
-import { ChangeEvent } from 'react';
 import { observable } from 'mobx';
 
 import Axios from '@utilities/axios';
 import * as T from '@types';
-import alertStore from './alertStore';
 
 export interface HomeStore {
   recentlyPostList: T.RecentPost[];
   noticePostList: T.NoticePost[];
   footprintList: T.FootPrint[];
   footprintSize: number;
-  footprintInfo: {
-    footprint: string;
-    modifierFootprint: string;
-  };
   modifierFootprintId: number;
   setModifierFootprintId(id: number, content: string): void;
-  footprintHandleChange(event: ChangeEvent<HTMLTextAreaElement>): void;
   getRecentlyPostList(): Promise<void>;
   getNoticePostList(): Promise<void>;
-  addFootprint(): void;
+  addFootprint(footprint: string): void;
   moreFootprint(): void;
   getFootprint(): Promise<void>;
   modifyFootprint(id: number): void;
@@ -31,22 +24,10 @@ const homeStore: HomeStore = {
   noticePostList: [],
   footprintList: [],
   footprintSize: 20,
-  footprintInfo: {
-    footprint: '',
-    modifierFootprint: '',
-  },
   modifierFootprintId: 0,
   setModifierFootprintId(id, content) {
     this.modifierFootprintId = id;
     this.footprintInfo.modifierFootprint = content;
-  },
-  footprintHandleChange(event) {
-    if (event.target.value.length <= 1000) {
-      this.footprintInfo = {
-        ...this.footprintInfo,
-        [event.target.name]: event.target.value,
-      };
-    }
   },
   async getRecentlyPostList() {
     await Axios({
@@ -68,21 +49,15 @@ const homeStore: HomeStore = {
       },
     });
   },
-  addFootprint() {
-    if (!this.footprintInfo.footprint.trim()) {
-      alertStore.toggleAlertModal('발자취 내용을 입력해주세요!');
-      return;
-    }
-
+  addFootprint(footprint: string) {
     Axios({
       method: T.RequestMethod.POST,
       url: '/api/footprint',
       data: {
-        content: this.footprintInfo.footprint,
+        content: footprint,
       },
       success: () => {
         this.getFootprint();
-        this.footprintInfo.footprint = '';
       },
     });
   },

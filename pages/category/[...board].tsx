@@ -1,24 +1,24 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { NextPageContext } from 'next';
 
-import * as T from '@types';
 import stores from '@stores';
-import BoardHead from '../../components/board/BoardHead';
-import BoardContent from '../../components/board/BoardContent';
-import BoardPagination from '../../components/board/BoardPagination';
-import PostView from '../../components/PostView';
-import {NextPageContext} from "next";
+import * as T from '@types';
+import BoardHead from '@components/board/BoardHead';
+import BoardContent from '@components/board/BoardContent';
+import BoardPagination from '@components/board/BoardPagination';
+import PostView from '@components/PostView';
 
 const Board = () => {
   const router = useRouter();
   if (!router.query.board) return null;
 
-  const { alertStore, sidebarStore } = stores();
-  const { toggleAlertModal } = alertStore;
-  const { boardCategoryName } = sidebarStore;
+  const { utilStore, sidebarStore } = stores();
 
-  if (!boardCategoryName[router.query.board[0]]) {
-    router.push('/').then(() => toggleAlertModal('존재하지 않는 게시판입니다.'));
+  if (!sidebarStore.getCategoryName(router.query.board[0])) {
+    router.push('/').then(() => {
+      utilStore.openPopup(T.Popup.ALERT, '존재하지 않는 게시판입니다.');
+    });
     return null;
   }
 

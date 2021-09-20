@@ -9,7 +9,6 @@ import { MediaQuery } from '@styles';
 
 const ArticleHeader = () => {
   const { postStore, sidebarStore } = stores();
-  const { getCategoryName } = sidebarStore;
   const { postView } = postStore;
   if (!postView) return null;
 
@@ -31,7 +30,7 @@ const ArticleHeader = () => {
       </ArticleTitle>
       <ArticleMeta>
         <ArticleMetaLeft>
-          <li>{getCategoryName(category)}</li>
+          <li>{sidebarStore.getCategoryName(category)}</li>
           <li>{tags}</li>
           <li>
             {modifiedTime || time}

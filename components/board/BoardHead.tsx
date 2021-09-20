@@ -20,7 +20,6 @@ const BoardHead = () => {
     sidebarStore, categoryStore, signStore,
     postStore,
   } = stores();
-  const { getCategoryName } = sidebarStore;
   const { categoryTags } = categoryStore;
   const { userData } = signStore;
   const { clearPost } = postStore;
@@ -32,7 +31,7 @@ const BoardHead = () => {
   const isBestOrAll = ['best', 'all'].includes(categoryPath);
   const isBest = categoryTag === 'best';
 
-  const categoryName = useMemo(() => getCategoryName(categoryPath), [categoryPath]);
+  const categoryName = useMemo(() => sidebarStore.getCategoryName(categoryPath), [categoryPath]);
 
   const goPost = useCallback(() => {
     router.push('/post').then(clearPost);

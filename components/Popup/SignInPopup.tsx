@@ -10,7 +10,7 @@ import * as T from '@types';
 
 const SignInPopup = () => {
   const { signStore, utilStore } = stores();
-  const signInForm = useLocalObservable(() => ({
+  const form = useLocalObservable(() => ({
     values: {
       email: '',
       password: '',
@@ -24,7 +24,7 @@ const SignInPopup = () => {
   }));
 
   const onSignIn = useCallback(() => {
-    signStore.signIn(signInForm.values);
+    signStore.signIn(form.values);
   }, []);
 
   const onSignUp = useCallback(() => {
@@ -44,18 +44,18 @@ const SignInPopup = () => {
       <Content>
         <TextField
           name="email"
-          value={signInForm.values.email}
+          value={form.values.email}
           label="e-mail"
           ref={focusRef}
-          onChange={signInForm.onChange}
+          onChange={form.onChange}
           onKeyPress={onEnter}
         />
         <TextField
           type="password"
           name="password"
           label="비밀번호"
-          value={signInForm.values.password}
-          onChange={signInForm.onChange}
+          value={form.values.password}
+          onChange={form.onChange}
           onKeyPress={onEnter}
         />
       </Content>

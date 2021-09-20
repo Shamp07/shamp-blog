@@ -1,5 +1,5 @@
-import React from 'react';
-import { observer } from 'mobx-react-lite';
+import React, { ChangeEvent, useCallback } from 'react';
+import { observer, useLocalObservable } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import TextareaAutosize from 'react-textarea-autosize';
 
@@ -8,32 +8,58 @@ import * as T from '@types';
 import Button from '@atoms/Button';
 
 const FootprintWrite = () => {
-  const { homeStore } = stores();
-  const { footprintInfo, footprintHandleChange, addFootprint } = homeStore;
-  const { footprint } = footprintInfo;
+  const { homeStore, utilStore } = stores();
+
+  const form = useLocalObservable(() => ({
+    values: {
+      footprint: '',
+    },
+    onChange(event: ChangeEvent<HTMLTextAreaElement>) {
+      if (event.target.value.length > 1000) return;
+
+      this.values = {
+        ...this.values,
+        [event.target.name]: event.target.value,
+      };
+    },
+    onValidate() {
+      if (!this.values.footprint.trim()) {
+        utilStore.openPopup(T.Popup.ALERT, '발자취 내용을 입력해주세요!');
+        return false;
+      }
+
+      return true;
+    },
+  }));
+
+  const onSubmit = useCallback(() => {
+    if (!form.onValidate()) return;
+
+    homeStore.addFootprint(form.values.footprint);
+  }, [form.values.footprint]);
 
   return (
     <FootprintWriteWrapper>
       <TextareaWrapper>
         <Textarea
           rows={3}
-          onChange={footprintHandleChange}
+          onChange={form.onChange}
           name="footprint"
-          value={footprint}
+          value={form.values.footprint}
           placeholder="블로그에 관련된 건의사항이나 의견들을 자유롭게 작성해주세요!"
         />
         <Footer>
           <span>
             <span>
               (
-              {footprint.length}
+              {form.values.footprint.length}
               /1000)
             </span>
             <Button
               size={T.ButtonSize.SMALL}
               color="primary"
               variant="contained"
-              onClick={addFootprint}
+              onClick={onSubmit}
             >
               작성
             </Button>
