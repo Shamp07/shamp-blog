@@ -1,30 +1,63 @@
-import React, { useCallback } from 'react';
-import { observer } from 'mobx-react-lite';
+import React, { ChangeEvent, useCallback } from 'react';
+import { observer, useLocalObservable } from 'mobx-react-lite';
 import styled from '@emotion/styled';
+import TextareaAutosize from 'react-textarea-autosize';
 
 import stores from '@stores';
 import Button from '@atoms/Button';
 import * as T from '@types';
-import TextareaAutosize from 'react-textarea-autosize';
 
 interface Props {
   isReply: boolean;
 }
 
 const CommentWrite = ({ isReply }: Props) => {
-  const { postStore, commentStore } = stores();
+  const { postStore, commentStore, utilStore } = stores();
   const { postView } = postStore;
   if (!postView) return null;
 
   const { id } = postView;
-  const {
-    commentInfo, addComment,
-    commentHandleChange, replyCommentId,
-  } = commentStore;
-  const { comment, replyComment } = commentInfo;
+  const { replyCommentId } = commentStore;
 
-  const onAddComment = useCallback(() => {
-    addComment(id, replyCommentId, isReply);
+  const form = useLocalObservable(() => ({
+    values: {
+      comment: '',
+      reply: '',
+    },
+    onChange(event: ChangeEvent<HTMLTextAreaElement>) {
+      if (event.target.value.length > 1000) return;
+
+      this.values = {
+        ...this.values,
+        [event.target.name]: event.target.value,
+      };
+    },
+    onValidate() {
+      if (!isReply && !this.values.comment.trim()) {
+        utilStore.openPopup(T.Popup.ALERT, '댓글 내용을 입력해주세요');
+        return false;
+      }
+
+      if (isReply && !this.values.reply.trim()) {
+        utilStore.openPopup(T.Popup.ALERT, '답글 내용을 입력해주세요');
+        return false;
+      }
+
+      return true;
+    },
+  }));
+
+  const onSubmit = useCallback(() => {
+    if (!form.onValidate()) return;
+
+    commentStore.addComment(
+      id,
+      isReply ? form.values.reply : form.values.comment,
+      replyCommentId,
+      isReply,
+    );
+    if (isReply) form.values.reply = '';
+    else form.values.comment = '';
   }, []);
 
   return (
@@ -34,23 +67,23 @@ const CommentWrite = ({ isReply }: Props) => {
         <Textarea
           minRows={2}
           maxRows={50}
-          onChange={commentHandleChange}
+          onChange={form.onChange}
           name={isReply ? 'replyComment' : 'comment'}
-          value={isReply ? replyComment : comment}
+          value={isReply ? form.values.reply : form.values.comment}
           placeholder="포스팅에 관련된 의견이나 질문을 자유롭게 남겨주세요!"
         />
         <CommentWriteFooter>
           <span>
             <span>
               (
-              {isReply ? replyComment.length : comment.length}
+              {isReply ? form.values.reply.length : form.values.comment.length}
               /1000)
             </span>
             <Button
               size={T.ButtonSize.SMALL}
               color="primary"
               variant="contained"
-              onClick={onAddComment}
+              onClick={onSubmit}
             >
               작성
             </Button>

@@ -1,20 +1,17 @@
-import React, { useMemo } from 'react';
-import { observer } from 'mobx-react-lite';
+import React, { ChangeEvent, useMemo } from 'react';
+import { observer, useLocalObservable } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import TextareaAutosize from 'react-textarea-autosize';
 
 import stores from '@stores';
+import * as T from '@types';
 import CommentWrite from './CommentWrite';
 import CommentMenu from './CommentMenu';
 import { Props } from './CommentMenu/CommentNormalMenu';
 
 const CommentRow = ({ data }: Props) => {
-  const { commentStore } = stores();
-  const {
-    commentInfo,
-    replyCommentId, modifierCommentId, commentHandleChange,
-  } = commentStore;
-  const { modifierComment } = commentInfo;
+  const { commentStore, utilStore } = stores();
+  const { replyCommentId, modifierCommentId } = commentStore;
 
   const {
     id, commentId, userName,
@@ -24,6 +21,30 @@ const CommentRow = ({ data }: Props) => {
 
   const isModify = modifierCommentId === id;
   const isReply = id === replyCommentId;
+
+  const form = useLocalObservable(() => ({
+    values: {
+      comment: '',
+    },
+    setComment(value: string) {
+      this.values.comment = value;
+    },
+    onChange(event: ChangeEvent<HTMLTextAreaElement>) {
+      if (event.target.value.length > 1000) return;
+      this.values = {
+        ...this.values,
+        [event.target.name]: event.target.value,
+      };
+    },
+    onValidate() {
+      if (!this.values.comment.trim()) {
+        utilStore.openPopup(T.Popup.ALERT, '댓글 내용을 입력해주세요!');
+        return false;
+      }
+
+      return true;
+    },
+  }));
 
   const contentArea = useMemo(() => (
     <>
@@ -38,14 +59,14 @@ const CommentRow = ({ data }: Props) => {
         <Textarea
           minRows={2}
           maxRows={50}
-          onChange={commentHandleChange}
-          name="modifierComment"
-          value={modifierComment}
+          onChange={form.onChange}
+          name="comment"
+          value={form.values.comment}
           placeholder="포스팅에 관련된 의견이나 질문을 자유롭게 남겨주세요!"
         />
       </TextAreaWrapper>
     ) : contentArea
-  ), [isModify]);
+  ), [isModify, form.values.comment]);
 
   return (
     <>
@@ -59,7 +80,7 @@ const CommentRow = ({ data }: Props) => {
           <CommentContent>
             {modifyArea}
           </CommentContent>
-          <CommentMenu data={data} />
+          <CommentMenu data={data} setComment={form.setComment} />
         </CommentWrapper>
       </li>
       {isReply && <CommentWrite isReply />}

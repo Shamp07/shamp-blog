@@ -9,37 +9,36 @@ import stores from '@stores';
 
 export interface Props {
   data: T.Comment;
+  setComment(value: T.Comment['content']): void;
 }
 
-const CommentNormalMenu = ({ data }: Props) => {
+const CommentNormalMenu = ({ data, setComment }: Props) => {
   const {
-    postStore, commentStore, signStore,
-    utilStore,
+    postStore, commentStore, signStore, utilStore,
   } = stores();
   const { postView } = postStore;
   if (!postView) return null;
 
   const { id: postId } = postView;
-  const { setReplyCommentId, setModifierCommentId, deleteComment } = commentStore;
   const { userData } = signStore;
-  const { toggleConfirmModal } = utilStore;
 
   const { id, content } = data;
 
   const onDelete = useCallback(() => {
-    deleteComment(id, postId);
+    commentStore.deleteComment(id, postId);
   }, []);
 
   const onModify = useCallback(() => {
-    setModifierCommentId(id, content);
+    setComment(content);
+    commentStore.setModifierCommentId(id);
   }, []);
 
   const onReply = useCallback(() => {
-    setReplyCommentId(id);
+    commentStore.setReplyCommentId(id);
   }, []);
 
   const onDeleteConfirm = useCallback(() => {
-    toggleConfirmModal('해당 댓글을 삭제하시겠습니까?', onDelete);
+    utilStore.openPopup(T.Popup.CONFIRM, '해당 댓글을 삭제하시겠습니까?', onDelete);
   }, []);
 
   return (

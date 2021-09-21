@@ -9,31 +9,31 @@ const CommentModifyMenu = () => {
   if (!postView) return null;
 
   const { id: postId } = postView;
-  const { modifierCommentId: id, setModifierCommentId, modifyComment } = commentStore;
+  const { modifierCommentId: id } = commentStore;
 
-  const modifyCancel = useCallback(() => {
-    setModifierCommentId(0, '');
+  const onCancel = useCallback(() => {
+    commentStore.setModifierCommentId(0, '');
   }, []);
 
-  const modify = useCallback(() => {
-    modifyComment(id, postId);
-  }, []);
+  const onModify = useCallback(() => {
+    commentStore.modifyComment(id, postId);
+  }, [id, postId]);
 
   return (
     <CommentMenu>
       <span
         role="button"
         tabIndex={0}
-        onClick={modifyCancel}
-        onKeyDown={modifyCancel}
+        onClick={onCancel}
+        onKeyDown={onCancel}
       >
         취소
       </span>
       <span
         role="button"
         tabIndex={0}
-        onClick={modify}
-        onKeyDown={modify}
+        onClick={onModify}
+        onKeyDown={onModify}
       >
         수정
       </span>

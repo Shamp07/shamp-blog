@@ -7,7 +7,10 @@ import stores from '@stores';
 import * as T from '@types';
 
 import FootprintMenu from './FootprintMenu';
-import { Props } from './FootprintMenu/FootprintNormalMenu';
+
+interface Props {
+  data: T.FootPrint;
+}
 
 const FootprintRow = ({ data }: Props) => {
   const { homeStore, utilStore } = stores();

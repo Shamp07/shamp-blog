@@ -20,10 +20,9 @@ const FootprintMenu = ({ data, value, setFootprint }: Props) => {
   const isMine = userData?.id === userId;
 
   if (!isMine) return null;
+  if (id === modifierFootprintId) return <FootprintModifyMenu value={value} />;
 
-  return id === modifierFootprintId
-    ? <FootprintModifyMenu value={value} />
-    : <FootprintNormalMenu data={data} setFootprint={setFootprint} />;
+  return <FootprintNormalMenu data={data} setFootprint={setFootprint} />;
 };
 
 export default observer(FootprintMenu);

@@ -3,7 +3,6 @@ import { observable } from 'mobx';
 
 import Axios from '@utilities/axios';
 import * as T from '@types';
-import alertStore from './alertStore';
 import postStore from './postStore';
 
 export interface CommentStore {
@@ -13,9 +12,9 @@ export interface CommentStore {
   modifierCommentId: number;
   replyCommentId: number;
   commentHandleChange(event: ChangeEvent<HTMLTextAreaElement>): void;
-  setModifierCommentId(id: number, content: string): void;
+  setModifierCommentId(id: number): void;
   setReplyCommentId(id: number): void;
-  addComment(postId: number, commentId: number, isReply: boolean): void;
+  addComment(postId: number, comment: string, commentId: number, isReply: boolean): void;
   moreComment(postId: number): void;
   getComment(postId: number): Promise<void>;
   modifyComment(commentId: number, postId: number): void;
@@ -40,38 +39,24 @@ const commentStore: CommentStore = {
       };
     }
   },
-  setModifierCommentId(id, content) {
+  setModifierCommentId(id) {
     this.modifierCommentId = id;
-    this.commentInfo.modifierComment = content;
   },
   setReplyCommentId(id) {
     this.replyCommentId = id;
-    this.commentInfo.replyComment = '';
   },
-  addComment(postId, commentId, isReply) {
-    if (!isReply && !this.commentInfo.comment.trim()) {
-      alertStore.toggleAlertModal('댓글 내용을 입력해주세요!');
-      return;
-    }
-
-    if (isReply && !this.commentInfo.replyComment.trim()) {
-      alertStore.toggleAlertModal('답글 내용을 입력해주세요!');
-      return;
-    }
-
+  addComment(postId, comment, commentId, isReply) {
     Axios({
       method: T.RequestMethod.POST,
       url: '/api/post/comment',
       data: {
         postId,
+        comment,
         commentId: isReply ? commentId : null,
-        comment: isReply ? this.commentInfo.replyComment : this.commentInfo.comment,
       },
       success: () => {
-        postStore().getPost(postId, false);
         this.getComment(postId);
         this.setReplyCommentId(0);
-        this.commentInfo.comment = '';
       },
     });
   },
@@ -104,11 +89,10 @@ const commentStore: CommentStore = {
       success: () => {
         postStore().getPost(postId, false);
         this.getComment(postId);
-        this.setModifierCommentId(0, '');
+        this.setModifierCommentId(0);
       },
     });
   },
-
   deleteComment(commentId, postId) {
     Axios({
       method: T.RequestMethod.DELETE,

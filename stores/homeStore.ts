@@ -4,8 +4,8 @@ import Axios from '@utilities/axios';
 import * as T from '@types';
 
 export interface HomeStore {
-  recentlyPostList: T.RecentPost[];
-  noticePostList: T.NoticePost[];
+  recentlyPostList: T.HomePost[];
+  noticePostList: T.HomePost[];
   footprintList: T.FootPrint[];
   footprintSize: number;
   modifierFootprintId: number;
@@ -104,8 +104,8 @@ const homeStore: HomeStore = {
 };
 
 export const initialHome: {
-  recentlyPostList: T.RecentPost[];
-  noticePostList: T.NoticePost[];
+  recentlyPostList: T.HomePost[];
+  noticePostList: T.HomePost[];
   footprintList: T.FootPrint[];
 } = {
   recentlyPostList: [],

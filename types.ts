@@ -83,12 +83,7 @@ export interface FootPrint {
   modifiedTime: string;
 }
 
-export interface RecentPost {
-  id: number;
-  title: string;
-}
-
-export interface NoticePost {
+export interface HomePost {
   id: number;
   title: string;
   commentCnt: number;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from '@emotion/styled';
 import Grid from '@material-ui/core/Grid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,7 +13,11 @@ import { MediaQuery } from '@styles';
 
 const Home = () => {
   const { homeStore } = stores();
-  const { noticePostList, recentlyPostList, getFootprint } = homeStore;
+  const { noticePostList, recentlyPostList } = homeStore;
+
+  const onReload = useCallback(() => {
+    homeStore.getFootprint();
+  }, []);
 
   return (
     <GridWrapper>
@@ -32,7 +36,7 @@ const Home = () => {
             <Button
               size={T.ButtonSize.SMALL}
               variant="outlined"
-              onClick={getFootprint}
+              onClick={onReload}
               color="default"
             >
               <ReloadIcon icon={faSync} />
