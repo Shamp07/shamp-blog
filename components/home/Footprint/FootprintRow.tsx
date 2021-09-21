@@ -1,16 +1,41 @@
-import React, { useMemo } from 'react';
-import { observer } from 'mobx-react-lite';
+import React, { ChangeEvent, useMemo } from 'react';
+import { observer, useLocalObservable } from 'mobx-react-lite';
+import TextareaAutosize from 'react-textarea-autosize';
 import styled from '@emotion/styled';
 
 import stores from '@stores';
-import TextareaAutosize from 'react-textarea-autosize';
+import * as T from '@types';
+
 import FootprintMenu from './FootprintMenu';
 import { Props } from './FootprintMenu/FootprintNormalMenu';
 
 const FootprintRow = ({ data }: Props) => {
-  const { homeStore } = stores();
-  const { modifierFootprintId, footprintInfo, footprintHandleChange } = homeStore;
-  const { modifierFootprint } = footprintInfo;
+  const { homeStore, utilStore } = stores();
+  const { modifierFootprintId } = homeStore;
+
+  const form = useLocalObservable(() => ({
+    values: {
+      footprint: '',
+    },
+    setFootprint(value: string) {
+      this.values.footprint = value;
+    },
+    onChange(event: ChangeEvent<HTMLTextAreaElement>) {
+      if (event.target.value.length > 1000) return;
+      this.values = {
+        ...this.values,
+        [event.target.name]: event.target.value,
+      };
+    },
+    onValidate() {
+      if (!this.values.footprint.trim()) {
+        utilStore.openPopup(T.Popup.ALERT, '발자취 내용을 입력해주세요!');
+        return false;
+      }
+
+      return true;
+    },
+  }));
 
   const {
     id, userName,
@@ -19,42 +44,42 @@ const FootprintRow = ({ data }: Props) => {
 
   const isModify = modifierFootprintId === id;
 
-  const modifyArea = useMemo(() => (
+  const contentSection = useMemo(() => (
     isModify ? (
       <TextAreaWrapper>
         <Textarea
           minRows={2}
           maxRows={50}
-          onChange={footprintHandleChange}
-          name="modifierFootprint"
-          value={modifierFootprint}
+          onChange={form.onChange}
+          name="footprint"
+          value={form.values.footprint}
           placeholder="블로그에 관련된 건의사항이나 의견들을 자유롭게 작성해주세요!"
         />
       </TextAreaWrapper>
     ) : content
-  ), [isModify, modifierFootprint, content]);
+  ), [isModify, form.values.footprint, content]);
 
   return (
     <li>
-      <FootprintWrapper>
-        <FootprintWriter>
+      <ListInner>
+        <Writer>
           <span>{userName}</span>
-          <RightTime>{modifiedTime || time}</RightTime>
-        </FootprintWriter>
-        <FootprintContent>
-          {modifyArea}
-        </FootprintContent>
-        <FootprintMenu data={data} />
-      </FootprintWrapper>
+          <Time>{modifiedTime || time}</Time>
+        </Writer>
+        <Content>
+          {contentSection}
+        </Content>
+        <FootprintMenu data={data} value={form.values.footprint} setFootprint={form.setFootprint} />
+      </ListInner>
     </li>
   );
 };
 
-const FootprintWrapper = styled.div`
+const ListInner = styled.div`
   position: relative;
 `;
 
-const FootprintWriter = styled.div`
+const Writer = styled.div`
   line-height: 17px;
   font-weight: 700;
   color: #1e2022;
@@ -81,7 +106,7 @@ const FootprintWriter = styled.div`
   }
 `;
 
-const FootprintContent = styled.pre`
+const Content = styled.pre`
   margin-top: 8px;
   padding: 0 2px;
   line-height: 20px;
@@ -103,7 +128,7 @@ const Textarea = styled(TextareaAutosize)`
   outline: 0;
 `;
 
-const RightTime = styled.span`
+const Time = styled.span`
   margin-left: auto;
 `;
 

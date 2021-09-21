@@ -2,18 +2,23 @@ import React, { useCallback } from 'react';
 import styled from '@emotion/styled';
 
 import stores from '@stores';
+import * as T from '@types';
 
-const FootprintModifyMenu = () => {
+export interface Props {
+  value: T.FootPrint['content'];
+}
+
+const FootprintModifyMenu = ({ value }: Props) => {
   const { homeStore } = stores();
-  const { modifierFootprintId, setModifierFootprintId, modifyFootprint } = homeStore;
+  const { modifierFootprintId } = homeStore;
 
   const modifyCancel = useCallback(() => {
-    setModifierFootprintId(0, '');
+    homeStore.setModifierFootprintId(0);
   }, []);
 
   const modify = useCallback(() => {
-    modifyFootprint(modifierFootprintId);
-  }, []);
+    homeStore.modifyFootprint(modifierFootprintId, value);
+  }, [value]);
 
   return (
     <FootprintMenu>

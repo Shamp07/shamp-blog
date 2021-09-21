@@ -2,10 +2,17 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 
 import stores from '@stores';
+import * as T from '@types';
 import FootprintModifyMenu from './FootprintModifyMenu';
-import FootprintNormalMenu, { Props } from './FootprintNormalMenu';
+import FootprintNormalMenu from './FootprintNormalMenu';
 
-const FootprintMenu = ({ data }: Props) => {
+export interface Props {
+  data: T.FootPrint;
+  value: T.FootPrint['content'];
+  setFootprint(value: T.FootPrint['content']): void;
+}
+
+const FootprintMenu = ({ data, value, setFootprint }: Props) => {
   const { homeStore, signStore } = stores();
   const { modifierFootprintId } = homeStore;
   const { userData } = signStore;
@@ -15,7 +22,8 @@ const FootprintMenu = ({ data }: Props) => {
   if (!isMine) return null;
 
   return id === modifierFootprintId
-    ? <FootprintModifyMenu /> : <FootprintNormalMenu data={data} />;
+    ? <FootprintModifyMenu value={value} />
+    : <FootprintNormalMenu data={data} setFootprint={setFootprint} />;
 };
 
 export default observer(FootprintMenu);

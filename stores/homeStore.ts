@@ -9,13 +9,13 @@ export interface HomeStore {
   footprintList: T.FootPrint[];
   footprintSize: number;
   modifierFootprintId: number;
-  setModifierFootprintId(id: number, content: string): void;
+  setModifierFootprintId(id: number): void;
   getRecentlyPostList(): Promise<void>;
   getNoticePostList(): Promise<void>;
   addFootprint(footprint: string): void;
   moreFootprint(): void;
   getFootprint(): Promise<void>;
-  modifyFootprint(id: number): void;
+  modifyFootprint(id: number, content: string): void;
   deleteFootprint(id: number): void;
 }
 
@@ -25,9 +25,8 @@ const homeStore: HomeStore = {
   footprintList: [],
   footprintSize: 20,
   modifierFootprintId: 0,
-  setModifierFootprintId(id, content) {
+  setModifierFootprintId(id) {
     this.modifierFootprintId = id;
-    this.footprintInfo.modifierFootprint = content;
   },
   async getRecentlyPostList() {
     await Axios({
@@ -78,17 +77,17 @@ const homeStore: HomeStore = {
       },
     });
   },
-  modifyFootprint(id) {
+  modifyFootprint(id, content) {
     Axios({
       method: T.RequestMethod.PUT,
       url: '/api/footprint',
       data: {
         id,
-        content: this.footprintInfo.modifierFootprint,
+        content,
       },
       success: () => {
         this.getFootprint();
-        this.setModifierFootprintId(0, '');
+        this.setModifierFootprintId(0);
       },
     });
   },
@@ -97,7 +96,9 @@ const homeStore: HomeStore = {
       method: T.RequestMethod.DELETE,
       url: '/api/footprint',
       data: { id },
-      success: this.getFootprint,
+      success: () => {
+        this.getFootprint();
+      },
     });
   },
 };

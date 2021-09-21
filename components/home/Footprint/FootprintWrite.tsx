@@ -36,6 +36,7 @@ const FootprintWrite = () => {
     if (!form.onValidate()) return;
 
     homeStore.addFootprint(form.values.footprint);
+    form.values.footprint = '';
   }, [form.values.footprint]);
 
   return (

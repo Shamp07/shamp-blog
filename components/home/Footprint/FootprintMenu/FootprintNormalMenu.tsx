@@ -7,9 +7,10 @@ import * as T from '@types';
 
 export interface Props {
   data: T.FootPrint;
+  setFootprint(value: string): void;
 }
 
-const FootprintNormalMenu = ({ data }: Props) => {
+const FootprintNormalMenu = ({ data, setFootprint }: Props) => {
   const { homeStore, utilStore } = stores();
   const { id, content } = data;
 
@@ -22,7 +23,8 @@ const FootprintNormalMenu = ({ data }: Props) => {
   }, []);
 
   const onModify = useCallback(() => {
-    homeStore.setModifierFootprintId(id, content);
+    setFootprint(data.content);
+    homeStore.setModifierFootprintId(id);
   }, [id, content]);
 
   return (
