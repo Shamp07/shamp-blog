@@ -8,11 +8,11 @@ import FootprintNormalMenu from './FootprintNormalMenu';
 
 export interface Props {
   data: T.FootPrint;
-  value: T.FootPrint['content'];
   setFootprint(value: T.FootPrint['content']): void;
+  onModify(): void;
 }
 
-const FootprintMenu = ({ data, value, setFootprint }: Props) => {
+const FootprintMenu = ({ data, setFootprint, onModify }: Props) => {
   const { homeStore, signStore } = stores();
   const { modifierFootprintId } = homeStore;
   const { userData } = signStore;
@@ -20,7 +20,7 @@ const FootprintMenu = ({ data, value, setFootprint }: Props) => {
   const isMine = userData?.id === userId;
 
   if (!isMine) return null;
-  if (id === modifierFootprintId) return <FootprintModifyMenu value={value} />;
+  if (id === modifierFootprintId) return <FootprintModifyMenu onModify={onModify} />;
 
   return <FootprintNormalMenu data={data} setFootprint={setFootprint} />;
 };

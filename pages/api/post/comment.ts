@@ -218,6 +218,7 @@ const SELECT_COMMENT = `
       ROW_NUMBER() OVER(ORDER BY c.upper_id, c.id) AS rownum,
       COUNT(*) OVER() AS total,
       c.id,
+      c.post_id AS "postId",
       c.user_id AS "userId",
       c.upper_id AS "upperId",
       c.comment_id AS "commentId",

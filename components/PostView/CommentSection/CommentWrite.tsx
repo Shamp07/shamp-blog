@@ -68,7 +68,7 @@ const CommentWrite = ({ isReply }: Props) => {
           minRows={2}
           maxRows={50}
           onChange={form.onChange}
-          name={isReply ? 'replyComment' : 'comment'}
+          name={isReply ? 'reply' : 'comment'}
           value={isReply ? form.values.reply : form.values.comment}
           placeholder="포스팅에 관련된 의견이나 질문을 자유롭게 남겨주세요!"
         />

@@ -4,6 +4,7 @@ import { observable } from 'mobx';
 import Axios from '@utilities/axios';
 import * as T from '@types';
 import postStore from './postStore';
+import utilStore from "@stores/utilStore";
 
 export interface CommentStore {
   commentInfo: { comment: string, replyComment: string, modifierComment: string };
@@ -17,7 +18,7 @@ export interface CommentStore {
   addComment(postId: number, comment: string, commentId: number, isReply: boolean): void;
   moreComment(postId: number): void;
   getComment(postId: number): Promise<void>;
-  modifyComment(commentId: number, postId: number): void;
+  modifyComment(commentId: number, postId: number, comment: string): void;
   deleteComment(commentId: number, postId: number): void;
 }
 
@@ -78,16 +79,15 @@ const commentStore: CommentStore = {
       },
     });
   },
-  modifyComment(commentId, postId) {
+  modifyComment(commentId, postId, comment) {
     Axios({
       method: T.RequestMethod.PUT,
       url: '/api/post/comment',
       data: {
         commentId,
-        comment: this.commentInfo.modifierComment,
+        comment,
       },
       success: () => {
-        postStore().getPost(postId, false);
         this.getComment(postId);
         this.setModifierCommentId(0);
       },
@@ -98,9 +98,13 @@ const commentStore: CommentStore = {
       method: T.RequestMethod.DELETE,
       url: '/api/post/comment',
       data: { commentId },
-      success: () => {
-        postStore().getPost(postId, false);
-        this.getComment(postId);
+      success: (response) => {
+        if (response.data.code === 2) {
+          utilStore.openPopup(T.Popup.ALERT, response.data.message);
+        } else {
+          postStore().getPost(postId, false);
+          this.getComment(postId);
+        }
       },
     });
   },

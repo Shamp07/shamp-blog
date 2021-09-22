@@ -61,6 +61,7 @@ export interface Comment {
   rownum: number;
   total: number;
   id: number;
+  postId: number;
   userId: number;
   upperId: number;
   commentId: number;

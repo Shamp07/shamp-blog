@@ -2,23 +2,17 @@ import React, { useCallback } from 'react';
 import styled from '@emotion/styled';
 
 import stores from '@stores';
-import * as T from '@types';
 
 export interface Props {
-  value: T.FootPrint['content'];
+  onModify(): void;
 }
 
-const FootprintModifyMenu = ({ value }: Props) => {
+const FootprintModifyMenu = ({ onModify }: Props) => {
   const { homeStore } = stores();
-  const { modifierFootprintId } = homeStore;
 
   const modifyCancel = useCallback(() => {
     homeStore.setModifierFootprintId(0);
   }, []);
-
-  const modify = useCallback(() => {
-    homeStore.modifyFootprint(modifierFootprintId, value);
-  }, [value]);
 
   return (
     <FootprintMenu>
@@ -33,8 +27,8 @@ const FootprintModifyMenu = ({ value }: Props) => {
       <span
         role="button"
         tabIndex={0}
-        onClick={modify}
-        onKeyDown={modify}
+        onClick={onModify}
+        onKeyDown={onModify}
       >
         수정
       </span>

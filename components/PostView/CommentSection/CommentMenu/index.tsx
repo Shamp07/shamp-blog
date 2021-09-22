@@ -9,14 +9,15 @@ import CommentModifyMenu from './CommentModifyMenu';
 export interface Props {
   data: T.Comment;
   setComment(value: T.Comment['content']): void;
+  onModify(): void;
 }
 
-const CommentMenu = ({ data, setComment }: Props) => {
+const CommentMenu = ({ data, setComment, onModify }: Props) => {
   const { commentStore } = stores();
   const { modifierCommentId } = commentStore;
   const { id } = data;
 
-  if (id === modifierCommentId) return <CommentModifyMenu />;
+  if (id === modifierCommentId) return <CommentModifyMenu onModify={onModify} />;
 
   return <CommentNormalMenu data={data} setComment={setComment} />;
 };

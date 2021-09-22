@@ -1,11 +1,10 @@
-import React, { ChangeEvent, useMemo } from 'react';
+import React, { ChangeEvent, useCallback, useMemo } from 'react';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import TextareaAutosize from 'react-textarea-autosize';
 import styled from '@emotion/styled';
 
 import stores from '@stores';
 import * as T from '@types';
-
 import FootprintMenu from './FootprintMenu';
 
 interface Props {
@@ -47,6 +46,13 @@ const FootprintRow = ({ data }: Props) => {
 
   const isModify = modifierFootprintId === id;
 
+  const onModify = useCallback(() => {
+    if (!form.onValidate()) return;
+
+    homeStore.modifyFootprint(id, form.values.footprint);
+    homeStore.setModifierFootprintId(0);
+  }, [form.values.footprint]);
+
   const contentSection = useMemo(() => (
     isModify ? (
       <TextAreaWrapper>
@@ -72,7 +78,11 @@ const FootprintRow = ({ data }: Props) => {
         <Content>
           {contentSection}
         </Content>
-        <FootprintMenu data={data} value={form.values.footprint} setFootprint={form.setFootprint} />
+        <FootprintMenu
+          data={data}
+          setFootprint={form.setFootprint}
+          onModify={onModify}
+        />
       </ListInner>
     </li>
   );

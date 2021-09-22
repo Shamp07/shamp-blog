@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useMemo } from 'react';
+import React, { ChangeEvent, useCallback, useMemo } from 'react';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -7,14 +7,17 @@ import stores from '@stores';
 import * as T from '@types';
 import CommentWrite from './CommentWrite';
 import CommentMenu from './CommentMenu';
-import { Props } from './CommentMenu/CommentNormalMenu';
+
+interface Props {
+  data: T.Comment;
+}
 
 const CommentRow = ({ data }: Props) => {
   const { commentStore, utilStore } = stores();
   const { replyCommentId, modifierCommentId } = commentStore;
 
   const {
-    id, commentId, userName,
+    id, postId, commentId, userName,
     content, time, modifiedTime,
     isTag, commentUserName,
   } = data;
@@ -46,6 +49,13 @@ const CommentRow = ({ data }: Props) => {
     },
   }));
 
+  const onModify = useCallback(() => {
+    if (!form.onValidate()) return;
+
+    commentStore.modifyComment(id, postId, form.values.comment);
+    commentStore.setModifierCommentId(0);
+  }, [form.values.comment]);
+
   const contentArea = useMemo(() => (
     <>
       {isTag && (<NameTag>{commentUserName}</NameTag>)}
@@ -66,7 +76,7 @@ const CommentRow = ({ data }: Props) => {
         />
       </TextAreaWrapper>
     ) : contentArea
-  ), [isModify, form.values.comment]);
+  ), [isModify, form.values.comment, contentArea]);
 
   return (
     <>
@@ -80,7 +90,7 @@ const CommentRow = ({ data }: Props) => {
           <CommentContent>
             {modifyArea}
           </CommentContent>
-          <CommentMenu data={data} setComment={form.setComment} />
+          <CommentMenu data={data} setComment={form.setComment} onModify={onModify} />
         </CommentWrapper>
       </li>
       {isReply && <CommentWrite isReply />}

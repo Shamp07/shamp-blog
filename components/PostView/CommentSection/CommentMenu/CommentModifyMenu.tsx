@@ -3,21 +3,18 @@ import styled from '@emotion/styled';
 
 import stores from '@stores';
 
-const CommentModifyMenu = () => {
+interface Props {
+  onModify(): void;
+}
+
+const CommentModifyMenu = ({ onModify }: Props) => {
   const { postStore, commentStore } = stores();
   const { postView } = postStore;
   if (!postView) return null;
 
-  const { id: postId } = postView;
-  const { modifierCommentId: id } = commentStore;
-
   const onCancel = useCallback(() => {
-    commentStore.setModifierCommentId(0, '');
+    commentStore.setModifierCommentId(0);
   }, []);
-
-  const onModify = useCallback(() => {
-    commentStore.modifyComment(id, postId);
-  }, [id, postId]);
 
   return (
     <CommentMenu>
