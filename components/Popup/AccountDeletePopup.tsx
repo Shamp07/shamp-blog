@@ -57,7 +57,7 @@ const AccountDeletePopup = () => {
         <Button
           size={T.ButtonSize.MEDIUM}
           variant="contained"
-          color="default"
+          color="primary"
           onClick={onClose}
         >
           취소

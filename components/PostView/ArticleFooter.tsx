@@ -43,7 +43,7 @@ const ArticleFooter = () => {
       <Button
         size={T.ButtonSize.SMALL}
         variant="outlined"
-        color="default"
+        color="primary"
         onClick={onModify}
       >
         수정

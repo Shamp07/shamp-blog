@@ -37,7 +37,7 @@ const Home = () => {
               size={T.ButtonSize.SMALL}
               variant="outlined"
               onClick={onReload}
-              color="default"
+              color="primary"
             >
               <ReloadIcon icon={faSync} />
               {' '}

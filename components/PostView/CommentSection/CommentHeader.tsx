@@ -35,7 +35,7 @@ const CommentHeader = () => {
       <ButtonWrapper>
         <Button
           size={T.ButtonSize.SMALL}
-          color="default"
+          color="primary"
           variant="outlined"
           onClick={onRefresh}
         >

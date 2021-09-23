@@ -7,6 +7,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import stores from '@stores';
 import { MediaQuery } from '@styles';
 import * as T from '@types';
+import dsPalette from '@constants/ds-palette';
 import Category from './Category';
 import SideTokenMenu from './SideTokenMenu';
 
@@ -87,7 +88,7 @@ const CloseIcon = styled(FontAwesomeIcon)`
 
 const CategoryWrapper = styled.div({
   width: '100%',
-  padding: '7px 0',
+  padding: '10px 0',
   backgroundColor: '#fff',
   borderRadius: '14px',
   boxShadow: '0 1px 3px 0 rgba(0, 0, 0, .15)',
@@ -105,16 +106,21 @@ const CategoryWrapper = styled.div({
   '& > ul > li': {
     height: '40px',
     lineHeight: '41px',
-    margin: '4px 0 4px 15px',
+    marginLeft: '15px',
+    marginBottom: '10px',
     cursor: 'pointer',
     borderTopLeftRadius: '10px',
     borderBottomLeftRadius: '10px',
     fontSize: '14px',
-    fontWeight: 'bold',
+    fontWeight: 400,
     transition: 'all 0.3s',
 
     [MediaQuery[T.Device.LARGE]]: {
       outline: 'none',
+    },
+
+    '&:last-of-type': {
+      marginBottom: 0,
     },
 
     '&:hover': {
@@ -126,8 +132,9 @@ const CategoryWrapper = styled.div({
       display: 'inline-block',
       paddingLeft: '14px',
       textDecoration: 'none',
-      width: '270px',
+      width: '251px',
       height: '100%',
+      color: dsPalette.typePrimary.toString(),
     },
   },
 });

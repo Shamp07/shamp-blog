@@ -93,8 +93,8 @@ const Post = ({ isModify }: Props) => {
       <Footer>
         <Button
           size={T.ButtonSize.SMALL}
-          variant="contained"
-          color="default"
+          variant="outlined"
+          color="primary"
           onClick={router.back}
         >
           취소

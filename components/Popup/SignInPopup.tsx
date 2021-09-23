@@ -62,8 +62,8 @@ const SignInPopup = () => {
       <Footer>
         <Button
           size={T.ButtonSize.MEDIUM}
-          variant="contained"
-          color="default"
+          variant="outlined"
+          color="primary"
           onClick={onSignUp}
         >
           회원가입

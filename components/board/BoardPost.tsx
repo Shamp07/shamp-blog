@@ -79,7 +79,6 @@ const PostLinkSpan = styled.span`
   line-height: 20px;
 
   & > span:first-of-type {
-    color: #000;
     margin-right: 5px;
     max-width: 80%;
     display: inline-block;
@@ -130,10 +129,6 @@ const ArticleContent = styled.div`
 const PostTitle = styled.div`
   & > span:first-of-type {
     padding-right: 5px;
-  }
-
-  & > span:last-child {
-    color: #2d79c7;
   }
 `;
 

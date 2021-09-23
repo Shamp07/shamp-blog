@@ -33,7 +33,7 @@ const ConfirmPopup = () => {
           size={T.ButtonSize.MEDIUM}
           variant="contained"
           onClick={onClose}
-          color="default"
+          color="primary"
         >
           취소
         </Button>

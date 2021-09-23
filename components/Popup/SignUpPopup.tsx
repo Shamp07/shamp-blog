@@ -101,7 +101,7 @@ const SignUpPopup = () => {
           color="primary"
           onClick={onRegister}
         >
-          가입하기
+          가입
         </Button>
       </Footer>
     </Modal>

@@ -31,7 +31,7 @@ const Wrapper = styled.div`
   cursor: pointer;
   transition: background-color 0.2s;
   border-radius: 10px;
-  font-weight: 500;
+  font-weight: 400;
   
   & > div {
     white-space: nowrap;
