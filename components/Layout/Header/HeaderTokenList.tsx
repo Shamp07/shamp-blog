@@ -1,4 +1,4 @@
-import React, { useCallback, MouseEvent } from 'react';
+import React, { useMemo, useCallback, MouseEvent } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import Menu from '@material-ui/core/Menu';
@@ -16,7 +16,9 @@ const HeaderTokenList = () => {
   const {
     headerMenu, headerMenuElement,
   } = utilStore;
-  const { alertNotReadSize, alertLoading } = alertStore;
+
+  const { list, isLoading } = alertStore;
+  const notReadCount = useMemo(() => list.map((data) => !data.readFl).length, [list]);
 
   const onLogout = useCallback(() => {
     signStore.logout(true);
@@ -58,7 +60,7 @@ const HeaderTokenList = () => {
       <li>
         <AlertButton type="button" onClick={onProfile} name="alert">
           <FontAwesomeIcon icon={faBell} />
-          {Boolean(alertNotReadSize) && <div>{alertNotReadSize}</div>}
+          {Boolean(notReadCount) && <div>{notReadCount}</div>}
         </AlertButton>
         <AlertMenu
           anchorEl={headerMenuElement}
@@ -67,7 +69,7 @@ const HeaderTokenList = () => {
           onClose={onClose}
         >
           <MenuItem>알림 목록</MenuItem>
-          {alertLoading ? <AlertSpinner /> : <AlertList />}
+          {isLoading ? <AlertSpinner /> : <AlertList />}
         </AlertMenu>
       </li>
     </>

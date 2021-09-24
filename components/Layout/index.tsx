@@ -23,11 +23,15 @@ const options = {
 
 const Layout = ({ children }: Props) => {
   const { signStore, alertStore } = stores();
+  const { userData } = signStore;
 
   useEffect(() => {
     signStore.cookieCheck();
-    alertStore.getAlertList();
   }, []);
+
+  useEffect(() => {
+    if (userData) alertStore.getAlertList();
+  }, [userData]);
 
   return (
     <Wrapper>

@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { MenuItem } from '@material-ui/core';
 import styled from '@emotion/styled';
@@ -13,10 +13,10 @@ interface Props {
 const Alert = ({ data }: Props) => {
   const router = useRouter();
   const { alertStore } = stores();
-  const { movePost } = alertStore;
 
   const goPost = useCallback(() => {
-    movePost(router, postId, id);
+    alertStore.readAlert(id);
+    router.push(`/post/${postId}`);
   }, []);
 
   const {

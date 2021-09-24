@@ -9,18 +9,18 @@ import AlertMore from './AlertMore';
 
 const AlertList = () => {
   const { alertStore } = stores();
-  const { alertList, alertSize } = alertStore;
+  const { list, size } = alertStore;
 
-  const isMoreAlert = alertList[0]?.total > alertSize;
+  const isMoreAlert = list[0]?.total > size;
 
-  const alerts = useMemo(() => (alertList.length ? (
-    alertList.map((data) => (
+  const alerts = useMemo(() => (list.length ? (
+    list.map((data) => (
       <Alert key={data.id} data={data} />
     ))) : (
       <MenuItemNone>
         <span>알림이 없습니다.</span>
       </MenuItemNone>
-  )), [alertList]);
+  )), [list]);
 
   return (
     <>

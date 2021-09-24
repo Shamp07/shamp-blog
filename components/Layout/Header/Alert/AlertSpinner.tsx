@@ -3,12 +3,12 @@ import styled from '@emotion/styled';
 import { CircularProgress } from '@material-ui/core';
 
 const AlertSpinner = () => (
-  <Wrapper>
+  <Root>
     <CircularProgress size={30} />
-  </Wrapper>
+  </Root>
 );
 
-const Wrapper = styled.div`
+const Root = styled.div`
   text-align: center;
   margin: 10px 0;
   & svg {
