@@ -16,7 +16,7 @@ const Chat = () => {
   return (
     <Wrapper>
       {isChatOpen && <ChatWidget />}
-      <ButtonWrapper onClick={() => openChat(Boolean(userData), Boolean(userData?.adminFl))}>
+      <ButtonWrapper onClick={openChat}>
         <span>{userData?.adminFl ? '채팅하기' : '질문하기'}</span>
         {(Boolean(notReadChatCount) && !isChatOpen) && <div>{notReadChatCount}</div>}
         <ChatFloatButton color="primary" aria-label="add">

@@ -6,15 +6,15 @@ import styled from '@emotion/styled';
 import * as T from '@types';
 
 interface Props {
-  tag: T.Tag['tag'];
+  tag: T.Tag;
 }
 
 const BoardTag = ({ tag }: Props) => {
   const router = useRouter();
-  if (!router.query.board) return null;
+  if (!router.query.category) return null;
 
-  const boardPath = router.query.board[0];
-  const boardTag = router.query.board[1];
+  const boardPath = router.query.category[0];
+  const boardTag = router.query.category[1];
 
   return (
     <Tag isActive={boardTag === tag}>

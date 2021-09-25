@@ -42,8 +42,6 @@ export enum Auth {
   ADMIN = 'admin',
 }
 
-export type Store = RootStore;
-
 export interface Alert {
   total: number;
   id: number;
@@ -53,9 +51,7 @@ export interface Alert {
   time: string;
 }
 
-export interface Tag {
-  tag: string;
-}
+export type Tag = string;
 
 export interface Comment {
   rownum: number;
@@ -82,12 +78,6 @@ export interface FootPrint {
   content: string;
   time: string;
   modifiedTime: string;
-}
-
-export interface HomePost {
-  id: number;
-  title: string;
-  commentCnt: number;
 }
 
 export interface HomePost {

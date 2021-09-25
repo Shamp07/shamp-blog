@@ -3,8 +3,8 @@ import { observable } from 'mobx';
 
 import Axios from '@utilities/axios';
 import * as T from '@types';
+import utilStore from '@stores/utilStore';
 import postStore from './postStore';
-import utilStore from "@stores/utilStore";
 
 export interface CommentStore {
   commentInfo: { comment: string, replyComment: string, modifierComment: string };

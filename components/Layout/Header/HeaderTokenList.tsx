@@ -17,8 +17,8 @@ const HeaderTokenList = () => {
     headerMenu, headerMenuElement,
   } = utilStore;
 
-  const { list, isLoading } = alertStore;
-  const notReadCount = useMemo(() => list.map((data) => !data.readFl).length, [list]);
+  const { alerts, isLoading } = alertStore;
+  const notReadCount = useMemo(() => alerts.map((data) => !data.readFl).length, [alerts]);
 
   const onLogout = useCallback(() => {
     signStore.logout(true);

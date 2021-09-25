@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 import { MenuItem } from '@material-ui/core';
@@ -9,23 +9,24 @@ import AlertMore from './AlertMore';
 
 const AlertList = () => {
   const { alertStore } = stores();
-  const { list, size } = alertStore;
+  const { alerts } = alertStore;
 
-  const isMoreAlert = list[0]?.total > size;
+  const [size, setSize] = useState(10);
+  const isMoreAlert = alerts[0]?.total > size;
 
-  const alerts = useMemo(() => (list.length ? (
-    list.map((data) => (
+  const alertList = useMemo(() => (alerts.length ? (
+    alerts.map((data) => (
       <Alert key={data.id} data={data} />
     ))) : (
       <MenuItemNone>
         <span>알림이 없습니다.</span>
       </MenuItemNone>
-  )), [list]);
+  )), [alerts]);
 
   return (
     <>
-      {alerts}
-      {isMoreAlert && <AlertMore />}
+      {alertList}
+      {isMoreAlert && <AlertMore size={size} setSize={setSize} />}
     </>
   );
 };

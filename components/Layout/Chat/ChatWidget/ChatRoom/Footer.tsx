@@ -118,13 +118,13 @@ const ChatEnter = styled.div<ActiveProp>(({ active }) => ({
     cursor: 'pointer',
     '&:hover': {
       color: '#2d79c7',
-    }
-  }): ({
+    },
+  }) : ({
     color: '#e6e6e6',
     cursor: 'not-allowed',
   })),
 
- '& > svg': {
+  '& > svg': {
     width: '25px',
     height: '35px',
   },

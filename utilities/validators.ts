@@ -14,7 +14,7 @@ export const passwordValidator = (password: string, passwordCheck: string) => {
 
   const num = password.search(/[0-9]/g);
   const eng = password.search(/[a-z]/ig);
-  const spe = password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+  const spe = password.search(/[`~!@#$%^&*|₩'";:/?]/gi);
 
   if (password.length < 8 || password.length > 20) {
     utilStore.openPopup(T.Popup.ALERT, '비밀번호는 8자리 ~ 20자리 이내로 입력해주세요.');

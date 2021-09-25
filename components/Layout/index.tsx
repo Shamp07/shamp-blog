@@ -30,7 +30,7 @@ const Layout = ({ children }: Props) => {
   }, []);
 
   useEffect(() => {
-    if (userData) alertStore.getAlertList();
+    if (userData) alertStore.getAlerts();
   }, [userData]);
 
   return (

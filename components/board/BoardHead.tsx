@@ -14,18 +14,18 @@ import BoardTag, { Tag } from './BoardTag';
 
 const BoardHead = () => {
   const router = useRouter();
-  if (!router.query.board) return null;
+  if (!router.query.category) return null;
 
   const {
     sidebarStore, categoryStore, signStore,
     postStore,
   } = stores();
-  const { categoryTags } = categoryStore;
+  const { tags } = categoryStore;
   const { userData } = signStore;
   const { clearPost } = postStore;
 
-  const categoryPath = router.query.board[0];
-  const categoryTag = router.query.board[1];
+  const categoryPath = router.query.category[0];
+  const categoryTag = router.query.category[1];
 
   const isAdmin = Boolean(userData?.adminFl);
   const isBestOrAll = ['best', 'all'].includes(categoryPath);
@@ -73,7 +73,7 @@ const BoardHead = () => {
         <Tag isActive={categoryTag === undefined}>
           <Link href={`/category/${categoryPath}`}>전체</Link>
         </Tag>
-        {categoryTags.map((tag) => <BoardTag key={tag} tag={tag} />)}
+        {tags.map((tag) => <BoardTag key={tag} tag={tag} />)}
       </CategoryTag>
     </Wrapper>
   );

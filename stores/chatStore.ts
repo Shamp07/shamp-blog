@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 
 import * as T from '@types';
 import Axios from '@utilities/axios';
-import alertStore from './alertStore';
+import utilStore from './utilStore';
 
 export interface ChatStore {
   isChatOpen: boolean;
@@ -107,7 +107,7 @@ const chatStore: ChatStore = {
     });
   },
   async openChat() {
-    alertStore.toggleAlertModal('지원 준비 중 이에요!');
+    utilStore.openPopup(T.Popup.ALERT, '지원 준비 중 이에요!');
 
     // if (!this.isChatOpen) {
     //   if (!loggedIn) {

@@ -4,8 +4,6 @@ import { NextApiResponse } from 'next';
 import config from '@config/jwt.config.json';
 import * as T from '@types';
 
-
-
 const authMiddleware = (
   handler: Function, type: T.Auth,
 ) => async (request: T.NextApiRequestToken, response: NextApiResponse) => {

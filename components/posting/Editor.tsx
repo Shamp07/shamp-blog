@@ -14,6 +14,9 @@ const QuillNoSSRWrapper = dynamic(import('react-quill'), {
 const Editor = () => {
   const { postStore } = stores();
   const { post, postHandleChange } = postStore;
+
+  if (!post) return null;
+
   const { content } = post;
   return (
     <CustomQuill

@@ -4,16 +4,16 @@ import Axios from '@utilities/axios';
 import * as T from '@types';
 
 export interface AlertStore {
-  list: T.Alert[];
+  alerts: T.Alert[];
   isLoading: boolean;
-  getAlertList(size?: number): void;
+  getAlerts(size?: number): void;
   readAlert(id: number): void;
 }
 
 const alertStore: AlertStore = {
-  list: [],
+  alerts: [],
   isLoading: true,
-  getAlertList(size = 10) {
+  getAlerts(size = 10) {
     this.isLoading = true;
     Axios({
       method: T.RequestMethod.GET,
@@ -23,7 +23,7 @@ const alertStore: AlertStore = {
       url: '/api/user/alert',
       success: (response) => {
         const { result } = response.data;
-        this.list = result;
+        this.alerts = result;
         this.isLoading = false;
       },
     });

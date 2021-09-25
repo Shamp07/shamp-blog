@@ -41,7 +41,7 @@ const postStore: PostStore = {
     }
   },
   movePage(router, page) {
-    const boardParams = router.query.board as Array<string>;
+    const boardParams = router.query.category as Array<string>;
     let pathUrl = `/category/${boardParams[0]}`;
 
     // url 에 태그가 존재할시

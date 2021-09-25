@@ -1,16 +1,19 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, Dispatch, SetStateAction } from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import stores from '@stores';
 
-const AlertMore = () => {
-  const { alertStore } = stores();
+interface Props {
+  size: number;
+  setSize: Dispatch<SetStateAction<number>>
+}
 
-  const [size, setSize] = useState(10);
+const AlertMore = ({ size, setSize }: Props) => {
+  const { alertStore } = stores();
 
   const onMore = useCallback(() => {
     setSize((prev) => prev + 10);
-    alertStore.getAlertList(size);
+    alertStore.getAlerts(size);
   }, [size]);
 
   return (

@@ -15,7 +15,7 @@ interface Props {
 
 const BoardPost = ({ data }: Props) => {
   const router = useRouter();
-  if (!router.query.board) return null;
+  if (!router.query.category) return null;
 
   const { sidebarStore } = stores();
   const {
@@ -23,7 +23,7 @@ const BoardPost = ({ data }: Props) => {
     commentCnt, tag, time, likeCnt,
   } = data;
 
-  const boardPath = router.query.board[0];
+  const boardPath = router.query.category[0];
   const isExistComment = Number(commentCnt) > 0;
 
   const commentCount = useMemo(() => (
