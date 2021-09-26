@@ -5,16 +5,16 @@ import TextareaAutosize from 'react-textarea-autosize';
 
 import stores from '@stores';
 import * as T from '@types';
-import CommentWrite from './CommentWrite';
-import CommentMenu from './CommentMenu';
+import CommentWrite from './Form';
+import CommentMenu from './Menu';
 
 interface Props {
   data: T.Comment;
 }
 
-const CommentRow = ({ data }: Props) => {
+const Row = ({ data }: Props) => {
   const { commentStore, utilStore } = stores();
-  const { replyCommentId, modifierCommentId } = commentStore;
+  const { replyCommentId, modifyId } = commentStore;
 
   const {
     id, postId, commentId, userName,
@@ -22,7 +22,7 @@ const CommentRow = ({ data }: Props) => {
     isTag, commentUserName,
   } = data;
 
-  const isModify = modifierCommentId === id;
+  const isModify = modifyId === id;
   const isReply = id === replyCommentId;
 
   const form = useLocalObservable(() => ({
@@ -53,7 +53,7 @@ const CommentRow = ({ data }: Props) => {
     if (!form.onValidate()) return;
 
     commentStore.modifyComment(id, postId, form.values.comment);
-    commentStore.setModifierCommentId(0);
+    commentStore.setModifyId(0);
   }, [form.values.comment]);
 
   const contentArea = useMemo(() => (
@@ -180,4 +180,4 @@ const TextAreaWrapper = styled.div`
   background-color: #fff;
 `;
 
-export default observer(CommentRow);
+export default observer(Row);

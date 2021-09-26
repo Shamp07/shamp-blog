@@ -8,7 +8,7 @@ import stores from '@stores';
 import Button from '@atoms/Button';
 import * as T from '@types';
 
-const CommentHeader = () => {
+const Header = () => {
   const { postStore, commentStore } = stores();
   const { postView } = postStore;
   if (!postView) return null;
@@ -85,4 +85,4 @@ const ReloadICon = styled(FontAwesomeIcon)`
   height: 12px;
 `;
 
-export default observer(CommentHeader);
+export default observer(Header);

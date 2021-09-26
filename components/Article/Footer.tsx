@@ -7,7 +7,7 @@ import stores from '@stores';
 import Button from '@atoms/Button';
 import * as T from '@types';
 
-const ArticleFooter = () => {
+const Footer = () => {
   const router = useRouter();
   const { postStore, utilStore, signStore } = stores();
   const { postView } = postStore;
@@ -62,4 +62,4 @@ const ArticleFooterWrapper = styled.div`
   }
 `;
 
-export default observer(ArticleFooter);
+export default observer(Footer);

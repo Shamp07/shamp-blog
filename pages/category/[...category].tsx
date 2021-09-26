@@ -7,7 +7,7 @@ import * as T from '@types';
 import BoardHead from '@components/board/BoardHead';
 import BoardContent from '@components/board/BoardContent';
 import BoardPagination from '@components/board/BoardPagination';
-import PostView from '@components/PostView';
+import Article from '@components/Article';
 
 const Category = () => {
   const router = useRouter();
@@ -22,7 +22,7 @@ const Category = () => {
     return null;
   }
 
-  if (router.query.category[1] === 'post') return <PostView />;
+  if (router.query.category[1] === 'post') return <Article />;
 
   return (
     <>

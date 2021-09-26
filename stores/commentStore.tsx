@@ -1,4 +1,3 @@
-import { ChangeEvent } from 'react';
 import { observable } from 'mobx';
 
 import Axios from '@utilities/axios';
@@ -7,14 +6,8 @@ import utilStore from '@stores/utilStore';
 import postStore from './postStore';
 
 export interface CommentStore {
-  commentInfo: { comment: string, replyComment: string, modifierComment: string };
-  commentList: T.Comment[];
-  commentSize: number;
-  modifierCommentId: number;
-  replyCommentId: number;
-  commentHandleChange(event: ChangeEvent<HTMLTextAreaElement>): void;
-  setModifierCommentId(id: number): void;
-  setReplyCommentId(id: number): void;
+  comments: T.Comment[];
+  size: number;
   addComment(postId: number, comment: string, commentId: number, isReply: boolean): void;
   moreComment(postId: number): void;
   getComment(postId: number): Promise<void>;
@@ -23,29 +16,8 @@ export interface CommentStore {
 }
 
 const commentStore: CommentStore = {
-  commentInfo: {
-    comment: '',
-    replyComment: '',
-    modifierComment: '',
-  },
-  commentList: [],
-  commentSize: 15,
-  modifierCommentId: 0,
-  replyCommentId: 0,
-  commentHandleChange(event) {
-    if (event.target.value.length <= 1000) {
-      this.commentInfo = {
-        ...this.commentInfo,
-        [event.target.name]: event.target.value,
-      };
-    }
-  },
-  setModifierCommentId(id) {
-    this.modifierCommentId = id;
-  },
-  setReplyCommentId(id) {
-    this.replyCommentId = id;
-  },
+  comments: [],
+  size: 15,
   addComment(postId, comment, commentId, isReply) {
     Axios({
       method: T.RequestMethod.POST,
@@ -57,13 +29,12 @@ const commentStore: CommentStore = {
       },
       success: () => {
         this.getComment(postId);
-        this.setReplyCommentId(0);
       },
     });
   },
   moreComment(postId) {
     this.getComment(postId);
-    this.commentSize += 15;
+    this.size += 15;
   },
   async getComment(postId) {
     await Axios({
@@ -71,11 +42,11 @@ const commentStore: CommentStore = {
       url: `${process.env.BASE_PATH}/api/post/comment`,
       data: {
         postId,
-        commentSize: this.commentSize,
+        commentSize: this.size,
       },
       success: (response) => {
         const { result } = response.data;
-        this.commentList = result;
+        this.comments = result;
       },
     });
   },
@@ -89,7 +60,7 @@ const commentStore: CommentStore = {
       },
       success: () => {
         this.getComment(postId);
-        this.setModifierCommentId(0);
+        this.setModifyId(0);
       },
     });
   },
@@ -111,9 +82,9 @@ const commentStore: CommentStore = {
 };
 
 export const initialComment: {
-  commentList: T.Comment[];
+  comments: T.Comment[];
 } = {
-  commentList: [],
+  comments: [],
 };
 
 export default (() => {

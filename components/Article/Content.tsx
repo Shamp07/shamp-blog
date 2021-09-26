@@ -9,7 +9,7 @@ import Button from '@atoms/Button';
 import * as T from '@types';
 import { MediaQuery } from '@styles';
 
-const ArticleContent = () => {
+const Content = () => {
   const { postStore, signStore } = stores();
   const { postView } = postStore;
   if (!postView) return null;
@@ -154,4 +154,4 @@ const ThumbsUpIcon = styled(FontAwesomeIcon)`
   margin-right: 5px;
 `;
 
-export default observer(ArticleContent);
+export default observer(Content);

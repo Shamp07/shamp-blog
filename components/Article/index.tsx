@@ -3,19 +3,19 @@ import styled from '@emotion/styled';
 
 import * as T from '@types';
 import { MediaQuery } from '@styles';
-import CommentSection from './CommentSection';
-import ArticleFooter from './ArticleFooter';
-import ArticleHeader from './ArticleHeader';
-import ArticleContent from './ArticleContent';
+import Comment from './Comment';
+import Header from './Header';
+import Content from './Content';
+import Footer from './Footer';
 
-const PostView = () => (
+const Article = () => (
   <>
     <Section>
-      <ArticleHeader />
-      <ArticleContent />
-      <ArticleFooter />
+      <Header />
+      <Content />
+      <Footer />
     </Section>
-    <CommentSection />
+    <Comment />
   </>
 );
 
@@ -30,4 +30,4 @@ const Section = styled.section({
   },
 });
 
-export default PostView;
+export default Article;

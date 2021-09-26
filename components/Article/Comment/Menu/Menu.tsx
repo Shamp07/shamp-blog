@@ -12,7 +12,7 @@ export interface Props {
   setComment(value: T.Comment['content']): void;
 }
 
-const CommentNormalMenu = ({ data, setComment }: Props) => {
+const Menu = ({ data, setComment }: Props) => {
   const {
     postStore, commentStore, signStore, utilStore,
   } = stores();
@@ -30,11 +30,11 @@ const CommentNormalMenu = ({ data, setComment }: Props) => {
 
   const onModify = useCallback(() => {
     setComment(content);
-    commentStore.setModifierCommentId(id);
+    commentStore.setModifyId(id);
   }, []);
 
   const onReply = useCallback(() => {
-    commentStore.setReplyCommentId(id);
+    commentStore.setReplyId(id);
   }, []);
 
   const onDeleteConfirm = useCallback(() => {
@@ -100,4 +100,4 @@ const ReplyIcon = styled(FontAwesomeIcon)`
   vertical-align: middle;
 `;
 
-export default observer(CommentNormalMenu);
+export default observer(Menu);

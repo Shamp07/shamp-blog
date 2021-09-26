@@ -9,15 +9,16 @@ import * as T from '@types';
 
 interface Props {
   isReply: boolean;
+  replyId: T.Comment['id'];
+  setReplyId(id: T.Comment['id']): void;
 }
 
-const CommentWrite = ({ isReply }: Props) => {
+const Form = ({ isReply, replyId, setReplyId }: Props) => {
   const { postStore, commentStore, utilStore } = stores();
   const { postView } = postStore;
   if (!postView) return null;
 
   const { id } = postView;
-  const { replyCommentId } = commentStore;
 
   const form = useLocalObservable(() => ({
     values: {
@@ -53,9 +54,11 @@ const CommentWrite = ({ isReply }: Props) => {
     commentStore.addComment(
       id,
       isReply ? form.values.reply : form.values.comment,
-      replyCommentId,
+      replyId,
       isReply,
     );
+
+    setReplyId(0);
     if (isReply) form.values.reply = '';
     else form.values.comment = '';
   }, []);
@@ -149,4 +152,4 @@ const ReplyBorder = styled.div`
   border-bottom: 1px solid #c5cbd0;
 `;
 
-export default observer(CommentWrite);
+export default observer(Form);

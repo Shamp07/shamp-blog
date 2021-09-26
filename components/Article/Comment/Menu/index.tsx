@@ -3,8 +3,8 @@ import { observer } from 'mobx-react-lite';
 
 import stores from '@stores';
 import * as T from '@types';
-import CommentNormalMenu from './CommentNormalMenu';
-import CommentModifyMenu from './CommentModifyMenu';
+import CommentNormalMenu from './Menu';
+import ModifyMenu from './ModifyMenu';
 
 export interface Props {
   data: T.Comment;
@@ -12,14 +12,14 @@ export interface Props {
   onModify(): void;
 }
 
-const CommentMenu = ({ data, setComment, onModify }: Props) => {
+const Menu = ({ data, setComment, onModify }: Props) => {
   const { commentStore } = stores();
-  const { modifierCommentId } = commentStore;
+  const { modifyId } = commentStore;
   const { id } = data;
 
-  if (id === modifierCommentId) return <CommentModifyMenu onModify={onModify} />;
+  if (id === modifyId) return <ModifyMenu onModify={onModify} />;
 
   return <CommentNormalMenu data={data} setComment={setComment} />;
 };
 
-export default observer(CommentMenu);
+export default observer(Menu);

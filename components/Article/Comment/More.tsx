@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 
 import stores from '@stores';
 
-const CommentMore = () => {
+const More = () => {
   const { commentStore, postStore } = stores();
   const { moreComment } = commentStore;
   const { postView } = postStore;
@@ -39,4 +39,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default CommentMore;
+export default More;

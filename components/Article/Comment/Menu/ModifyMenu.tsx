@@ -7,13 +7,13 @@ interface Props {
   onModify(): void;
 }
 
-const CommentModifyMenu = ({ onModify }: Props) => {
+const ModifyMenu = ({ onModify }: Props) => {
   const { postStore, commentStore } = stores();
   const { postView } = postStore;
   if (!postView) return null;
 
   const onCancel = useCallback(() => {
-    commentStore.setModifierCommentId(0);
+    commentStore.setModifyId(0);
   }, []);
 
   return (
@@ -57,4 +57,4 @@ const CommentMenu = styled.div`
   }
 `;
 
-export default CommentModifyMenu;
+export default ModifyMenu;

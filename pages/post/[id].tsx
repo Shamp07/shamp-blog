@@ -2,7 +2,7 @@ import React from 'react';
 import { NextPageContext } from 'next';
 
 import stores from '@stores';
-import PostView from '@components/PostView';
+import PostView from '@components/Article';
 
 const Post = () => <PostView />;
 

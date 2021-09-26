@@ -7,7 +7,7 @@ import stores from '@stores';
 import * as T from '@types';
 import { MediaQuery } from '@styles';
 
-const ArticleHeader = () => {
+const Header = () => {
   const { postStore, sidebarStore } = stores();
   const { postView } = postStore;
   if (!postView) return null;
@@ -137,4 +137,4 @@ const ArticleMetaRight = styled(ArticleMetaUl)({
   },
 });
 
-export default observer(ArticleHeader);
+export default observer(Header);
