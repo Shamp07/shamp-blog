@@ -9,8 +9,8 @@ import * as T from '@types';
 
 interface Props {
   isReply: boolean;
-  replyId: T.Comment['id'];
-  setReplyId(id: T.Comment['id']): void;
+  replyId?: T.Comment['id'];
+  setReplyId?(id: T.Comment['id']): void;
 }
 
 const Form = ({ isReply, replyId, setReplyId }: Props) => {
@@ -54,19 +54,20 @@ const Form = ({ isReply, replyId, setReplyId }: Props) => {
     commentStore.addComment(
       id,
       isReply ? form.values.reply : form.values.comment,
-      replyId,
+      replyId ?? 0,
       isReply,
     );
 
-    setReplyId(0);
-    if (isReply) form.values.reply = '';
-    else form.values.comment = '';
+    if (isReply) {
+      form.values.reply = '';
+      setReplyId?.(0);
+    } else form.values.comment = '';
   }, []);
 
   return (
-    <CommentWriteWrapper isReply={isReply}>
+    <Root isReply={isReply}>
       {isReply && <ReplyBorder />}
-      <CommentWriterInner>
+      <Inner>
         <Textarea
           minRows={2}
           maxRows={50}
@@ -75,7 +76,7 @@ const Form = ({ isReply, replyId, setReplyId }: Props) => {
           value={isReply ? form.values.reply : form.values.comment}
           placeholder="포스팅에 관련된 의견이나 질문을 자유롭게 남겨주세요!"
         />
-        <CommentWriteFooter>
+        <Footer>
           <span>
             <span>
               (
@@ -91,26 +92,31 @@ const Form = ({ isReply, replyId, setReplyId }: Props) => {
               작성
             </Button>
           </span>
-        </CommentWriteFooter>
-      </CommentWriterInner>
-    </CommentWriteWrapper>
+        </Footer>
+      </Inner>
+    </Root>
   );
 };
 
-const CommentWriteWrapper = styled.div<Props>(({ isReply }) => ({
+Form.defaultProps = {
+  replyId: 0,
+  setReplyId: null,
+};
+
+const Root = styled.div<{ isReply: boolean }>(({ isReply }) => ({
   position: 'relative',
   backgroundColor: '#f8f9fa',
   padding: isReply ? '24px 16px 24px 64px' : '16px',
 }));
 
-const CommentWriterInner = styled.div`
+const Inner = styled.div`
   border: 1px solid #dddfe4;
   border-radius: 10px;
   padding: 20px;
   background-color: #fff;
 `;
 
-const CommentWriteFooter = styled.div`
+const Footer = styled.div`
   height: 36px;
   display: flex;
   margin-top: 12px;

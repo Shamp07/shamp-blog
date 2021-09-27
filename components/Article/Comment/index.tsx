@@ -24,20 +24,20 @@ const Comment = () => {
     },
   }));
 
-  const form = userData
-    ? (
-      <Form
-        replyId={info.replyId}
-        setReplyId={info.setReplyId}
-        isReply={false}
-      />
-    ) : null;
+  const form = userData ? (
+    <Form isReply={false} />
+  ) : null;
 
   return (
     <Root>
       <Header />
       {form}
-      <List />
+      <List
+        modifyId={info.modifyId}
+        replyId={info.replyId}
+        setModifyId={info.setModifyId}
+        setReplyId={info.setReplyId}
+      />
     </Root>
   );
 };

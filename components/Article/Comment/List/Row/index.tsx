@@ -5,8 +5,8 @@ import TextareaAutosize from 'react-textarea-autosize';
 
 import stores from '@stores';
 import * as T from '@types';
-import CommentWrite from './Form';
-import CommentMenu from './Menu';
+import Form from '../../Form';
+import Menu from './Menu';
 
 interface Props {
   data: T.Comment;
@@ -90,10 +90,14 @@ const Row = ({ data }: Props) => {
           <CommentContent>
             {modifyArea}
           </CommentContent>
-          <CommentMenu data={data} setComment={form.setComment} onModify={onModify} />
+          <Menu
+            data={data}
+            setComment={form.setComment}
+            onModify={onModify}
+          />
         </CommentWrapper>
       </li>
-      {isReply && <CommentWrite isReply />}
+      {isReply && <Form isReply />}
     </>
   );
 };
