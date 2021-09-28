@@ -5,16 +5,21 @@ import TextareaAutosize from 'react-textarea-autosize';
 
 import stores from '@stores';
 import * as T from '@types';
-import Form from '../../Form';
+import Form from '@components/Article/Comment/Form';
 import Menu from './Menu';
 
 interface Props {
   data: T.Comment;
+  replyId: T.Comment['id'];
+  modifyId: T.Comment['id'];
+  setReplyId(id: T.Comment['id']): void;
+  setModifyId(id: T.Comment['id']): void;
 }
 
-const Row = ({ data }: Props) => {
+const Row = ({
+  data, replyId, modifyId, setReplyId, setModifyId,
+}: Props) => {
   const { commentStore, utilStore } = stores();
-  const { replyCommentId, modifyId } = commentStore;
 
   const {
     id, postId, commentId, userName,
@@ -23,7 +28,7 @@ const Row = ({ data }: Props) => {
   } = data;
 
   const isModify = modifyId === id;
-  const isReply = id === replyCommentId;
+  const isReply = replyId === id;
 
   const form = useLocalObservable(() => ({
     values: {
@@ -53,7 +58,7 @@ const Row = ({ data }: Props) => {
     if (!form.onValidate()) return;
 
     commentStore.modifyComment(id, postId, form.values.comment);
-    commentStore.setModifyId(0);
+    setModifyId(0);
   }, [form.values.comment]);
 
   const contentArea = useMemo(() => (
@@ -78,35 +83,42 @@ const Row = ({ data }: Props) => {
     ) : contentArea
   ), [isModify, form.values.comment, contentArea]);
 
+  const replyForm = useMemo(() => (isReply ? (
+    <Form
+      isReply
+      replyId={replyId}
+      setReplyId={setReplyId}
+    />
+  ) : null), [isReply]);
+
   return (
     <>
       <li>
-        <CommentWrapper isReply={Boolean(commentId)}>
+        <Wrapper isReply={Boolean(commentId)}>
           {Boolean(commentId) && (<ReplyBorder />)}
-          <CommentWriter>
+          <Writer>
             <span>{userName}</span>
             <span>{modifiedTime || time}</span>
-          </CommentWriter>
+          </Writer>
           <CommentContent>
             {modifyArea}
           </CommentContent>
           <Menu
             data={data}
+            modifyId={modifyId}
+            setModifyId={setModifyId}
+            setReplyId={setReplyId}
             setComment={form.setComment}
             onModify={onModify}
           />
-        </CommentWrapper>
+        </Wrapper>
       </li>
-      {isReply && <Form isReply />}
+      {replyForm}
     </>
   );
 };
 
-interface ReplyProp {
-  isReply: boolean;
-}
-
-const CommentWrapper = styled.div<ReplyProp>(({ isReply }) => ({
+const Wrapper = styled.div<{ isReply: boolean }>(({ isReply }) => ({
   position: 'relative',
   ...(isReply ? ({
     padding: '16px 16px 16px 64px',
@@ -117,7 +129,7 @@ const CommentWrapper = styled.div<ReplyProp>(({ isReply }) => ({
   })),
 }));
 
-const CommentWriter = styled.div`
+const Writer = styled.div`
   line-height: 17px;
   font-weight: 700;
   color: #1e2022;

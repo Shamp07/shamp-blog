@@ -3,7 +3,6 @@ import { observable } from 'mobx';
 import Axios from '@utilities/axios';
 import * as T from '@types';
 import utilStore from '@stores/utilStore';
-import postStore from './postStore';
 
 export interface CommentStore {
   comments: T.Comment[];
@@ -60,7 +59,6 @@ const commentStore: CommentStore = {
       },
       success: () => {
         this.getComment(postId);
-        this.setModifyId(0);
       },
     });
   },
@@ -73,7 +71,6 @@ const commentStore: CommentStore = {
         if (response.data.code === 2) {
           utilStore.openPopup(T.Popup.ALERT, response.data.message);
         } else {
-          postStore().getPost(postId, false);
           this.getComment(postId);
         }
       },

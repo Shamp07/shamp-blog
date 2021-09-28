@@ -31,7 +31,7 @@ const ConfirmPopup = () => {
         </Button>
         <Button
           size={T.ButtonSize.MEDIUM}
-          variant="contained"
+          variant="outlined"
           onClick={onClose}
           color="primary"
         >

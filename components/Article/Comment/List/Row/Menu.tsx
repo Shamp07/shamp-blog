@@ -1,24 +1,24 @@
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faReply } from '@fortawesome/free-solid-svg-icons';
 
 import stores from '@stores';
 import * as T from '@types';
 import dsPalette from '@constants/ds-palette';
-import { faReply } from '@fortawesome/free-solid-svg-icons';
-import ModifyMenu from './ModifyMenu';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export interface Props {
   data: T.Comment;
   modifyId: T.Comment['id'];
   setModifyId(value: T.Comment['id']): void;
+  setReplyId(value: T.Comment['id']): void;
   setComment(value: T.Comment['content']): void;
   onModify(): void;
 }
 
 const Menu = ({
-  data, modifyId, setModifyId, setComment, onModify,
+  data, modifyId, setModifyId, setReplyId, setComment, onModify,
 }: Props) => {
   const { id, content } = data;
   const {

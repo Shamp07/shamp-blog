@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { observer, useLocalObservable } from 'mobx-react-lite';
+import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
 import stores from '@stores';
@@ -24,10 +24,17 @@ const List = ({
   const isMoreComment = comments[0]?.total > size;
 
   const list = useMemo(() => (
-    comments.length ? comments.map(
-      (data) => <Row data={data} key={data.id} />,
-    ) : <None />
-  ), [comments]);
+    comments.length ? comments.map((data) => (
+      <Row
+        key={data.id}
+        data={data}
+        replyId={replyId}
+        modifyId={modifyId}
+        setModifyId={setModifyId}
+        setReplyId={setReplyId}
+      />
+    )) : <None />),
+  [comments, replyId, modifyId]);
 
   return (
     <Root>
