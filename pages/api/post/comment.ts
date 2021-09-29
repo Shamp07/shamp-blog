@@ -86,8 +86,8 @@ const addComment = async (request: T.NextApiRequestToken, response: NextApiRespo
 };
 
 const getComment = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { postId, commentSize } = request.query;
-  const values = [postId, commentSize];
+  const { postId, size } = request.query;
+  const values = [postId, size];
 
   await Database.execute(
     (database: Client) => database.query(

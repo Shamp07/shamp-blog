@@ -11,9 +11,12 @@ interface Props {
   isReply: boolean;
   replyId?: T.Comment['id'];
   setReplyId?(id: T.Comment['id']): void;
+  size: number;
 }
 
-const Form = ({ isReply, replyId, setReplyId }: Props) => {
+const Form = ({
+  isReply, replyId, setReplyId, size,
+}: Props) => {
   const { postStore, commentStore, utilStore } = stores();
   const { postView } = postStore;
   if (!postView) return null;
@@ -56,6 +59,7 @@ const Form = ({ isReply, replyId, setReplyId }: Props) => {
       isReply ? form.values.reply : form.values.comment,
       replyId ?? 0,
       isReply,
+      size,
     );
 
     if (isReply) {

@@ -6,18 +6,21 @@ import utilStore from '@stores/utilStore';
 
 export interface CommentStore {
   comments: T.Comment[];
-  size: number;
-  addComment(postId: number, comment: string, commentId: number, isReply: boolean): void;
-  moreComment(postId: number): void;
-  getComment(postId: number): Promise<void>;
-  modifyComment(commentId: number, postId: number, comment: string): void;
-  deleteComment(commentId: number, postId: number): void;
+  addComment(
+    postId: number,
+    comment: string,
+    commentId: number,
+    isReply: boolean,
+    size: number
+  ): void;
+  getComment(postId: number, size: number): Promise<void>;
+  modifyComment(commentId: number, postId: number, comment: string, size: number): void;
+  deleteComment(commentId: number, postId: number, size: number): void;
 }
 
 const commentStore: CommentStore = {
   comments: [],
-  size: 15,
-  addComment(postId, comment, commentId, isReply) {
+  addComment(postId, comment, commentId, isReply, size) {
     Axios({
       method: T.RequestMethod.POST,
       url: '/api/post/comment',
@@ -27,21 +30,17 @@ const commentStore: CommentStore = {
         commentId: isReply ? commentId : null,
       },
       success: () => {
-        this.getComment(postId);
+        this.getComment(postId, size);
       },
     });
   },
-  moreComment(postId) {
-    this.getComment(postId);
-    this.size += 15;
-  },
-  async getComment(postId) {
+  async getComment(postId, size) {
     await Axios({
       method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/post/comment`,
       data: {
         postId,
-        commentSize: this.size,
+        size,
       },
       success: (response) => {
         const { result } = response.data;
@@ -49,7 +48,7 @@ const commentStore: CommentStore = {
       },
     });
   },
-  modifyComment(commentId, postId, comment) {
+  modifyComment(commentId, postId, comment, size) {
     Axios({
       method: T.RequestMethod.PUT,
       url: '/api/post/comment',
@@ -58,11 +57,11 @@ const commentStore: CommentStore = {
         comment,
       },
       success: () => {
-        this.getComment(postId);
+        this.getComment(postId, size);
       },
     });
   },
-  deleteComment(commentId, postId) {
+  deleteComment(commentId, postId, size) {
     Axios({
       method: T.RequestMethod.DELETE,
       url: '/api/post/comment',
@@ -71,7 +70,7 @@ const commentStore: CommentStore = {
         if (response.data.code === 2) {
           utilStore.openPopup(T.Popup.ALERT, response.data.message);
         } else {
-          this.getComment(postId);
+          this.getComment(postId, size);
         }
       },
     });

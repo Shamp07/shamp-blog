@@ -12,12 +12,13 @@ interface Props {
   data: T.Comment;
   replyId: T.Comment['id'];
   modifyId: T.Comment['id'];
+  size: number;
   setReplyId(id: T.Comment['id']): void;
   setModifyId(id: T.Comment['id']): void;
 }
 
 const Row = ({
-  data, replyId, modifyId, setReplyId, setModifyId,
+  data, replyId, modifyId, size, setReplyId, setModifyId,
 }: Props) => {
   const { commentStore, utilStore } = stores();
 
@@ -57,7 +58,7 @@ const Row = ({
   const onModify = useCallback(() => {
     if (!form.onValidate()) return;
 
-    commentStore.modifyComment(id, postId, form.values.comment);
+    commentStore.modifyComment(id, postId, form.values.comment, size);
     setModifyId(0);
   }, [form.values.comment]);
 
@@ -88,6 +89,7 @@ const Row = ({
       isReply
       replyId={replyId}
       setReplyId={setReplyId}
+      size={size}
     />
   ) : null), [isReply]);
 
@@ -106,6 +108,7 @@ const Row = ({
           <Menu
             data={data}
             modifyId={modifyId}
+            size={size}
             setModifyId={setModifyId}
             setReplyId={setReplyId}
             setComment={form.setComment}

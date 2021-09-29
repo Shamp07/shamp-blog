@@ -11,15 +11,18 @@ import None from './None';
 interface Props {
   modifyId: T.Comment['id'];
   replyId: T.Comment['id'];
+  size: number;
   setModifyId(id: T.Comment['id']): void;
   setReplyId(id: T.Comment['id']): void;
+  increaseSize(): void;
 }
 
 const List = ({
-  modifyId, replyId, setModifyId, setReplyId,
+  modifyId, replyId, size, setModifyId, setReplyId,
+  increaseSize,
 }: Props) => {
   const { commentStore } = stores();
-  const { comments, size } = commentStore;
+  const { comments } = commentStore;
 
   const isMoreComment = comments[0]?.total > size;
 
@@ -30,6 +33,7 @@ const List = ({
         data={data}
         replyId={replyId}
         modifyId={modifyId}
+        size={size}
         setModifyId={setModifyId}
         setReplyId={setReplyId}
       />
@@ -40,7 +44,7 @@ const List = ({
     <Root>
       <ul>
         {list}
-        {isMoreComment && <More />}
+        {isMoreComment && <More size={size} increaseSize={increaseSize} />}
       </ul>
     </Root>
   );

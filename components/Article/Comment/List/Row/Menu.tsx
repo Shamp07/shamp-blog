@@ -11,6 +11,7 @@ import dsPalette from '@constants/ds-palette';
 export interface Props {
   data: T.Comment;
   modifyId: T.Comment['id'];
+  size: number;
   setModifyId(value: T.Comment['id']): void;
   setReplyId(value: T.Comment['id']): void;
   setComment(value: T.Comment['content']): void;
@@ -18,7 +19,8 @@ export interface Props {
 }
 
 const Menu = ({
-  data, modifyId, setModifyId, setReplyId, setComment, onModify,
+  data, modifyId, size,
+  setModifyId, setReplyId, setComment, onModify,
 }: Props) => {
   const { id, content } = data;
   const {
@@ -36,7 +38,7 @@ const Menu = ({
   }, []);
 
   const onDelete = useCallback(() => {
-    commentStore.deleteComment(id, postId);
+    commentStore.deleteComment(id, postId, size);
   }, []);
 
   const onModifyMode = useCallback(() => {

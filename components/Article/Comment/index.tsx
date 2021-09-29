@@ -16,16 +16,20 @@ const Comment = () => {
   const info = useLocalObservable(() => ({
     modifyId: 0,
     replyId: 0,
+    size: 15,
     setModifyId(id: number) {
       this.modifyId = id;
     },
     setReplyId(id: number) {
       this.replyId = id;
     },
+    increaseSize() {
+      this.size += 10;
+    },
   }));
 
   const form = userData ? (
-    <Form isReply={false} />
+    <Form isReply={false} size={info.size} />
   ) : null;
 
   return (
@@ -35,8 +39,10 @@ const Comment = () => {
       <List
         modifyId={info.modifyId}
         replyId={info.replyId}
+        size={info.size}
         setModifyId={info.setModifyId}
         setReplyId={info.setReplyId}
+        increaseSize={info.increaseSize}
       />
     </Root>
   );
