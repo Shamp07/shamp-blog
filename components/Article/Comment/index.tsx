@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
@@ -9,14 +9,21 @@ import Header from './Header';
 import Form from './Form';
 import List from './List';
 
+const COMMENT_DEFAULT_SIZE = 15;
+
 const Comment = () => {
-  const { signStore } = stores();
+  const { signStore, postStore, commentStore } = stores();
   const { userData } = signStore;
+  const { postView } = postStore;
+
+  if (!postView) return null;
+
+  const { id: postId } = postView;
 
   const info = useLocalObservable(() => ({
     modifyId: 0,
     replyId: 0,
-    size: 15,
+    size: COMMENT_DEFAULT_SIZE,
     setModifyId(id: number) {
       this.modifyId = id;
     },
@@ -28,13 +35,17 @@ const Comment = () => {
     },
   }));
 
+  useEffect(() => {
+    if (info.size > COMMENT_DEFAULT_SIZE) commentStore.getComment(postId, info.size);
+  }, [info.size]);
+
   const form = userData ? (
     <Form isReply={false} size={info.size} />
   ) : null;
 
   return (
     <Root>
-      <Header />
+      <Header size={info.size} />
       {form}
       <List
         modifyId={info.modifyId}

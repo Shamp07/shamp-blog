@@ -8,17 +8,20 @@ import stores from '@stores';
 import Button from '@atoms/Button';
 import * as T from '@types';
 
-const Header = () => {
+interface Props {
+  size: number;
+}
+
+const Header = ({ size }: Props) => {
   const { postStore, commentStore } = stores();
   const { postView } = postStore;
   if (!postView) return null;
 
-  const { getComment } = commentStore;
   const { id, commentCnt } = postView;
 
   const onRefresh = useCallback(() => {
-    getComment(id);
-  }, []);
+    commentStore.getComment(id, size);
+  }, [size]);
 
   return (
     <CommentHeaderWrapper>

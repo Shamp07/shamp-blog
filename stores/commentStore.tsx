@@ -13,7 +13,7 @@ export interface CommentStore {
     isReply: boolean,
     size: number
   ): void;
-  getComment(postId: number, size: number): Promise<void>;
+  getComment(postId: number, size?: number): Promise<void>;
   modifyComment(commentId: number, postId: number, comment: string, size: number): void;
   deleteComment(commentId: number, postId: number, size: number): void;
 }
@@ -34,7 +34,7 @@ const commentStore: CommentStore = {
       },
     });
   },
-  async getComment(postId, size) {
+  async getComment(postId, size = 15) {
     await Axios({
       method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/post/comment`,

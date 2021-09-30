@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
 import stores from '@stores';
 import * as T from '@types';
-import More from '../More';
+import More from './More';
 import Row from './Row';
 import None from './None';
 
@@ -21,8 +21,13 @@ const List = ({
   modifyId, replyId, size, setModifyId, setReplyId,
   increaseSize,
 }: Props) => {
-  const { commentStore } = stores();
+  const { commentStore, postStore } = stores();
   const { comments } = commentStore;
+  const { postView } = postStore;
+
+  if (!postView) return null;
+
+  const { id } = postView;
 
   const isMoreComment = comments[0]?.total > size;
 
@@ -44,7 +49,7 @@ const List = ({
     <Root>
       <ul>
         {list}
-        {isMoreComment && <More size={size} increaseSize={increaseSize} />}
+        {isMoreComment && <More increaseSize={increaseSize} />}
       </ul>
     </Root>
   );

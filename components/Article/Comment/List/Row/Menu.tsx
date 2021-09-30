@@ -44,7 +44,7 @@ const Menu = ({
   const onModifyMode = useCallback(() => {
     setComment(content);
     setModifyId(id);
-  }, []);
+  }, [content]);
 
   const onReply = useCallback(() => {
     setReplyId(id);

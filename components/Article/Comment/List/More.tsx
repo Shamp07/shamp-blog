@@ -1,25 +1,13 @@
 import React, { useCallback } from 'react';
 import styled from '@emotion/styled';
 
-import stores from '@stores';
-
 interface Props {
-  size: number;
   increaseSize(): void;
 }
 
-const More = ({
-  size, increaseSize,
-}: Props) => {
-  const { commentStore, postStore } = stores();
-  const { postView } = postStore;
-  if (!postView) return null;
-
-  const { id } = postView;
-
+const More = ({ increaseSize }: Props) => {
   const onMore = useCallback(() => {
     increaseSize();
-    commentStore.getComment(id, size);
   }, []);
 
   return (
