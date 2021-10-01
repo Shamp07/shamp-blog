@@ -5,13 +5,13 @@ import styled from '@emotion/styled';
 
 import stores from '@stores';
 import * as T from '@types';
-import FootprintMenu from './FootprintMenu';
+import FootprintMenu from './Menu';
 
 interface Props {
   data: T.FootPrint;
 }
 
-const FootprintRow = ({ data }: Props) => {
+const Row = ({ data }: Props) => {
   const { homeStore, utilStore } = stores();
   const { modifierFootprintId } = homeStore;
 
@@ -153,4 +153,4 @@ const TextAreaWrapper = styled.div`
   background-color: #fff;
 `;
 
-export default observer(FootprintRow);
+export default observer(Row);

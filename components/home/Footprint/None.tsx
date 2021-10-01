@@ -4,7 +4,7 @@ import { faShoePrints } from '@fortawesome/free-solid-svg-icons';
 
 import styled from '@emotion/styled';
 
-const FootPrintNone = () => (
+const None = () => (
   <li>
     <NoneWrapper>
       <FootprintIcon icon={faShoePrints} />
@@ -28,4 +28,4 @@ const FootprintIcon = styled(FontAwesomeIcon)`
   margin-bottom: 15px;
 `;
 
-export default FootPrintNone;
+export default None;

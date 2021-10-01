@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 
 import stores from '@stores';
+import dsPalette from '@constants/ds-palette';
 import * as T from '@types';
 import { MediaQuery } from '@styles';
 
@@ -73,20 +74,24 @@ const BoardPost = ({ data }: Props) => {
   );
 };
 
-const PostLinkSpan = styled.span`
-  cursor: pointer;
-  display: flex;
-  line-height: 20px;
+const PostLinkSpan = styled.span({
+  cursor: 'pointer',
+  display: 'flex',
+  lineHeight: '20px',
 
-  & > span:first-of-type {
-    margin-right: 5px;
-    max-width: 80%;
-    display: inline-block;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-`;
+  '& > span:first-of-type': {
+    marginRight: '5px',
+    maxWidth: '80%',
+    display: 'inline-block',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+  },
+
+  '& > span:nth-of-type(2)': {
+    color: dsPalette.themePrimary.toString(),
+  },
+});
 
 const Article = styled.article`
   position: relative;

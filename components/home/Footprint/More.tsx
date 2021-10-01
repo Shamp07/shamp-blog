@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 
 import stores from '@stores';
 
-const FootprintMore = () => {
+const More = () => {
   const { homeStore } = stores();
   const { moreFootprint } = homeStore;
 
@@ -30,4 +30,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default FootprintMore;
+export default More;

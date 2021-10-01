@@ -7,7 +7,7 @@ import stores from '@stores';
 import * as T from '@types';
 import Button from '@atoms/Button';
 
-const FootprintWrite = () => {
+const Form = () => {
   const { homeStore, utilStore } = stores();
 
   const form = useLocalObservable(() => ({
@@ -113,4 +113,4 @@ const Textarea = styled(TextareaAutosize)`
   outline: 0;
 `;
 
-export default observer(FootprintWrite);
+export default observer(Form);

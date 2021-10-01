@@ -7,7 +7,7 @@ export interface Props {
   onModify(): void;
 }
 
-const FootprintModifyMenu = ({ onModify }: Props) => {
+const ModifyMenu = ({ onModify }: Props) => {
   const { homeStore } = stores();
 
   const modifyCancel = useCallback(() => {
@@ -55,4 +55,4 @@ const FootprintMenu = styled.div`
   }
 `;
 
-export default FootprintModifyMenu;
+export default ModifyMenu;

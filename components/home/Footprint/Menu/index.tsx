@@ -3,8 +3,8 @@ import { observer } from 'mobx-react-lite';
 
 import stores from '@stores';
 import * as T from '@types';
-import FootprintModifyMenu from './FootprintModifyMenu';
-import FootprintNormalMenu from './FootprintNormalMenu';
+import ModifyMenu from './ModifyMenu';
+import FootprintNormalMenu from './NormalMenu';
 
 export interface Props {
   data: T.FootPrint;
@@ -20,7 +20,7 @@ const FootprintMenu = ({ data, setFootprint, onModify }: Props) => {
   const isMine = userData?.id === userId;
 
   if (!isMine) return null;
-  if (id === modifierFootprintId) return <FootprintModifyMenu onModify={onModify} />;
+  if (id === modifierFootprintId) return <ModifyMenu onModify={onModify} />;
 
   return <FootprintNormalMenu data={data} setFootprint={setFootprint} />;
 };

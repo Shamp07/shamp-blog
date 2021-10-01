@@ -10,7 +10,7 @@ export interface Props {
   setFootprint(value: string): void;
 }
 
-const FootprintNormalMenu = ({ data, setFootprint }: Props) => {
+const NormalMenu = ({ data, setFootprint }: Props) => {
   const { homeStore, utilStore } = stores();
   const { id, content } = data;
 
@@ -68,4 +68,4 @@ const FootprintMenu = styled.div`
   }
 `;
 
-export default observer(FootprintNormalMenu);
+export default observer(NormalMenu);

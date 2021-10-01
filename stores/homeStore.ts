@@ -4,51 +4,42 @@ import Axios from '@utilities/axios';
 import * as T from '@types';
 
 export interface HomeStore {
-  recentlyPostList: T.HomePost[];
-  noticePostList: T.HomePost[];
-  footprintList: T.FootPrint[];
-  footprintSize: number;
-  modifierFootprintId: number;
-  setModifierFootprintId(id: number): void;
-  getRecentlyPostList(): Promise<void>;
-  getNoticePostList(): Promise<void>;
-  addFootprint(footprint: string): void;
-  moreFootprint(): void;
-  getFootprint(): Promise<void>;
-  modifyFootprint(id: number, content: string): void;
-  deleteFootprint(id: number): void;
+  recentPosts: T.HomePost[];
+  noticePosts: T.HomePost[];
+  footprints: T.FootPrint[];
+  getRecentPosts(): Promise<void>;
+  getNoticePosts(): Promise<void>;
+  addFootprint(footprint: string, size: number): void;
+  getFootprint(size: number): Promise<void>;
+  modifyFootprint(id: number, content: string, size: number): void;
+  deleteFootprint(id: number, size: number): void;
 }
 
 const homeStore: HomeStore = {
-  recentlyPostList: [],
-  noticePostList: [],
-  footprintList: [],
-  footprintSize: 20,
-  modifierFootprintId: 0,
-  setModifierFootprintId(id) {
-    this.modifierFootprintId = id;
-  },
-  async getRecentlyPostList() {
+  recentPosts: [],
+  noticePosts: [],
+  footprints: [],
+  async getRecentPosts() {
     await Axios({
       method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/post/list/recently`,
       success: (response) => {
         const { result } = response.data;
-        this.recentlyPostList = result;
+        this.recentPosts = result;
       },
     });
   },
-  async getNoticePostList() {
+  async getNoticePosts() {
     await Axios({
       method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/post/list/notice`,
       success: (response) => {
         const { result } = response.data;
-        this.noticePostList = result;
+        this.noticePosts = result;
       },
     });
   },
-  addFootprint(footprint: string) {
+  addFootprint(footprint, size) {
     Axios({
       method: T.RequestMethod.POST,
       url: '/api/footprint',
@@ -56,28 +47,22 @@ const homeStore: HomeStore = {
         content: footprint,
       },
       success: () => {
-        this.getFootprint();
+        this.getFootprint(size);
       },
     });
   },
-  moreFootprint() {
-    this.footprintSize += 20;
-    this.getFootprint();
-  },
-  async getFootprint() {
+  async getFootprint(size) {
     await Axios({
       method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/footprint`,
-      data: {
-        size: this.footprintSize,
-      },
+      data: { size },
       success: (response) => {
         const { result } = response.data;
-        this.footprintList = result;
+        this.footprints = result;
       },
     });
   },
-  modifyFootprint(id, content) {
+  modifyFootprint(id, content, size) {
     Axios({
       method: T.RequestMethod.PUT,
       url: '/api/footprint',
@@ -86,31 +71,30 @@ const homeStore: HomeStore = {
         content,
       },
       success: () => {
-        this.getFootprint();
-        this.setModifierFootprintId(0);
+        this.getFootprint(size);
       },
     });
   },
-  deleteFootprint(id) {
+  deleteFootprint(id, size) {
     Axios({
       method: T.RequestMethod.DELETE,
       url: '/api/footprint',
       data: { id },
       success: () => {
-        this.getFootprint();
+        this.getFootprint(size);
       },
     });
   },
 };
 
 export const initialHome: {
-  recentlyPostList: T.HomePost[];
-  noticePostList: T.HomePost[];
-  footprintList: T.FootPrint[];
+  recentPosts: T.HomePost[];
+  noticePosts: T.HomePost[];
+  footprints: T.FootPrint[];
 } = {
-  recentlyPostList: [],
-  noticePostList: [],
-  footprintList: [],
+  recentPosts: [],
+  noticePosts: [],
+  footprints: [],
 };
 
 export default (() => {

@@ -3,33 +3,33 @@ import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 
 import stores from '@stores';
-import FootprintMore from './FootprintMore';
-import FootPrintRow from './FootprintRow';
-import FootprintNone from './FootprintNone';
+import More from './More';
+import FootPrintRow from './Row';
+import FootprintNone from './None';
 
-const FootprintList = () => {
+const List = () => {
   const { homeStore } = stores();
-  const { footprintList, footprintSize } = homeStore;
+  const { footprints } = homeStore;
 
-  const isMoreFootprint = footprintList[0]?.total > footprintSize;
+  const isMoreFootprint = footprints[0]?.total > size;
 
-  const footprints = useMemo(() => (
-    footprintList.length ? footprintList.map(
+  const footprintList = useMemo(() => (
+    footprints.length ? footprints.map(
       (data) => <FootPrintRow data={data} key={data.id} />,
     ) : <FootprintNone />
-  ), [footprintList]);
+  ), [footprints]);
 
   return (
-    <FootprintListWrapper>
+    <Root>
       <ul>
-        {footprints}
-        {isMoreFootprint && <FootprintMore />}
+        {footprintList}
+        {isMoreFootprint && <More />}
       </ul>
-    </FootprintListWrapper>
+    </Root>
   );
 };
 
-const FootprintListWrapper = styled.div`
+const Root = styled.div`
   margin-top: 15px;
   max-height: 500px;
   overflow: auto;
@@ -62,4 +62,4 @@ const FootprintListWrapper = styled.div`
   }
 `;
 
-export default observer(FootprintList);
+export default observer(List);

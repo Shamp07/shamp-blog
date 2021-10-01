@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 
 import stores from '@stores';
-import HomePostList from '@components/home/HomePostList';
+import HomePostList from '@components/home/Post/HomePostList';
 import Footprint from '@components/home/Footprint';
 import Button from '@atoms/Button';
 import * as T from '@types';
@@ -13,7 +13,7 @@ import { MediaQuery } from '@styles';
 
 const Home = () => {
   const { homeStore } = stores();
-  const { noticePostList, recentlyPostList } = homeStore;
+  const { noticePosts, recentPosts } = homeStore;
 
   const onReload = useCallback(() => {
     homeStore.getFootprint();
@@ -24,11 +24,11 @@ const Home = () => {
       <CustomGrid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <h2>공지사항</h2>
-          <HomePostList list={noticePostList} />
+          <HomePostList list={noticePosts} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <h2>최근 글</h2>
-          <HomePostList list={recentlyPostList} />
+          <HomePostList list={recentPosts} />
         </Grid>
         <RelativeGrid item xs={12}>
           <h2>발자취</h2>
@@ -55,8 +55,8 @@ Home.getInitialProps = async () => {
   const { homeStore } = stores();
 
   await Promise.all([
-    homeStore.getRecentlyPostList(),
-    homeStore.getNoticePostList(),
+    homeStore.getRecentPosts(),
+    homeStore.getNoticePosts(),
     homeStore.getFootprint(),
   ]);
 

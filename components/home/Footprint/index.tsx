@@ -2,8 +2,8 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 
 import stores from '@stores';
-import FootprintWrite from './FootprintWrite';
-import FootprintList from './FootprintList';
+import FootprintWrite from './Form';
+import FootprintList from './List';
 
 const Footprint = () => {
   const { signStore } = stores();
