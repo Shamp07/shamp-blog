@@ -10,7 +10,7 @@ export interface HomeStore {
   getRecentPosts(): Promise<void>;
   getNoticePosts(): Promise<void>;
   addFootprint(footprint: string, size: number): void;
-  getFootprint(size: number): Promise<void>;
+  getFootprint(size?: number): Promise<void>;
   modifyFootprint(id: number, content: string, size: number): void;
   deleteFootprint(id: number, size: number): void;
 }
@@ -51,7 +51,7 @@ const homeStore: HomeStore = {
       },
     });
   },
-  async getFootprint(size) {
+  async getFootprint(size = 10) {
     await Axios({
       method: T.RequestMethod.GET,
       url: `${process.env.BASE_PATH}/api/footprint`,

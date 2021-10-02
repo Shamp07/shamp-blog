@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
@@ -21,13 +21,8 @@ const List = ({
   modifyId, replyId, size, setModifyId, setReplyId,
   increaseSize,
 }: Props) => {
-  const { commentStore, postStore } = stores();
+  const { commentStore } = stores();
   const { comments } = commentStore;
-  const { postView } = postStore;
-
-  if (!postView) return null;
-
-  const { id } = postView;
 
   const isMoreComment = comments[0]?.total > size;
 

@@ -1,20 +1,17 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import stores from '@stores';
+interface Props {
+  increaseSize(): void;
+}
 
-const More = () => {
-  const { homeStore } = stores();
-  const { moreFootprint } = homeStore;
+const More = ({ increaseSize }: Props) => (
+  <Root onClick={increaseSize}>
+    발자취 더보기
+  </Root>
+);
 
-  return (
-    <Wrapper onClick={moreFootprint}>
-      발자취 더보기
-    </Wrapper>
-  );
-};
-
-const Wrapper = styled.div`
+const Root = styled.div`
   margin-top: 8px;
   text-align: center;
   background-color: #fff;

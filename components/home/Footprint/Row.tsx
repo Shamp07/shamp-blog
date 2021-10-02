@@ -5,15 +5,19 @@ import styled from '@emotion/styled';
 
 import stores from '@stores';
 import * as T from '@types';
-import FootprintMenu from './Menu';
+import Menu from './Menu';
 
 interface Props {
   data: T.FootPrint;
+  size: number;
+  modifyId: T.FootPrint['id'];
+  setModifyId(id: T.FootPrint['id']): void;
 }
 
-const Row = ({ data }: Props) => {
+const Row = ({
+  data, size, modifyId, setModifyId,
+}: Props) => {
   const { homeStore, utilStore } = stores();
-  const { modifierFootprintId } = homeStore;
 
   const form = useLocalObservable(() => ({
     values: {
@@ -44,14 +48,14 @@ const Row = ({ data }: Props) => {
     content, time, modifiedTime,
   } = data;
 
-  const isModify = modifierFootprintId === id;
+  const isModify = modifyId === id;
 
   const onModify = useCallback(() => {
     if (!form.onValidate()) return;
 
-    homeStore.modifyFootprint(id, form.values.footprint);
-    homeStore.setModifierFootprintId(0);
-  }, [form.values.footprint]);
+    homeStore.modifyFootprint(id, form.values.footprint, size);
+    setModifyId(0);
+  }, [form.values.footprint, size]);
 
   const contentSection = useMemo(() => (
     isModify ? (
@@ -70,7 +74,7 @@ const Row = ({ data }: Props) => {
 
   return (
     <li>
-      <ListInner>
+      <Inner>
         <Writer>
           <span>{userName}</span>
           <Time>{modifiedTime || time}</Time>
@@ -78,17 +82,20 @@ const Row = ({ data }: Props) => {
         <Content>
           {contentSection}
         </Content>
-        <FootprintMenu
+        <Menu
           data={data}
+          modifyId={modifyId}
+          size={size}
+          setModifyId={setModifyId}
           setFootprint={form.setFootprint}
           onModify={onModify}
         />
-      </ListInner>
+      </Inner>
     </li>
   );
 };
 
-const ListInner = styled.div`
+const Inner = styled.div`
   position: relative;
 `;
 

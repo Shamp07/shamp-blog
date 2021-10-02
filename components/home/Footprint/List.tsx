@@ -3,27 +3,43 @@ import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 
 import stores from '@stores';
+import * as T from '@types';
 import More from './More';
-import FootPrintRow from './Row';
-import FootprintNone from './None';
+import Row from './Row';
+import None from './None';
 
-const List = () => {
+interface Props {
+  size: number;
+  modifyId: T.FootPrint['id'];
+  increaseSize(): void;
+  setModifyId(id: T.FootPrint['id']): void;
+}
+
+const List = ({
+  size, modifyId, increaseSize, setModifyId,
+}: Props) => {
   const { homeStore } = stores();
   const { footprints } = homeStore;
 
   const isMoreFootprint = footprints[0]?.total > size;
 
   const footprintList = useMemo(() => (
-    footprints.length ? footprints.map(
-      (data) => <FootPrintRow data={data} key={data.id} />,
-    ) : <FootprintNone />
-  ), [footprints]);
+    footprints.length ? footprints.map((data) => (
+      <Row
+        key={data.id}
+        data={data}
+        size={size}
+        modifyId={modifyId}
+        setModifyId={setModifyId}
+      />
+    )) : <None />
+  ), [footprints, size, modifyId]);
 
   return (
     <Root>
       <ul>
         {footprintList}
-        {isMoreFootprint && <More />}
+        {isMoreFootprint && <More increaseSize={increaseSize} />}
       </ul>
     </Root>
   );

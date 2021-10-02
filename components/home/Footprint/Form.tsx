@@ -7,7 +7,11 @@ import stores from '@stores';
 import * as T from '@types';
 import Button from '@atoms/Button';
 
-const Form = () => {
+interface Props {
+  size: number;
+}
+
+const Form = ({ size }: Props) => {
   const { homeStore, utilStore } = stores();
 
   const form = useLocalObservable(() => ({
@@ -35,13 +39,13 @@ const Form = () => {
   const onSubmit = useCallback(() => {
     if (!form.onValidate()) return;
 
-    homeStore.addFootprint(form.values.footprint);
+    homeStore.addFootprint(form.values.footprint, size);
     form.values.footprint = '';
-  }, [form.values.footprint]);
+  }, [form.values.footprint, size]);
 
   return (
-    <FootprintWriteWrapper>
-      <TextareaWrapper>
+    <Root>
+      <Wrapper>
         <Textarea
           rows={3}
           onChange={form.onChange}
@@ -66,34 +70,16 @@ const Form = () => {
             </Button>
           </span>
         </Footer>
-      </TextareaWrapper>
-    </FootprintWriteWrapper>
+      </Wrapper>
+    </Root>
   );
 };
 
-const FootprintWriteWrapper = styled.div`
+const Root = styled.div`
   position: relative;
 `;
 
-const Footer = styled.div`
-  height: 36px;
-  display: flex;
-  margin-top: 12px;
-  
-  & > span {
-    margin-left: auto;  
-  }
-  
-  & > span > span {
-    display: inline-block;
-    line-height: 36px;
-    padding-right: 10px;
-    font-size: 14px;
-    color: #7b858e;
-  }
-`;
-
-const TextareaWrapper = styled.div`
+const Wrapper = styled.div`
   border: 1px solid #dddfe4;
   border-radius: 10px;
   overflow: hidden;
@@ -111,6 +97,24 @@ const Textarea = styled(TextareaAutosize)`
   font-family: inherit;
   border: 0;
   outline: 0;
+`;
+
+const Footer = styled.div`
+  height: 36px;
+  display: flex;
+  margin-top: 12px;
+
+  & > span {
+    margin-left: auto;
+  }
+
+  & > span > span {
+    display: inline-block;
+    line-height: 36px;
+    padding-right: 10px;
+    font-size: 14px;
+    color: #7b858e;
+  }
 `;
 
 export default observer(Form);
