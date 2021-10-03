@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 
 import stores from '@stores';
-import HomePostList from '@components/home/Post/HomePostList';
+import Index from '@components/home/PostList';
 import Footprint from '@components/home/Footprint';
 import Button from '@atoms/Button';
 import * as T from '@types';
@@ -24,11 +24,11 @@ const Home = () => {
       <CustomGrid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <h2>공지사항</h2>
-          <HomePostList list={noticePosts} />
+          <Index list={noticePosts} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <h2>최근 글</h2>
-          <HomePostList list={recentPosts} />
+          <Index list={recentPosts} />
         </Grid>
         <RelativeGrid item xs={12}>
           <h2>발자취</h2>

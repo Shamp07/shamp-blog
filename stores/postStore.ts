@@ -7,12 +7,11 @@ import * as T from '@types';
 import utilStore from './utilStore';
 
 export interface PostStore {
-  post: T.Post | undefined;
-  postView: T.PostView | undefined;
-  postList: T.PostList[];
+  post: T.Post | null;
+  article: T.PostView | null;
+  posts: T.PostList[];
   postHandleChange(event: string | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
   movePage(router: NextRouter, page: number): void;
-  clearPost(): void;
   addPost(router: NextRouter): void;
   getPostList(category: string, tag: string, page: number): Promise<void>;
   getPost(id: number, isModify: boolean): Promise<void>;
@@ -22,11 +21,11 @@ export interface PostStore {
 }
 
 const postStore: PostStore = {
-  post: undefined,
-  postView: undefined,
-  postList: [],
+  post: null,
+  article: null,
+  posts: [],
   postHandleChange(event) {
-    if (this.post === undefined) return;
+    if (!this.post) return;
 
     if (typeof event === 'string') {
       this.post = {
@@ -54,9 +53,6 @@ const postStore: PostStore = {
       query: { page },
     });
   },
-  clearPost() {
-    this.post = initialPost.post;
-  },
   addPost(router) {
     Axios({
       method: T.RequestMethod.POST,
@@ -72,7 +68,7 @@ const postStore: PostStore = {
       data: { category, tag, page },
       success: (response) => {
         const { result } = response.data;
-        this.postList = result;
+        this.posts = result;
       },
     });
   },
@@ -84,7 +80,7 @@ const postStore: PostStore = {
       success: (response) => {
         const { result } = response.data;
         if (isModify) this.post = result;
-        else this.postView = result;
+        else this.article = result;
       },
     });
   },
@@ -122,13 +118,13 @@ const postStore: PostStore = {
 };
 
 export const initialPost: {
-  post: T.Post | undefined;
-  postView: T.PostView | undefined;
-  postList: T.PostList[],
+  post: T.Post | null;
+  article: T.PostView | null;
+  posts: T.PostList[],
 } = {
-  post: undefined,
-  postView: undefined,
-  postList: [],
+  post: null,
+  article: null,
+  posts: [],
 };
 
 export default (() => {

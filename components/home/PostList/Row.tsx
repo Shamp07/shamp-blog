@@ -8,7 +8,7 @@ export interface Props {
   data: Post;
 }
 
-const HomePost = ({ data }: Props) => {
+const Row = ({ data }: Props) => {
   const { id, title } = data;
 
   return (
@@ -46,4 +46,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default HomePost;
+export default Row;

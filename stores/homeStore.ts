@@ -22,7 +22,7 @@ const homeStore: HomeStore = {
   async getRecentPosts() {
     await Axios({
       method: T.RequestMethod.GET,
-      url: `${process.env.BASE_PATH}/api/post/list/recently`,
+      url: `${process.env.BASE_PATH}/api/post/list/recent`,
       success: (response) => {
         const { result } = response.data;
         this.recentPosts = result;

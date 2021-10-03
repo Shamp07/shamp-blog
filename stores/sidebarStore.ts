@@ -5,7 +5,7 @@ export interface SidebarStore {
     name: string;
     path: string;
   }[];
-  boardCategoryList: {
+  categoryList: {
     name: string;
     path: string;
   }[];
@@ -28,7 +28,7 @@ const sidebarStore: SidebarStore = {
     name: '일상',
     path: 'life',
   }],
-  boardCategoryList: [{
+  categoryList: [{
     name: '공지사항',
     path: 'notice',
   }, {
