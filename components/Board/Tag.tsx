@@ -9,7 +9,7 @@ interface Props {
   tag: T.Tag;
 }
 
-const BoardTag = ({ tag }: Props) => {
+const Tag = ({ tag }: Props) => {
   const router = useRouter();
   if (!router.query.category) return null;
 
@@ -17,11 +17,11 @@ const BoardTag = ({ tag }: Props) => {
   const boardTag = router.query.category[1];
 
   return (
-    <Tag isActive={boardTag === tag}>
+    <Root isActive={boardTag === tag}>
       <Link href={`/category/${boardPath}/${tag}`}>
         {tag}
       </Link>
-    </Tag>
+    </Root>
   );
 };
 
@@ -29,7 +29,7 @@ interface ActiveProp {
   isActive: boolean;
 }
 
-export const Tag = styled.li<ActiveProp>(({ isActive }) => ({
+export const Root = styled.li<ActiveProp>(({ isActive }) => ({
   display: 'inline-block',
   margin: '10px 0 10px 10px',
 
@@ -58,4 +58,4 @@ export const Tag = styled.li<ActiveProp>(({ isActive }) => ({
   },
 }));
 
-export default BoardTag;
+export default Tag;

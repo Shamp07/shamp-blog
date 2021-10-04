@@ -86,17 +86,17 @@ export interface HomePost {
   commentCnt: number;
 }
 
-export interface Post {
-  id: number;
+export interface PostForm {
+  // id: number;
   category: string;
   tags: string;
   title: string;
   content: string;
-  count: number;
-  page: number;
+  // count: number;
+  // page: number;
 }
 
-export interface PostList {
+export interface Post {
   rownum: number;
   page: number;
   id: number;
@@ -110,7 +110,7 @@ export interface PostList {
   time: string;
 }
 
-export interface PostView {
+export interface Article {
   id: number;
   category: string;
   tags: string;

@@ -14,7 +14,7 @@ import SideTokenMenu from './SideTokenMenu';
 const Sidebar = () => {
   const { sidebarStore } = stores();
   const {
-    boardCategoryList, topCategoryList,
+    categories, topCategories,
     isOpenSidebar, toggleSidebar,
   } = sidebarStore;
 
@@ -26,7 +26,7 @@ const Sidebar = () => {
       <SideTokenMenu />
       <CategoryWrapper>
         <ul>
-          {topCategoryList.map(
+          {topCategories.map(
             (data) => (
               <Category isBoard={false} path={data.path} name={data.name} key={data.path} />
             ),
@@ -35,11 +35,9 @@ const Sidebar = () => {
       </CategoryWrapper>
       <BottomCategory>
         <ul>
-          {boardCategoryList.map(
-            (data) => (
-              <Category isBoard path={data.path} name={data.name} key={data.path} />
-            ),
-          )}
+          {categories.map((data) => (
+            <Category isBoard path={data.path} name={data.name} key={data.path} />
+          ))}
         </ul>
       </BottomCategory>
     </Wrapper>

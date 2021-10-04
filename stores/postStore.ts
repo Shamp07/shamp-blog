@@ -7,34 +7,37 @@ import * as T from '@types';
 import utilStore from './utilStore';
 
 export interface PostStore {
-  post: T.Post | null;
-  article: T.PostView | null;
-  posts: T.PostList[];
-  postHandleChange(event: string | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
+  form: T.PostForm;
+  posts: T.Post[];
+  article: T.Article | null;
+  formHandleChange(event: string | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
   movePage(router: NextRouter, page: number): void;
-  addPost(router: NextRouter): void;
+  addPost(): void;
   getPostList(category: string, tag: string, page: number): Promise<void>;
   getPost(id: number, isModify: boolean): Promise<void>;
-  modifyPost(router: NextRouter): void;
-  deletePost(id: number, router: NextRouter): void;
-  addPostLike(postId: number): void;
+  modifyPost(): void;
+  deletePost(id: number): void;
+  likePost(id: number): void;
 }
 
 const postStore: PostStore = {
-  post: null,
-  article: null,
+  form: {
+    category: '',
+    tags: '',
+    title: '',
+    content: '',
+  },
   posts: [],
-  postHandleChange(event) {
-    if (!this.post) return;
-
+  article: null,
+  formHandleChange(event) {
     if (typeof event === 'string') {
-      this.post = {
-        ...this.post,
+      this.form = {
+        ...this.form,
         content: event,
       };
     } else {
-      this.post = {
-        ...this.post,
+      this.form = {
+        ...this.form,
         [event.target.name]: event.target.value,
       };
     }
@@ -53,12 +56,11 @@ const postStore: PostStore = {
       query: { page },
     });
   },
-  addPost(router) {
+  addPost() {
     Axios({
       method: T.RequestMethod.POST,
       url: '/api/post',
-      data: this.post,
-      success: router.back,
+      data: this.form,
     });
   },
   async getPostList(category, tag, page) {
@@ -79,39 +81,37 @@ const postStore: PostStore = {
       data: { id },
       success: (response) => {
         const { result } = response.data;
-        if (isModify) this.post = result;
+        if (isModify) this.form = result;
         else this.article = result;
       },
     });
   },
-  modifyPost(router) {
+  modifyPost() {
     Axios({
       method: T.RequestMethod.PUT,
       url: '/api/post',
-      data: this.post,
-      success: router.back,
+      data: this.form,
     });
   },
-  deletePost(id, router) {
+  deletePost(id) {
     Axios({
       method: T.RequestMethod.DELETE,
       url: '/api/post',
       data: { id },
-      success: router.back,
     });
   },
-  addPostLike(postId) {
+  likePost(id) {
     Axios({
       method: T.RequestMethod.POST,
       url: '/api/post/like',
-      data: { postId },
+      data: { id },
       success: (response) => {
         const { code } = response.data;
         if (code === 2) {
           const { message } = response.data;
           utilStore.openPopup(T.Popup.ALERT, message);
         }
-        this.getPost(postId, false);
+        this.getPost(id, false);
       },
     });
   },
@@ -119,12 +119,12 @@ const postStore: PostStore = {
 
 export const initialPost: {
   post: T.Post | null;
-  article: T.PostView | null;
-  posts: T.PostList[],
+  posts: T.Post[],
+  article: T.Article | null;
 } = {
   post: null,
-  article: null,
   posts: [],
+  article: null,
 };
 
 export default (() => {

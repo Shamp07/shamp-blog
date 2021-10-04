@@ -16,7 +16,7 @@ const handler = async (request: T.NextApiRequestToken, response: NextApiResponse
 };
 
 const addLike = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
-  const { postId } = request.body;
+  const { id: postId } = request.body;
   const { id } = request.decodedToken;
   const values = [postId, id];
 

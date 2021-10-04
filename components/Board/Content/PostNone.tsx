@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilRuler } from '@fortawesome/free-solid-svg-icons';
 
-const BoardPostNone = () => (
+const PostNone = () => (
   <Wrapper>
     <div>
       <div>
@@ -35,4 +35,4 @@ const Icon = styled(FontAwesomeIcon)`
   height: 50px;
 `;
 
-export default BoardPostNone;
+export default PostNone;

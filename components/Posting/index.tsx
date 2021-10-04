@@ -31,8 +31,10 @@ const Posting = ({ isModify }: Props) => {
   }
 
   const onSubmit = useCallback(() => {
-    if (isModify) modifyPost(router);
-    else addPost(router);
+    if (isModify) modifyPost();
+    else addPost();
+
+    router.back();
   }, []);
 
   const submitText = useMemo(() => (isModify ? '수정' : '등록'), []);

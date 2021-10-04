@@ -7,7 +7,8 @@ import stores from '@stores';
 import Editor from './Editor';
 
 const Content = () => {
-  const { sidebarStore } = stores();
+  const { postStore, sidebarStore } = stores();
+  const { form, formHandleChange } = postStore;
   const { categories } = sidebarStore;
 
   const categoryList = useMemo(() => (
@@ -24,17 +25,17 @@ const Content = () => {
         select
         label="카테고리"
         value={categoryList}
-        onChange={postHandleChange}
+        onChange={formHandleChange}
         name="category"
         variant="outlined"
         size="small"
       >
-        {boardCategories}
+        {categoryList}
       </TitleInput>
       <TitleInput
         name="tags"
-        value={tags}
-        onChange={postHandleChange}
+        value={form.tags}
+        onChange={formHandleChange}
         label="태그"
         variant="outlined"
         size="small"
@@ -42,8 +43,8 @@ const Content = () => {
       />
       <TitleInput
         name="title"
-        value={title}
-        onChange={postHandleChange}
+        value={form.title}
+        onChange={formHandleChange}
         label="제목"
         variant="outlined"
         size="small"

@@ -1,15 +1,15 @@
 import { observable } from 'mobx';
 
 export interface SidebarStore {
-  topCategoryList: {
+  topCategories: {
     name: string;
     path: string;
   }[];
-  categoryList: {
+  categories: {
     name: string;
     path: string;
   }[];
-  boardCategoryName: {
+  categoryNames: {
     [name: string]: string;
   };
   isOpenSidebar: boolean;
@@ -18,7 +18,7 @@ export interface SidebarStore {
 }
 
 const sidebarStore: SidebarStore = {
-  topCategoryList: [{
+  topCategories: [{
     name: '홈',
     path: '',
   }, {
@@ -28,7 +28,7 @@ const sidebarStore: SidebarStore = {
     name: '일상',
     path: 'life',
   }],
-  categoryList: [{
+  categories: [{
     name: '공지사항',
     path: 'notice',
   }, {
@@ -56,7 +56,7 @@ const sidebarStore: SidebarStore = {
     name: 'etc',
     path: 'etc',
   }],
-  boardCategoryName: {
+  categoryNames: {
     notice: '공지사항',
     all: '전체 글',
     best: '인기 글',
@@ -72,7 +72,7 @@ const sidebarStore: SidebarStore = {
     this.isOpenSidebar = !this.isOpenSidebar;
   },
   getCategoryName(path) {
-    return this.boardCategoryName[path] ?? '';
+    return this.categoryNames[path] ?? '';
   },
 };
 

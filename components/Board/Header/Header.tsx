@@ -10,9 +10,9 @@ import stores from '@stores';
 import * as T from '@types';
 import Button from '@atoms/Button';
 import { MediaQuery } from '@styles';
-import BoardTag, { Tag } from './BoardTag';
+import Tag, { Tag } from '../Tag';
 
-const BoardHead = () => {
+const Header = () => {
   const router = useRouter();
   if (!router.query.category) return null;
 
@@ -63,7 +63,7 @@ const BoardHead = () => {
   ), [isBestOrAll, isBest]);
 
   return (
-    <Wrapper>
+    <Root>
       <SubTitle>
         <h2>{categoryName}</h2>
         {postButton}
@@ -73,13 +73,13 @@ const BoardHead = () => {
         <Tag isActive={categoryTag === undefined}>
           <Link href={`/category/${categoryPath}`}>전체</Link>
         </Tag>
-        {tags.map((tag) => <BoardTag key={tag} tag={tag} />)}
+        {tags.map((tag) => <Tag key={tag} tag={tag} />)}
       </CategoryTag>
-    </Wrapper>
+    </Root>
   );
 };
 
-const Wrapper = styled.header({
+const Root = styled.header({
   boxShadow: '0 1px 3px 0 rgba(0, 0, 0, .15)',
   borderRadius: '14px',
   overflow: 'hidden',
@@ -169,4 +169,4 @@ const AbsoluteUl = styled.ul`
   }
 `;
 
-export default observer(BoardHead);
+export default observer(Header);

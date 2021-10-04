@@ -5,13 +5,13 @@ import { Pagination, PaginationItem, PaginationRenderItemParams } from '@materia
 
 import stores from '@stores';
 
-const BoardPagination = () => {
+const Pagination = () => {
   const router = useRouter();
   const { postStore } = stores();
-  const { postList, movePage } = postStore;
+  const { posts, movePage } = postStore;
 
   const page = router.query.page ? Number(router.query.page) : 1;
-  const count = postList.length ? Number(postList[0].page) : 0;
+  const count = posts.length ? Number(posts[0].page) : 0;
 
   const renderItem = useCallback((item: PaginationRenderItemParams) => {
     const moveBoardPage = () => movePage(router, item.page);
@@ -46,4 +46,4 @@ const CustomPagination = styled(Pagination)`
   display: inline-flex;
 `;
 
-export default BoardPagination;
+export default Pagination;

@@ -11,10 +11,10 @@ import * as T from '@types';
 import { MediaQuery } from '@styles';
 
 interface Props {
-  data: T.PostList;
+  data: T.Post;
 }
 
-const BoardPost = ({ data }: Props) => {
+const Post = ({ data }: Props) => {
   const router = useRouter();
   if (!router.query.category) return null;
 
@@ -164,4 +164,4 @@ const ThumbsUp = styled(FontAwesomeIcon)`
   height: 16px;
 `;
 
-export default BoardPost;
+export default Post;
