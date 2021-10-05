@@ -9,7 +9,7 @@ interface Props {
   tag: T.Tag;
 }
 
-const Tag = ({ tag }: Props) => {
+const Row = ({ tag }: Props) => {
   const router = useRouter();
   if (!router.query.category) return null;
 
@@ -25,11 +25,7 @@ const Tag = ({ tag }: Props) => {
   );
 };
 
-interface ActiveProp {
-  isActive: boolean;
-}
-
-export const Root = styled.li<ActiveProp>(({ isActive }) => ({
+const Root = styled.li<{ isActive: boolean }>(({ isActive }) => ({
   display: 'inline-block',
   margin: '10px 0 10px 10px',
 
@@ -58,4 +54,4 @@ export const Root = styled.li<ActiveProp>(({ isActive }) => ({
   },
 }));
 
-export default Tag;
+export default Row;

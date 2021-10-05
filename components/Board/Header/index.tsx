@@ -10,28 +10,22 @@ import stores from '@stores';
 import * as T from '@types';
 import Button from '@atoms/Button';
 import { MediaQuery } from '@styles';
-import Tag, { Tag } from '../Tag';
+import Tag from './Tag';
 
 const Header = () => {
   const router = useRouter();
   if (!router.query.category) return null;
 
-  const {
-    sidebarStore, categoryStore, signStore,
-    postStore,
-  } = stores();
-  const { tags } = categoryStore;
+  const { sidebarStore, signStore, postStore } = stores();
+
   const { userData } = signStore;
   const { clearPost } = postStore;
 
-  const categoryPath = router.query.category[0];
-  const categoryTag = router.query.category[1];
+  const category = router.query.category[0];
+  const tag = router.query.category[1];
 
   const isAdmin = Boolean(userData?.adminFl);
-  const isBestOrAll = ['best', 'all'].includes(categoryPath);
-  const isBest = categoryTag === 'best';
-
-  const categoryName = useMemo(() => sidebarStore.getCategoryName(categoryPath), [categoryPath]);
+  const categoryName = useMemo(() => sidebarStore.getCategoryName(category), [category]);
 
   const goPost = useCallback(() => {
     router.push('/post').then(clearPost);
@@ -54,27 +48,13 @@ const Header = () => {
     ) : null
   ), [isAdmin]);
 
-  const bestTag = useMemo(() => (
-    isBestOrAll ? null : (
-      <BestTag isActive={isBest}>
-        <Link href={`/category/${categoryPath}/best`}>인기글</Link>
-      </BestTag>
-    )
-  ), [isBestOrAll, isBest]);
-
   return (
     <Root>
       <SubTitle>
         <h2>{categoryName}</h2>
         {postButton}
       </SubTitle>
-      <CategoryTag>
-        {bestTag}
-        <Tag isActive={categoryTag === undefined}>
-          <Link href={`/category/${categoryPath}`}>전체</Link>
-        </Tag>
-        {tags.map((tag) => <Tag key={tag} tag={tag} />)}
-      </CategoryTag>
+      <Tag category={category} tag={tag} />
     </Root>
   );
 };
@@ -90,46 +70,6 @@ const Root = styled.header({
     borderRadius: 0,
   },
 });
-
-const CategoryTag = styled.ul`
-  list-style: none;
-  overflow-x: visible;
-  overflow-y: hidden;
-  white-space: nowrap;
-
-  &::-webkit-scrollbar {
-    width: 10px;
-    height: 6px;
-    background: transparent;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: #2d79c7;
-    border-radius: 4px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: #ebeef1;;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-  }
-`;
-
-const BestTag = styled(Tag)(({ isActive }) => ({
-  '& > a': {
-    border: '#eeee00 1.5px solid',
-    backgroundColor: '#fff',
-    color: '#eeee00',
-    padding: '4.5px 13.5px',
-
-    ...(isActive ? ({
-      color: '#fff !important',
-      backgroundColor: '#eeee00 !important',
-    }) : null),
-  },
-}));
 
 const SubTitle = styled.div`
   position: relative;

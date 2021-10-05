@@ -47,13 +47,13 @@ const Post = ({ data }: Props) => {
         </div>
         <div>{likeCnt}</div>
       </Vote>
-      <ArticleContent>
+      <Content>
         <PostTitle>
           <Link href={`/category/${boardPath}/post/${id}`}>
-            <PostLinkSpan>
+            <PostLink>
               <span>{title}</span>
               {commentCount}
-            </PostLinkSpan>
+            </PostLink>
           </Link>
         </PostTitle>
         <div>
@@ -69,12 +69,12 @@ const Post = ({ data }: Props) => {
             </li>
           </PostInfoUl>
         </div>
-      </ArticleContent>
+      </Content>
     </Article>
   );
 };
 
-const PostLinkSpan = styled.span({
+const PostLink = styled.span({
   cursor: 'pointer',
   display: 'flex',
   lineHeight: '20px',
@@ -126,7 +126,7 @@ const Vote = styled.div({
   },
 });
 
-const ArticleContent = styled.div`
+const Content = styled.div`
   vertical-align: middle;
   display: table-cell;
 `;
