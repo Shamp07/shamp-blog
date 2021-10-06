@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import dynamic from 'next/dynamic';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
@@ -11,16 +11,18 @@ const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   loading: () => <span>loading...</span>,
 });
 
-const Editor = () => {
+interface Props {
+  onChange(event: string | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
+}
+
+const Editor = ({ onChange }: Props) => {
   const { postStore } = stores();
-  const { post, postHandleChange } = postStore;
+  const { form } = postStore;
 
-  if (!post) return null;
-
-  const { content } = post;
+  const { content } = form;
   return (
     <CustomQuill
-      onChange={postHandleChange}
+      onChange={onChange}
       value={content}
       modules={Editor.modules}
     />

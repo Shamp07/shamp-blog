@@ -6,7 +6,7 @@ import * as T from '@types';
 import Article from '@components/Article';
 import Header from './Header';
 import Content from '@components/Board/Content';
-import Pagination from '@components/Board/Pagination';
+import Pagination from '@components/Board/Footer';
 
 const Board = () => {
   const router = useRouter();

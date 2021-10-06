@@ -9,13 +9,13 @@ import { MediaQuery } from '@styles';
 
 const Header = () => {
   const { postStore, sidebarStore } = stores();
-  const { postView } = postStore;
-  if (!postView) return null;
+  const { article } = postStore;
+  if (!article) return null;
 
   const {
     title, category, tags, time,
     commentCnt, likeCnt, viewCnt, modifiedTime,
-  } = postView;
+  } = article;
 
   const headTitle = title.concat(' - Shamp Blog');
 

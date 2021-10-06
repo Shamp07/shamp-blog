@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-import { Pagination, PaginationItem, PaginationRenderItemParams } from '@material-ui/lab';
+import { Pagination as RowPagination, PaginationItem, PaginationRenderItemParams } from '@material-ui/lab';
 
 import stores from '@stores';
 
-const Pagination = () => {
+const Footer = () => {
   const router = useRouter();
   const { postStore } = stores();
   const { posts, movePage } = postStore;
@@ -26,24 +26,24 @@ const Pagination = () => {
   }, []);
 
   return (
-    <PaginationWrapper>
-      <CustomPagination
+    <Root>
+      <Pagination
         page={page}
         count={count}
         color="primary"
         renderItem={renderItem}
       />
-    </PaginationWrapper>
+    </Root>
   );
 };
 
-const PaginationWrapper = styled.div`
+const Root = styled.div`
   margin-top: 15px;
   text-align: center;
 `;
 
-const CustomPagination = styled(Pagination)`
+const Pagination = styled(RowPagination)`
   display: inline-flex;
 `;
 
-export default Pagination;
+export default Footer;

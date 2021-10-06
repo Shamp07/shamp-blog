@@ -14,10 +14,10 @@ interface Props {
 
 const Header = ({ size }: Props) => {
   const { postStore, commentStore } = stores();
-  const { postView } = postStore;
-  if (!postView) return null;
+  const { article } = postStore;
+  if (!article) return null;
 
-  const { id, commentCnt } = postView;
+  const { id, commentCnt } = article;
 
   const onRefresh = useCallback(() => {
     commentStore.getComment(id, size);

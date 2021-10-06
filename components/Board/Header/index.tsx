@@ -33,7 +33,7 @@ const Header = () => {
 
   const postButton = useMemo(() => (
     isAdmin ? (
-      <AbsoluteUl>
+      <ButtonWrapper>
         <li>
           <Button
             size={T.ButtonSize.SMALL}
@@ -44,7 +44,7 @@ const Header = () => {
             <CustomIcon icon={faPen} />
           </Button>
         </li>
-      </AbsoluteUl>
+      </ButtonWrapper>
     ) : null
   ), [isAdmin]);
 
@@ -94,7 +94,7 @@ const CustomIcon = styled(FontAwesomeIcon)`
   vertical-align: text-bottom;
 `;
 
-const AbsoluteUl = styled.ul`
+const ButtonWrapper = styled.ul`
   position: absolute;
   top: 0;
   right: 0;

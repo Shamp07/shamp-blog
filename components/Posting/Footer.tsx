@@ -39,7 +39,7 @@ const Footer = ({
 
 const Root = styled.div`
   display: flex;
-  padding-top: 0 !important;
+  padding-top: 18px !important;
 
   & > button:last-child {
     margin-left: auto;

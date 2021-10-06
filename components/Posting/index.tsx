@@ -18,7 +18,6 @@ const Posting = ({ isModify }: Props) => {
   const router = useRouter();
 
   const { postStore, signStore, utilStore } = stores();
-  const { addPost, modifyPost } = postStore;
   const { userData } = signStore;
   const { openPopup } = utilStore;
 
@@ -31,8 +30,8 @@ const Posting = ({ isModify }: Props) => {
   }
 
   const onSubmit = useCallback(() => {
-    if (isModify) modifyPost();
-    else addPost();
+    if (isModify) postStore.modifyPost();
+    else postStore.addPost();
 
     router.back();
   }, []);

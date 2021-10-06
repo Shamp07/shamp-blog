@@ -10,14 +10,15 @@ import * as T from '@types';
 const Footer = () => {
   const router = useRouter();
   const { postStore, utilStore, signStore } = stores();
-  const { postView } = postStore;
-  if (!postView) return null;
+  const { article } = postStore;
+  if (!article) return null;
 
-  const { id } = postView;
+  const { id } = article;
   const { userData } = signStore;
 
   const onDelete = useCallback(() => {
-    postStore.deletePost(id, router);
+    postStore.deletePost(id);
+    router.back();
   }, []);
 
   const onDeleteConfirm = useCallback(() => {

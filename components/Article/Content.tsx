@@ -11,14 +11,14 @@ import { MediaQuery } from '@styles';
 
 const Content = () => {
   const { postStore, signStore } = stores();
-  const { postView } = postStore;
-  if (!postView) return null;
+  const { article } = postStore;
+  if (!article) return null;
 
-  const { id, likeCnt, content } = postView;
+  const { id, likeCnt, content } = article;
   const { userData } = signStore;
 
   const onLike = useCallback(() => {
-    postStore.addPostLike(id);
+    postStore.likePost(id);
   }, []);
 
   return (

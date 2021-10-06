@@ -16,11 +16,9 @@ const Root = styled.div`
 
 const SubTitle = styled.div`
   font-size: 18px;
-  padding: 18px 0;
-  border-bottom: solid 1px #e6e6e6;
-
+  padding-bottom: 18px;
+  
   & > h2 {
-    padding-left: 16px;
     font-size: 18px;
   }
 `;

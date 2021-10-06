@@ -14,11 +14,11 @@ const COMMENT_DEFAULT_SIZE = 15;
 const Comment = () => {
   const { signStore, postStore, commentStore } = stores();
   const { userData } = signStore;
-  const { postView } = postStore;
+  const { article } = postStore;
 
-  if (!postView) return null;
+  if (!article) return null;
 
-  const { id: postId } = postView;
+  const { id: postId } = article;
 
   const info = useLocalObservable(() => ({
     modifyId: 0,

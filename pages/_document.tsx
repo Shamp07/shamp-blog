@@ -7,9 +7,7 @@ class MyDocument extends Document {
   render() {
     return (
       <Html lang="ko">
-        <Head>
-          <title />
-        </Head>
+        <Head />
         <body>
           <Main />
           <NextScript />

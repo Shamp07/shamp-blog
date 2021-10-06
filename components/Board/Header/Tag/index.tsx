@@ -13,7 +13,7 @@ const Tag = ({ category, tag }: Props) => {
   const { categoryStore } = stores();
   const { tags } = categoryStore;
 
-  const isBestOrAll = ['best', 'all'].includes(tag);
+  const isBestOrAll = ['best', 'all'].includes(category);
 
   const bestTag = useMemo(() => (
     isBestOrAll ? null : (
@@ -26,9 +26,9 @@ const Tag = ({ category, tag }: Props) => {
   ), [isBestOrAll, tag]);
 
   const tagList = tags.map((value) => (
-    <Row isActive={tag === value}>
-      <Link href={`/category/${category}/${tag}`}>
-        {tag}
+    <Row key={value} isActive={tag === value}>
+      <Link href={`/category/${category}/${value}`}>
+        {value}
       </Link>
     </Row>
   ));

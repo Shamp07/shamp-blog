@@ -39,7 +39,7 @@ const utilStore: UtilStore = {
   },
   openHeaderMenu(event) {
     if (!this.headerMenu) {
-      alertStore.getAlertList();
+      alertStore.getAlerts();
     }
 
     this.headerMenu = event.currentTarget.getAttribute('name');

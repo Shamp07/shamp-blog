@@ -26,10 +26,10 @@ const Menu = ({
   const {
     commentStore, signStore, utilStore, postStore,
   } = stores();
-  const { postView } = postStore;
-  if (!postView) return null;
+  const { article } = postStore;
+  if (!article) return null;
 
-  const { id: postId } = postView;
+  const { id: postId } = article;
 
   const { userData } = signStore;
 

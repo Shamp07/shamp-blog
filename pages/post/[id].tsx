@@ -2,9 +2,9 @@ import React from 'react';
 import { NextPageContext } from 'next';
 
 import stores from '@stores';
-import PostView from '@components/Article';
+import Article from '@components/Article';
 
-const Post = () => <PostView />;
+const Post = () => <Article />;
 
 Post.getInitialProps = async ({ query }: NextPageContext) => {
   const { postStore, commentStore } = stores();

@@ -1,4 +1,5 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback, ChangeEvent } from 'react';
+import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import MenuItem from '@material-ui/core/MenuItem';
 import { TextField } from '@material-ui/core';
@@ -8,7 +9,7 @@ import Editor from './Editor';
 
 const Content = () => {
   const { postStore, sidebarStore } = stores();
-  const { form, formHandleChange } = postStore;
+  const { form } = postStore;
   const { categories } = sidebarStore;
 
   const categoryList = useMemo(() => (
@@ -19,13 +20,20 @@ const Content = () => {
     ))
   ), []);
 
+  const onChange = useCallback(
+    (event: string | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      postStore.formHandleChange(event);
+    },
+    [],
+  );
+
   return (
     <article>
       <TitleInput
         select
         label="카테고리"
-        value={categoryList}
-        onChange={formHandleChange}
+        value={form.category}
+        onChange={onChange}
         name="category"
         variant="outlined"
         size="small"
@@ -35,7 +43,7 @@ const Content = () => {
       <TitleInput
         name="tags"
         value={form.tags}
-        onChange={formHandleChange}
+        onChange={onChange}
         label="태그"
         variant="outlined"
         size="small"
@@ -44,21 +52,21 @@ const Content = () => {
       <TitleInput
         name="title"
         value={form.title}
-        onChange={formHandleChange}
+        onChange={onChange}
         label="제목"
         variant="outlined"
         size="small"
         inputProps={{ maxLength: 100 }}
       />
-      <Editor />
+      <Editor onChange={onChange} />
     </article>
   );
 };
 
 const TitleInput = styled(TextField)`
   width: 100%;
-  margin-bottom: 10px !important;
+  margin-bottom: 15px !important;
   border-radius: 10px;
 `;
 
-export default Content;
+export default observer(Content);

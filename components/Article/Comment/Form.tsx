@@ -18,10 +18,10 @@ const Form = ({
   isReply, replyId, setReplyId, size,
 }: Props) => {
   const { postStore, commentStore, utilStore } = stores();
-  const { postView } = postStore;
-  if (!postView) return null;
+  const { article } = postStore;
+  if (!article) return null;
 
-  const { id } = postView;
+  const { id } = article;
 
   const form = useLocalObservable(() => ({
     values: {
