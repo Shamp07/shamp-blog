@@ -11,7 +11,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   if (request.method === T.RequestMethod.GET) {
     await Database.execute(
       (database: Client) => database.query(
-        SELECT_POST_LIST_RECENTLY,
+        SELECT_POST_LIST_RECENT,
       )
         .then((result) => {
           response.json({
@@ -20,12 +20,12 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           });
         }),
     ).then(() => {
-      logger.info('[SELECT, GET /api/post/list/recently] 인기 게시글 조회');
+      logger.info('[SELECT, GET /api/post/list/recent] 최근 게시글 조회');
     });
   }
 };
 
-const SELECT_POST_LIST_RECENTLY = `
+const SELECT_POST_LIST_RECENT = `
   SELECT
     a.id,
     a.title
@@ -37,6 +37,7 @@ const SELECT_POST_LIST_RECENTLY = `
       p.view_cnt,
       (SELECT COUNT(*) FROM post_like WHERE post_id = p.id) AS like_cnt
     FROM post p
+    WHERE delete_fl = false
   ) a
   WHERE
     a.rownum <= 5

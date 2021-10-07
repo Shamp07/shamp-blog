@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import stores from '@stores';
 import * as T from '@types';
 import Article from '@components/Article';
-import Header from './Header';
 import Content from '@components/Board/Content';
-import Pagination from '@components/Board/Footer';
+import Footer from '@components/Board/Footer';
+import Header from './Header';
 
 const Board = () => {
   const router = useRouter();
@@ -27,7 +27,7 @@ const Board = () => {
     <>
       <Header />
       <Content />
-      <Pagination />
+      <Footer />
     </>
   );
 };

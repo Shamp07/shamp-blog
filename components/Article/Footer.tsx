@@ -32,7 +32,7 @@ const Footer = () => {
   if (!userData?.adminFl) return null;
 
   return (
-    <ArticleFooterWrapper>
+    <Root>
       <Button
         size={T.ButtonSize.SMALL}
         variant="outlined"
@@ -49,11 +49,11 @@ const Footer = () => {
       >
         수정
       </Button>
-    </ArticleFooterWrapper>
+    </Root>
   );
 };
 
-const ArticleFooterWrapper = styled.div`
+const Root = styled.div`
   background: #f8f9fa;
   padding: 12px;
   text-align: right;

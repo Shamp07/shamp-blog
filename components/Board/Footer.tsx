@@ -8,19 +8,30 @@ import stores from '@stores';
 const Footer = () => {
   const router = useRouter();
   const { postStore } = stores();
-  const { posts, movePage } = postStore;
+  const { posts } = postStore;
 
   const page = router.query.page ? Number(router.query.page) : 1;
   const count = posts.length ? Number(posts[0].page) : 0;
 
   const renderItem = useCallback((item: PaginationRenderItemParams) => {
-    const moveBoardPage = () => movePage(router, item.page);
+    const onPage = () => {
+      if (!router.query.category) return;
+
+      const { category } = router.query;
+
+      const path = `/category/${category[0]}${category[1] ? `/${category[1]}` : ''}`;
+
+      router.push({
+        pathname: path,
+        query: { page: item.page },
+      });
+    };
 
     return (
       <PaginationItem
         {...item}
         component="div"
-        onClick={moveBoardPage}
+        onClick={onPage}
       />
     );
   }, []);

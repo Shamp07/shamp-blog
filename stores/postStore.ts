@@ -46,7 +46,6 @@ const postStore: PostStore = {
     const boardParams = router.query.category as Array<string>;
     let pathUrl = `/category/${boardParams[0]}`;
 
-    // url 에 태그가 존재할시
     if (boardParams.length > 1) {
       pathUrl = pathUrl.concat(`/${boardParams[1]}`);
     }
