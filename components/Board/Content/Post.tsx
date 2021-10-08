@@ -37,8 +37,6 @@ const Post = ({ data }: Props) => {
     ) : null
   ), [isExistComment]);
 
-  const CategoryName = useMemo(() => sidebarStore.getCategoryName(category), [category]);
-
   return (
     <Article>
       <Vote>
@@ -59,7 +57,7 @@ const Post = ({ data }: Props) => {
         <div>
           <PostInfoUl>
             <li>
-              <span>{CategoryName}</span>
+              <span>{categoryName[category]}</span>
             </li>
             <li>
               <span>{tag}</span>

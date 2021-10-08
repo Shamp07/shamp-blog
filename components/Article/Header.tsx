@@ -6,9 +6,10 @@ import styled from '@emotion/styled';
 import stores from '@stores';
 import * as T from '@types';
 import { MediaQuery } from '@styles';
+import { categoryName } from '@constants/category';
 
 const Header = () => {
-  const { postStore, sidebarStore } = stores();
+  const { postStore } = stores();
   const { article } = postStore;
   if (!article) return null;
 
@@ -30,7 +31,7 @@ const Header = () => {
       </ArticleTitle>
       <ArticleMeta>
         <ArticleMetaLeft>
-          <li>{sidebarStore.getCategoryName(category)}</li>
+          <li>{categoryName[category]}</li>
           <li>{tags}</li>
           <li>
             {modifiedTime || time}

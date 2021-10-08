@@ -3,21 +3,25 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 
+import * as T from '@types';
+import { categoryPath, categoryName } from '@constants/category';
+
 interface Props {
-  path: string;
-  name: string;
+  category: T.CategoryType;
   isBoard: boolean;
 }
 
-const Category = ({ path, name, isBoard }: Props) => {
+const Category = ({ category, isBoard }: Props) => {
   const router = useRouter();
 
   const baseUrl = isBoard ? '/category' : '';
-  const currentPath = (isBoard && router.query.category) ? router.query.category[0] : router.asPath.replace('/', '');
+  const currentPath = (isBoard && router.query.category)
+    ? router.query.category[0]
+    : router.asPath.replace('/', '');
 
   return (
-    <CategoryList isActive={currentPath === path}>
-      <Link href={`${baseUrl}/${path}`}>{name}</Link>
+    <CategoryList isActive={currentPath === categoryPath[category]}>
+      <Link href={`${baseUrl}/${categoryPath[category]}`}>{categoryName[category]}</Link>
     </CategoryList>
   );
 };

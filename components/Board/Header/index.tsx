@@ -10,13 +10,14 @@ import stores from '@stores';
 import * as T from '@types';
 import Button from '@atoms/Button';
 import { MediaQuery } from '@styles';
+import { categoryName } from '@constants/category';
 import Tag from './Tag';
 
 const Header = () => {
   const router = useRouter();
   if (!router.query.category) return null;
 
-  const { sidebarStore, signStore, postStore } = stores();
+  const { signStore, postStore } = stores();
 
   const { userData } = signStore;
   const { clearPost } = postStore;
@@ -25,7 +26,6 @@ const Header = () => {
   const tag = router.query.category[1];
 
   const isAdmin = Boolean(userData?.adminFl);
-  const categoryName = useMemo(() => sidebarStore.getCategoryName(category), [category]);
 
   const goPost = useCallback(() => {
     router.push('/post').then(clearPost);
@@ -51,7 +51,7 @@ const Header = () => {
   return (
     <Root>
       <SubTitle>
-        <h2>{categoryName}</h2>
+        <h2>{categoryName[category]}</h2>
         {postButton}
       </SubTitle>
       <Tag category={category} tag={tag} />

@@ -8,15 +8,13 @@ import stores from '@stores';
 import { MediaQuery } from '@styles';
 import * as T from '@types';
 import dsPalette from '@constants/ds-palette';
+import { topCategories, categories } from '@constants/category';
 import Category from './Category';
 import SideTokenMenu from './SideTokenMenu';
 
 const Sidebar = () => {
   const { sidebarStore } = stores();
-  const {
-    categories, topCategories,
-    isOpenSidebar, toggleSidebar,
-  } = sidebarStore;
+  const { isOpenSidebar, toggleSidebar } = sidebarStore;
 
   return (
     <Wrapper isOpenSidebar={isOpenSidebar}>
@@ -26,17 +24,15 @@ const Sidebar = () => {
       <SideTokenMenu />
       <CategoryWrapper>
         <ul>
-          {topCategories.map(
-            (data) => (
-              <Category isBoard={false} path={data.path} name={data.name} key={data.path} />
-            ),
-          )}
+          {topCategories.map((category) => (
+            <Category key={category} category={category} isBoard={false} />
+          ))}
         </ul>
       </CategoryWrapper>
       <BottomCategory>
         <ul>
-          {categories.map((data) => (
-            <Category isBoard path={data.path} name={data.name} key={data.path} />
+          {categories.map((category) => (
+            <Category key={category} category={category} isBoard />
           ))}
         </ul>
       </BottomCategory>

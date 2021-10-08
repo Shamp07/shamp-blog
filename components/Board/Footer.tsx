@@ -19,7 +19,10 @@ const Footer = () => {
 
       const { category } = router.query;
 
-      const path = `/category/${category[0]}${category[1] ? `/${category[1]}` : ''}`;
+      const path = (() => {
+        if (category.length >= 2) return `/category/${category[0]}/${category[1]}`;
+        return `/category/${category[0]}`;
+      })();
 
       router.push({
         pathname: path,

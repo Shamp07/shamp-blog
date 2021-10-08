@@ -42,6 +42,21 @@ export enum Auth {
   ADMIN = 'admin',
 }
 
+export enum CategoryType {
+  HOME = 'HOME',
+  PROFILE = 'PROFILE',
+  LIFE = 'LIFE',
+  NOTICE = 'NOTICE',
+  ALL = 'ALL',
+  BEST = 'BEST',
+  JAVASCRIPT = 'JAVASCRIPT',
+  TYPESCRIPT = 'TYPESCRIPT',
+  REACT = 'REACT',
+  REACT_NATIVE = 'REACT_NATIVE',
+  NODEJS = 'NODEJS',
+  ETC = 'ETC',
+}
+
 export interface Alert {
   total: number;
   id: number;
@@ -112,7 +127,7 @@ export interface Post {
 
 export interface Article {
   id: number;
-  category: string;
+  category: CategoryType;
   tags: string;
   title: string;
   content: string;

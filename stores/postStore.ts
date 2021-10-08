@@ -1,6 +1,5 @@
 import { ChangeEvent } from 'react';
 import { observable } from 'mobx';
-import { NextRouter } from 'next/dist/next-server/lib/router/router';
 
 import Axios from '@utilities/axios';
 import * as T from '@types';
@@ -11,7 +10,6 @@ export interface PostStore {
   posts: T.Post[];
   article: T.Article | null;
   formHandleChange(event: string | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
-  movePage(router: NextRouter, page: number): void;
   addPost(): void;
   getPostList(category: string, tag: string, page: number): Promise<void>;
   getPost(id: number, isModify: boolean): Promise<void>;
@@ -41,19 +39,6 @@ const postStore: PostStore = {
         [event.target.name]: event.target.value,
       };
     }
-  },
-  movePage(router, page) {
-    const boardParams = router.query.category as Array<string>;
-    let pathUrl = `/category/${boardParams[0]}`;
-
-    if (boardParams.length > 1) {
-      pathUrl = pathUrl.concat(`/${boardParams[1]}`);
-    }
-
-    router.push({
-      pathname: pathUrl,
-      query: { page },
-    });
   },
   addPost() {
     Axios({
