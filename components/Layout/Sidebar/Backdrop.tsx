@@ -10,14 +10,14 @@ const Backdrop = () => {
   const { sidebarStore } = stores();
   const { isOpenSidebar, toggleSidebar } = sidebarStore;
 
-  return <SidebarBackdrop isOpenSidebar={isOpenSidebar} onClick={toggleSidebar} />;
+  return <Root isOpen={isOpenSidebar} onClick={toggleSidebar} />;
 };
 
-interface SidebarProp {
-  isOpenSidebar: boolean;
+interface OpenProp {
+  isOpen: boolean;
 }
 
-const SidebarBackdrop = styled.div<SidebarProp>(({ isOpenSidebar }) => ({
+const Root = styled.div<OpenProp>(({ isOpen }) => ({
   height: '100%',
   width: '100%',
   position: 'fixed',
@@ -26,7 +26,7 @@ const SidebarBackdrop = styled.div<SidebarProp>(({ isOpenSidebar }) => ({
   zIndex: -1,
 
   [MediaQuery[T.Device.LARGE]]: {
-    ...(isOpenSidebar ? ({
+    ...(isOpen ? ({
       zIndex: 1,
       backgroundColor: 'rgba(0,0,0,.5)',
     }) : null),

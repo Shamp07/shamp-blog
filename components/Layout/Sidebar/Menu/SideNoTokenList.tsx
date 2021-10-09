@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from '@emotion/styled';
 
 import stores from '@stores';
@@ -6,13 +6,20 @@ import { MediaQuery } from '@styles';
 import * as T from '@types';
 
 const SideNoTokenList = () => {
-  const { signStore } = stores();
-  const { toggleSignModal, toggleRegisterModal } = signStore;
+  const { utilStore } = stores();
+
+  const onSignIn = useCallback(() => {
+    utilStore.openPopup(T.Popup.SIGN_IN);
+  }, []);
+
+  const onSignUp = useCallback(() => {
+    utilStore.openPopup(T.Popup.SIGN_UP);
+  }, []);
 
   return (
     <MobileMenu>
-      <TopMenu onClick={toggleSignModal}>로그인</TopMenu>
-      <TopMenu onClick={toggleRegisterModal}>회원가입</TopMenu>
+      <TopMenu onClick={onSignIn}>로그인</TopMenu>
+      <TopMenu onClick={onSignUp}>회원가입</TopMenu>
     </MobileMenu>
   );
 };

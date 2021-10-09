@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
@@ -9,22 +9,25 @@ import * as T from '@types';
 
 const HeaderSidebarButton = () => {
   const { sidebarStore } = stores();
-  const { toggleSidebar } = sidebarStore;
+
+  const onSidebar = useCallback(() => {
+    sidebarStore.toggleSidebar();
+  }, []);
 
   return (
-    <SidebarWrapper>
-      <SidebarButton onClick={toggleSidebar}>
+    <Root>
+      <Menu onClick={onSidebar}>
         <MenuIcon icon={faBars} />
-      </SidebarButton>
-    </SidebarWrapper>
+      </Menu>
+    </Root>
   );
 };
 
-const SidebarWrapper = styled.div`
+const Root = styled.div`
   font-size: 12px;
 `;
 
-const SidebarButton = styled.div({
+const Menu = styled.div({
   display: 'none',
   padding: '7px 10px 5px 10px',
   border: '#ffffff solid 1px',

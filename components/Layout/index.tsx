@@ -11,7 +11,6 @@ import NextNprogress from 'nextjs-progressbar';
 import Header from './Header';
 import SideBar from './Sidebar';
 import Content from './Content';
-import Backdrop from './Sidebar/Backdrop';
 
 interface Props {
   children: ReactNode;
@@ -34,10 +33,9 @@ const Layout = ({ children }: Props) => {
   }, [userData]);
 
   return (
-    <Wrapper>
+    <Root>
       <Global styles={GlobalStyle} />
       <Header />
-      <Backdrop />
       <CenterContent>
         <SideBar />
         <Content>
@@ -52,11 +50,11 @@ const Layout = ({ children }: Props) => {
         height={3}
         options={options}
       />
-    </Wrapper>
+    </Root>
   );
 };
 
-const Wrapper = styled.div({
+const Root = styled.div({
   backgroundColor: dsPalette.themeBackground.toString(),
   minHeight: '100vh',
 });

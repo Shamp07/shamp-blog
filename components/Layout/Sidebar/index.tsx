@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,48 +10,52 @@ import * as T from '@types';
 import dsPalette from '@constants/ds-palette';
 import { topCategories, categories } from '@constants/category';
 import Category from './Category';
-import SideTokenMenu from './SideTokenMenu';
+import SideTokenMenu from './Menu/SideTokenMenu';
+import Backdrop from './Backdrop';
 
 const Sidebar = () => {
   const { sidebarStore } = stores();
-  const { isOpenSidebar, toggleSidebar } = sidebarStore;
+  const { isOpenSidebar } = sidebarStore;
+
+  const onClose = useCallback(() => {
+    sidebarStore.toggleSidebar();
+  }, []);
 
   return (
-    <Wrapper isOpenSidebar={isOpenSidebar}>
-      <MobileMenu>
-        <CloseIcon icon={faTimes} onClick={toggleSidebar} />
-      </MobileMenu>
-      <SideTokenMenu />
-      <CategoryWrapper>
-        <ul>
-          {topCategories.map((category) => (
-            <Category key={category} category={category} isBoard={false} />
-          ))}
-        </ul>
-      </CategoryWrapper>
-      <BottomCategory>
-        <ul>
-          {categories.map((category) => (
-            <Category key={category} category={category} isBoard />
-          ))}
-        </ul>
-      </BottomCategory>
-    </Wrapper>
+    <>
+      <Backdrop />
+      <Root isOpen={isOpenSidebar}>
+        <CloseButton>
+          <CloseIcon icon={faTimes} onClick={onClose} />
+        </CloseButton>
+        <SideTokenMenu />
+        <CategoryWrapper>
+          <ul>
+            {topCategories.map((category) => (
+              <Category key={category} category={category} isBoard={false} />
+            ))}
+          </ul>
+        </CategoryWrapper>
+        <BottomCategory>
+          <ul>
+            {categories.map((category) => (
+              <Category key={category} category={category} isBoard />
+            ))}
+          </ul>
+        </BottomCategory>
+      </Root>
+    </>
   );
 };
 
-interface SidebarProp {
-  isOpenSidebar: boolean;
-}
-
-const Wrapper = styled.div<SidebarProp>(({ isOpenSidebar }) => ({
+const Root = styled.div<{ isOpen: boolean }>(({ isOpen }) => ({
   display: 'block',
   width: '280px',
   willChange: 'min-height',
 
   [MediaQuery[T.Device.LARGE]]: {
     backgroundColor: '#fff',
-    display: isOpenSidebar ? 'block' : 'none',
+    display: isOpen ? 'block' : 'none',
     position: 'fixed',
     zIndex: 1,
     height: '100%',
@@ -63,7 +67,7 @@ const Wrapper = styled.div<SidebarProp>(({ isOpenSidebar }) => ({
   },
 }));
 
-const MobileMenu = styled.div({
+const CloseButton = styled.div({
   display: 'none',
   height: '44px',
 
