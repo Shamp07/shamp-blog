@@ -10,6 +10,7 @@ export interface PostStore {
   posts: T.Post[];
   article: T.Article | null;
   formHandleChange(event: string | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
+  clearForm(): void;
   addPost(): void;
   getPostList(category: string, tag: string, page: number): Promise<void>;
   getPost(id: number, isModify: boolean): Promise<void>;
@@ -39,6 +40,14 @@ const postStore: PostStore = {
         [event.target.name]: event.target.value,
       };
     }
+  },
+  clearForm() {
+    this.form = {
+      category: '',
+      tags: '',
+      title: '',
+      content: '',
+    };
   },
   addPost() {
     Axios({

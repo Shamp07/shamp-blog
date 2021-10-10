@@ -6,12 +6,14 @@ import alertStore from './alertStore';
 
 export interface UtilStore {
   popup: {
-    type: T.Popup | undefined;
+    type: T.Popup | null;
     description: string | undefined;
     callback: (() => void) | undefined;
   };
-  headerMenu: string | null;
-  headerMenuElement: Element | null;
+  menu: {
+    name: string | null;
+    element: Element | null;
+  }
   openPopup(type: T.Popup, description?: string, callback?: (() => void) | undefined): void;
   closePopup(): void;
   confirm(callback: (() => void) | undefined): void;
@@ -21,32 +23,32 @@ export interface UtilStore {
 
 const utilStore: UtilStore = {
   popup: {
-    type: undefined,
+    type: null,
     description: undefined,
     callback: undefined,
   },
-  headerMenu: null,
-  headerMenuElement: null,
+  menu: {
+    name: null,
+    element: null,
+  },
   openPopup(type, description, callback) {
     this.popup = { type, description, callback };
   },
   closePopup() {
-    this.popup.type = undefined;
+    this.popup.type = null;
   },
   confirm(callback) {
     if (callback) callback();
     this.closePopup();
   },
   openHeaderMenu(event) {
-    if (!this.headerMenu) {
-      alertStore.getAlerts();
-    }
+    if (!this.menu.name) alertStore.getAlerts();
 
-    this.headerMenu = event.currentTarget.getAttribute('name');
-    this.headerMenuElement = event.currentTarget;
+    const element = event.currentTarget;
+    this.menu = { name: element.getAttribute('name'), element };
   },
   closeHeaderMenu() {
-    this.headerMenu = null;
+    this.menu = { name: null, element: null };
   },
 };
 

@@ -13,7 +13,7 @@ export interface SignStore {
     email: string;
     password: string;
   }): void;
-  signUp(fom: {
+  signUp(form: {
     email: string;
     name: string;
     password: string;
@@ -36,8 +36,6 @@ const signStore: SignStore = {
       success: (response) => {
         const { result } = response.data;
         this.userData = result;
-        // chatStore.connectSocket();
-        // chatStore.getChatRoomList();
       },
       complete: () => {
         this.cookieChecked = true;
@@ -58,9 +56,6 @@ const signStore: SignStore = {
           utilStore.openPopup(T.Popup.ALERT, message);
         } else if (code === 2) {
           utilStore.openPopup(T.Popup.ALERT, message);
-        } else if (code === 3) {
-          // this.registerInfo.email = signInform.email;
-          // this.verifyEmail(false);
         }
       },
     });

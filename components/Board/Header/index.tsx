@@ -20,7 +20,7 @@ const Header = () => {
   const { signStore, postStore } = stores();
 
   const { userData } = signStore;
-  const { clearPost } = postStore;
+  const { clearForm } = postStore;
 
   const category = router.query.category[0];
   const tag = router.query.category[1];
@@ -28,7 +28,7 @@ const Header = () => {
   const isAdmin = Boolean(userData?.adminFl);
 
   const goPost = useCallback(() => {
-    router.push('/post').then(clearPost);
+    router.push('/post').then(clearForm);
   }, []);
 
   const postButton = useMemo(() => (
@@ -51,7 +51,7 @@ const Header = () => {
   return (
     <Root>
       <SubTitle>
-        <h2>{categoryName[category]}</h2>
+        <h2>{categoryName[category as T.CategoryType]}</h2>
         {postButton}
       </SubTitle>
       <Tag category={category} tag={tag} />
