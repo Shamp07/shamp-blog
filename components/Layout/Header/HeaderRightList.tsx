@@ -65,7 +65,7 @@ const RightList = styled.ul({
     cursor: 'pointer',
 
     '&:hover': {
-      opacity: 0.03,
+      backgroundColor: 'rgba(0, 0, 0, 0.03)',
     },
   },
 

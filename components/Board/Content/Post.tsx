@@ -5,10 +5,10 @@ import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 
-import stores from '@stores';
 import dsPalette from '@constants/ds-palette';
 import * as T from '@types';
 import { MediaQuery } from '@styles';
+import { categoryName } from '@constants/category';
 
 interface Props {
   data: T.Post;
@@ -18,7 +18,6 @@ const Post = ({ data }: Props) => {
   const router = useRouter();
   if (!router.query.category) return null;
 
-  const { sidebarStore } = stores();
   const {
     id, title, category,
     commentCnt, tag, time, likeCnt,

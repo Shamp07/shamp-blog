@@ -115,7 +115,7 @@ export interface Post {
   rownum: number;
   page: number;
   id: number;
-  category: string;
+  category: CategoryType;
   tag: string;
   title: string;
   content: string;

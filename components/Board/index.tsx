@@ -6,7 +6,7 @@ import * as T from '@types';
 import Article from '@components/Article';
 import Content from '@components/Board/Content';
 import Footer from '@components/Board/Footer';
-import { categoryName } from '@constants/category';
+import { categoryPath } from '@constants/category';
 import Header from './Header';
 
 const Board = () => {
@@ -15,7 +15,7 @@ const Board = () => {
 
   const { utilStore } = stores();
 
-  if (!categoryName[router.query.category[0]]) {
+  if (!Object.values(categoryPath).includes(router.query.category[0])) {
     router.push('/').then(() => {
       utilStore.openPopup(T.Popup.ALERT, '존재하지 않는 게시판입니다.');
     });

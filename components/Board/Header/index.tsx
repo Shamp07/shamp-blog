@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
@@ -8,6 +7,7 @@ import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 import stores from '@stores';
 import * as T from '@types';
+import dsPalette from '@constants/ds-palette';
 import Button from '@atoms/Button';
 import { MediaQuery } from '@styles';
 import { categoryName } from '@constants/category';
@@ -34,16 +34,14 @@ const Header = () => {
   const postButton = useMemo(() => (
     isAdmin ? (
       <ButtonWrapper>
-        <li>
-          <Button
-            size={T.ButtonSize.SMALL}
-            variant="contained"
-            color="primary"
-            onClick={goPost}
-          >
-            <CustomIcon icon={faPen} />
-          </Button>
-        </li>
+        <Button
+          size={T.ButtonSize.SMALL}
+          variant="contained"
+          color="primary"
+          onClick={goPost}
+        >
+          <CustomIcon icon={faPen} />
+        </Button>
       </ButtonWrapper>
     ) : null
   ), [isAdmin]);
@@ -94,19 +92,19 @@ const CustomIcon = styled(FontAwesomeIcon)`
   vertical-align: text-bottom;
 `;
 
-const ButtonWrapper = styled.ul`
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin-top: 9px;
-  margin-right: 10px;
-  list-style: none;
+const ButtonWrapper = styled.ul({
+  position: 'absolute',
+  top: 0,
+  right: 0,
+  marginTop: '9px',
+  marginRight: '10px',
+  listStyle: 'none',
 
-  & > li {
-    display: inline-block;
-    color: #2d79c7;
-    cursor: pointer;
-  }
-`;
+  '& > button': {
+    display: 'inline-block',
+    color: dsPalette.themePrimary.toString(),
+    cursor: 'pointer',
+  },
+});
 
 export default observer(Header);
