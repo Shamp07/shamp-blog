@@ -15,12 +15,12 @@ const Board = () => {
 
   const { utilStore } = stores();
 
-  if (!Object.values(categoryPath).includes(router.query.category[0])) {
-    router.push('/').then(() => {
-      utilStore.openPopup(T.Popup.ALERT, '존재하지 않는 게시판입니다.');
-    });
-    return null;
-  }
+  // if (!Object.values(categoryPath).includes(router.query.category[0] as T.CategoryPath)) {
+  //   router.push('/').then(() => {
+  //     utilStore.openPopup(T.Popup.ALERT, '존재하지 않는 게시판입니다.');
+  //   });
+  //   return null;
+  // }
 
   if (router.query.category[1] === 'post') return <Article />;
 

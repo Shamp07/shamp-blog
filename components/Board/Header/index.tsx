@@ -33,23 +33,21 @@ const Header = () => {
 
   const postButton = useMemo(() => (
     isAdmin ? (
-      <ButtonWrapper>
-        <Button
-          size={T.ButtonSize.SMALL}
-          variant="contained"
-          color="primary"
-          onClick={goPost}
-        >
-          <CustomIcon icon={faPen} />
-        </Button>
-      </ButtonWrapper>
+      <PostButton
+        size={T.ButtonSize.SMALL}
+        variant="contained"
+        color="primary"
+        onClick={goPost}
+      >
+        <Icon icon={faPen} />
+      </PostButton>
     ) : null
   ), [isAdmin]);
 
   return (
     <Root>
       <SubTitle>
-        <h2>{categoryName[category as T.CategoryType]}</h2>
+        {/*<h2>{categoryName[category as T.CategoryPath]}</h2>*/}
         {postButton}
       </SubTitle>
       <Tag category={category} tag={tag} />
@@ -72,7 +70,7 @@ const Root = styled.header({
 const SubTitle = styled.div`
   position: relative;
   font-size: 18px;
-  padding: 18px 0;
+  padding: 20px 0;
   border-bottom: solid 1px #e6e6e6;
 
   & > h2 {
@@ -86,24 +84,21 @@ const SubTitle = styled.div`
   }
 `;
 
-const CustomIcon = styled(FontAwesomeIcon)`
+const Icon = styled(FontAwesomeIcon)`
   width: 18px;
   height: 18px;
   vertical-align: text-bottom;
 `;
 
-const ButtonWrapper = styled.ul({
-  position: 'absolute',
-  top: 0,
-  right: 0,
-  marginTop: '9px',
-  marginRight: '10px',
-  listStyle: 'none',
-
-  '& > button': {
-    display: 'inline-block',
-    color: dsPalette.themePrimary.toString(),
-    cursor: 'pointer',
+const PostButton = styled(Button)({
+  '&&&': {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    marginTop: '10px',
+    marginRight: '10px',
+    listStyle: 'none',
+    color: dsPalette.typeWhite.toString(),
   },
 });
 

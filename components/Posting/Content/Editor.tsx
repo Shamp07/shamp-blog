@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React, { ChangeEvent } from 'react';
 import dynamic from 'next/dynamic';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';

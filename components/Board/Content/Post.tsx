@@ -56,7 +56,7 @@ const Post = ({ data }: Props) => {
         <div>
           <PostInfoUl>
             <li>
-              <span>{categoryName[category]}</span>
+              <span>ddd</span>
             </li>
             <li>
               <span>{tag}</span>

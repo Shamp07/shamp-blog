@@ -57,6 +57,21 @@ export enum CategoryType {
   ETC = 'ETC',
 }
 
+export enum CategoryPath {
+  HOME = '',
+  PROFILE = 'profile',
+  LIFE = 'life',
+  NOTICE = 'notice',
+  ALL = 'all',
+  BEST = 'best',
+  JAVASCRIPT = 'javascript',
+  TYPESCRIPT = 'typescript',
+  REACT = 'react',
+  REACT_NATIVE = 'rn',
+  NODEJS = 'nodejs',
+  ETC = 'etc',
+}
+
 export interface Alert {
   total: number;
   id: number;

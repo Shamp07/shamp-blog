@@ -111,11 +111,16 @@ const postStore: PostStore = {
 };
 
 export const initialPost: {
-  post: T.Post | null;
-  posts: T.Post[],
+  form: T.PostForm;
+  posts: T.Post[];
   article: T.Article | null;
 } = {
-  post: null,
+  form: {
+    category: '',
+    tags: '',
+    title: '',
+    content: '',
+  },
   posts: [],
   article: null,
 };

@@ -1,33 +1,33 @@
-import { CategoryType } from '@types';
+import { CategoryType, CategoryPath } from '@types';
 
-export const categoryPath: Record<CategoryType, string> = {
-  [CategoryType.HOME]: '',
-  [CategoryType.PROFILE]: 'profile',
-  [CategoryType.LIFE]: 'life',
-  [CategoryType.NOTICE]: 'notice',
-  [CategoryType.ALL]: 'all',
-  [CategoryType.BEST]: 'best',
-  [CategoryType.JAVASCRIPT]: 'javascript',
-  [CategoryType.TYPESCRIPT]: 'typescript',
-  [CategoryType.REACT]: 'react',
-  [CategoryType.REACT_NATIVE]: 'rn',
-  [CategoryType.NODEJS]: 'nodejs',
-  [CategoryType.ETC]: 'etc',
+export const categoryPath: Record<CategoryType, CategoryPath> = {
+  [CategoryType.HOME]: CategoryPath.HOME,
+  [CategoryType.PROFILE]: CategoryPath.PROFILE,
+  [CategoryType.LIFE]: CategoryPath.LIFE,
+  [CategoryType.NOTICE]: CategoryPath.NOTICE,
+  [CategoryType.ALL]: CategoryPath.ALL,
+  [CategoryType.BEST]: CategoryPath.BEST,
+  [CategoryType.JAVASCRIPT]: CategoryPath.JAVASCRIPT,
+  [CategoryType.TYPESCRIPT]: CategoryPath.TYPESCRIPT,
+  [CategoryType.REACT]: CategoryPath.REACT,
+  [CategoryType.REACT_NATIVE]: CategoryPath.REACT_NATIVE,
+  [CategoryType.NODEJS]: CategoryPath.NODEJS,
+  [CategoryType.ETC]: CategoryPath.ETC,
 };
 
-export const categoryName: Record<CategoryType, string> = {
-  [CategoryType.HOME]: '홈',
-  [CategoryType.PROFILE]: '프로필',
-  [CategoryType.LIFE]: '일상',
-  [CategoryType.NOTICE]: '공지사항',
-  [CategoryType.ALL]: '전체 글',
-  [CategoryType.BEST]: '인기 글',
-  [CategoryType.JAVASCRIPT]: 'JavaScript',
-  [CategoryType.TYPESCRIPT]: 'TypeScript',
-  [CategoryType.REACT]: 'React',
-  [CategoryType.REACT_NATIVE]: 'React Native',
-  [CategoryType.NODEJS]: 'NodeJS',
-  [CategoryType.ETC]: 'etc',
+export const categoryName: Record<CategoryPath, string> = {
+  [CategoryPath.HOME]: '홈',
+  [CategoryPath.PROFILE]: '프로필',
+  [CategoryPath.LIFE]: '일상',
+  [CategoryPath.NOTICE]: '공지사항',
+  [CategoryPath.ALL]: '전체 글',
+  [CategoryPath.BEST]: '인기 글',
+  [CategoryPath.JAVASCRIPT]: 'JavaScript',
+  [CategoryPath.TYPESCRIPT]: 'TypeScript',
+  [CategoryPath.REACT]: 'React',
+  [CategoryPath.REACT_NATIVE]: 'React Native',
+  [CategoryPath.NODEJS]: 'NodeJS',
+  [CategoryPath.ETC]: 'etc',
 };
 
 export const topCategories = [CategoryType.HOME, CategoryType.PROFILE, CategoryType.LIFE];

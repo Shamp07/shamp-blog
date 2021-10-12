@@ -21,7 +21,7 @@ const Category = ({ category, isBoard }: Props) => {
 
   return (
     <CategoryList isActive={currentPath === categoryPath[category]}>
-      <Link href={`${baseUrl}/${categoryPath[category]}`}>{categoryName[category]}</Link>
+      <Link href={`${baseUrl}/${categoryPath[category]}`}>d</Link>
     </CategoryList>
   );
 };
