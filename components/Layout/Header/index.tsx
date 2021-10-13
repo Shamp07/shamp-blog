@@ -3,14 +3,14 @@ import styled from '@emotion/styled';
 
 import { MediaQuery } from '@styles';
 import * as T from '@types';
-import HeaderLeftLogo from './HeaderLeftLogo';
-import HeaderRightList from './HeaderRightList';
+import Logo from './Logo';
+import HeaderRightList from './Menu';
 
 const Header = () => (
   <div>
     <TopBar>
       <Container>
-        <HeaderLeftLogo />
+        <Logo />
         <HeaderRightList />
       </Container>
     </TopBar>

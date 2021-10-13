@@ -1,12 +1,14 @@
 import React, { useCallback } from 'react';
-import styled from '@emotion/styled';
-
 import stores from '@stores';
+import { observer } from 'mobx-react-lite';
+
+import styled from '@emotion/styled';
 import { MediaQuery } from '@styles';
 import * as T from '@types';
 
-const SideNoTokenList = () => {
-  const { utilStore } = stores();
+const Menu = () => {
+  const { signStore, utilStore } = stores();
+  const { userData, cookieChecked } = signStore;
 
   const onSignIn = useCallback(() => {
     utilStore.openPopup(T.Popup.SIGN_IN);
@@ -16,15 +18,30 @@ const SideNoTokenList = () => {
     utilStore.openPopup(T.Popup.SIGN_UP);
   }, []);
 
+  const onSignOut = useCallback(() => {
+    signStore.signOut(false);
+  }, []);
+
+  if (!cookieChecked) return null;
+
+  if (userData) {
+    return (
+      <Root>
+        <TopMenu>{userData.name}</TopMenu>
+        <TopMenu onClick={onSignOut}>로그아웃</TopMenu>
+      </Root>
+    );
+  }
+
   return (
-    <MobileMenu>
+    <Root>
       <TopMenu onClick={onSignIn}>로그인</TopMenu>
       <TopMenu onClick={onSignUp}>회원가입</TopMenu>
-    </MobileMenu>
+    </Root>
   );
 };
 
-const MobileMenu = styled.div({
+const Root = styled.div({
   display: 'none',
   height: '44px',
 
@@ -43,4 +60,4 @@ const TopMenu = styled.div`
   cursor: pointer;
 `;
 
-export default SideNoTokenList;
+export default observer(Menu);

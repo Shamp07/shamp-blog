@@ -5,9 +5,9 @@ import { MenuItem } from '@material-ui/core';
 
 import stores from '@stores';
 import Alert from '.';
-import AlertMore from './AlertMore';
+import More from './More';
 
-const AlertList = () => {
+const List = () => {
   const { alertStore } = stores();
   const { alerts } = alertStore;
 
@@ -26,7 +26,7 @@ const AlertList = () => {
   return (
     <>
       {alertList}
-      {isMoreAlert && <AlertMore size={size} setSize={setSize} />}
+      {isMoreAlert && <More size={size} setSize={setSize} />}
     </>
   );
 };
@@ -41,4 +41,4 @@ const MenuItemNone = styled(MenuItem)`
   }
 `;
 
-export default observer(AlertList);
+export default observer(List);

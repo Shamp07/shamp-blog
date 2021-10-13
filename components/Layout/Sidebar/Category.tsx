@@ -20,17 +20,13 @@ const Category = ({ category, isBoard }: Props) => {
     : router.asPath.replace('/', '');
 
   return (
-    <CategoryList isActive={currentPath === categoryPath[category]}>
-      <Link href={`${baseUrl}/${categoryPath[category]}`}>d</Link>
-    </CategoryList>
+    <Root isActive={currentPath === categoryPath[category]}>
+      <Link href={`${baseUrl}/${categoryPath[category]}`}>{categoryName[categoryPath[category]]}</Link>
+    </Root>
   );
 };
 
-interface ActiveProp {
-  isActive: boolean;
-}
-
-const CategoryList = styled.li<ActiveProp>(({ isActive }) => ({
+const Root = styled.li<{ isActive: boolean }>(({ isActive }) => ({
   '&&&': {
     ...(isActive ? ({
       backgroundColor: '#2d79c7',

@@ -10,7 +10,7 @@ import * as T from '@types';
 import dsPalette from '@constants/ds-palette';
 import { topCategories, categories } from '@constants/category';
 import Category from './Category';
-import SideTokenMenu from './Menu/SideTokenMenu';
+import Menu from './Menu';
 import Backdrop from './Backdrop';
 
 const Sidebar = () => {
@@ -28,14 +28,14 @@ const Sidebar = () => {
         <CloseButton>
           <CloseIcon icon={faTimes} onClick={onClose} />
         </CloseButton>
-        <SideTokenMenu />
-        <CategoryWrapper>
+        <Menu />
+        <TopCategory>
           <ul>
             {topCategories.map((category) => (
               <Category key={category} category={category} isBoard={false} />
             ))}
           </ul>
-        </CategoryWrapper>
+        </TopCategory>
         <BottomCategory>
           <ul>
             {categories.map((category) => (
@@ -84,7 +84,7 @@ const CloseIcon = styled(FontAwesomeIcon)`
   color: #616161;
 `;
 
-const CategoryWrapper = styled.div({
+const TopCategory = styled.div({
   width: '100%',
   padding: '10px 0',
   backgroundColor: '#fff',
@@ -137,7 +137,7 @@ const CategoryWrapper = styled.div({
   },
 });
 
-const BottomCategory = styled(CategoryWrapper)({
+const BottomCategory = styled(TopCategory)({
   marginTop: '16px',
   [MediaQuery[T.Device.LARGE]]: {
     marginTop: 0,

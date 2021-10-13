@@ -8,8 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import stores from '@stores';
 import * as T from '@types';
-import AlertSpinner from './Alert/AlertSpinner';
-import AlertList from './Alert/AlertList';
+import Spinner from '../Alert/Spinner';
+import AlertList from '../Alert/List';
 
 const HeaderTokenList = () => {
   const { signStore, utilStore, alertStore } = stores();
@@ -69,7 +69,7 @@ const HeaderTokenList = () => {
           onClose={onClose}
         >
           <MenuItem>알림 목록</MenuItem>
-          {isLoading ? <AlertSpinner /> : <AlertList />}
+          {isLoading ? <Spinner /> : <AlertList />}
         </AlertMenu>
       </li>
     </>

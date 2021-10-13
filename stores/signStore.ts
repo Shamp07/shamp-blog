@@ -19,11 +19,11 @@ export interface SignStore {
     password: string;
     passwordCheck: string;
   }): void;
+  signOut(openAlert: boolean): void;
   resetPassword(currentPassword: string, password: string): void;
   deleteUser(email: string): void;
   verifyEmail(email: string): void;
   verifyCode(email: string, code: string): void;
-  logout(openAlert: boolean): void;
 }
 
 const signStore: SignStore = {
@@ -75,6 +75,15 @@ const signStore: SignStore = {
       },
     });
   },
+  signOut(openAlert: boolean) {
+    utilStore.closeHeaderMenu();
+
+    cookie.remove('token');
+    this.userData = null;
+    if (openAlert) {
+      utilStore.openPopup(T.Popup.ALERT, '로그아웃 되었습니다.');
+    }
+  },
   resetPassword(currentPassword: string, password: string) {
     Axios({
       method: T.RequestMethod.PUT,
@@ -86,7 +95,7 @@ const signStore: SignStore = {
       success: (response) => {
         const { code, message } = response.data;
         if (code === 1) {
-          this.logout(false);
+          this.signOut(false);
         }
         utilStore.openPopup(T.Popup.ALERT, message);
       },
@@ -102,7 +111,7 @@ const signStore: SignStore = {
       success: (response) => {
         const { code, message } = response.data;
         if (code === 1) {
-          this.logout(true);
+          this.signOut(true);
         }
         utilStore.openPopup(T.Popup.ALERT, message);
       },
@@ -133,15 +142,6 @@ const signStore: SignStore = {
         utilStore.openPopup(T.Popup.ALERT, message);
       },
     });
-  },
-  logout(openAlert: boolean) {
-    utilStore.closeHeaderMenu();
-
-    cookie.remove('token');
-    this.userData = null;
-    if (openAlert) {
-      utilStore.openPopup(T.Popup.ALERT, '로그아웃 되었습니다.');
-    }
   },
 };
 

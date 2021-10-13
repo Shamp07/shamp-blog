@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { CircularProgress } from '@material-ui/core';
 
-const AlertSpinner = () => (
+const Spinner = () => (
   <Root>
     <CircularProgress size={30} />
   </Root>
@@ -16,4 +16,4 @@ const Root = styled.div`
   }
 `;
 
-export default AlertSpinner;
+export default Spinner;

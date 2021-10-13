@@ -8,7 +8,7 @@ interface Props {
   setSize: Dispatch<SetStateAction<number>>
 }
 
-const AlertMore = ({ size, setSize }: Props) => {
+const More = ({ size, setSize }: Props) => {
   const { alertStore } = stores();
 
   const onMore = useCallback(() => {
@@ -23,4 +23,4 @@ const AlertMore = ({ size, setSize }: Props) => {
   );
 };
 
-export default AlertMore;
+export default More;
