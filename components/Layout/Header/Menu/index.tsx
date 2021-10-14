@@ -8,7 +8,7 @@ import * as T from '@types';
 import stores from '@stores';
 import dsPalette from '@constants/ds-palette';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import HeaderTokenMenu from './HeaderTokenMenu';
+import UserMenuList from './UserMenuList';
 
 const Menu = () => {
   const { sidebarStore } = stores();
@@ -19,14 +19,14 @@ const Menu = () => {
   return (
     <Root>
       <Wrapper>
-        <RightList>
-          <HeaderTokenMenu />
+        <List>
+          <UserMenuList />
           <li>
             <a href="https://github.com/Shamp07">
               <FontAwesomeIcon icon={faGithubAlt} />
             </a>
           </li>
-        </RightList>
+        </List>
       </Wrapper>
       <SidebarButton onClick={onSidebar}>
         <SidebarIcon icon={faBars} />
@@ -50,7 +50,7 @@ const Wrapper = styled.div({
   },
 });
 
-const RightList = styled.ul({
+const List = styled.ul({
   listStyle: 'none',
   display: 'inline-flex',
   width: '100%',

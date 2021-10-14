@@ -4,10 +4,10 @@ import { observer } from 'mobx-react-lite';
 import { MenuItem } from '@material-ui/core';
 
 import stores from '@stores';
-import Alert from '.';
+import Row from './Row';
 import More from './More';
 
-const List = () => {
+const Alert = () => {
   const { alertStore } = stores();
   const { alerts } = alertStore;
 
@@ -16,11 +16,11 @@ const List = () => {
 
   const alertList = useMemo(() => (alerts.length ? (
     alerts.map((data) => (
-      <Alert key={data.id} data={data} />
+      <Row key={data.id} data={data} />
     ))) : (
-      <MenuItemNone>
+      <None>
         <span>알림이 없습니다.</span>
-      </MenuItemNone>
+      </None>
   )), [alerts]);
 
   return (
@@ -31,7 +31,7 @@ const List = () => {
   );
 };
 
-const MenuItemNone = styled(MenuItem)`
+const None = styled(MenuItem)`
   font-size: 14px !important;
   text-align: center;
   cursor: default !important;
@@ -41,4 +41,4 @@ const MenuItemNone = styled(MenuItem)`
   }
 `;
 
-export default observer(List);
+export default observer(Alert);

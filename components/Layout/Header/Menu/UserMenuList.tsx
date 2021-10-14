@@ -1,27 +1,34 @@
-import React, { useMemo, useCallback, MouseEvent } from 'react';
+import React, { MouseEvent, useCallback, useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import { faUserCircle, faBell } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faBell, faSignInAlt, faUserCircle, faUserPlus,
+} from '@fortawesome/free-solid-svg-icons';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import stores from '@stores';
 import * as T from '@types';
-import Spinner from '../Alert/Spinner';
-import AlertList from '../Alert/List';
+import Spinner from './Spinner';
+import Alert from './Alert';
 
-const HeaderTokenList = () => {
-  const { signStore, utilStore, alertStore } = stores();
-  const {
-    headerMenu, headerMenuElement,
-  } = utilStore;
-
+const UserMenuList = () => {
+  const { signStore, alertStore, utilStore } = stores();
+  const { userData, cookieChecked } = signStore;
   const { alerts, isLoading } = alertStore;
+  const { menu } = utilStore;
+  const { name, element } = menu;
+
+  if (!cookieChecked) return null;
+
+  const toggleSignIn = () => utilStore.openPopup(T.Popup.SIGN_IN);
+  const toggleSignUp = () => utilStore.openPopup(T.Popup.SIGN_UP);
+
   const notReadCount = useMemo(() => alerts.map((data) => !data.readFl).length, [alerts]);
 
   const onLogout = useCallback(() => {
-    signStore.logout(true);
+    signStore.signOut(true);
   }, []);
 
   const onTogglePassword = useCallback(() => {
@@ -40,22 +47,39 @@ const HeaderTokenList = () => {
     utilStore.closeHeaderMenu();
   }, []);
 
+  if (!userData) {
+    return (
+      <>
+        <li>
+          <button type="button" onClick={toggleSignIn}>
+            <FontAwesomeIcon icon={faSignInAlt} />
+          </button>
+        </li>
+        <li>
+          <button type="button" onClick={toggleSignUp}>
+            <FontAwesomeIcon icon={faUserPlus} />
+          </button>
+        </li>
+      </>
+    );
+  }
+
   return (
     <>
       <li>
         <button type="button" onClick={onProfile} name="profile">
           <FontAwesomeIcon icon={faUserCircle} />
         </button>
-        <UserMenu
-          anchorEl={headerMenuElement}
+        <ProfileMenu
+          anchorEl={element}
           keepMounted
-          open={headerMenu === 'profile'}
+          open={name === 'profile'}
           onClose={onClose}
         >
           <MenuItem onClick={onLogout}>로그아웃</MenuItem>
           <MenuItem onClick={onTogglePassword}>비밀번호 변경</MenuItem>
           <MenuItem onClick={onToggleDelete}>탈퇴하기</MenuItem>
-        </UserMenu>
+        </ProfileMenu>
       </li>
       <li>
         <AlertButton type="button" onClick={onProfile} name="alert">
@@ -63,13 +87,13 @@ const HeaderTokenList = () => {
           {Boolean(notReadCount) && <div>{notReadCount}</div>}
         </AlertButton>
         <AlertMenu
-          anchorEl={headerMenuElement}
+          anchorEl={element}
           keepMounted
-          open={headerMenu === 'alert'}
+          open={name === 'alert'}
           onClose={onClose}
         >
           <MenuItem>알림 목록</MenuItem>
-          {isLoading ? <Spinner /> : <AlertList />}
+          {isLoading ? <Spinner /> : <Alert />}
         </AlertMenu>
       </li>
     </>
@@ -90,7 +114,7 @@ const AlertButton = styled.button`
   }
 `;
 
-const UserMenu = styled(Menu)`
+const ProfileMenu = styled(Menu)`
   & > .MuiPaper-root {
     border-radius: 10px;
   }
@@ -134,7 +158,6 @@ const AlertMenu = styled(Menu)`
   }
   
   & li:last-of-type {
-    
     cursor: pointer;
     font-weight: 300;
     & > span {
@@ -143,4 +166,4 @@ const AlertMenu = styled(Menu)`
   }
 `;
 
-export default observer(HeaderTokenList);
+export default observer(UserMenuList);

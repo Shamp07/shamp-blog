@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
-import { MenuItem } from '@material-ui/core';
+import { MenuItem as RowMenuItem } from '@material-ui/core';
 import styled from '@emotion/styled';
 
 import stores from '@stores';
@@ -25,33 +25,29 @@ const Alert = ({ data }: Props) => {
   } = data;
 
   return (
-    <MenuItemCustom onClick={goPost}>
+    <MenuItem onClick={goPost}>
       <MenuItemInner isRead={readFl}>
         <div>
           &quot;
           {content}
           &quot; 라는 내용의 댓글이 달렸습니다.
         </div>
-        <MenuItemTime>
+        <Time>
           <span>
             {time}
           </span>
-        </MenuItemTime>
+        </Time>
       </MenuItemInner>
-    </MenuItemCustom>
+    </MenuItem>
   );
 };
 
-interface MenuItemInnerProps {
-  isRead: boolean;
-}
-
-const MenuItemCustom = styled(MenuItem)`
+const MenuItem = styled(RowMenuItem)`
   white-space: normal;
   border-bottom: 1px solid #e6e6e6 !important;
 `;
 
-const MenuItemInner = styled.div<MenuItemInnerProps>(({ isRead }) => ({
+const MenuItemInner = styled.div<{ isRead: boolean }>(({ isRead }) => ({
   display: 'block',
   width: '100%',
   fontWeight: 300,
@@ -63,7 +59,7 @@ const MenuItemInner = styled.div<MenuItemInnerProps>(({ isRead }) => ({
   },
 }));
 
-const MenuItemTime = styled.div`
+const Time = styled.div`
   display: flex;
   & > span {
     margin-left: auto;
