@@ -17,13 +17,13 @@ const Content = ({ children }: Props) => {
   if (!cookieChecked) return null;
 
   return (
-    <Wrapper>
+    <Section>
       {children}
-    </Wrapper>
+    </Section>
   );
 };
 
-const Wrapper = styled.div({
+const Section = styled.section({
   marginLeft: 'auto',
   boxSizing: 'border-box',
   width: '744px',

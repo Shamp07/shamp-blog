@@ -20,8 +20,6 @@ const UserMenuList = () => {
   const { menu } = utilStore;
   const { name, element } = menu;
 
-  if (!cookieChecked) return null;
-
   const toggleSignIn = () => utilStore.openPopup(T.Popup.SIGN_IN);
   const toggleSignUp = () => utilStore.openPopup(T.Popup.SIGN_UP);
 
@@ -46,6 +44,8 @@ const UserMenuList = () => {
   const onClose = useCallback(() => {
     utilStore.closeHeaderMenu();
   }, []);
+
+  if (!cookieChecked) return null;
 
   if (!userData) {
     return (

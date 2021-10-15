@@ -4,18 +4,17 @@ import styled from '@emotion/styled';
 import { MediaQuery } from '@styles';
 import * as T from '@types';
 import Logo from './Logo';
-import HeaderRightList from './Menu';
+import Menu from './Menu';
 
 const Header = () => (
-  <div>
+  <header>
     <TopBar>
       <Container>
         <Logo />
-        <HeaderRightList />
+        <Menu />
       </Container>
     </TopBar>
-    <Background />
-  </div>
+  </header>
 );
 
 const Container = styled.div({
@@ -28,17 +27,6 @@ const Container = styled.div({
     paddingLeft: '0 !important',
     paddingRight: '0 !important',
     height: '56px !important',
-  },
-});
-
-const Background = styled.div({
-  width: '100%',
-  height: '250px',
-  backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url(/background.jpg)',
-  backgroundPosition: 'center 60%',
-
-  [MediaQuery[T.Device.LARGE]]: {
-    display: 'none',
   },
 });
 

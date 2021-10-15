@@ -117,13 +117,10 @@ export interface HomePost {
 }
 
 export interface PostForm {
-  // id: number;
   category: string;
   tags: string;
   title: string;
   content: string;
-  // count: number;
-  // page: number;
 }
 
 export interface Post {

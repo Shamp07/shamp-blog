@@ -48,7 +48,7 @@ const Sidebar = () => {
   );
 };
 
-const Root = styled.div<{ isOpen: boolean }>(({ isOpen }) => ({
+const Root = styled.aside<{ isOpen: boolean }>(({ isOpen }) => ({
   display: 'block',
   width: '280px',
   willChange: 'min-height',

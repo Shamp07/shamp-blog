@@ -3,26 +3,27 @@ import styled from '@emotion/styled';
 
 import * as T from '@types';
 import { MediaQuery } from '@styles';
-import Comment from './Comment';
+import dsPalette from '@constants/ds-palette';
 import Header from './Header';
 import Content from './Content';
 import Footer from './Footer';
+import Comment from './Comment';
 
 const Article = () => (
-  <>
-    <Section>
+  <article>
+    <Wrapper>
       <Header />
       <Content />
       <Footer />
-    </Section>
+    </Wrapper>
     <Comment />
-  </>
+  </article>
 );
 
-const Section = styled.section({
-  overflow: 'hidden',
-  backgroundColor: '#fff',
+const Wrapper = styled.div({
+  backgroundColor: dsPalette.themeWhite.toString(),
   borderRadius: '14px',
+  overflow: 'hidden',
   boxShadow: '0 1px 3px 0 rgba(0, 0, 0, .15)',
 
   [MediaQuery[T.Device.LARGE]]: {
