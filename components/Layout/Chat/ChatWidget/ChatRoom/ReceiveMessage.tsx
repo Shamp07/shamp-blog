@@ -59,7 +59,7 @@ const ProfileImage = styled.div`
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background-image: url("/logo_profile.png");
+  background-image: url("/assets/images/logo-profile.png");
   background-size: cover;
   background-position: center center;
   background-color: rgb(255, 255, 255);

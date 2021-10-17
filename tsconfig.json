@@ -15,17 +15,18 @@
     "forceConsistentCasingInFileNames": false,
     "baseUrl": ".",
     "paths": {
+      "@assets/*": ["assets/*"],
+      "@components/*": ["components/*"],
+      "@atoms/*": ["components/atoms/*"],
+      "@config/*": ["config/*"],
+      "@constants/*": ["constants/*"],
       "@database/*": ["database/*"],
       "@middleware/*": ["middleware/*"],
-      "@config/*": ["config/*"],
-      "@components/*": ["components/*"],
-      "@constants/*": ["constants/*"],
-      "@atoms/*": ["components/atoms/*"],
       "@stores/*": ["stores/*"],
-      "@utilities/*": ["utilities/*"],
       "@stores": ["stores"],
-      "@types": ["types"],
-      "@styles": ["styles"]
+      "@utilities/*": ["utilities/*"],
+      "@styles": ["styles"],
+      "@types": ["types"]
     },
     "lib": [
       "dom",

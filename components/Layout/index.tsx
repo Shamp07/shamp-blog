@@ -86,6 +86,10 @@ const GlobalStyle = css({
     outline: 0,
   },
 
+  'span, div': {
+    lineHeight: 1,
+  },
+
   body: {
     color: dsPalette.typePrimary.toString(),
     minWidth: '320px',
@@ -95,47 +99,6 @@ const GlobalStyle = css({
 
   'a, span, div': {
     webkitTapHighlightColor: 'transparent',
-  },
-
-  '.MuiButton-outlinedPrimary': {
-    color: '#2d79c7 !important',
-    border: '1px solid rgba(45, 121, 199, 0.5) !important',
-  },
-
-  '.MuiButton-outlined.Mui-disabled': {
-    border: '1px solid rgba(0, 0, 0, 0.12) !important',
-  },
-
-  '.MuiButton-root.Mui-disabled': {
-    color: 'rgba(0, 0, 0, 0.26) !important',
-  },
-
-  '.MuiPaginationItem-textPrimary.Mui-selected, .MuiButton-containedPrimary': {
-    backgroundColor: '#3b8bdd !important',
-  },
-
-  '.MuiButton-containedPrimary:hover': {
-    backgroundColor: '#3886d7 !important',
-  },
-
-  '.MuiButton-contained.Mui-disabled': {
-    color: 'rgba(0, 0, 0, 0.26) !important',
-    boxShadow: 'none !important',
-    backgroundColor: 'rgba(0, 0, 0, 0.12) !important',
-  },
-
-  '.MuiInputLabel-formControl': {
-    '&&&': {
-      zIndex: 0,
-      fontFamily: 'inherit',
-    },
-  },
-
-  '.MuiPaper-root': {
-    borderRadius: '10px !important',
-    '&&& *': {
-      fontFamily: 'inherit',
-    },
   },
 
   '@font-face': {

@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import { MediaQuery } from '@styles';
-import * as T from '@types';
+import dsPalette from '@constants/ds-palette';
 import Logo from './Logo';
 import Menu from './Menu';
 
@@ -17,6 +16,7 @@ const Header = () => (
 
 const Root = styled.header({
   height: '4rem',
+  backgroundColor: dsPalette.themeWhite.toString(),
 });
 
 const Container = styled.div({
