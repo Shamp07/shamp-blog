@@ -1,17 +1,16 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import Image from 'next/image';
 
 import * as T from '@types';
 import dsPalette from '@constants/ds-palette';
-import logo from '@assets/images/logo.png';
+import LogoSVG from '@assets/icon/logo.svg';
 
 const Logo = () => (
   <Root>
     <Link href={T.CategoryPath.HOME}>
       <Wrapper>
-        <Image src={logo} width={32} height={32} />
+        <LogoSVG />
         <Title>Shamp Blog</Title>
       </Wrapper>
     </Link>
@@ -33,6 +32,7 @@ const Title = styled.div({
   fontSize: '25px',
   fontWeight: 700,
   fontFamily: 'Roboto Slab',
+  marginLeft: '1rem',
 });
 
 export default Logo;
