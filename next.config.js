@@ -1,16 +1,20 @@
-const { PHASE_DEVELOPMENT_SERVER } = require('next/constants');
+const { PHASE_DEVELOPMENT_SERVER, PHASE_PRODUCTION_SERVER } = require('next/constants');
 const withPlugins = require('next-compose-plugins');
 const withImages = require('next-images');
 const path = require('path');
-const withBundleAnalyzer = require('@next/bundle-analyzer');
 
-module.exports = withPlugins([], {
+module.exports = withPlugins([withImages], {
   [PHASE_DEVELOPMENT_SERVER]: {
     env: {
       BASE_PATH: 'http://localhost',
     },
   },
-  exclude: path.resolve(__dirname, 'assets/icon/*.svg'),
+  [PHASE_PRODUCTION_SERVER]: {
+    env: {
+      BASE_PATH: 'https://shamp.kr',
+    },
+  },
+  exclude: path.resolve(__dirname, 'assets/icon'),
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
