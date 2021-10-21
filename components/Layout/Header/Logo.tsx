@@ -11,7 +11,7 @@ const Logo = () => (
     <Link href={T.CategoryPath.HOME}>
       <Wrapper>
         <LogoSVG />
-        <Title>Shamp Blog</Title>
+        <Title href="d">shamp07.log</Title>
       </Wrapper>
     </Link>
   </Root>
@@ -25,14 +25,20 @@ const Root = styled.div({
 
 const Wrapper = styled.div({
   display: 'flex',
+  alignItems: 'center',
 });
 
-const Title = styled.div({
+const Title = styled.a({
   color: dsPalette.themePrimary.toString(),
-  fontSize: '25px',
-  fontWeight: 700,
-  fontFamily: 'Roboto Slab',
+  fontSize: '1.125rem',
+  fontWeight: 500,
+  fontFamily: 'Fira Mono',
   marginLeft: '1rem',
+  display: 'block',
+  maxWidth: 'calc(100vw - 200px)',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
 });
 
 export default Logo;

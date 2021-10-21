@@ -91,6 +91,7 @@ const GlobalStyle = css({
   },
 
   body: {
+    WebkitFontSmoothing: 'antialiased',
     color: dsPalette.typePrimary.toString(),
     minWidth: '320px',
     minHeight: '100%',
