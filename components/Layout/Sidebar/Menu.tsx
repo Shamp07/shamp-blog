@@ -3,7 +3,7 @@ import stores from '@stores';
 import { observer } from 'mobx-react-lite';
 
 import styled from '@emotion/styled';
-import { MediaQuery } from '@styles';
+import { MediaQuery } from '@constants/styles';
 import * as T from '@types';
 
 const Menu = () => {

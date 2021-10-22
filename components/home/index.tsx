@@ -6,7 +6,7 @@ import { faSync } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '@atoms/Button';
 import * as T from '@types';
-import { MediaQuery } from '@styles';
+import { MediaQuery } from '@constants/styles';
 import stores from '@stores';
 import Footprint from './Footprint';
 import PostList from './PostList';

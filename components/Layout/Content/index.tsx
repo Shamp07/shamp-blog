@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 
 import stores from '@stores';
 import * as T from '@types';
-import { MediaQuery } from '@styles';
+import { MediaQuery } from '@constants/styles';
 
 interface Props {
   children: ReactNode;

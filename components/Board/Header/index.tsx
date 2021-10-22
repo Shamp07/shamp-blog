@@ -9,7 +9,7 @@ import stores from '@stores';
 import * as T from '@types';
 import dsPalette from '@constants/ds-palette';
 import Button from '@atoms/Button';
-import { MediaQuery } from '@styles';
+import { MediaQuery } from '@constants/styles';
 import { categoryName } from '@constants/category';
 import Tag from './Tag';
 

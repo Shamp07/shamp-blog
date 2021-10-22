@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 
 import stores from '@stores';
 import * as T from '@types';
-import { MediaQuery } from '@styles';
+import {FontFamily, MediaQuery} from '@constants/styles';
 import dsPalette from '@constants/ds-palette';
 import Popup from '@components/Popup';
 import NextNprogress from 'nextjs-progressbar';
@@ -80,7 +80,7 @@ const CenterContent = styled.div({
 
 const GlobalStyle = css({
   'header, body, span, div, nav, ul, li, h1, h2, h3, h4, pre': {
-    fontFamily: 'Roboto, Noto Sans KR, serif',
+    fontFamily: `${FontFamily.ROBOTO}, ${FontFamily.NOTO_SANS_KR}, ${FontFamily.SERIF}`,
     margin: 0,
     padding: 0,
     outline: 0,
@@ -102,12 +102,6 @@ const GlobalStyle = css({
     webkitTapHighlightColor: 'transparent',
   },
 
-  '@font-face': {
-    fontFamily: 'Roboto',
-    fontStyle: 'normal',
-    fontWeight: 300,
-    unicodeRange: 'U+0041-005A, U+0061-007A, U+0030-0039',
-  },
 });
 
 export default Layout;

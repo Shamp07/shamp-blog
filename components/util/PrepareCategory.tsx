@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBusinessTime } from '@fortawesome/free-solid-svg-icons';
 
-import { MediaQuery } from '@styles';
+import { MediaQuery } from '@constants/styles';
 import * as T from '@types';
 
 const PrepareCategory = () => (

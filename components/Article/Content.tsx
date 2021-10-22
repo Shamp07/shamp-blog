@@ -7,7 +7,7 @@ import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import stores from '@stores';
 import Button from '@atoms/Button';
 import * as T from '@types';
-import { MediaQuery } from '@styles';
+import { MediaQuery } from '@constants/styles';
 
 const Content = () => {
   const { postStore, signStore } = stores();

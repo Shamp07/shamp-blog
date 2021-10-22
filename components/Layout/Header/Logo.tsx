@@ -5,13 +5,14 @@ import Link from 'next/link';
 import * as T from '@types';
 import dsPalette from '@constants/ds-palette';
 import LogoSVG from '@assets/icon/logo.svg';
+import {FontFamily} from "@constants/styles";
 
 const Logo = () => (
   <Root>
     <Link href={T.CategoryPath.HOME}>
       <Wrapper>
         <LogoSVG />
-        <Title href="d">shamp07.log</Title>
+        <Title>Shamp Blog</Title>
       </Wrapper>
     </Link>
   </Root>
@@ -28,17 +29,12 @@ const Wrapper = styled.div({
   alignItems: 'center',
 });
 
-const Title = styled.a({
+const Title = styled.div({
   color: dsPalette.themePrimary.toString(),
-  fontSize: '1.125rem',
-  fontWeight: 500,
-  fontFamily: 'Fira Mono',
+  fontSize: '1.3125rem',
+  fontWeight: 700,
+  fontFamily: FontFamily.PT_SANS,
   marginLeft: '1rem',
-  display: 'block',
-  maxWidth: 'calc(100vw - 200px)',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
 });
 
 export default Logo;

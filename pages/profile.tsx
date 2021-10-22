@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import { MediaQuery } from '@styles';
+import { MediaQuery } from '@constants/styles';
 import * as T from '@types';
 
 const Profile = () => (

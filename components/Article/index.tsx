@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import * as T from '@types';
-import { MediaQuery } from '@styles';
+import { MediaQuery } from '@constants/styles';
 import dsPalette from '@constants/ds-palette';
 import Header from './Header';
 import Content from './Content';

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import stores from '@stores';
-import { MediaQuery } from '@styles';
+import { MediaQuery } from '@constants/styles';
 import * as T from '@types';
 import dsPalette from '@constants/ds-palette';
 import { topCategories, categories } from '@constants/category';

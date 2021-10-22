@@ -7,7 +7,7 @@ import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 
 import dsPalette from '@constants/ds-palette';
 import * as T from '@types';
-import { MediaQuery } from '@styles';
+import { MediaQuery } from '@constants/styles';
 import { categoryName } from '@constants/category';
 
 interface Props {

@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import styled from '@emotion/styled';
 
 import stores from '@stores';
-import { MediaQuery } from '@styles';
+import { MediaQuery } from '@constants/styles';
 import * as T from '@types';
 import Post from './Post';
 import PostNone from './PostNone';
