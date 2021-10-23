@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 
 import stores from '@stores';
 import * as T from '@types';
-import {FontFamily, MediaQuery} from '@constants/styles';
+import { FontFamily, MediaQuery } from '@constants/styles';
 import dsPalette from '@constants/ds-palette';
 import Popup from '@components/Popup';
 import NextNprogress from 'nextjs-progressbar';

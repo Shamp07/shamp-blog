@@ -5,7 +5,7 @@ import Link from 'next/link';
 import * as T from '@types';
 import dsPalette from '@constants/ds-palette';
 import LogoSVG from '@assets/icon/logo.svg';
-import {FontFamily} from "@constants/styles";
+import { FontFamily } from '@constants/styles';
 
 const Logo = () => (
   <Root>

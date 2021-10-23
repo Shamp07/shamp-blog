@@ -2,13 +2,12 @@ import React from 'react';
 import App, { AppContext } from 'next/app';
 import Head from 'next/head';
 
-import stores from '@stores';
-import Layout from '@components/Layout';
-import * as T from '@types';
 import 'react-quill/dist/quill.snow.css';
 import 'highlight.js/styles/nord.css';
 
-React.useLayoutEffect = React.useEffect;
+import stores from '@stores';
+import Layout from '@components/Layout';
+import * as T from '@types';
 
 class CustomApp extends App {
   static async getInitialProps(context: AppContext) {

@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import { faGithubAlt } from '@fortawesome/free-brands-svg-icons';
 
 import { MediaQuery } from '@constants/styles';
@@ -10,24 +10,20 @@ import dsPalette from '@constants/ds-palette';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import UserMenuList from './UserMenuList';
 
+const GITHUB_URL = 'https://github.com/Shamp07';
+
 const Menu = () => {
   const { sidebarStore } = stores();
-  const onSidebar = useCallback(() => {
-    sidebarStore.toggleSidebar();
-  }, []);
+  const onSidebar = () => sidebarStore.toggleSidebar();
 
   return (
     <Root>
-      <Wrapper>
-        <List>
-          <UserMenuList />
-          <li>
-            <a href="https://github.com/Shamp07">
-              <FontAwesomeIcon icon={faGithubAlt} />
-            </a>
-          </li>
-        </List>
-      </Wrapper>
+      <List>
+        <UserMenuList />
+        <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
+          <Icon icon={faGithubAlt} />
+        </a>
+      </List>
       <SidebarButton onClick={onSidebar}>
         <SidebarIcon icon={faBars} />
       </SidebarButton>
@@ -112,7 +108,7 @@ const SidebarButton = styled.div({
   },
 });
 
-const SidebarIcon = styled(FontAwesomeIcon)`
+const SidebarIcon = styled(Icon)`
   font-size: 10px;
   height: 20px;
 `;
