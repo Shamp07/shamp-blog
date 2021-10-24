@@ -6,24 +6,25 @@ import { faGithubAlt } from '@fortawesome/free-brands-svg-icons';
 import { MediaQuery } from '@constants/styles';
 import * as T from '@types';
 import stores from '@stores';
-import dsPalette from '@constants/ds-palette';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import UserMenuList from './UserMenuList';
+import Authed from './Authed';
+import Unauthed from './Unauthed';
 
 const GITHUB_URL = 'https://github.com/Shamp07';
 
 const Menu = () => {
-  const { sidebarStore } = stores();
+  const { sidebarStore, signStore } = stores();
+  const { userData } = signStore;
   const onSidebar = () => sidebarStore.toggleSidebar();
+
+  const userMenu = userData ? <Authed /> : <Unauthed />;
 
   return (
     <Root>
-      <List>
-        <UserMenuList />
-        <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
-          <Icon icon={faGithubAlt} />
-        </a>
-      </List>
+      {userMenu}
+      <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
+        <Icon icon={faGithubAlt} />
+      </a>
       <SidebarButton onClick={onSidebar}>
         <SidebarIcon icon={faBars} />
       </SidebarButton>
@@ -31,67 +32,9 @@ const Menu = () => {
   );
 };
 
-const Root = styled.div`
-  display: inline-flex;
-  margin-left: auto;
-`;
-
-const Wrapper = styled.div({
-  display: 'inline-block',
-  width: '165px',
-  height: '70px',
-
-  [MediaQuery[T.Device.LARGE]]: {
-    display: 'none',
-  },
-});
-
-const List = styled.ul({
-  listStyle: 'none',
-  display: 'inline-flex',
-  width: '100%',
-  height: '70px',
-
-  '& > li': {
-    width: '55px',
-    height: '70px',
-    lineHeight: '70px',
-    display: 'inline-block',
-    textAlign: 'center',
-  },
-
-  '& > li > a, & > li > button': {
-    display: 'inline-block',
-    width: '50px',
-    height: '50px',
-    margin: '10px 0',
-    color: '#fff',
-    borderRadius: '25px',
-    transition: 'background-color 0.2s',
-    cursor: 'pointer',
-
-    '&:hover': {
-      backgroundColor: 'rgba(0, 0, 0, 0.03)',
-    },
-  },
-
-  '& > li > button': {
-    border: 0,
-    padding: 0,
-    backgroundColor: 'transparent',
-
-    '&:focus': {
-      outline: 0,
-    },
-  },
-
-  '& svg': {
-    padding: '12px',
-    width: '25px',
-    height: '25px',
-    color: dsPalette.typeWhite.toString(),
-  },
-});
+const Root = styled.div({
+  display: 'flex',
+})
 
 const SidebarButton = styled.div({
   fontSize: '12px',

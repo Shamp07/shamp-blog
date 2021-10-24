@@ -36,12 +36,9 @@ const Layout = ({ children }: Props) => {
     <Root>
       <Global styles={GlobalStyle} />
       <Header />
-      {/*<CenterContent>*/}
-      {/*  <SideBar />*/}
-      {/*  <Content>*/}
-      {/*    {children}*/}
-      {/*  </Content>*/}
-      {/*</CenterContent>*/}
+      <CenterContent>
+        {children}
+      </CenterContent>
       <Popup />
       <NextNprogress
         color={dsPalette.typeWhite.toString()}
