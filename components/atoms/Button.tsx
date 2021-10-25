@@ -1,19 +1,23 @@
-import { Button as RowButton } from '@material-ui/core';
+import RowButton from '@mui/material/Button';
 import styled from '@emotion/styled';
 
-import * as T from '@types';
+import dsPalette from '@constants/ds-palette';
 
-const Button = styled(RowButton)(({ size }) => ({
+const Button = styled(RowButton)({
   '&&&': {
-    height: '44px',
-    padding: '0 18px',
     boxShadow: 'none',
-    borderRadius: '10px',
-    ...(size === T.ButtonSize.SMALL ? ({
-      height: '38px',
-      padding: '0 16px',
-    }) : null),
+  },
+});
+
+export const SubmitButton = styled(Button)(() => ({
+  '&&&': {
   },
 }));
+
+export const SubButton = styled(SubmitButton)({
+  '&&&': {
+    background: dsPalette.themePrimary.toString(),
+  },
+});
 
 export default Button;

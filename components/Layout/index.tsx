@@ -52,27 +52,17 @@ const Layout = ({ children }: Props) => {
 };
 
 const Root = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
   backgroundColor: dsPalette.themeBackground.toString(),
   minHeight: '100vh',
 });
 
 const CenterContent = styled.div({
-  margin: '-80px auto 0 auto',
-  maxWidth: '1044px',
   display: 'flex',
-
-  '&:after': {
-    content: '""',
-    display: 'block',
-    clear: 'both',
-  },
-
-  [MediaQuery[T.Device.LARGE]]: {
-    paddingLeft: '0 !important',
-    paddingRight: '0 !important',
-    maxWidth: '100%',
-    margin: 0,
-  },
+  height: 'inherit',
+  justifyContent: 'center',
+  alignItems: 'center',
 });
 
 const GlobalStyle = css({
