@@ -22,9 +22,9 @@ const Menu = () => {
   return (
     <Root>
       {userMenu}
-      <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
-        <Icon icon={faGithubAlt} />
-      </a>
+      {/*<a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">*/}
+      {/*  <Icon icon={faGithubAlt} />*/}
+      {/*</a>*/}
       <SidebarButton onClick={onSidebar}>
         <SidebarIcon icon={faBars} />
       </SidebarButton>
@@ -34,7 +34,7 @@ const Menu = () => {
 
 const Root = styled.div({
   display: 'flex',
-})
+});
 
 const SidebarButton = styled.div({
   fontSize: '12px',

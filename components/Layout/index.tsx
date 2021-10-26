@@ -62,7 +62,7 @@ const CenterContent = styled.div({
   display: 'flex',
   height: 'inherit',
   justifyContent: 'center',
-  alignItems: 'center',
+  marginTop: '10rem',
 });
 
 const GlobalStyle = css({

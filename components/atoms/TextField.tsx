@@ -1,12 +1,12 @@
-import { TextField as RowTextField } from '@material-ui/core';
+import RowTextField from '@mui/material/TextField';
 import styled from '@emotion/styled';
 
-const TextField = styled(RowTextField)`
-  width: 100%;
-  margin-bottom: 15px;
-  &&& * {
-    font-family: inherit;
-  }
-`;
+const TextField = styled(RowTextField)({
+  width: '100%',
+  marginBottom: '15px',
+  '&&& *': {
+    fontFamily: 'inherit',
+  },
+});
 
 export default TextField;

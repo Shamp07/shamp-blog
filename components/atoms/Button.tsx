@@ -6,6 +6,7 @@ import dsPalette from '@constants/ds-palette';
 const Button = styled(RowButton)({
   '&&&': {
     boxShadow: 'none',
+    fontFamily: 'inherit',
   },
 });
 
