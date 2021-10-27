@@ -8,5 +8,6 @@ export default {
   themeWhite: new Color('#FFFFFF'),
 
   typePrimary: new Color('#1E2022'),
+  typeSecond: new Color('#868E96'),
   typeWhite: new Color('#FFFFFF'),
 };

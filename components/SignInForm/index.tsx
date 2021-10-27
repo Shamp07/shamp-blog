@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import Link from 'next/link';
+import { observer, useLocalObservable } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -8,25 +9,44 @@ import dsPalette from '@constants/ds-palette';
 import { SubmitButton } from '@atoms/Button';
 import TextField from '@atoms/TextField';
 
+const SignInForm = () => {
+  const form = useLocalObservable(() => ({
+    values: {
+      email: '',
+      password: '',
+    },
+    onChange(event: ChangeEvent<HTMLInputElement>) {
+      this.values = {
+        ...this.values,
+        [event.target.name]: event.target.value,
+      };
+    },
+  }));
 
-const SignInForm = () => (
-  <Root>
-    <Inner>
-      <Title>로그인</Title>
-      <TextField label="이메일 주소" variant="standard" />
-      <TextField label="비밀번호" variant="standard" />
-      <Option>
-        <FormControlLabel control={<Checkbox defaultChecked />} label="자동 로그인" />
-        <Link href="/password" passHref>
-          <PasswordReset>비밀번호를 잊어버리셨나요?</PasswordReset>
+  const isAvailable = form.values.email && form.values.password;
+
+  return (
+    <Root>
+      <Inner>
+        <Title>로그인</Title>
+        <TextField label="이메일 주소" variant="standard" name="email" onChange={form.onChange} value={form.values.email} />
+        <TextField label="비밀번호" variant="standard" name="password" onChange={form.onChange} value={form.values.password} />
+        <Option>
+          <FormControlLabel control={<Checkbox defaultChecked />} label="자동 로그인" />
+          <Link href="/password" passHref>
+            <SignLink>비밀번호 찾기</SignLink>
+          </Link>
+        </Option>
+        <SignInButton variant="contained" disabled={!isAvailable}>
+          로그인
+        </SignInButton>
+        <Link href="/signup" passHref>
+          <SignUp>회원가입</SignUp>
         </Link>
-      </Option>
-      <SignInButton variant="contained">
-        로그인
-      </SignInButton>
-    </Inner>
-  </Root>
-);
+      </Inner>
+    </Root>
+  );
+}
 
 const Root = styled.div({
   display: 'flex',
@@ -55,18 +75,32 @@ const Option = styled.div({
   '& span': {
     fontFamily: 'inherit',
     fontSize: '14px',
+    color: dsPalette.typeSecond.toString(),
   },
-});
-
-const PasswordReset = styled.a({
-  fontSize: '14px',
 });
 
 const SignInButton = styled(SubmitButton)({
   width: '100%',
+  fontSize: '1rem',
   '&&&': {
     padding: '1rem',
   },
 });
 
-export default SignInForm;
+const SignLink = styled.a({
+  textDecorationLine: 'none',
+  color: dsPalette.typeSecond.toString(),
+  fontSize: '.875rem',
+  '&: hover': {
+    textDecorationLine: 'underline',
+  },
+});
+
+const SignUp = styled(SignLink)({
+  display: 'block',
+  width: '100%',
+  textAlign: 'center',
+  marginTop: '2rem',
+});
+
+export default observer(SignInForm);
