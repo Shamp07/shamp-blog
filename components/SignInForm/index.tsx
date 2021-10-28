@@ -5,11 +5,14 @@ import styled from '@emotion/styled';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
+import stores from '@stores';
 import dsPalette from '@constants/ds-palette';
 import { SubmitButton } from '@atoms/Button';
 import TextField from '@atoms/TextField';
 
 const SignInForm = () => {
+  const { signStore } = stores();
+
   const form = useLocalObservable(() => ({
     values: {
       email: '',
@@ -23,21 +26,25 @@ const SignInForm = () => {
     },
   }));
 
-  const isAvailable = form.values.email && form.values.password;
+  const onSignIn = () => {
+    signStore.signIn(form.values);
+  };
+
+  const isAvailable = form.values.email.trim() && form.values.password.trim();
 
   return (
     <Root>
       <Inner>
         <Title>로그인</Title>
         <TextField label="이메일 주소" variant="standard" name="email" onChange={form.onChange} value={form.values.email} />
-        <TextField label="비밀번호" variant="standard" name="password" onChange={form.onChange} value={form.values.password} />
+        <TextField label="비밀번호" variant="standard" name="password" onChange={form.onChange} value={form.values.password} type="password" />
         <Option>
           <FormControlLabel control={<Checkbox defaultChecked />} label="자동 로그인" />
           <Link href="/password" passHref>
             <SignLink>비밀번호 찾기</SignLink>
           </Link>
         </Option>
-        <SignInButton variant="contained" disabled={!isAvailable}>
+        <SignInButton variant="contained" disabled={!isAvailable} onClick={onSignIn}>
           로그인
         </SignInButton>
         <Link href="/signup" passHref>
@@ -46,7 +53,7 @@ const SignInForm = () => {
       </Inner>
     </Root>
   );
-}
+};
 
 const Root = styled.div({
   display: 'flex',

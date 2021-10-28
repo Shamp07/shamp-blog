@@ -42,8 +42,8 @@ const signStore: SignStore = {
       },
     });
   },
-  signIn(signInForm) {
-    Axios({
+  async signIn(signInForm) {
+    await Axios({
       method: T.RequestMethod.POST,
       url: '/api/user/login',
       data: signInForm,
