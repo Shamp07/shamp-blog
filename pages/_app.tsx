@@ -1,6 +1,7 @@
 import React from 'react';
 import App, { AppContext } from 'next/app';
 import Head from 'next/head';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import 'react-quill/dist/quill.snow.css';
 import 'highlight.js/styles/nord.css';
@@ -8,6 +9,8 @@ import 'highlight.js/styles/nord.css';
 import stores from '@stores';
 import Layout from '@components/Layout';
 import * as T from '@types';
+
+const queryClient = new QueryClient();
 
 class CustomApp extends App {
   static async getInitialProps(context: AppContext) {
@@ -59,9 +62,11 @@ class CustomApp extends App {
             href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
           />
         </Head>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <QueryClientProvider client={queryClient}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </QueryClientProvider>
       </>
     );
   }
