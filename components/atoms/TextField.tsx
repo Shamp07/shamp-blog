@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 
 const TextField = styled(RowTextField)({
   width: '100%',
-  marginBottom: '15px',
+  marginBottom: '20px',
   '&&& *': {
     fontFamily: 'inherit',
   },

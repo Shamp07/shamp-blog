@@ -5,7 +5,6 @@ import stores from '@stores';
 import * as T from '@types';
 import AlertPopup from '@components/Popup/AlertPopup';
 import ConfirmPopup from '@components/Popup/ConfirmPopup';
-import SignInPopup from '@components/Popup/SignInPopup';
 import SignUpPopup from '@components/Popup/SignUpPopup';
 import PasswordResetPopup from '@components/Popup/PasswordResetPopup';
 import EmailVerifyPopup from '@components/Popup/EmailVerifyPopup';
@@ -22,8 +21,6 @@ const Popup = () => {
     case T.Popup.CONFIRM:
       return <ConfirmPopup />;
     case T.Popup.SIGN_IN:
-      return <SignInPopup />;
-    case T.Popup.SIGN_UP:
       return <SignUpPopup />;
     case T.Popup.PASSWORD_RESET:
       return <PasswordResetPopup />;

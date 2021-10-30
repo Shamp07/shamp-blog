@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
 import Link from 'next/link';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import { useMutation } from 'react-query';
@@ -6,8 +6,8 @@ import styled from '@emotion/styled';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
-import stores from '@stores';
 import dsPalette from '@constants/ds-palette';
 import { SubmitButton } from '@atoms/Button';
 import TextField from '@atoms/TextField';
@@ -18,6 +18,8 @@ interface Form {
 }
 
 const SignInForm = () => {
+  const router = useRouter();
+
   const form = useLocalObservable(() => ({
     values: {
       email: '',
@@ -31,17 +33,21 @@ const SignInForm = () => {
     },
   }));
 
-  const mutation = useMutation<Form, Error, Form>((values) => axios.post('/api/user/login', { params: values }));
+  const mutation = useMutation<void, Error, Form>((values) => axios.post('/api/user/login', { params: values }));
 
   const onSignIn = () => {
     mutation.mutate(form.values);
   };
 
+  useEffect(() => {
+    if (mutation.isSuccess) router.back();
+  }, [mutation.isSuccess]);
+
   const isAvailable = form.values.email.trim() && form.values.password.trim();
 
   const errorMessage = mutation.isError ? (
     <ErrorDescription>
-      ID가 존재하지 않거나 비밀번호가 일치하지 않습니다. 다시 시도해주세요.
+      이메일이 존재하지 않거나 비밀번호가 일치하지 않습니다. 다시 시도해주세요.
     </ErrorDescription>
   ) : null;
 
