@@ -131,7 +131,7 @@ const SignUp = styled(SignLink)({
 
 const ErrorDescription = styled.div({
   color: dsPalette.themeError.toString(),
-  lineHeight: '20px',
+  lineHeight: 1.5,
   fontSize: '.875rem',
   marginBottom: '1rem',
   wordBreak: 'keep-all',
