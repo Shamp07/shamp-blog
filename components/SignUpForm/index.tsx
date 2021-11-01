@@ -6,6 +6,28 @@ import dsPalette from '@constants/ds-palette';
 import TextField from '@atoms/TextField';
 import { SubmitButton } from '@atoms/Button';
 import { emailValidator, passwordValidator } from '@utilities/validators';
+import {useMutation} from "react-query";
+import axios from "axios";
+
+enum UI {
+  EMAIL = 'EMAIL',
+  USERNAME = 'USERNAME',
+  PASSWORD = 'PASSWORD',
+  PASSWORD_CHECK = 'PASSWORD_CHECK',
+}
+
+const INITIAL_ERRORS = {
+  [UI.EMAIL]: false,
+  [UI.USERNAME]: false,
+  [UI.PASSWORD]: false,
+  [UI.PASSWORD_CHECK]: false,
+};
+
+interface Form {
+  email: string;
+  username: string;
+  password: string;
+}
 
 const SignUpForm = () => {
   const form = useLocalObservable(() => ({
@@ -15,6 +37,7 @@ const SignUpForm = () => {
       password: '',
       passwordCheck: '',
     },
+    errors: INITIAL_ERRORS,
     onChange(event: ChangeEvent<HTMLInputElement>) {
       this.values = {
         ...this.values,
@@ -22,20 +45,29 @@ const SignUpForm = () => {
       };
     },
     onValidation() {
-      const {
-        email, username, password, passwordCheck,
-      } = this.values;
+      const { email, password, passwordCheck } = this.values;
 
-      if (!email.trim() || !emailValidator(email)) {
-        return false;
-      }
-      if (!username.trim()) {
+      if (!emailValidator(email)) {
+        this.errors[UI.EMAIL] = true;
         return false;
       }
 
-      return passwordValidator(password, passwordCheck);
+      if (passwordValidator(password, passwordCheck)) {
+        this.errors[UI.PASSWORD] = true;
+        return false;
+      }
+
+      return true;
     },
   }));
+
+  const onSignUp = () => {
+    if (!form.onValidation()) return;
+
+    mutation.mutate(form.values);
+  };
+
+  const mutation = useMutation<void, Error, Form>((values) => axios.post('/api/user', { params: values }));
 
   const isAvailable = Object.values(form.values).every((str) => str.trim());
 
@@ -49,10 +81,25 @@ const SignUpForm = () => {
           name="email"
           onChange={form.onChange}
           value={form.values.email}
-          helperText="회원가입을 위해서 해당 이메일을 통해 인증이 진행이 필요합니다."
+          helperText="회원가입을 위해서 해당 이메일을 통해 인증이 필요합니다."
+          error={form.errors[UI.EMAIL]}
         />
-        <TextField label="이름" variant="standard" name="username" onChange={form.onChange} value={form.values.username} />
-        <TextField type="password" label="비밀번호" variant="standard" name="password" onChange={form.onChange} value={form.values.password} />
+        <TextField
+          label="이름"
+          variant="standard"
+          name="username"
+          onChange={form.onChange}
+          value={form.values.username}
+        />
+        <TextField
+          type="password"
+          label="비밀번호"
+          variant="standard"
+          name="password"
+          onChange={form.onChange}
+          value={form.values.password}
+          error={form.errors[UI.PASSWORD]}
+        />
         <TextField
           type="password"
           label="비밀번호 확인"
@@ -61,6 +108,7 @@ const SignUpForm = () => {
           onChange={form.onChange}
           value={form.values.passwordCheck}
           helperText="8~16자 영문 대 소문자, 숫자, 특수문자를 사용해주세요."
+          error={form.errors[UI.PASSWORD]}
         />
         <Description>
           <ul>
@@ -68,7 +116,7 @@ const SignUpForm = () => {
             <li>블로그는 오픈 소스로 공개되어있습니다.</li>
           </ul>
         </Description>
-        <SignUpButton variant="contained" disabled={!isAvailable}>
+        <SignUpButton variant="contained" disabled={!isAvailable} onClick={onSignUp}>
           회원가입
         </SignUpButton>
       </Inner>
@@ -103,9 +151,10 @@ const SignUpButton = styled(SubmitButton)({
 });
 
 const Description = styled.div({
+  color: dsPalette.typeSecond.toString(),
   backgroundColor: dsPalette.themeBackground.toString(),
   lineHeight: 1.5,
-  fontSize: '.825rem',
+  fontSize: '.75rem',
   padding: '1rem 1rem 1rem 2rem',
   marginBottom: '1rem',
   borderRadius: '.25rem',
