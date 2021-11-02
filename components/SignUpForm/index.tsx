@@ -1,13 +1,13 @@
 import React, { ChangeEvent } from 'react';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import styled from '@emotion/styled';
+import { useMutation } from 'react-query';
+import axios from 'axios';
 
 import dsPalette from '@constants/ds-palette';
 import TextField from '@atoms/TextField';
 import { SubmitButton } from '@atoms/Button';
 import { emailValidator, passwordValidator } from '@utilities/validators';
-import {useMutation} from "react-query";
-import axios from "axios";
 
 enum UI {
   EMAIL = 'EMAIL',
@@ -16,11 +16,16 @@ enum UI {
   PASSWORD_CHECK = 'PASSWORD_CHECK',
 }
 
-const INITIAL_ERRORS = {
-  [UI.EMAIL]: false,
-  [UI.USERNAME]: false,
-  [UI.PASSWORD]: false,
-  [UI.PASSWORD_CHECK]: false,
+interface UIError {
+  isError: boolean;
+  message?: string;
+}
+
+const INITIAL_ERRORS: Record<UI, UIError> = {
+  [UI.EMAIL]: { isError: false },
+  [UI.USERNAME]: { isError: false },
+  [UI.PASSWORD]: { isError: false },
+  [UI.PASSWORD_CHECK]: { isError: false },
 };
 
 interface Form {
@@ -48,12 +53,19 @@ const SignUpForm = () => {
       const { email, password, passwordCheck } = this.values;
 
       if (!emailValidator(email)) {
-        this.errors[UI.EMAIL] = true;
+        this.errors[UI.EMAIL] = {
+          isError: true,
+          message: '이메일 형식이 올바르지 않습니다. 다시 입력해주세요.',
+        };
         return false;
       }
 
-      if (passwordValidator(password, passwordCheck)) {
-        this.errors[UI.PASSWORD] = true;
+      const message = passwordValidator(password, passwordCheck);
+      if (message) {
+        this.errors[UI.PASSWORD] = {
+          isError: true,
+          message,
+        };
         return false;
       }
 
@@ -81,8 +93,8 @@ const SignUpForm = () => {
           name="email"
           onChange={form.onChange}
           value={form.values.email}
-          helperText="회원가입을 위해서 해당 이메일을 통해 인증이 필요합니다."
-          error={form.errors[UI.EMAIL]}
+          helperText={form.errors[UI.EMAIL].message}
+          description="회원가입을 위해서 해당 이메일을 통해 인증이 필요합니다."
         />
         <TextField
           label="이름"
@@ -98,7 +110,7 @@ const SignUpForm = () => {
           name="password"
           onChange={form.onChange}
           value={form.values.password}
-          error={form.errors[UI.PASSWORD]}
+          error={form.errors[UI.PASSWORD].isError}
         />
         <TextField
           type="password"
@@ -107,15 +119,16 @@ const SignUpForm = () => {
           name="passwordCheck"
           onChange={form.onChange}
           value={form.values.passwordCheck}
-          helperText="8~16자 영문 대 소문자, 숫자, 특수문자를 사용해주세요."
-          error={form.errors[UI.PASSWORD]}
+          helperText={form.errors[UI.PASSWORD].message}
+          error={form.errors[UI.PASSWORD].isError}
+          description="8~16자 영문 대 소문자, 숫자, 특수문자를 사용해주세요."
         />
-        <Description>
+        <Notice>
           <ul>
             <li>비밀번호는 단방향 암호화가 진행되어 블로그 주인조차 알 방법이 없습니다.</li>
             <li>블로그는 오픈 소스로 공개되어있습니다.</li>
           </ul>
-        </Description>
+        </Notice>
         <SignUpButton variant="contained" disabled={!isAvailable} onClick={onSignUp}>
           회원가입
         </SignUpButton>
@@ -150,7 +163,7 @@ const SignUpButton = styled(SubmitButton)({
   },
 });
 
-const Description = styled.div({
+const Notice = styled.div({
   color: dsPalette.typeSecond.toString(),
   backgroundColor: dsPalette.themeBackground.toString(),
   lineHeight: 1.5,
@@ -158,6 +171,10 @@ const Description = styled.div({
   padding: '1rem 1rem 1rem 2rem',
   marginBottom: '1rem',
   borderRadius: '.25rem',
+});
+
+const Description = styled.div({
+  fontSize: '.75rem',
 });
 
 export default observer(SignUpForm);
