@@ -100,7 +100,7 @@ const Option = styled.div({
 
   '& span': {
     fontFamily: 'inherit',
-    fontSize: '14px',
+    fontSize: '.875rem',
     color: dsPalette.typeSecond.toString(),
   },
 });

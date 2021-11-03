@@ -34,7 +34,7 @@ interface Form {
   password: string;
 }
 
-const SignUpForm = () => {
+const Form = () => {
   const form = useLocalObservable(() => ({
     values: {
       email: '',
@@ -177,4 +177,4 @@ const Description = styled.div({
   fontSize: '.75rem',
 });
 
-export default observer(SignUpForm);
+export default observer(Form);
