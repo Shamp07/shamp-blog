@@ -13,6 +13,7 @@ enum Page {
 const SignUp = () => {
   const page = useLocalObservable(() => ({
     current: Page.FORM,
+    email: '',
     next() {
       this.current = (() => {
         switch (this.current) {
@@ -25,11 +26,14 @@ const SignUp = () => {
         }
       })();
     },
+    setEmail(email: string) {
+      this.email = email;
+    },
   }));
 
   const pages = {
-    [Page.FORM]: <Form />,
-    [Page.EMAIL_VERIFY]: <EmailVerify email="" />,
+    [Page.FORM]: <Form setEmail={page.setEmail} next={page.next} />,
+    [Page.EMAIL_VERIFY]: <EmailVerify email={page.email} />,
     [Page.DONE]: <></>,
   };
 

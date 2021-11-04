@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, {ChangeEvent, useEffect} from 'react';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { useMutation } from 'react-query';
@@ -28,13 +28,12 @@ const INITIAL_ERRORS: Record<UI, UIError> = {
   [UI.PASSWORD_CHECK]: { isError: false },
 };
 
-interface Form {
-  email: string;
-  username: string;
-  password: string;
+interface Props {
+  setEmail(email: string): void;
+  next(): void;
 }
 
-const Form = () => {
+const Form = ({ setEmail, next }: Props) => {
   const form = useLocalObservable(() => ({
     values: {
       email: '',
@@ -73,13 +72,20 @@ const Form = () => {
     },
   }));
 
+  const mutation = useMutation(() => axios.post('/api/user', { params: form.values }));
+
   const onSignUp = () => {
     if (!form.onValidation()) return;
 
-    mutation.mutate(form.values);
+    mutation.mutate();
   };
 
-  const mutation = useMutation<void, Error, Form>((values) => axios.post('/api/user', { params: values }));
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      setEmail(form.values.email);
+      next();
+    }
+  }, [mutation.isSuccess]);
 
   const isAvailable = Object.values(form.values).every((str) => str.trim());
 
@@ -171,10 +177,6 @@ const Notice = styled.div({
   padding: '1rem 1rem 1rem 2rem',
   marginBottom: '1rem',
   borderRadius: '.25rem',
-});
-
-const Description = styled.div({
-  fontSize: '.75rem',
 });
 
 export default observer(Form);

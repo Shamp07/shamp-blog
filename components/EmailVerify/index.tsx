@@ -6,12 +6,14 @@ import axios from 'axios';
 import TextField from '@atoms/TextField';
 import styled from '@emotion/styled';
 import dsPalette from '@constants/ds-palette';
+import { SubmitButton } from '@atoms/Button';
 
 interface Props {
   email: string;
+  next(): void;
 }
 
-const EmailVerify = ({ email }: Props) => {
+const EmailVerify = ({ email, next }: Props) => {
   const form = useLocalObservable(() => ({
     values: {
       code: '',
@@ -21,11 +23,24 @@ const EmailVerify = ({ email }: Props) => {
     },
   }));
 
-  const mutation = useMutation(() => axios.put('/api/user/verify', { email }));
+  const sendMutation = useMutation(() => axios.put('/api/user/verify', { email }));
+  const verifyMutation = useMutation(() => axios.put('/api/user/verify/code', { email, code: form.values.code }));
 
   useEffect(() => {
-    // mutation.mutate();
+    sendMutation.mutate();
   }, []);
+
+  useEffect(() => {
+    if (verifyMutation.isSuccess) {
+      next();
+    }
+  }, [verifyMutation.isSuccess]);
+
+  const onVerify = () => {
+    verifyMutation.mutate();
+  };
+
+  const isAvailable = form.values.code.length === 6;
 
   return (
     <Root>
@@ -33,6 +48,9 @@ const EmailVerify = ({ email }: Props) => {
         <Title>이메일 인증</Title>
         <Description>입력하신 이메일로 인증번호가 발송되었습니다.</Description>
         <TextField label="인증번호" variant="standard" onChange={form.onChange} value={form.values.code} />
+        <VerifyButton variant="contained" disabled={isAvailable} onClick={onVerify}>
+          인증하기
+        </VerifyButton>
       </Inner>
     </Root>
   );
@@ -58,6 +76,14 @@ const Title = styled.h1({
 
 const Description = styled.div({
   fontSize: '.875rem',
+});
+
+const VerifyButton = styled(SubmitButton)({
+  width: '100%',
+  fontSize: '1rem',
+  '&&&': {
+    padding: '1rem',
+  },
 });
 
 export default EmailVerify;
