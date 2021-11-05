@@ -55,8 +55,23 @@ const SignInForm = () => {
     <Root>
       <Inner>
         <Title>로그인</Title>
-        <TextField label="이메일 주소" variant="standard" name="email" onChange={form.onChange} value={form.values.email} />
-        <TextField label="비밀번호" variant="standard" name="password" onChange={form.onChange} value={form.values.password} type="password" />
+        <TextField
+          label="이메일 주소"
+          variant="standard"
+          name="email"
+          onChange={form.onChange}
+          value={form.values.email}
+          error={mutation.isError}
+        />
+        <TextField
+          type="password"
+          label="비밀번호"
+          variant="standard"
+          name="password"
+          onChange={form.onChange}
+          value={form.values.password}
+          error={mutation.isError}
+        />
         <Option>
           <FormControlLabel control={<Checkbox defaultChecked />} label="자동 로그인" />
           <Link href="/password" passHref>

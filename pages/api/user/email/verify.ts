@@ -9,7 +9,7 @@ import * as T from '@types';
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   await cors(request, response);
 
-  if (request.method === T.RequestMethod.PUT) {
+  if (request.method === T.RequestMethod.POST) {
     await verifyUser(request, response);
   }
 };

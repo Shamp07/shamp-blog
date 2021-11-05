@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect } from 'react';
-import { useLocalObservable } from 'mobx-react-lite';
+import { observer, useLocalObservable } from 'mobx-react-lite';
 import { useMutation } from 'react-query';
 import axios from 'axios';
 
@@ -23,8 +23,8 @@ const EmailVerify = ({ email, next }: Props) => {
     },
   }));
 
-  const sendMutation = useMutation(() => axios.put('/api/user/verify', { email }));
-  const verifyMutation = useMutation(() => axios.put('/api/user/verify/code', { email, code: form.values.code }));
+  const sendMutation = useMutation(() => axios.post('/api/user/email/send', { email }));
+  const verifyMutation = useMutation(() => axios.post('/api/user/email/verify', { email, code: form.values.code }));
 
   useEffect(() => {
     sendMutation.mutate();
@@ -48,7 +48,7 @@ const EmailVerify = ({ email, next }: Props) => {
         <Title>이메일 인증</Title>
         <Description>입력하신 이메일로 인증번호가 발송되었습니다.</Description>
         <TextField label="인증번호" variant="standard" onChange={form.onChange} value={form.values.code} />
-        <VerifyButton variant="contained" disabled={isAvailable} onClick={onVerify}>
+        <VerifyButton variant="contained" disabled={!isAvailable} onClick={onVerify}>
           인증하기
         </VerifyButton>
       </Inner>
@@ -86,4 +86,4 @@ const VerifyButton = styled(SubmitButton)({
   },
 });
 
-export default EmailVerify;
+export default observer(EmailVerify);

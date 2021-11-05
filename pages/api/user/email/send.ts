@@ -10,7 +10,7 @@ import * as T from '@types';
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   await cors(request, response);
 
-  if (request.method === T.RequestMethod.PUT) {
+  if (request.method === T.RequestMethod.POST) {
     const { email } = request.body;
     const code = generateRandom(111111, 999999);
 

@@ -33,7 +33,7 @@ const SignUp = () => {
 
   const pages = {
     [Page.FORM]: <Form setEmail={page.setEmail} next={page.next} />,
-    [Page.EMAIL_VERIFY]: <EmailVerify email={page.email} />,
+    [Page.EMAIL_VERIFY]: <EmailVerify email={page.email} next={page.next} />,
     [Page.DONE]: <></>,
   };
 

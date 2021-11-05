@@ -37,7 +37,7 @@ const Form = ({ setEmail, next }: Props) => {
   const form = useLocalObservable(() => ({
     values: {
       email: '',
-      username: '',
+      name: '',
       password: '',
       passwordCheck: '',
     },
@@ -72,7 +72,7 @@ const Form = ({ setEmail, next }: Props) => {
     },
   }));
 
-  const mutation = useMutation(() => axios.post('/api/user', { params: form.values }));
+  const mutation = useMutation(() => axios.post('/api/user', form.values));
 
   const onSignUp = () => {
     if (!form.onValidation()) return;
@@ -105,9 +105,9 @@ const Form = ({ setEmail, next }: Props) => {
         <TextField
           label="이름"
           variant="standard"
-          name="username"
+          name="name"
           onChange={form.onChange}
-          value={form.values.username}
+          value={form.values.name}
         />
         <TextField
           type="password"
