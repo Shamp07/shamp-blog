@@ -5,7 +5,7 @@ import Link from 'next/link';
 import dsPalette from '@constants/ds-palette';
 
 const Unauthed = () => (
-  <Link href="/signin" passHref>
+  <Link href="/signin?previous=true" passHref>
     <Root>로그인</Root>
   </Link>
 );

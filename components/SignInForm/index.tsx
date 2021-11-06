@@ -12,11 +12,6 @@ import dsPalette from '@constants/ds-palette';
 import { SubmitButton } from '@atoms/Button';
 import TextField from '@atoms/TextField';
 
-interface Form {
-  email: string;
-  password: string;
-}
-
 const SignInForm = () => {
   const router = useRouter();
 
@@ -33,14 +28,17 @@ const SignInForm = () => {
     },
   }));
 
-  const mutation = useMutation<void, Error, Form>((values) => axios.post('/api/user/login', { params: values }));
+  const mutation = useMutation((values) => axios.post('/api/user/login', { params: values }));
 
   const onSignIn = () => {
-    mutation.mutate(form.values);
+    mutation.mutate();
   };
 
   useEffect(() => {
-    if (mutation.isSuccess) router.back();
+    if (mutation.isSuccess) {
+      if (router.query.previous) router.back();
+      router.push('/');
+    }
   }, [mutation.isSuccess]);
 
   const isAvailable = form.values.email.trim() && form.values.password.trim();

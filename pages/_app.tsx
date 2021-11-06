@@ -29,6 +29,7 @@ class CustomApp extends App {
   }
 
   render() {
+    console.log('app 렌더링');
     const { Component, pageProps } = this.props;
     return (
       <>
