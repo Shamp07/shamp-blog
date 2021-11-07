@@ -6,10 +6,11 @@ import * as T from '@types';
 import dsPalette from '@constants/ds-palette';
 import LogoSVG from '@assets/icon/logo.svg';
 import { FontFamily } from '@constants/styles';
+import { getCategoryPath } from '@constants/category';
 
 const Logo = () => (
   <Root>
-    <Link href={T.CategoryPath.HOME}>
+    <Link href={getCategoryPath(T.CategoryType.HOME)} passHref>
       <Wrapper>
         <LogoSVG />
         <Title>Shamp Blog</Title>
@@ -24,9 +25,10 @@ const Root = styled.div({
   cursor: 'pointer',
 });
 
-const Wrapper = styled.div({
+const Wrapper = styled.a({
   display: 'flex',
   alignItems: 'center',
+  textDecorationLine: 'none',
 });
 
 const Title = styled.div({

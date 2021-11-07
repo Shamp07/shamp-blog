@@ -42,3 +42,7 @@ export const categories = [
   CategoryType.NODEJS,
   CategoryType.ETC,
 ];
+
+const ROOT_PATH_PREFIX = '/';
+
+export const getCategoryPath = (category: CategoryType) => `${ROOT_PATH_PREFIX}${categoryPath[category]}`;

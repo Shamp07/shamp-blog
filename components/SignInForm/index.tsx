@@ -35,10 +35,7 @@ const SignInForm = () => {
   };
 
   useEffect(() => {
-    if (mutation.isSuccess) {
-      if (router.query.previous) router.back();
-      router.push('/');
-    }
+    if (mutation.isSuccess) router.push('/');
   }, [mutation.isSuccess]);
 
   const isAvailable = form.values.email.trim() && form.values.password.trim();

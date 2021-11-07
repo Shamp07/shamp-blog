@@ -10,6 +10,8 @@ export enum FontFamily {
 export const DeviceWidth: {
   [K in T.Device]: number
 } = {
+  [T.Device.SMALl]: 320,
+  [T.Device.MEDIUM]: 768,
   [T.Device.LARGE]: 1064,
 };
 
