@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
+import * as T from '@types';
 import dsPalette from '@constants/ds-palette';
+import { MediaQuery } from '@constants/styles';
 import Logo from './Logo';
 import Menu from './Menu';
 
@@ -27,6 +29,18 @@ const Container = styled.div({
   marginRight: 'auto',
   alignItems: 'center',
   justifyContent: 'space-between',
+
+  [MediaQuery[T.Device.DESKTOP]]: {
+    width: '1376px',
+  },
+
+  [MediaQuery[T.Device.LAPTOP]]: {
+    width: '1024px',
+  },
+
+  [MediaQuery[T.Device.TABLET]]: {
+    width: 'calc(100% - 2rem)',
+  },
 });
 
 export default Header;

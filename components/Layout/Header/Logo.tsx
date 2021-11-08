@@ -32,11 +32,15 @@ const Wrapper = styled.a({
 });
 
 const Title = styled.div({
+  maxWidth: 'calc(100vw - 200px)',
   color: dsPalette.themePrimary.toString(),
   fontSize: '1.3125rem',
   fontWeight: 700,
   fontFamily: FontFamily.PT_SANS,
   marginLeft: '1rem',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
 });
 
 export default Logo;

@@ -214,7 +214,8 @@ export enum ButtonSize {
   LARGE = 'large',
 }
 export enum Device {
-  SMALL = 'small',
-  MEDIUM = 'medium',
-  LARGE = 'large',
+  MOBILE = 'mobile',
+  TABLET = 'tablet',
+  LAPTOP = 'laptop',
+  DESKTOP = 'desktop',
 }

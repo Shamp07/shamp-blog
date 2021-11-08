@@ -4,19 +4,19 @@ export enum FontFamily {
   ROBOTO = 'Roboto',
   NOTO_SANS_KR = 'Noto Sans KR',
   PT_SANS = 'PT Sans',
-  SERIF = 'serif'
+  SERIF = 'serif',
 }
 
-export const DeviceWidth: {
-  [K in T.Device]: number
-} = {
-  [T.Device.SMALl]: 320,
-  [T.Device.MEDIUM]: 768,
-  [T.Device.LARGE]: 1064,
+export const DeviceWidth = {
+  [T.Device.MOBILE]: 768,
+  [T.Device.TABLET]: 1024,
+  [T.Device.LAPTOP]: 1440,
+  [T.Device.DESKTOP]: 1920,
 };
 
-export const MediaQuery: {
-  [K in T.Device]: string;
-} = {
-  [T.Device.LARGE]: `@media(max-width: ${DeviceWidth[T.Device.LARGE]}px)`,
+export const MediaQuery = {
+  [T.Device.MOBILE]: `@media(max-width: ${DeviceWidth[T.Device.MOBILE]}px)`,
+  [T.Device.TABLET]: `@media(max-width: ${DeviceWidth[T.Device.TABLET]}px)`,
+  [T.Device.LAPTOP]: `@media(max-width: ${DeviceWidth[T.Device.LAPTOP]}px)`,
+  [T.Device.DESKTOP]: `@media(max-width: ${DeviceWidth[T.Device.DESKTOP]}px)`,
 };
