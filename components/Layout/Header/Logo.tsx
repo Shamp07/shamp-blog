@@ -32,7 +32,7 @@ const Wrapper = styled.a({
 });
 
 const Title = styled.div({
-  maxWidth: 'calc(100vw - 200px)',
+  maxWidth: 'calc(100vw - 170px)',
   color: dsPalette.themePrimary.toString(),
   fontSize: '1.3125rem',
   fontWeight: 700,

@@ -80,7 +80,7 @@ const GlobalStyle = css({
   body: {
     WebkitFontSmoothing: 'antialiased',
     color: dsPalette.typePrimary.toString(),
-    minWidth: '320px',
+    minWidth: '157px',
     minHeight: '100%',
     webkitOverflowScrolling: 'touch',
   },
