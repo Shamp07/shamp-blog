@@ -1,4 +1,5 @@
 import RowButton from '@mui/material/Button';
+import RowLoadingButton from '@mui/lab/LoadingButton';
 import styled from '@emotion/styled';
 
 import dsPalette from '@constants/ds-palette';
@@ -14,6 +15,10 @@ export const SubmitButton = styled(Button)(() => ({
   '&&&': {
   },
 }));
+
+export const LoadingButton = styled(RowLoadingButton)({
+
+});
 
 export const SubButton = styled(SubmitButton)({
   '&&&': {

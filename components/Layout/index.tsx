@@ -63,6 +63,11 @@ const CenterContent = styled.div({
   height: 'inherit',
   justifyContent: 'center',
   marginTop: '10rem',
+
+  [MediaQuery[T.Device.TABLET]]: {
+    width: 'calc(100% - 2rem)',
+    margin: 'auto 1rem',
+  },
 });
 
 const GlobalStyle = css({
@@ -71,10 +76,6 @@ const GlobalStyle = css({
     margin: 0,
     padding: 0,
     outline: 0,
-  },
-
-  'span, div': {
-    lineHeight: 1,
   },
 
   body: {

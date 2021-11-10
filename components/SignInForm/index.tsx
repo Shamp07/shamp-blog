@@ -9,8 +9,10 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 
 import dsPalette from '@constants/ds-palette';
-import { SubmitButton } from '@atoms/Button';
+import { LoadingButton } from '@atoms/Button';
 import TextField from '@atoms/TextField';
+import { MediaQuery } from '@constants/styles';
+import * as T from '@types';
 
 const SignInForm = () => {
   const router = useRouter();
@@ -74,8 +76,8 @@ const SignInForm = () => {
           </Link>
         </Option>
         {errorMessage}
-        <SignInButton variant="contained" disabled={!isAvailable} onClick={onSignIn}>
-          {mutation.isLoading ? '로딩' : '로그인'}
+        <SignInButton variant="contained" loading={mutation.isLoading} disabled={!isAvailable} onClick={onSignIn}>
+          {!mutation.isLoading ? 'ㅇㅇ' : ' '}
         </SignInButton>
         <Link href="/signup" passHref>
           <SignUp>회원가입</SignUp>
@@ -92,10 +94,18 @@ const Root = styled.div({
   borderRadius: '1rem',
   background: dsPalette.themeWhite.toString(),
   boxShadow: 'rgb(0 0 0 / 4%) 0px 4px 16px 0px',
+
+  [MediaQuery[T.Device.TABLET]]: {
+    width: '100%',
+  },
 });
 
 const Inner = styled.div({
   padding: '3rem',
+
+  [MediaQuery[T.Device.TABLET]]: {
+    padding: '2rem',
+  },
 });
 
 const Title = styled.h1({
@@ -115,7 +125,7 @@ const Option = styled.div({
   },
 });
 
-const SignInButton = styled(SubmitButton)({
+const SignInButton = styled(LoadingButton)({
   width: '100%',
   fontSize: '1rem',
   '&&&': {
