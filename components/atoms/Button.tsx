@@ -4,6 +4,13 @@ import styled from '@emotion/styled';
 
 import dsPalette from '@constants/ds-palette';
 
+const CommonButtonStyle = {
+  '&&&': {
+    boxShadow: 'none',
+    fontFamily: 'inherit',
+  },
+};
+
 const Button = styled(RowButton)({
   '&&&': {
     boxShadow: 'none',
@@ -17,7 +24,7 @@ export const SubmitButton = styled(Button)(() => ({
 }));
 
 export const LoadingButton = styled(RowLoadingButton)({
-
+  ...CommonButtonStyle,
 });
 
 export const SubButton = styled(SubmitButton)({

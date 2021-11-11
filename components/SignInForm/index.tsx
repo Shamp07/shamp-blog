@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useEffect } from 'react';
 import Link from 'next/link';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import { useMutation } from 'react-query';
@@ -36,6 +36,11 @@ const SignInForm = () => {
     mutation.mutate();
   };
 
+  const onEnter = (event: KeyboardEvent<HTMLInputElement>) => {
+    console.log(event.key);
+    if (event.key === 'Enter') onSignIn();
+  };
+
   useEffect(() => {
     if (mutation.isSuccess) router.push('/');
   }, [mutation.isSuccess]);
@@ -59,6 +64,10 @@ const SignInForm = () => {
           onChange={form.onChange}
           value={form.values.email}
           error={mutation.isError}
+          onKeyPress={onEnter}
+          inputProps={{
+            onKeyPress: onEnter,
+          }}
         />
         <TextField
           type="password"
@@ -68,6 +77,9 @@ const SignInForm = () => {
           onChange={form.onChange}
           value={form.values.password}
           error={mutation.isError}
+          inputProps={{
+            onKeyPress: onEnter,
+          }}
         />
         <Option>
           <FormControlLabel control={<Checkbox defaultChecked />} label="자동 로그인" />
@@ -77,7 +89,7 @@ const SignInForm = () => {
         </Option>
         {errorMessage}
         <SignInButton variant="contained" loading={mutation.isLoading} disabled={!isAvailable} onClick={onSignIn}>
-          {!mutation.isLoading ? 'ㅇㅇ' : ' '}
+          로그인
         </SignInButton>
         <Link href="/signup" passHref>
           <SignUp>회원가입</SignUp>
