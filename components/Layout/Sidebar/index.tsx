@@ -53,7 +53,7 @@ const Root = styled.aside<{ isOpen: boolean }>(({ isOpen }) => ({
   width: '280px',
   willChange: 'min-height',
 
-  [MediaQuery[T.Device.LARGE]]: {
+  [MediaQuery[T.Device.TABLET]]: {
     backgroundColor: '#fff',
     display: isOpen ? 'block' : 'none',
     position: 'fixed',
@@ -71,7 +71,7 @@ const CloseButton = styled.div({
   display: 'none',
   height: '44px',
 
-  [MediaQuery[T.Device.LARGE]]: {
+  [MediaQuery[T.Device.TABLET]]: {
     display: 'block',
   },
 });
@@ -91,7 +91,7 @@ const TopCategory = styled.div({
   borderRadius: '14px',
   boxShadow: '0 1px 3px 0 rgba(0, 0, 0, .15)',
 
-  [MediaQuery[T.Device.LARGE]]: {
+  [MediaQuery[T.Device.TABLET]]: {
     boxShadow: 'none !important',
     borderTop: '1px solid #e6e6e6',
     borderRadius: 0,
@@ -113,7 +113,7 @@ const TopCategory = styled.div({
     fontWeight: 400,
     transition: 'all 0.3s',
 
-    [MediaQuery[T.Device.LARGE]]: {
+    [MediaQuery[T.Device.TABLET]]: {
       outline: 'none',
     },
 
@@ -139,7 +139,7 @@ const TopCategory = styled.div({
 
 const BottomCategory = styled(TopCategory)({
   marginTop: '16px',
-  [MediaQuery[T.Device.LARGE]]: {
+  [MediaQuery[T.Device.TABLET]]: {
     marginTop: 0,
   },
 });

@@ -57,7 +57,7 @@ const Root = styled.div({
   boxShadow: '0 1px 3px 0 rgba(0,0,0,.15)',
   borderRadius: '14px',
 
-  [MediaQuery[T.Device.LARGE]]: {
+  [MediaQuery[T.Device.TABLET]]: {
     borderRadius: 0,
   },
 });
@@ -69,7 +69,7 @@ const WrapperGrid = styled(Grid)({
   '& > div': {
     padding: '20px !important',
 
-    [MediaQuery[T.Device.LARGE]]: {
+    [MediaQuery[T.Device.TABLET]]: {
       padding: '20px 15px !important',
     },
   },

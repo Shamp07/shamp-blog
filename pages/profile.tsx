@@ -122,7 +122,7 @@ const Wrapper = styled.div({
   borderRadius: '14px',
   wordBreak: 'break-all',
 
-  [MediaQuery[T.Device.LARGE]]: {
+  [MediaQuery[T.Device.TABLET]]: {
     borderRadius: 0,
   },
 

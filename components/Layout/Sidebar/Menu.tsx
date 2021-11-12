@@ -45,7 +45,7 @@ const Root = styled.div({
   display: 'none',
   height: '44px',
 
-  [MediaQuery[T.Device.LARGE]]: {
+  [MediaQuery[T.Device.TABLET]]: {
     display: 'block',
   },
 });

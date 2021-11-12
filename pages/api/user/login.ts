@@ -42,7 +42,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         })
         .then((result) => {
           if (result.rows.length <= 0) {
-            return response.json({
+            return response.status(400).json({
               success: true,
               code: 2,
               message: '😅 ID가 존재하지 않거나 비밀번호가 일치하지 않습니다.',
@@ -70,7 +70,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             result: token,
           });
         }, () => {
-          response.json({
+          response.status(400).json({
             success: true,
             code: 2,
             message,

@@ -8,7 +8,7 @@ import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import dsPalette from '@constants/ds-palette';
 import * as T from '@types';
 import { MediaQuery } from '@constants/styles';
-import { categoryName } from '@constants/category';
+// import { categoryName } from '@constants/category';
 
 interface Props {
   data: T.Post;
@@ -19,7 +19,7 @@ const Post = ({ data }: Props) => {
   if (!router.query.category) return null;
 
   const {
-    id, title, category,
+    id, title,
     commentCnt, tag, time, likeCnt,
   } = data;
 
@@ -111,7 +111,7 @@ const Vote = styled.div({
   color: '#7b858e',
   width: '72px',
 
-  [MediaQuery[T.Device.LARGE]]: {
+  [MediaQuery[T.Device.TABLET]]: {
     width: '48px',
   },
 

@@ -25,7 +25,7 @@ const Root = styled.div<OpenProp>(({ isOpen }) => ({
   left: 0,
   zIndex: -1,
 
-  [MediaQuery[T.Device.LARGE]]: {
+  [MediaQuery[T.Device.TABLET]]: {
     ...(isOpen ? ({
       zIndex: 1,
       backgroundColor: 'rgba(0,0,0,.5)',

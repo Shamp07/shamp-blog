@@ -9,8 +9,8 @@ import dsPalette from '@constants/ds-palette';
 import Popup from '@components/Popup';
 import NextNprogress from 'nextjs-progressbar';
 import Header from './Header';
-import SideBar from './Sidebar';
-import Content from './Content';
+// import SideBar from './Sidebar';
+// import Content from './Content';
 
 interface Props {
   children: ReactNode;

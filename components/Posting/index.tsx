@@ -66,7 +66,7 @@ const Root = styled.div({
     borderRadius: '10px',
   },
 
-  [MediaQuery[T.Device.LARGE]]: {
+  [MediaQuery[T.Device.TABLET]]: {
     borderRadius: 0,
   },
 });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { KeyboardEvent } from 'react';
 import styled from '@emotion/styled';
 import RowTextField from '@mui/material/TextField';
 import { TextFieldProps } from '@mui/material/TextField/TextField';
@@ -7,6 +7,7 @@ import dsPalette from '@constants/ds-palette';
 
 type Props = TextFieldProps & {
   description?: string;
+  onKeyPress?(event: KeyboardEvent<HTMLInputElement>): void;
 };
 
 const TextField = ({
@@ -19,6 +20,7 @@ const TextField = ({
   helperText,
   error,
   description,
+  onKeyPress,
 }: Props) => (
   <Root>
     <Field
@@ -30,6 +32,7 @@ const TextField = ({
       value={value}
       helperText={helperText}
       error={error}
+      onKeyPress={onKeyPress}
     />
     {description && <Description>{description}</Description>}
   </Root>
@@ -37,6 +40,7 @@ const TextField = ({
 
 TextField.defaultProps = {
   description: undefined,
+  onKeyPress: undefined,
 };
 
 const Root = styled.div({

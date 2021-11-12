@@ -32,7 +32,7 @@ const Root = styled.section({
   boxShadow: '0 1px 3px 0 rgba(0, 0, 0, .15)',
   overflow: 'hidden',
 
-  [MediaQuery[T.Device.LARGE]]: {
+  [MediaQuery[T.Device.TABLET]]: {
     borderRadius: 0,
   },
 });

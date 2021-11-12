@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import { faGithubAlt } from '@fortawesome/free-brands-svg-icons';
+// import { faGithubAlt } from '@fortawesome/free-brands-svg-icons';
 
 import { MediaQuery } from '@constants/styles';
 import * as T from '@types';
@@ -10,7 +10,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import Authed from './Authed';
 import Unauthed from './Unauthed';
 
-const GITHUB_URL = 'https://github.com/Shamp07';
+// const GITHUB_URL = 'https://github.com/Shamp07';
 
 const Menu = () => {
   const { sidebarStore, signStore } = stores();
@@ -22,9 +22,9 @@ const Menu = () => {
   return (
     <Root>
       {userMenu}
-      {/*<a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">*/}
-      {/*  <Icon icon={faGithubAlt} />*/}
-      {/*</a>*/}
+      {/* <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer"> */}
+      {/*  <Icon icon={faGithubAlt} /> */}
+      {/* </a> */}
       <SidebarButton onClick={onSidebar}>
         <SidebarIcon icon={faBars} />
       </SidebarButton>
@@ -46,7 +46,7 @@ const SidebarButton = styled.div({
   cursor: 'pointer',
   transition: 'all 0.2s',
 
-  [MediaQuery[T.Device.LARGE]]: {
+  [MediaQuery[T.Device.TABLET]]: {
     display: 'inline-block',
   },
 });

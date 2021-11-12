@@ -10,7 +10,7 @@ import * as T from '@types';
 import dsPalette from '@constants/ds-palette';
 import Button from '@atoms/Button';
 import { MediaQuery } from '@constants/styles';
-import { categoryName } from '@constants/category';
+// import { categoryName } from '@constants/category';
 import Tag from './Tag';
 
 const Header = () => {
@@ -47,7 +47,7 @@ const Header = () => {
   return (
     <Root>
       <SubTitle>
-        {/*<h2>{categoryName[category as T.CategoryPath]}</h2>*/}
+        {/* <h2>{categoryName[category as T.CategoryPath]}</h2> */}
         {postButton}
       </SubTitle>
       <Tag category={category} tag={tag} />
@@ -62,7 +62,7 @@ const Root = styled.header({
   marginBottom: '16px',
   backgroundColor: '#fff',
 
-  [MediaQuery[T.Device.LARGE]]: {
+  [MediaQuery[T.Device.TABLET]]: {
     borderRadius: 0,
   },
 });

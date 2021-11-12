@@ -22,6 +22,7 @@ const SignInForm = () => {
       email: '',
       password: '',
     },
+    isError: false,
     onChange(event: ChangeEvent<HTMLInputElement>) {
       this.values = {
         ...this.values,
@@ -37,7 +38,6 @@ const SignInForm = () => {
   };
 
   const onEnter = (event: KeyboardEvent<HTMLInputElement>) => {
-    console.log(event.key);
     if (event.key === 'Enter') onSignIn();
   };
 
@@ -45,9 +45,13 @@ const SignInForm = () => {
     if (mutation.isSuccess) router.push('/');
   }, [mutation.isSuccess]);
 
+  useEffect(() => {
+    if (mutation.isError) form.isError = true;
+  }, [mutation.isError]);
+
   const isAvailable = form.values.email.trim() && form.values.password.trim();
 
-  const errorMessage = mutation.isError ? (
+  const errorMessage = form.isError ? (
     <ErrorDescription>
       이메일이 존재하지 않거나 비밀번호가 일치하지 않습니다. 다시 시도해주세요.
     </ErrorDescription>
@@ -63,11 +67,8 @@ const SignInForm = () => {
           name="email"
           onChange={form.onChange}
           value={form.values.email}
-          error={mutation.isError}
+          error={form.isError}
           onKeyPress={onEnter}
-          inputProps={{
-            onKeyPress: onEnter,
-          }}
         />
         <TextField
           type="password"
@@ -76,10 +77,8 @@ const SignInForm = () => {
           name="password"
           onChange={form.onChange}
           value={form.values.password}
-          error={mutation.isError}
-          inputProps={{
-            onKeyPress: onEnter,
-          }}
+          error={form.isError}
+          onKeyPress={onEnter}
         />
         <Option>
           <FormControlLabel control={<Checkbox defaultChecked />} label="자동 로그인" />
@@ -149,7 +148,7 @@ const SignLink = styled.a({
   textDecorationLine: 'none',
   color: dsPalette.typeSecond.toString(),
   fontSize: '.875rem',
-  '&: hover': {
+  '&:hover': {
     textDecorationLine: 'underline',
   },
 });

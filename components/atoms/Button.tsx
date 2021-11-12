@@ -19,8 +19,6 @@ const Button = styled(RowButton)({
 });
 
 export const SubmitButton = styled(Button)(() => ({
-  '&&&': {
-  },
 }));
 
 export const LoadingButton = styled(RowLoadingButton)({

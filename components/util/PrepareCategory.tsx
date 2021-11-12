@@ -26,7 +26,7 @@ const Wrapper = styled.div({
   padding: '243px 0',
   borderRadius: '14px',
 
-  [MediaQuery[T.Device.LARGE]]: {
+  [MediaQuery[T.Device.TABLET]]: {
     borderRadius: 0,
   },
 

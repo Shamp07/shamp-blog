@@ -29,7 +29,7 @@ const Section = styled.section({
   width: '744px',
   marginBottom: '20px',
 
-  [MediaQuery[T.Device.LARGE]]: {
+  [MediaQuery[T.Device.TABLET]]: {
     width: '100%',
   },
 });

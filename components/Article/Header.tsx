@@ -80,7 +80,7 @@ const ArticleMeta = styled.div({
   color: '#7b858e',
   display: 'flex',
 
-  [MediaQuery[T.Device.LARGE]]: {
+  [MediaQuery[T.Device.TABLET]]: {
     display: 'block',
   },
 });
@@ -88,7 +88,7 @@ const ArticleMeta = styled.div({
 const ArticleMetaUl = styled.ul({
   listStyle: 'none',
 
-  [MediaQuery[T.Device.LARGE]]: {
+  [MediaQuery[T.Device.TABLET]]: {
     display: 'block',
   },
 
@@ -103,7 +103,7 @@ const ArticleMetaUl = styled.ul({
 });
 
 const ArticleMetaLeft = styled(ArticleMetaUl)({
-  [MediaQuery[T.Device.LARGE]]: {
+  [MediaQuery[T.Device.TABLET]]: {
     marginRight: 'auto',
   },
 
@@ -120,7 +120,7 @@ const ArticleMetaLeft = styled(ArticleMetaUl)({
 
 const ArticleMetaRight = styled(ArticleMetaUl)({
   marginLeft: 'auto',
-  [MediaQuery[T.Device.LARGE]]: {
+  [MediaQuery[T.Device.TABLET]]: {
     marginLeft: 'auto',
   },
 

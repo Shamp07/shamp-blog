@@ -1,19 +1,19 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 
-import stores from '@stores';
-import * as T from '@types';
+// import stores from '@stores';
+// import * as T from '@types';
 import Article from '@components/Article';
 import Content from '@components/Board/Content';
 import Footer from '@components/Board/Footer';
-import { categoryPath } from '@constants/category';
+// import { categoryPath } from '@constants/category';
 import Header from './Header';
 
 const Board = () => {
   const router = useRouter();
   if (!router.query.category) return null;
 
-  const { utilStore } = stores();
+  // const { utilStore } = stores();
 
   // if (!Object.values(categoryPath).includes(router.query.category[0] as T.CategoryPath)) {
   //   router.push('/').then(() => {

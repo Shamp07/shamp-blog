@@ -56,7 +56,7 @@ const ArticleText = styled.article({
   color: '#1e2022',
   wordBreak: 'keep-all',
 
-  [MediaQuery[T.Device.LARGE]]: {
+  [MediaQuery[T.Device.TABLET]]: {
     fontSize: '14px',
     padding: '24px 16px',
   },
