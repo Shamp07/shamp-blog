@@ -13,6 +13,7 @@ import { LoadingButton } from '@atoms/Button';
 import TextField from '@atoms/TextField';
 import { MediaQuery } from '@constants/styles';
 import * as T from '@types';
+import cookie from 'js-cookie';
 
 const SignInForm = () => {
   const router = useRouter();
@@ -31,10 +32,12 @@ const SignInForm = () => {
     },
   }));
 
-  const mutation = useMutation((values) => axios.post('/api/user/login', { params: values }));
+  const mutation = useMutation<{ result: string }, Error>(() => axios.post('/api/user/login', form.values));
+
+  const isAvailable = form.values.email.trim() && form.values.password.trim();
 
   const onSignIn = () => {
-    mutation.mutate();
+    if (isAvailable) mutation.mutate();
   };
 
   const onEnter = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -42,14 +45,15 @@ const SignInForm = () => {
   };
 
   useEffect(() => {
-    if (mutation.isSuccess) router.push('/');
+    if (mutation.isSuccess) {
+      cookie.set('token', mutation.data.result, { expires: 2 });
+      router.push('/');
+    }
   }, [mutation.isSuccess]);
 
   useEffect(() => {
     if (mutation.isError) form.isError = true;
   }, [mutation.isError]);
-
-  const isAvailable = form.values.email.trim() && form.values.password.trim();
 
   const errorMessage = form.isError ? (
     <ErrorDescription>
