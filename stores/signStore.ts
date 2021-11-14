@@ -1,9 +1,15 @@
 import { observable } from 'mobx';
 import cookie from 'js-cookie';
+import axios from 'axios';
 
 import Axios from '@utilities/axios';
 import * as T from '@types';
 import utilStore from './utilStore';
+
+interface Result {
+  result: string;
+  code: number;
+}
 
 export interface SignStore {
   cookieChecked: boolean;
@@ -12,7 +18,7 @@ export interface SignStore {
   signIn(form: {
     email: string;
     password: string;
-  }): void;
+  }): Promise<Result>;
   signUp(form: {
     email: string;
     name: string;
@@ -43,22 +49,8 @@ const signStore: SignStore = {
     });
   },
   async signIn(signInForm) {
-    await Axios({
-      method: T.RequestMethod.POST,
-      url: '/api/user/login',
-      data: signInForm,
-      success: (response) => {
-        const { code, message, result } = response.data;
-        if (code === 1) {
-          cookie.set('token', result, { expires: 2 });
-          this.cookieCheck();
-          utilStore.closePopup();
-          utilStore.openPopup(T.Popup.ALERT, message);
-        } else if (code === 2) {
-          utilStore.openPopup(T.Popup.ALERT, message);
-        }
-      },
-    });
+    const res = await axios.post<Result>('/api/user/login', signInForm);
+    return res.data;
   },
   signUp(signUpForm) {
     Axios({

@@ -5,9 +5,9 @@ import { useMutation } from 'react-query';
 import styled from '@emotion/styled';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 
+import stores from '@stores';
 import dsPalette from '@constants/ds-palette';
 import { LoadingButton } from '@atoms/Button';
 import TextField from '@atoms/TextField';
@@ -15,8 +15,14 @@ import { MediaQuery } from '@constants/styles';
 import * as T from '@types';
 import cookie from 'js-cookie';
 
+interface Result {
+  result: string;
+  code: number;
+}
+
 const SignInForm = () => {
   const router = useRouter();
+  const { signStore } = stores();
 
   const form = useLocalObservable(() => ({
     values: {
@@ -32,7 +38,11 @@ const SignInForm = () => {
     },
   }));
 
-  const mutation = useMutation<{ result: string }, Error>(() => axios.post('/api/user/login', form.values));
+  const mutation = useMutation<Result, Error, void>(async () => signStore.signIn(form.values), {
+    onError: (error) => {
+      console.log(error);
+    }
+  });
 
   const isAvailable = form.values.email.trim() && form.values.password.trim();
 
