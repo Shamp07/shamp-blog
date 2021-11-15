@@ -7,7 +7,7 @@ import * as T from '@types';
 const authMiddleware = (
   handler: Function, type: T.Auth,
 ) => async (request: T.NextApiRequestToken, response: NextApiResponse) => {
-  if (!('token' in request.cookies)) {
+  if (!('auth' in request.cookies)) {
     response.status(200).json({
       success: false,
       message: '로그인 해주세요.',
@@ -15,10 +15,10 @@ const authMiddleware = (
   }
 
   let decodedToken: T.AuthToken | undefined;
-  const { token } = request.cookies;
-  if (token) {
+  const { auth } = request.cookies;
+  if (auth) {
     try {
-      decodedToken = jwt.verify(token, config.secret) as T.AuthToken;
+      decodedToken = jwt.verify(auth, config.secret) as T.AuthToken;
     } catch (e) {
       response.status(200).json({
         success: false,

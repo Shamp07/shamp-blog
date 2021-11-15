@@ -15,11 +15,6 @@ import { MediaQuery } from '@constants/styles';
 import * as T from '@types';
 import cookie from 'js-cookie';
 
-interface Result {
-  result: string;
-  code: number;
-}
-
 const SignInForm = () => {
   const router = useRouter();
   const { signStore } = stores();
@@ -29,6 +24,7 @@ const SignInForm = () => {
       email: '',
       password: '',
     },
+    autoSignIn: false,
     isError: false,
     onChange(event: ChangeEvent<HTMLInputElement>) {
       this.values = {
@@ -36,13 +32,12 @@ const SignInForm = () => {
         [event.target.name]: event.target.value,
       };
     },
+    onChangeAutoSignIn() {
+      this.autoSignIn = !this.autoSignIn;
+    },
   }));
 
-  const mutation = useMutation<Result, Error, void>(async () => signStore.signIn(form.values), {
-    onError: (error) => {
-      console.log(error);
-    }
-  });
+  const mutation = useMutation<T.Response, Error, void>(async () => signStore.signIn(form.values));
 
   const isAvailable = form.values.email.trim() && form.values.password.trim();
 
@@ -56,7 +51,8 @@ const SignInForm = () => {
 
   useEffect(() => {
     if (mutation.isSuccess) {
-      cookie.set('token', mutation.data.result, { expires: 2 });
+      cookie.set('auth', mutation.data.result, { expires: 2 });
+      signStore.authCheck();
       router.push('/');
     }
   }, [mutation.isSuccess]);
@@ -95,7 +91,7 @@ const SignInForm = () => {
           onKeyPress={onEnter}
         />
         <Option>
-          <FormControlLabel control={<Checkbox defaultChecked />} label="자동 로그인" />
+          <FormControlLabel control={<Checkbox checked={form.autoSignIn} onChange={form.onChangeAutoSignIn} />} label="자동 로그인" />
           <Link href="/password" passHref>
             <SignLink>비밀번호 찾기</SignLink>
           </Link>

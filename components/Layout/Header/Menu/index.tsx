@@ -1,7 +1,7 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-// import { faGithubAlt } from '@fortawesome/free-brands-svg-icons';
 
 import { MediaQuery } from '@constants/styles';
 import * as T from '@types';
@@ -9,8 +9,6 @@ import stores from '@stores';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import Authed from './Authed';
 import Unauthed from './Unauthed';
-
-// const GITHUB_URL = 'https://github.com/Shamp07';
 
 const Menu = () => {
   const { sidebarStore, signStore } = stores();
@@ -22,9 +20,6 @@ const Menu = () => {
   return (
     <Root>
       {userMenu}
-      {/* <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer"> */}
-      {/*  <Icon icon={faGithubAlt} /> */}
-      {/* </a> */}
       <SidebarButton onClick={onSidebar}>
         <SidebarIcon icon={faBars} />
       </SidebarButton>
@@ -56,4 +51,4 @@ const SidebarIcon = styled(Icon)`
   height: 20px;
 `;
 
-export default Menu;
+export default observer(Menu);

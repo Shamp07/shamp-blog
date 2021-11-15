@@ -25,7 +25,7 @@ const Layout = ({ children }: Props) => {
   const { userData } = signStore;
 
   useEffect(() => {
-    signStore.cookieCheck();
+    signStore.authCheck();
   }, []);
 
   useEffect(() => {

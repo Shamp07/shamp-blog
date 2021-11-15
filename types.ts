@@ -37,6 +37,11 @@ export interface AxiosType {
   complete?: (response: AxiosResponse) => void,
 }
 
+export interface Response {
+  code: number;
+  result: any;
+}
+
 export enum Auth {
   USER = 'user',
   ADMIN = 'admin',

@@ -6,19 +6,14 @@ import Axios from '@utilities/axios';
 import * as T from '@types';
 import utilStore from './utilStore';
 
-interface Result {
-  result: string;
-  code: number;
-}
-
 export interface SignStore {
   cookieChecked: boolean;
   userData: T.User | null;
-  cookieCheck(): void;
+  authCheck(): void;
   signIn(form: {
     email: string;
     password: string;
-  }): Promise<Result>;
+  }): Promise<T.Response>;
   signUp(form: {
     email: string;
     name: string;
@@ -35,12 +30,13 @@ export interface SignStore {
 const signStore: SignStore = {
   cookieChecked: false,
   userData: null,
-  cookieCheck() {
+  authCheck() {
     Axios({
       method: T.RequestMethod.GET,
       url: '/api/user/cookie',
       success: (response) => {
         const { result } = response.data;
+        console.log(result);
         this.userData = result;
       },
       complete: () => {
@@ -49,7 +45,7 @@ const signStore: SignStore = {
     });
   },
   async signIn(signInForm) {
-    const res = await axios.post<Result>('/api/user/login', signInForm);
+    const res = await axios.post<T.Response>('/api/user/login', signInForm);
     return res.data;
   },
   signUp(signUpForm) {
