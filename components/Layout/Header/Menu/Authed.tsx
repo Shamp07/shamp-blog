@@ -1,27 +1,62 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
+import { observer, useLocalObservable } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortDown } from '@fortawesome/free-solid-svg-icons';
 
 import dsPalette from '@constants/ds-palette';
 import stores from '@stores';
 
+interface MenuObservable {
+  element: HTMLDivElement | null;
+  open(event: MouseEvent<HTMLDivElement>): void;
+  close(): void;
+}
+
 const Authed = () => {
   const { signStore } = stores();
   const { userData } = signStore;
   if (!userData) return null;
+
+  const menu = useLocalObservable<MenuObservable>(() => ({
+    element: null,
+    open(event: MouseEvent<HTMLDivElement>) {
+      this.element = event.currentTarget;
+    },
+    close() {
+      this.element = null;
+    },
+  }));
 
   return (
     <Root>
       <Link href="/write" passHref>
         <Posting>글 작성</Posting>
       </Link>
-      <Profile>
+      <Profile
+        aria-controls="basic-menu"
+        aria-haspopup="true"
+        aria-expanded={menu.element ? 'true' : undefined}
+        onClick={menu.open}
+      >
         <AvatarIcon>{userData.name.substring(0, 1)}</AvatarIcon>
         <FontAwesomeIcon icon={faSortDown} />
       </Profile>
+      <Menu
+        id="basic-menu"
+        anchorEl={menu.element}
+        open={Boolean(menu.element)}
+        onClose={menu.close}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={() => {}}>로그아웃</MenuItem>
+      </Menu>
     </Root>
   );
 };
@@ -67,4 +102,4 @@ const AvatarIcon = styled(Avatar)({
   },
 });
 
-export default Authed;
+export default observer(Authed);
