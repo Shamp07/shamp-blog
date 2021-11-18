@@ -46,7 +46,7 @@ const Authed = () => {
         <AvatarIcon>{userData.name.substring(0, 1)}</AvatarIcon>
         <FontAwesomeIcon icon={faSortDown} />
       </Profile>
-      <Menu
+      <ProfileMenu
         id="basic-menu"
         anchorEl={menu.element}
         open={Boolean(menu.element)}
@@ -56,7 +56,7 @@ const Authed = () => {
         }}
       >
         <MenuItem onClick={() => {}}>로그아웃</MenuItem>
-      </Menu>
+      </ProfileMenu>
     </Root>
   );
 };
@@ -99,6 +99,15 @@ const AvatarIcon = styled(Avatar)({
   marginRight: '.5rem',
   '&&&': {
     fontFamily: 'inherit',
+  },
+});
+
+const ProfileMenu = styled(Menu)({
+  '&&&': {
+    fontFamily: 'inherit',
+  },
+  '&&& ul': {
+    padding: 0,
   },
 });
 
