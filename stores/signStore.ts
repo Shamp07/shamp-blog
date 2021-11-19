@@ -7,7 +7,7 @@ import * as T from '@types';
 import utilStore from './utilStore';
 
 export interface SignStore {
-  cookieChecked: boolean;
+  authChecked: boolean;
   userData: T.User | null;
   authCheck(): void;
   signIn(form: {
@@ -28,7 +28,7 @@ export interface SignStore {
 }
 
 const signStore: SignStore = {
-  cookieChecked: false,
+  authChecked: false,
   userData: null,
   authCheck() {
     Axios({
@@ -36,11 +36,10 @@ const signStore: SignStore = {
       url: '/api/user/cookie',
       success: (response) => {
         const { result } = response.data;
-        console.log(result);
         this.userData = result;
       },
       complete: () => {
-        this.cookieChecked = true;
+        this.authChecked = true;
       },
     });
   },

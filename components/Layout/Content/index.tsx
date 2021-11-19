@@ -12,9 +12,9 @@ interface Props {
 
 const Content = ({ children }: Props) => {
   const { signStore } = stores();
-  const { cookieChecked } = signStore;
+  const { authChecked } = signStore;
 
-  if (!cookieChecked) return null;
+  if (!authChecked) return null;
 
   return (
     <Section>

@@ -12,7 +12,9 @@ import Unauthed from './Unauthed';
 
 const Menu = () => {
   const { sidebarStore, signStore } = stores();
-  const { userData } = signStore;
+  const { userData, authChecked } = signStore;
+  if (!authChecked) return null;
+
   const onSidebar = () => sidebarStore.toggleSidebar();
 
   const userMenu = userData ? <Authed /> : <Unauthed />;

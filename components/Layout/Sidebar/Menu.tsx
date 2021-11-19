@@ -8,7 +8,7 @@ import * as T from '@types';
 
 const Menu = () => {
   const { signStore, utilStore } = stores();
-  const { userData, cookieChecked } = signStore;
+  const { userData, authChecked } = signStore;
 
   const onSignIn = useCallback(() => {
     utilStore.openPopup(T.Popup.SIGN_IN);
@@ -22,7 +22,7 @@ const Menu = () => {
     signStore.signOut(false);
   }, []);
 
-  if (!cookieChecked) return null;
+  if (!authChecked) return null;
 
   if (userData) {
     return (
