@@ -8,10 +8,11 @@ import { faSortDown } from '@fortawesome/free-solid-svg-icons';
 import Avatar from '@mui/material/Avatar';
 
 import stores from '@stores';
+import dsPalette from '@constants/ds-palette';
 
 interface MenuObservable {
-  element: HTMLDivElement | null;
-  open(event: MouseEvent<HTMLDivElement>): void;
+  element: HTMLButtonElement | null;
+  open(event: MouseEvent<HTMLButtonElement>): void;
   close(): void;
 }
 
@@ -22,7 +23,7 @@ const Profile = () => {
 
   const menu = useLocalObservable<MenuObservable>(() => ({
     element: null,
-    open(event: MouseEvent<HTMLDivElement>) {
+    open(event: MouseEvent<HTMLButtonElement>) {
       this.element = event.currentTarget;
     },
     close() {
@@ -31,36 +32,31 @@ const Profile = () => {
   }));
 
   return (
-    <>
-      <Button
-        aria-controls="basic-menu"
-        aria-haspopup="true"
-        aria-expanded={menu.element ? 'true' : undefined}
-        onClick={menu.open}
-      >
+    <div>
+      <Button onClick={menu.open}>
         <AvatarIcon>{userData.name.substring(0, 1)}</AvatarIcon>
         <FontAwesomeIcon icon={faSortDown} />
       </Button>
       <ProfileMenu
-        id="basic-menu"
         anchorEl={menu.element}
         open={Boolean(menu.element)}
         onClose={menu.close}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={() => {}}>로그아웃</MenuItem>
+        <ProfileMenuItem onClick={menu.close}>로그아웃</ProfileMenuItem>
       </ProfileMenu>
-    </>
+    </div>
   );
 };
 
-const Button = styled.div({
+const Button = styled.button({
   display: 'flex',
+  border: 0,
   cursor: 'pointer',
   marginLeft: '1rem',
   alignItems: 'center',
+  background: 'transparent',
 });
 
 const AvatarIcon = styled(Avatar)({
@@ -71,8 +67,26 @@ const AvatarIcon = styled(Avatar)({
 });
 
 const ProfileMenu = styled(Menu)({
-  '&&& ul': {
-    padding: 0,
+  '&&&': {
+    '& > .MuiPaper-elevation': {
+      color: dsPalette.typePrimary.toString(),
+      boxShadow: 'rgb(0 0 0 / 4%) 0px 4px 16px 0px',
+      marginTop: '11px',
+      borderTopLeftRadius: 0,
+      borderTopRightRadius: 0,
+      '& > ul': {
+        padding: 0,
+        fontSize: '1rem',
+      },
+    },
+  },
+});
+
+const ProfileMenuItem = styled(MenuItem)({
+  '&&&': {
+    fontFamily: 'inherit',
+    padding: '12px 16px',
+    minWidth: '2rem',
   },
 });
 
