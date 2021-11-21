@@ -31,8 +31,10 @@ const Profile = () => {
     },
   }));
 
+  const onSignOut = () => signStore.signOut();
+
   return (
-    <div>
+    <>
       <Button onClick={menu.open}>
         <AvatarIcon>{userData.name.substring(0, 1)}</AvatarIcon>
         <FontAwesomeIcon icon={faSortDown} />
@@ -41,12 +43,13 @@ const Profile = () => {
         anchorEl={menu.element}
         open={Boolean(menu.element)}
         onClose={menu.close}
+        transitionDuration={0}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <ProfileMenuItem onClick={menu.close}>로그아웃</ProfileMenuItem>
+        <ProfileMenuItem onClick={onSignOut}>로그아웃</ProfileMenuItem>
       </ProfileMenu>
-    </div>
+    </>
   );
 };
 
@@ -57,6 +60,7 @@ const Button = styled.button({
   marginLeft: '1rem',
   alignItems: 'center',
   background: 'transparent',
+  fontFamily: 'inherit',
 });
 
 const AvatarIcon = styled(Avatar)({

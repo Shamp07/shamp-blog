@@ -15,7 +15,7 @@ import { MediaQuery } from '@constants/styles';
 import * as T from '@types';
 import cookie from 'js-cookie';
 
-const SignInForm = () => {
+const SignIn = () => {
   const router = useRouter();
   const { signStore } = stores();
 
@@ -178,4 +178,4 @@ const ErrorDescription = styled.div({
   wordBreak: 'keep-all',
 });
 
-export default observer(SignInForm);
+export default observer(SignIn);

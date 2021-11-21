@@ -2,6 +2,6 @@ import React from 'react';
 
 import PrepareCategory from '@components/util/PrepareCategory';
 
-const Life = () => <PrepareCategory />;
+const LifePage = () => <PrepareCategory />;
 
-export default Life;
+export default LifePage;

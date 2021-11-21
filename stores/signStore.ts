@@ -20,7 +20,7 @@ export interface SignStore {
     password: string;
     passwordCheck: string;
   }): void;
-  signOut(openAlert: boolean): void;
+  signOut(): void;
   resetPassword(currentPassword: string, password: string): void;
   deleteUser(email: string): void;
   verifyEmail(email: string): void;
@@ -62,14 +62,10 @@ const signStore: SignStore = {
       },
     });
   },
-  signOut(openAlert: boolean) {
+  signOut() {
     utilStore.closeHeaderMenu();
-
-    cookie.remove('token');
+    cookie.remove('auth');
     this.userData = null;
-    if (openAlert) {
-      utilStore.openPopup(T.Popup.ALERT, '로그아웃 되었습니다.');
-    }
   },
   resetPassword(currentPassword: string, password: string) {
     Axios({
@@ -82,7 +78,7 @@ const signStore: SignStore = {
       success: (response) => {
         const { code, message } = response.data;
         if (code === 1) {
-          this.signOut(false);
+          this.signOut();
         }
         utilStore.openPopup(T.Popup.ALERT, message);
       },
@@ -98,7 +94,7 @@ const signStore: SignStore = {
       success: (response) => {
         const { code, message } = response.data;
         if (code === 1) {
-          this.signOut(true);
+          this.signOut();
         }
         utilStore.openPopup(T.Popup.ALERT, message);
       },

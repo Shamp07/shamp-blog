@@ -4,9 +4,9 @@ import { NextPageContext } from 'next';
 import stores from '@stores';
 import Board from '@components/Board';
 
-const Category = () => <Board />;
+const CategoryPage = () => <Board />;
 
-Category.getInitialProps = async ({ query }: NextPageContext) => {
+CategoryPage.getInitialProps = async ({ query }: NextPageContext) => {
   if (!query.category) return null;
 
   const category = query.category[0];
@@ -36,4 +36,4 @@ Category.getInitialProps = async ({ query }: NextPageContext) => {
   };
 };
 
-export default Category;
+export default CategoryPage;
