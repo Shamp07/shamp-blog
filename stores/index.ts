@@ -6,7 +6,6 @@ import postStore, { PostStore, initialPost } from './postStore';
 import sidebarStore, { SidebarStore } from './sidebarStore';
 import signStore, { SignStore } from './signStore';
 import utilStore, { UtilStore } from './utilStore';
-import chatStore, { ChatStore } from './chatStore';
 
 export const initialRoot = {
   categoryStore: initialCategory,
@@ -24,7 +23,6 @@ export interface RootStore {
   sidebarStore: SidebarStore;
   signStore: SignStore;
   utilStore: UtilStore;
-  chatStore: ChatStore;
 }
 
 export default (() => {
@@ -38,7 +36,6 @@ export default (() => {
     sidebarStore,
     signStore,
     utilStore,
-    chatStore,
   });
 
   return (initialStore = initialRoot) => {

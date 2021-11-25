@@ -62,7 +62,7 @@ const CenterContent = styled.div({
   display: 'flex',
   height: 'inherit',
   justifyContent: 'center',
-  marginTop: '10rem',
+  marginTop: '5rem',
 
   [MediaQuery[T.Device.TABLET]]: {
     width: 'calc(100% - 2rem)',

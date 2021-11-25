@@ -1,20 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import styled from '@emotion/styled';
 
-import tempo from '@assets/images/tempo.gif';
 import dsPalette from '@constants/ds-palette';
 
 const PostCard = () => (
   <Root>
     <Link href="/post/1" passHref>
       <Section>
-        <Image
-          src={tempo}
-          width="100%"
-          height="167"
-        />
+        {/* <Image */}
+        {/*  src={temp} */}
+        {/*  width="100%" */}
+        {/*  height="167" */}
+        {/* /> */}
         <Inner>
           <Title>Title</Title>
           <Content>
@@ -36,6 +34,12 @@ const Root = styled.div({
   borderRadius: '4px',
   margin: '1rem',
   overflow: 'hidden',
+  transition: 'box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s',
+
+  '&:hover': {
+    transform: 'translateY(-8px)',
+    boxShadow: 'rgb(0 0 0 / 8%) 0px 12px 20px 0px',
+  },
 });
 
 const Title = styled.h4({
@@ -45,7 +49,7 @@ const Title = styled.h4({
 
 const Inner = styled.div({
   padding: '1rem',
-})
+});
 
 const Content = styled.p({
   fontSize: '.875rem',
