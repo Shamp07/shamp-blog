@@ -1,5 +1,5 @@
-import RowButton from '@mui/material/Button';
-import RowLoadingButton from '@mui/lab/LoadingButton';
+import RawButton from '@mui/material/Button';
+import RawLoadingButton from '@mui/lab/LoadingButton';
 import styled from '@emotion/styled';
 
 import dsPalette from '@constants/ds-palette';
@@ -11,7 +11,7 @@ const CommonButtonStyle = {
   },
 };
 
-const Button = styled(RowButton)({
+const Button = styled(RawButton)({
   '&&&': {
     boxShadow: 'none',
     fontFamily: 'inherit',
@@ -21,7 +21,7 @@ const Button = styled(RowButton)({
 export const SubmitButton = styled(Button)(() => ({
 }));
 
-export const LoadingButton = styled(RowLoadingButton)({
+export const LoadingButton = styled(RawLoadingButton)({
   ...CommonButtonStyle,
 });
 

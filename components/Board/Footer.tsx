@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-import { Pagination as RowPagination, PaginationItem, PaginationRenderItemParams } from '@material-ui/lab';
+import { Pagination as RawPagination, PaginationItem, PaginationRenderItemParams } from '@mui/lab';
 
 import stores from '@stores';
 
@@ -56,7 +56,7 @@ const Root = styled.div`
   text-align: center;
 `;
 
-const Pagination = styled(RowPagination)`
+const Pagination = styled(RawPagination)`
   display: inline-flex;
 `;
 

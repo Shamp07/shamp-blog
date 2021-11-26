@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { CircularProgress } from '@material-ui/core';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Spinner = () => (
   <Root>

@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
-import { MenuItem } from '@material-ui/core';
+import MenuItem from '@mui/material/MenuItem';
 
 import stores from '@stores';
 import Row from './Row';

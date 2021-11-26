@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 import styled from '@emotion/styled';
-import RowModal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
+import RawModal from '@mui/material/Modal';
+import Backdrop from '@mui/material/Backdrop';
+import Fade from '@mui/material/Fade';
 
 import stores from '@stores';
 
@@ -37,7 +37,7 @@ const Modal = ({
   );
 };
 
-const StyledModal = styled(RowModal)`
+const StyledModal = styled(RawModal)`
   display: flex;
   align-items: center;
   justify-content: center;

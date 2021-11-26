@@ -1,6 +1,6 @@
 import React, { KeyboardEvent } from 'react';
 import styled from '@emotion/styled';
-import RowTextField from '@mui/material/TextField';
+import RawTextField from '@mui/material/TextField';
 import { TextFieldProps } from '@mui/material/TextField/TextField';
 
 import dsPalette from '@constants/ds-palette';
@@ -47,7 +47,7 @@ const Root = styled.div({
   marginBottom: '20px',
 });
 
-const Field = styled(RowTextField)({
+const Field = styled(RawTextField)({
   width: '100%',
   '&&& *': {
     fontFamily: 'inherit',

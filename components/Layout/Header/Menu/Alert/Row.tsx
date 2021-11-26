@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
-import { MenuItem as RowMenuItem } from '@material-ui/core';
+import RawMenuItem from '@mui/material/MenuItem';
 import styled from '@emotion/styled';
 
 import stores from '@stores';
@@ -42,7 +42,7 @@ const Alert = ({ data }: Props) => {
   );
 };
 
-const MenuItem = styled(RowMenuItem)`
+const MenuItem = styled(RawMenuItem)`
   white-space: normal;
   border-bottom: 1px solid #e6e6e6 !important;
 `;

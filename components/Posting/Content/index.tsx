@@ -1,8 +1,8 @@
 import React, { useMemo, useCallback, ChangeEvent } from 'react';
 import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
-import MenuItem from '@material-ui/core/MenuItem';
-import { TextField } from '@material-ui/core';
+import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField';
 
 import stores from '@stores';
 import Editor from './Editor';
