@@ -3,9 +3,6 @@ import App, { AppContext } from 'next/app';
 import Head from 'next/head';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
-import 'react-quill/dist/quill.snow.css';
-import 'highlight.js/styles/nord.css';
-
 import stores from '@stores';
 import Layout from '@components/Layout';
 import * as T from '@types';
