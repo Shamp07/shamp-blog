@@ -21,21 +21,57 @@ const Root = styled.div({
     fontFamily: 'inherit',
   },
 
+  '.ProseMirror': {
+    fontSize: '1.125rem',
+  },
+
   '.toastui-editor-contents': {
     fontSize: '1.125rem',
-    lineHeight: '1.7',
+    lineHeight: '1.7 !important',
   },
 
   '.toastui-editor-contents h1': {
     lineHeight: '1.5',
     fontSize: '2.5rem',
     border: 0,
+    marginBottom: '1rem',
+  },
+
+  '.toastui-editor-md-heading1': {
+    fontSize: '2.5rem',
   },
 
   '.toastui-editor-contents h2': {
     lineHeight: '1.5',
     fontSize: '2rem',
     border: 0,
+    marginBottom: '1rem',
+  },
+
+  '.toastui-editor-md-heading2': {
+    fontSize: '2rem',
+  },
+
+  '.toastui-editor-contents h3': {
+    lineHeight: '1.5',
+    fontSize: '1.5rem',
+    border: 0,
+    marginBottom: '1rem',
+  },
+
+  '.toastui-editor-md-heading3': {
+    fontSize: '1.5rem',
+  },
+
+  '.toastui-editor-contents h4': {
+    lineHeight: '1.5',
+    fontSize: '1.125rem',
+    border: 0,
+    marginBottom: '1rem',
+  },
+
+  '.toastui-editor-md-heading4': {
+    fontSize: '1.125rem;',
   },
 });
 
