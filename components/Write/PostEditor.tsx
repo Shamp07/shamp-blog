@@ -16,7 +16,6 @@ const PostEditor = () => (
 );
 
 const Root = styled.div({
-
   '&&& *': {
     fontFamily: 'inherit',
   },
@@ -30,10 +29,14 @@ const Root = styled.div({
     lineHeight: '1.7 !important',
   },
 
+  '.toastui-editor-contents p + h1, .toastui-editor-contents p + h2, .toastui-editor-contents p + h3, .toastui-editor-contents p + h4': {
+    marginTop: '2.5rem',
+  },
+
   '.toastui-editor-contents h1': {
     lineHeight: '1.5',
     fontSize: '2.5rem',
-    border: 0,
+    borderBottom: 0,
     marginBottom: '1rem',
   },
 
@@ -44,7 +47,7 @@ const Root = styled.div({
   '.toastui-editor-contents h2': {
     lineHeight: '1.5',
     fontSize: '2rem',
-    border: 0,
+    borderBottom: 0,
     marginBottom: '1rem',
   },
 
@@ -55,7 +58,7 @@ const Root = styled.div({
   '.toastui-editor-contents h3': {
     lineHeight: '1.5',
     fontSize: '1.5rem',
-    border: 0,
+    borderBottom: 0,
     marginBottom: '1rem',
   },
 
@@ -66,7 +69,6 @@ const Root = styled.div({
   '.toastui-editor-contents h4': {
     lineHeight: '1.5',
     fontSize: '1.125rem',
-    border: 0,
     marginBottom: '1rem',
   },
 

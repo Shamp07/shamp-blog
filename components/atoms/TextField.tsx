@@ -7,6 +7,7 @@ import dsPalette from '@constants/ds-palette';
 
 type Props = TextFieldProps & {
   description?: string;
+  borderless?: boolean;
   onKeyPress?(event: KeyboardEvent<HTMLInputElement>): void;
 };
 
@@ -21,8 +22,9 @@ const TextField = ({
   error,
   description,
   onKeyPress,
+  borderless,
 }: Props) => (
-  <Root>
+  <Root borderless={borderless}>
     <Field
       type={type}
       label={label}
@@ -41,11 +43,18 @@ const TextField = ({
 TextField.defaultProps = {
   description: undefined,
   onKeyPress: undefined,
+  borderless: false,
 };
 
-const Root = styled.div({
+const Root = styled.div<{ borderless?: boolean }>(({ borderless }) => ({
   marginBottom: '20px',
-});
+
+  ...(borderless ? ({
+    '& fieldset': {
+      border: 0,
+    },
+  }) : null),
+}));
 
 const Field = styled(RawTextField)({
   width: '100%',
