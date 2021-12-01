@@ -47,8 +47,6 @@ TextField.defaultProps = {
 };
 
 const Root = styled.div<{ borderless?: boolean }>(({ borderless }) => ({
-  marginBottom: '20px',
-
   ...(borderless ? ({
     '& fieldset': {
       border: 0,

@@ -13,16 +13,25 @@ const Editor = dynamic(
 
 interface Form {
   title: string;
+  tag: string;
   tags: string[];
   onChange(event: ChangeEvent<HTMLInputElement>): void;
+  onAddTag(event: KeyboardEvent): void;
 }
 
 const Write = () => {
   const form = useLocalObservable<Form>(() => ({
     title: '',
+    tag: '',
     tags: [],
     onChange(event) {
       this.title = event.target.value;
+    },
+    onAddTag(event) {
+      if (event.key === 'Enter' && event.target) {
+        form.tags.push(event.target.value);
+        form.tag = '';
+      }
     },
   }));
 
@@ -32,12 +41,18 @@ const Write = () => {
         variant="outlined"
         label="제목"
         name="title"
+        value={form.title}
         onChange={form.onChange}
       />
       <Tags>
-        <div></div>
+        <div>
+          {form.tags.map((tag) => <Tag>{tag}</Tag>)}
+        </div>
         <TextField
           variant="outlined"
+          onKeyPress={form.onAddTag}
+          name="tag"
+          value={form.tag}
           borderless
         />
       </Tags>
@@ -56,6 +71,22 @@ const Root = styled.div({
 const Tags = styled.div({
   display: 'flex',
   border: '1px solid rgba(0, 0, 0, 0.23)',
+  alignItems: 'center',
+  paddingLeft: '1rem',
+  paddingRight: '1rem',
+});
+
+const Tag = styled.div({
+  display: 'flex',
+  background: dsPalette.themePrimary.toString(),
+  color: dsPalette.themeWhite.toString(),
+  borderRadius: '1rem',
+  fontSize: '1rem',
+  paddingLeft: '1rem',
+  paddingRight: '1rem',
+  height: '2rem',
+  alignItems: 'center',
+  cursor: 'pointer',
 });
 
 export default observer(Write);
