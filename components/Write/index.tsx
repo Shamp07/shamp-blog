@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React, { MouseEvent, ChangeEvent, KeyboardEvent } from 'react';
 import dynamic from 'next/dynamic';
 import styled from '@emotion/styled';
 import { observer, useLocalObservable } from 'mobx-react-lite';
@@ -12,25 +12,39 @@ const Editor = dynamic(
 );
 
 interface Form {
-  title: string;
-  tag: string;
+  inputs: {
+    title: string;
+    tag: string;
+  };
   tags: string[];
   onChange(event: ChangeEvent<HTMLInputElement>): void;
-  onAddTag(event: KeyboardEvent): void;
+  onKeyPress(event: KeyboardEvent<HTMLInputElement>): void;
+  onDelete(event: MouseEvent<HTMLElement>): void;
 }
 
 const Write = () => {
   const form = useLocalObservable<Form>(() => ({
-    title: '',
-    tag: '',
+    inputs: {
+      title: '',
+      tag: '',
+    },
     tags: [],
     onChange(event) {
-      this.title = event.target.value;
+      this.inputs = {
+        ...this.inputs,
+        [event.target.name]: event.target.value,
+      };
     },
-    onAddTag(event) {
-      if (event.key === 'Enter' && event.target) {
-        form.tags.push(event.target.value);
-        form.tag = '';
+    onKeyPress(event) {
+      if (event.key === 'Enter' && this.inputs.tag) {
+        if (!this.tags.includes(this.inputs.tag)) this.tags.push(this.inputs.tag);
+        this.inputs.tag = '';
+      }
+    },
+    onDelete(event) {
+      const idx = this.tags.indexOf(event.currentTarget.innerText);
+      if (idx > -1) {
+        this.tags.splice(idx, 1);
       }
     },
   }));
@@ -41,21 +55,22 @@ const Write = () => {
         variant="outlined"
         label="제목"
         name="title"
-        value={form.title}
+        value={form.inputs.title}
         onChange={form.onChange}
       />
-      <Tags>
-        <div>
-          {form.tags.map((tag) => <Tag>{tag}</Tag>)}
-        </div>
+      <TagForm>
+        <TagWrapper>
+          {form.tags.map((tag) => <Tag onClick={form.onDelete}>{tag}</Tag>)}
+        </TagWrapper>
         <TextField
           variant="outlined"
-          onKeyPress={form.onAddTag}
           name="tag"
-          value={form.tag}
+          value={form.inputs.tag}
+          onKeyPress={form.onKeyPress}
+          onChange={form.onChange}
           borderless
         />
-      </Tags>
+      </TagForm>
       <Editor />
     </Root>
   );
@@ -68,12 +83,14 @@ const Root = styled.div({
   padding: '3rem',
 });
 
-const Tags = styled.div({
+const TagForm = styled.div({
   display: 'flex',
   border: '1px solid rgba(0, 0, 0, 0.23)',
   alignItems: 'center',
-  paddingLeft: '1rem',
-  paddingRight: '1rem',
+});
+
+const TagWrapper = styled.div({
+  display: 'flex',
 });
 
 const Tag = styled.div({
@@ -87,6 +104,7 @@ const Tag = styled.div({
   height: '2rem',
   alignItems: 'center',
   cursor: 'pointer',
+  marginLeft: '0.5rem',
 });
 
 export default observer(Write);
