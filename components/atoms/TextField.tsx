@@ -17,6 +17,7 @@ const TextField = ({
   variant,
   name,
   onChange,
+  placeholder,
   value,
   helperText,
   error,
@@ -30,6 +31,7 @@ const TextField = ({
       label={label}
       variant={variant}
       name={name}
+      placeholder={placeholder}
       onChange={onChange}
       value={value}
       helperText={helperText}

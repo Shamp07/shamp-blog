@@ -65,6 +65,7 @@ const Write = () => {
         <TextField
           variant="outlined"
           name="tag"
+          placeholder="태그를 입력하세요"
           value={form.inputs.tag}
           onKeyPress={form.onKeyPress}
           onChange={form.onChange}
@@ -81,12 +82,21 @@ const Root = styled.div({
   width: '90%',
   borderRadius: '1rem',
   padding: '3rem',
+
+  '& > div': {
+    marginBottom: '20px',
+  },
 });
 
 const TagForm = styled.div({
   display: 'flex',
   border: '1px solid rgba(0, 0, 0, 0.23)',
   alignItems: 'center',
+  borderRadius: '4px',
+
+  '&:hover': {
+    borderColor: 'rgba(0, 0, 0, 0.87)',
+  },
 });
 
 const TagWrapper = styled.div({
