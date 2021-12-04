@@ -1,4 +1,4 @@
-import React, { MouseEvent, ChangeEvent, KeyboardEvent } from 'react';
+import React, {MouseEvent, ChangeEvent, KeyboardEvent, CSSProperties} from 'react';
 import dynamic from 'next/dynamic';
 import styled from '@emotion/styled';
 import { observer, useLocalObservable } from 'mobx-react-lite';
@@ -36,8 +36,9 @@ const Write = () => {
       };
     },
     onKeyPress(event) {
-      if (event.key === 'Enter' && this.inputs.tag) {
-        if (!this.tags.includes(this.inputs.tag)) this.tags.push(this.inputs.tag);
+      const { tags, inputs: { tag } } = this;
+      if (event.key === 'Enter' && tag) {
+        if (!tags.includes(this.inputs.tag)) tags.push(tag);
         this.inputs.tag = '';
       }
     },
@@ -53,10 +54,12 @@ const Write = () => {
     <Root>
       <TextField
         variant="outlined"
-        label="제목"
         name="title"
+        placeholder="제목을 입력하세요"
         value={form.inputs.title}
         onChange={form.onChange}
+        customStyles={titleInputStyles}
+        borderless
       />
       <TagForm>
         <TagWrapper>
@@ -78,25 +81,19 @@ const Write = () => {
 };
 
 const Root = styled.div({
-  background: dsPalette.themeWhite.toString(),
-  width: '90%',
-  borderRadius: '1rem',
+  position: 'absolute',
+  boxSizing: 'border-box',
+  width: '100%',
+  height: '100%',
   padding: '3rem',
-
-  '& > div': {
-    marginBottom: '20px',
-  },
+  top: 0,
+  background: dsPalette.themeWhite.toString(),
 });
 
 const TagForm = styled.div({
   display: 'flex',
-  border: '1px solid rgba(0, 0, 0, 0.23)',
   alignItems: 'center',
   borderRadius: '4px',
-
-  '&:hover': {
-    borderColor: 'rgba(0, 0, 0, 0.87)',
-  },
 });
 
 const TagWrapper = styled.div({
@@ -116,5 +113,11 @@ const Tag = styled.div({
   cursor: 'pointer',
   marginLeft: '0.5rem',
 });
+
+const titleInputStyles: CSSProperties = {
+  padding: 0,
+  fontSize: '2.75rem',
+  fontWeight: 'bold',
+};
 
 export default observer(Write);

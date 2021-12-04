@@ -93,42 +93,44 @@ const Form = ({ setEmail, next }: Props) => {
     <Root>
       <Inner>
         <Title>회원가입</Title>
-        <TextField
-          label="이메일 주소"
-          variant="standard"
-          name="email"
-          onChange={form.onChange}
-          value={form.values.email}
-          helperText={form.errors[UI.EMAIL].message}
-          description="회원가입을 위해서 해당 이메일을 통해 인증이 필요합니다."
-        />
-        <TextField
-          label="이름"
-          variant="standard"
-          name="name"
-          onChange={form.onChange}
-          value={form.values.name}
-        />
-        <TextField
-          type="password"
-          label="비밀번호"
-          variant="standard"
-          name="password"
-          onChange={form.onChange}
-          value={form.values.password}
-          error={form.errors[UI.PASSWORD].isError}
-        />
-        <TextField
-          type="password"
-          label="비밀번호 확인"
-          variant="standard"
-          name="passwordCheck"
-          onChange={form.onChange}
-          value={form.values.passwordCheck}
-          helperText={form.errors[UI.PASSWORD].message}
-          error={form.errors[UI.PASSWORD].isError}
-          description="8~16자 영문 대 소문자, 숫자, 특수문자를 사용해주세요."
-        />
+        <Wrapper>
+          <TextField
+            label="이메일 주소"
+            variant="standard"
+            name="email"
+            onChange={form.onChange}
+            value={form.values.email}
+            helperText={form.errors[UI.EMAIL].message}
+            description="회원가입을 위해서 해당 이메일을 통해 인증이 필요합니다."
+          />
+          <TextField
+            label="이름"
+            variant="standard"
+            name="name"
+            onChange={form.onChange}
+            value={form.values.name}
+          />
+          <TextField
+            type="password"
+            label="비밀번호"
+            variant="standard"
+            name="password"
+            onChange={form.onChange}
+            value={form.values.password}
+            error={form.errors[UI.PASSWORD].isError}
+          />
+          <TextField
+            type="password"
+            label="비밀번호 확인"
+            variant="standard"
+            name="passwordCheck"
+            onChange={form.onChange}
+            value={form.values.passwordCheck}
+            helperText={form.errors[UI.PASSWORD].message}
+            error={form.errors[UI.PASSWORD].isError}
+            description="8~16자 영문 대 소문자, 숫자, 특수문자를 사용해주세요."
+          />
+        </Wrapper>
         <Notice>
           <ul>
             <li>비밀번호는 단방향 암호화가 진행되어 블로그 주인조차 알 방법이 없습니다.</li>
@@ -159,6 +161,12 @@ const Inner = styled.div({
 const Title = styled.h1({
   marginBottom: '1rem',
   textAlign: 'center',
+});
+
+const Wrapper = styled.div({
+  '& > div': {
+    marginBottom: '20px',
+  },
 });
 
 const SignUpButton = styled(SubmitButton)({

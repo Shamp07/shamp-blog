@@ -71,25 +71,27 @@ const SignIn = () => {
     <Root>
       <Inner>
         <Title>로그인</Title>
-        <TextField
-          label="이메일 주소"
-          variant="standard"
-          name="email"
-          onChange={form.onChange}
-          value={form.values.email}
-          error={form.isError}
-          onKeyPress={onEnter}
-        />
-        <TextField
-          type="password"
-          label="비밀번호"
-          variant="standard"
-          name="password"
-          onChange={form.onChange}
-          value={form.values.password}
-          error={form.isError}
-          onKeyPress={onEnter}
-        />
+        <Wrapper>
+          <TextField
+            label="이메일 주소"
+            variant="standard"
+            name="email"
+            onChange={form.onChange}
+            value={form.values.email}
+            error={form.isError}
+            onKeyPress={onEnter}
+          />
+          <TextField
+            type="password"
+            label="비밀번호"
+            variant="standard"
+            name="password"
+            onChange={form.onChange}
+            value={form.values.password}
+            error={form.isError}
+            onKeyPress={onEnter}
+          />
+        </Wrapper>
         <Option>
           <FormControlLabel control={<Checkbox checked={form.autoSignIn} onChange={form.onChangeAutoSignIn} />} label="자동 로그인" />
           <Link href="/password" passHref>
@@ -132,6 +134,12 @@ const Inner = styled.div({
 const Title = styled.h1({
   marginBottom: '1rem',
   textAlign: 'center',
+});
+
+const Wrapper = styled.div({
+  '& > div': {
+    marginBottom: '20px',
+  },
 });
 
 const Option = styled.div({

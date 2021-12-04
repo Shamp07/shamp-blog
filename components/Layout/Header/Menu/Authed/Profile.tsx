@@ -47,6 +47,7 @@ const Profile = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
+        <ProfileMenuItem onClick={() => {}}>설정</ProfileMenuItem>
         <ProfileMenuItem onClick={onSignOut}>로그아웃</ProfileMenuItem>
       </ProfileMenu>
     </>
@@ -74,7 +75,8 @@ const ProfileMenu = styled(Menu)({
   '&&&': {
     '& > .MuiPaper-elevation': {
       color: dsPalette.typePrimary.toString(),
-      boxShadow: 'rgb(0 0 0 / 4%) 0px 4px 16px 0px',
+      boxShadow: 'none',
+      borderTop: 0,
       marginTop: '11px',
       borderTopLeftRadius: 0,
       borderTopRightRadius: 0,
@@ -90,7 +92,7 @@ const ProfileMenuItem = styled(MenuItem)({
   '&&&': {
     fontFamily: 'inherit',
     padding: '12px 16px',
-    minWidth: '2rem',
+    minWidth: '167px',
   },
 });
 
