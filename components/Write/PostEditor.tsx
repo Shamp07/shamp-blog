@@ -6,11 +6,12 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 const PostEditor = () => (
   <Root>
     <Editor
-      initialValue="hello react editor world!"
+      placeholder="내용을 입력해주세요..."
       previewStyle="vertical"
       height="600px"
-      initialEditType="markdown"
+      initialEditType="wysiwyg"
       useCommandShortcut
+      hideModeSwitch
     />
   </Root>
 );

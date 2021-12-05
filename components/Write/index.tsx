@@ -5,6 +5,7 @@ import { observer, useLocalObservable } from 'mobx-react-lite';
 
 import dsPalette from '@constants/ds-palette';
 import TextField from '@atoms/TextField';
+import Button from "@atoms/Button";
 
 const Editor = dynamic(
   () => import('./PostEditor'),
@@ -52,35 +53,47 @@ const Write = () => {
 
   return (
     <Root>
-      <TextField
-        variant="outlined"
-        name="title"
-        placeholder="제목을 입력하세요"
-        value={form.inputs.title}
-        onChange={form.onChange}
-        customStyles={titleInputStyles}
-        borderless
-      />
-      <TagForm>
-        <TagWrapper>
-          {form.tags.map((tag) => <Tag onClick={form.onDelete}>{tag}</Tag>)}
-        </TagWrapper>
+      <Form>
         <TextField
           variant="outlined"
-          name="tag"
-          placeholder="태그를 입력하세요"
-          value={form.inputs.tag}
-          onKeyPress={form.onKeyPress}
+          name="title"
+          placeholder="제목을 입력하세요"
+          value={form.inputs.title}
           onChange={form.onChange}
+          customStyles={titleInputStyles}
           borderless
         />
-      </TagForm>
-      <Editor />
+        <TagForm>
+          <TagWrapper>
+            {form.tags.map((tag) => <Tag onClick={form.onDelete}>{tag}</Tag>)}
+          </TagWrapper>
+          <TextField
+            variant="outlined"
+            name="tag"
+            placeholder="태그를 입력하세요"
+            value={form.inputs.tag}
+            onKeyPress={form.onKeyPress}
+            onChange={form.onChange}
+            customStyles={inputStyles}
+            borderless
+          />
+        </TagForm>
+        <Editor />
+        <Footer>
+          <Button>
+            작성하기
+          </Button>
+        </Footer>
+      </Form>
+      <div>
+        뷰어
+      </div>
     </Root>
   );
 };
 
 const Root = styled.div({
+  display: 'flex',
   position: 'absolute',
   boxSizing: 'border-box',
   width: '100%',
@@ -90,10 +103,15 @@ const Root = styled.div({
   background: dsPalette.themeWhite.toString(),
 });
 
+const Form = styled.form({
+
+});
+
 const TagForm = styled.div({
   display: 'flex',
   alignItems: 'center',
   borderRadius: '4px',
+  marginBottom: '.75rem',
 });
 
 const TagWrapper = styled.div({
@@ -111,11 +129,28 @@ const Tag = styled.div({
   height: '2rem',
   alignItems: 'center',
   cursor: 'pointer',
-  marginLeft: '0.5rem',
+  marginRight: '.75rem',
+  transition: 'all 0.125s ease-in 0s',
+  animation: '0.125s ease-in-out 0s 1 normal forwards running iMKika',
 });
 
+const Footer = styled.div({
+  position: 'absolute',
+  borderTop: '1px solid #e6e6e6',
+  boxSizing: 'border-box',
+  width: '100%',
+  left: 0,
+  bottom: 0,
+});
+
+const inputStyles = {
+  paddingLeft: 0,
+  paddingRight: 0,
+  fontSize: '1.125rem',
+};
+
 const titleInputStyles: CSSProperties = {
-  padding: 0,
+  ...inputStyles,
   fontSize: '2.75rem',
   fontWeight: 'bold',
 };
