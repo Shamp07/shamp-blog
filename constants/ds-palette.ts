@@ -12,4 +12,8 @@ export default {
   typeSecond: new Color('#868E96'),
   typeWhite: new Color('#FFFFFF'),
   typeBlack: new Color('#000000'),
+
+  write: {
+    viewerBackground: new Color('#FBFCFD'),
+  },
 };

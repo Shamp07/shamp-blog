@@ -1,14 +1,21 @@
-import React, {MouseEvent, ChangeEvent, KeyboardEvent, CSSProperties} from 'react';
+import React, {
+  MouseEvent, ChangeEvent, KeyboardEvent, CSSProperties,
+} from 'react';
 import dynamic from 'next/dynamic';
 import styled from '@emotion/styled';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 
 import dsPalette from '@constants/ds-palette';
 import TextField from '@atoms/TextField';
-import Button from "@atoms/Button";
+import Button from '@atoms/Button';
 
 const Editor = dynamic(
   () => import('./PostEditor'),
+  { ssr: false },
+);
+
+const Viewer = dynamic(
+  () => import('./PostViewer'),
   { ssr: false },
 );
 
@@ -16,9 +23,11 @@ interface Form {
   inputs: {
     title: string;
     tag: string;
+    content: string;
   };
   tags: string[];
   onChange(event: ChangeEvent<HTMLInputElement>): void;
+  onChangeContent(value: string): void;
   onKeyPress(event: KeyboardEvent<HTMLInputElement>): void;
   onDelete(event: MouseEvent<HTMLElement>): void;
 }
@@ -28,6 +37,7 @@ const Write = () => {
     inputs: {
       title: '',
       tag: '',
+      content: '',
     },
     tags: [],
     onChange(event) {
@@ -35,6 +45,9 @@ const Write = () => {
         ...this.inputs,
         [event.target.name]: event.target.value,
       };
+    },
+    onChangeContent(value: string) {
+      this.inputs.content = value;
     },
     onKeyPress(event) {
       const { tags, inputs: { tag } } = this;
@@ -53,7 +66,7 @@ const Write = () => {
 
   return (
     <Root>
-      <Form>
+      <PostForm>
         <TextField
           variant="outlined"
           name="title"
@@ -78,16 +91,17 @@ const Write = () => {
             borderless
           />
         </TagForm>
-        <Editor />
+        <Editor content={form.inputs.content} onChange={form.onChangeContent} />
         <Footer>
           <Button>
             작성하기
           </Button>
         </Footer>
-      </Form>
-      <div>
-        뷰어
-      </div>
+      </PostForm>
+      <PostViewer>
+        <h1>{form.inputs.title}</h1>
+        <Viewer content={form.inputs.content} />
+      </PostViewer>
     </Root>
   );
 };
@@ -95,16 +109,22 @@ const Write = () => {
 const Root = styled.div({
   display: 'flex',
   position: 'absolute',
-  boxSizing: 'border-box',
   width: '100%',
   height: '100%',
-  padding: '3rem',
   top: 0,
   background: dsPalette.themeWhite.toString(),
 });
 
-const Form = styled.form({
+const PostForm = styled.form({
+  flex: '1 1 0%',
+  padding: '3rem',
+  boxSizing: 'border-box',
+  boxShadow: 'rgb(0 0 0 / 2%) 0px 0px 8px',
+});
 
+const PostViewer = styled.div({
+  flex: '1 1 0%',
+  background: dsPalette.write.viewerBackground.toString(),
 });
 
 const TagForm = styled.div({
@@ -151,6 +171,7 @@ const inputStyles = {
 
 const titleInputStyles: CSSProperties = {
   ...inputStyles,
+  paddingTop: 0,
   fontSize: '2.75rem',
   fontWeight: 'bold',
 };

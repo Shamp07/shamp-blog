@@ -3,15 +3,24 @@ import styled from '@emotion/styled';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
-const PostEditor = () => (
+interface Props {
+  content: string;
+  onChange(): void;
+}
+
+const PostEditor = ({ content, onChange }: Props) => (
   <Root>
     <Editor
       placeholder="내용을 입력해주세요..."
       previewStyle="vertical"
-      height="600px"
       initialEditType="wysiwyg"
       useCommandShortcut
       hideModeSwitch
+      events={{
+        change(dd) {
+        }
+      }}
+      initialValue={content}
     />
   </Root>
 );
