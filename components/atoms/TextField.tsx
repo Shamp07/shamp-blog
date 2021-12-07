@@ -28,7 +28,10 @@ const TextField = ({
   borderless,
   customStyles,
 }: Props) => (
-  <Root borderless={borderless}>
+  <Root
+    borderless={borderless}
+    customStyles={customStyles}
+  >
     <Field
       type={type}
       label={label}
@@ -41,7 +44,6 @@ const TextField = ({
       helperText={helperText}
       error={error}
       onKeyPress={onKeyPress}
-      customStyles={customStyles}
     />
     {description && <Description>{description}</Description>}
   </Root>
@@ -54,25 +56,29 @@ TextField.defaultProps = {
   customStyles: undefined,
 };
 
-const Root = styled.div<{ borderless?: boolean }>(({ borderless }) => ({
+interface RootProps {
+  borderless?: boolean
+  customStyles?: CSSProperties;
+}
+
+const Root = styled.div<RootProps>(({ borderless, customStyles }) => ({
   ...(borderless ? ({
     '& fieldset': {
       border: 0,
     },
   }) : null),
+
+  '& .MuiTextField-root input': {
+    ...customStyles,
+  },
 }));
 
-const Field = styled(RawTextField)<{ customStyles?: CSSProperties; }>(({ customStyles }) => ({
+const Field = styled(RawTextField)({
   width: '100%',
   '&&& *': {
     fontFamily: 'inherit',
   },
-  ...(customStyles ? ({
-    '&&& input': {
-      ...customStyles,
-    },
-  }) : null),
-}));
+});
 
 const Description = styled.div({
   color: dsPalette.typeBlack.toString(),

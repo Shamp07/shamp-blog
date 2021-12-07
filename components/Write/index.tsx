@@ -46,8 +46,8 @@ const Write = () => {
         [event.target.name]: event.target.value,
       };
     },
-    onChangeContent(value: string) {
-      this.inputs.content = value;
+    onChangeContent() {
+      console.log('shit');
     },
     onKeyPress(event) {
       const { tags, inputs: { tag } } = this;
@@ -163,7 +163,7 @@ const Footer = styled.div({
   bottom: 0,
 });
 
-const inputStyles = {
+const inputStyles: CSSProperties = {
   paddingLeft: 0,
   paddingRight: 0,
   fontSize: '1.125rem',

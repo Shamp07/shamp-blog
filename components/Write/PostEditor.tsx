@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import styled from '@emotion/styled';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
@@ -8,22 +8,39 @@ interface Props {
   onChange(): void;
 }
 
-const PostEditor = ({ content, onChange }: Props) => (
-  <Root>
-    <Editor
-      placeholder="내용을 입력해주세요..."
-      previewStyle="vertical"
-      initialEditType="wysiwyg"
-      useCommandShortcut
-      hideModeSwitch
-      events={{
-        change(dd) {
-        }
-      }}
-      initialValue={content}
-    />
-  </Root>
-);
+const PostEditor = ({ content, onChange }: Props) => {
+  const editorRef = useRef(null);
+
+  useEffect(() => {
+    if (!editorRef.current) return;
+
+  }, [editorRef]);
+
+  const EditorWithForwardedRef = React.forwardRef((props, ref) => (
+    <Editor {...props} forwardedRef={ref} />
+  ));
+
+  const onChange = useCallback(() => {
+    if (!editorRef.current) return;
+    const instance = editorRef.current?.getInstance();
+    onChange(instance.getMarkdown());
+  }, [editorRef]);
+
+  return (
+    <Root>
+      <EditorWithForwardedRef
+        placeholder="내용을 입력해주세요..."
+        previewStyle="vertical"
+        initialEditType="wysiwyg"
+        useCommandShortcut
+        hideModeSwitch
+        initialValue={content}
+        onChange={(event) => console.log(event)}
+        ref={editorRef}
+      />
+    </Root>
+  );
+}
 
 const Root = styled.div({
   '&&& *': {
