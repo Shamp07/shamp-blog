@@ -8,11 +8,7 @@ import { observer, useLocalObservable } from 'mobx-react-lite';
 import dsPalette from '@constants/ds-palette';
 import TextField from '@atoms/TextField';
 import Button from '@atoms/Button';
-
-const Editor = dynamic(
-  () => import('./PostEditor'),
-  { ssr: false },
-);
+import Editor from './Editor';
 
 const Viewer = dynamic(
   () => import('./PostViewer'),
@@ -46,8 +42,8 @@ const Write = () => {
         [event.target.name]: event.target.value,
       };
     },
-    onChangeContent() {
-      console.log('shit');
+    onChangeContent(value: string) {
+      this.inputs.content = value;
     },
     onKeyPress(event) {
       const { tags, inputs: { tag } } = this;
@@ -91,7 +87,7 @@ const Write = () => {
             borderless
           />
         </TagForm>
-        <Editor content={form.inputs.content} onChange={form.onChangeContent} />
+        <Editor onChange={form.onChangeContent} />
         <Footer>
           <Button>
             작성하기
@@ -99,7 +95,7 @@ const Write = () => {
         </Footer>
       </PostForm>
       <PostViewer>
-        <h1>{form.inputs.title}</h1>
+        <Title>{form.inputs.title}</Title>
         <Viewer content={form.inputs.content} />
       </PostViewer>
     </Root>
@@ -124,7 +120,12 @@ const PostForm = styled.form({
 
 const PostViewer = styled.div({
   flex: '1 1 0%',
+  padding: '3rem',
   background: dsPalette.write.viewerBackground.toString(),
+});
+
+const Title = styled.h1({
+  fontSize: '2.75rem',
 });
 
 const TagForm = styled.div({
