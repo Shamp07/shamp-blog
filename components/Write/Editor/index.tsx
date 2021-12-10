@@ -1,4 +1,6 @@
-import React, { forwardRef, useRef, useCallback, MutableRefObject } from 'react';
+import React, {
+  forwardRef, useRef, useCallback, MutableRefObject,
+} from 'react';
 import dynamic from 'next/dynamic';
 import { Editor as EditorType, EditorProps } from '@toast-ui/react-editor';
 import { Props as WrappedEditorProps } from './WrappedEditor';

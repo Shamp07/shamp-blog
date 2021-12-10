@@ -1,7 +1,6 @@
 import React, {
   MouseEvent, ChangeEvent, KeyboardEvent, CSSProperties,
 } from 'react';
-import dynamic from 'next/dynamic';
 import styled from '@emotion/styled';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 
@@ -9,11 +8,7 @@ import dsPalette from '@constants/ds-palette';
 import TextField from '@atoms/TextField';
 import Button from '@atoms/Button';
 import Editor from './Editor';
-
-const Viewer = dynamic(
-  () => import('./PostViewer'),
-  { ssr: false },
-);
+import Viewer from './Viewer';
 
 interface Form {
   inputs: {
@@ -122,10 +117,13 @@ const PostViewer = styled.div({
   flex: '1 1 0%',
   padding: '3rem',
   background: dsPalette.write.viewerBackground.toString(),
+  overflow: 'auto',
 });
 
 const Title = styled.h1({
   fontSize: '2.75rem',
+  marginBottom: '4rem',
+  fontWeight: 800,
 });
 
 const TagForm = styled.div({
@@ -174,7 +172,7 @@ const titleInputStyles: CSSProperties = {
   ...inputStyles,
   paddingTop: 0,
   fontSize: '2.75rem',
-  fontWeight: 'bold',
+  fontWeight: 800,
 };
 
 export default observer(Write);
