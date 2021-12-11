@@ -1,7 +1,7 @@
 import React, { MutableRefObject } from 'react';
 import { Viewer, ViewerProps } from '@toast-ui/react-editor';
 import styled from '@emotion/styled';
-import dsPalette from "@constants/ds-palette";
+import dsPalette from '@constants/ds-palette';
 
 export interface Props extends ViewerProps {
   forwardedRef?: MutableRefObject<Viewer>;
@@ -26,13 +26,24 @@ const Root = styled.div({
     lineHeight: '1.7',
   },
 
+  '.toastui-editor-contents blockquote': {
+    margin: '2rem 0px',
+    borderLeft: `4px solid ${dsPalette.themePrimary.toString()}`,
+    padding: '1rem 1rem 1rem 2rem',
+    background: dsPalette.write.blockquoteBackground.toString(),
+    '& > p': {
+      color: dsPalette.typePrimary.toString(),
+    },
+  },
+
   '.toastui-editor-contents ul > li::before': {
     marginTop: '11px',
     backgroundColor: dsPalette.typePrimary.toString(),
   },
 
   '.toastui-editor-contents ul > li.task-list-item::before': {
-    marginTop: '5px',
+    marginTop: '4px',
+    backgroundColor: dsPalette.themeWhite.toString(),
   },
 
   '.toastui-editor-contents p + h1, .toastui-editor-contents p + h2, .toastui-editor-contents p + h3, .toastui-editor-contents p + h4': {

@@ -15,5 +15,6 @@ export default {
 
   write: {
     viewerBackground: new Color('#FBFCFD'),
+    blockquoteBackground: new Color('#F8F9FA'),
   },
 };
