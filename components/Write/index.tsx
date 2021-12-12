@@ -57,38 +57,52 @@ const Write = () => {
 
   return (
     <Root>
-      <PostForm>
-        <TextField
-          variant="outlined"
-          name="title"
-          placeholder="제목을 입력하세요"
-          value={form.inputs.title}
-          onChange={form.onChange}
-          customStyles={titleInputStyles}
-          borderless
-        />
-        <TagForm>
-          <TagWrapper>
-            {form.tags.map((tag) => <Tag onClick={form.onDelete}>{tag}</Tag>)}
-          </TagWrapper>
+      <WriteSection>
+        <WriteForm>
           <TextField
             variant="outlined"
-            name="tag"
-            placeholder="태그를 입력하세요"
-            value={form.inputs.tag}
-            onKeyPress={form.onKeyPress}
+            name="title"
+            placeholder="제목을 입력하세요"
+            value={form.inputs.title}
             onChange={form.onChange}
-            customStyles={inputStyles}
+            customStyles={titleInputStyles}
             borderless
           />
-        </TagForm>
-        <Editor onChange={form.onChangeContent} />
-        <Footer>
-          <Button>
-            작성하기
+          <TagForm>
+            <TagWrapper>
+              {form.tags.map((tag) => <Tag onClick={form.onDelete}>{tag}</Tag>)}
+            </TagWrapper>
+            <TextField
+              variant="outlined"
+              name="tag"
+              placeholder="태그를 입력하세요"
+              value={form.inputs.tag}
+              onKeyPress={form.onKeyPress}
+              onChange={form.onChange}
+              customStyles={inputStyles}
+              borderless
+            />
+          </TagForm>
+          <Editor onChange={form.onChangeContent} />
+        </WriteForm>
+        <WriteFooter>
+          <Button
+            size="small"
+            variant="contained"
+            customStyles={buttonStyles}
+          >
+            나가기
           </Button>
-        </Footer>
-      </PostForm>
+          <Button
+            color="primary"
+            size="small"
+            variant="contained"
+            customStyles={buttonStyles}
+          >
+            작성
+          </Button>
+        </WriteFooter>
+      </WriteSection>
       <PostViewer>
         <Title>{form.inputs.title}</Title>
         <Viewer content={form.inputs.content} />
@@ -106,11 +120,30 @@ const Root = styled.div({
   background: dsPalette.themeWhite.toString(),
 });
 
-const PostForm = styled.form({
+const WriteForm = styled.form({
   flex: '1 1 0%',
   padding: '3rem',
   boxSizing: 'border-box',
   boxShadow: 'rgb(0 0 0 / 2%) 0px 0px 8px',
+});
+
+const WriteSection = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  boxShadow: 'rgb(0 0 0 / 2%) 0px 0px 8px',
+});
+
+const WriteFooter = styled.div({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  boxSizing: 'border-box',
+  paddingLeft: '1rem',
+  paddingRight: '1rem',
+  height: '4rem',
+  width: '100%',
+  boxShadow: 'rgb(0 0 0 / 10%) 0px 0px 8px',
 });
 
 const PostViewer = styled.div({
@@ -153,15 +186,6 @@ const Tag = styled.div({
   animation: '0.125s ease-in-out 0s 1 normal forwards running iMKika',
 });
 
-const Footer = styled.div({
-  position: 'absolute',
-  borderTop: '1px solid #e6e6e6',
-  boxSizing: 'border-box',
-  width: '100%',
-  left: 0,
-  bottom: 0,
-});
-
 const inputStyles: CSSProperties = {
   paddingLeft: 0,
   paddingRight: 0,
@@ -173,6 +197,12 @@ const titleInputStyles: CSSProperties = {
   paddingTop: 0,
   fontSize: '2.75rem',
   fontWeight: 800,
+};
+
+const buttonStyles: CSSProperties = {
+  height: '2.5rem',
+  fontSize: '1.125rem',
+  padding: '0 1.25rem',
 };
 
 export default observer(Write);

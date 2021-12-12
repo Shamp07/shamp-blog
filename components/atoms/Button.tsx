@@ -1,28 +1,33 @@
-import RawButton from '@mui/material/Button';
+import RawButton, { ButtonProps } from '@mui/material/Button';
 import RawLoadingButton from '@mui/lab/LoadingButton';
 import styled from '@emotion/styled';
 
 import dsPalette from '@constants/ds-palette';
+import { CSSProperties } from 'react';
+
+interface Props extends ButtonProps {
+  customStyles?: CSSProperties;
+}
 
 const CommonButtonStyle = {
-  '&&&': {
-    boxShadow: 'none',
-    fontFamily: 'inherit',
-  },
+  boxShadow: 'none',
+  fontFamily: 'inherit',
 };
 
-const Button = styled(RawButton)({
+const Button = styled(RawButton)<Props>(({ customStyles }) => ({
   '&&&': {
-    boxShadow: 'none',
-    fontFamily: 'inherit',
+    ...CommonButtonStyle,
+    ...customStyles,
   },
-});
+}));
 
 export const SubmitButton = styled(Button)(() => ({
 }));
 
 export const LoadingButton = styled(RawLoadingButton)({
-  ...CommonButtonStyle,
+  '&&&': {
+    ...CommonButtonStyle,
+  },
 });
 
 export const SubButton = styled(SubmitButton)({
