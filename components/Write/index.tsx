@@ -3,6 +3,8 @@ import React, {
 } from 'react';
 import styled from '@emotion/styled';
 import { observer, useLocalObservable } from 'mobx-react-lite';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 import dsPalette from '@constants/ds-palette';
 import TextField from '@atoms/TextField';
@@ -88,9 +90,10 @@ const Write = () => {
         <WriteFooter>
           <Button
             size="small"
-            variant="contained"
+            variant="text"
             customStyles={buttonStyles}
           >
+            <Icon icon={faArrowLeft} />
             나가기
           </Button>
           <Button
@@ -99,7 +102,7 @@ const Write = () => {
             variant="contained"
             customStyles={buttonStyles}
           >
-            작성
+            작성하기
           </Button>
         </WriteFooter>
       </WriteSection>
@@ -144,6 +147,10 @@ const WriteFooter = styled.div({
   height: '4rem',
   width: '100%',
   boxShadow: 'rgb(0 0 0 / 10%) 0px 0px 8px',
+});
+
+const Icon = styled(FontAwesomeIcon)({
+  marginRight: '.5rem',
 });
 
 const PostViewer = styled.div({

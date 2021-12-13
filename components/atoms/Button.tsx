@@ -1,32 +1,54 @@
+import React, { CSSProperties } from 'react';
 import RawButton, { ButtonProps } from '@mui/material/Button';
 import RawLoadingButton from '@mui/lab/LoadingButton';
 import styled from '@emotion/styled';
 
 import dsPalette from '@constants/ds-palette';
-import { CSSProperties } from 'react';
 
 interface Props extends ButtonProps {
   customStyles?: CSSProperties;
 }
 
-const CommonButtonStyle = {
-  boxShadow: 'none',
-  fontFamily: 'inherit',
-};
+const Button = ({
+  size,
+  color,
+  variant,
+  customStyles,
+  children,
+}: Props) => (
+  <Root customStyles={customStyles}>
+    <RawButton
+      size={size}
+      color={color}
+      variant={variant}
+    >
+      {children}
+    </RawButton>
+  </Root>
+);
 
-const Button = styled(RawButton)<Props>(({ customStyles }) => ({
-  '&&&': {
-    ...CommonButtonStyle,
+const Root = styled.div<{ customStyles?: CSSProperties }>(({ customStyles }) => ({
+  '&&& .MuiButton-root': {
+    ...commonButtonStyle,
     ...customStyles,
   },
 }));
 
-export const SubmitButton = styled(Button)(() => ({
-}));
+Button.defaultProps = {
+  customStyles: undefined,
+};
+
+const commonButtonStyle = {
+  boxShadow: 'none',
+  fontFamily: 'inherit',
+  letterSpacing: 'normal',
+};
+
+export const SubmitButton = styled(Button)({});
 
 export const LoadingButton = styled(RawLoadingButton)({
   '&&&': {
-    ...CommonButtonStyle,
+    ...commonButtonStyle,
   },
 });
 
