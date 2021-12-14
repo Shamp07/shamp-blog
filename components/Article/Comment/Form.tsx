@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useCallback } from 'react';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import styled from '@emotion/styled';
-import TextareaAutosize from 'react-textarea-autosize';
 
 import stores from '@stores';
 import Button from '@atoms/Button';

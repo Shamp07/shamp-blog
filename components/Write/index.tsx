@@ -96,14 +96,24 @@ const Write = () => {
             <Icon icon={faArrowLeft} />
             나가기
           </Button>
-          <Button
-            color="primary"
-            size="small"
-            variant="contained"
-            customStyles={buttonStyles}
-          >
-            작성하기
-          </Button>
+          <ButtonWrapper>
+            <Button
+              color="primary"
+              size="small"
+              variant="outlined"
+              customStyles={buttonStyles}
+            >
+              임시저장
+            </Button>
+            <Button
+              color="primary"
+              size="small"
+              variant="contained"
+              customStyles={buttonStyles}
+            >
+              출간하기
+            </Button>
+          </ButtonWrapper>
         </WriteFooter>
       </WriteSection>
       <PostViewer>
@@ -151,6 +161,10 @@ const WriteFooter = styled.div({
 
 const Icon = styled(FontAwesomeIcon)({
   marginRight: '.5rem',
+});
+
+const ButtonWrapper = styled.div({
+  display: 'flex',
 });
 
 const PostViewer = styled.div({

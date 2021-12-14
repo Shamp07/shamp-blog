@@ -28,6 +28,9 @@ const Button = ({
 );
 
 const Root = styled.div<{ customStyles?: CSSProperties }>(({ customStyles }) => ({
+  '& + &': {
+    marginLeft: '0.75rem',
+  },
   '&&& .MuiButton-root': {
     ...commonButtonStyle,
     ...customStyles,
