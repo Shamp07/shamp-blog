@@ -6,6 +6,7 @@ import styled from '@emotion/styled';
 import dsPalette from '@constants/ds-palette';
 
 interface Props extends ButtonProps {
+  onClick?(): void;
   customStyles?: CSSProperties;
 }
 
@@ -13,10 +14,11 @@ const Button = ({
   size,
   color,
   variant,
+  onClick,
   customStyles,
   children,
 }: Props) => (
-  <Root customStyles={customStyles}>
+  <Root customStyles={customStyles} onClick={onClick}>
     <RawButton
       size={size}
       color={color}
@@ -38,6 +40,7 @@ const Root = styled.div<{ customStyles?: CSSProperties }>(({ customStyles }) => 
 }));
 
 Button.defaultProps = {
+  onClick: undefined,
   customStyles: undefined,
 };
 

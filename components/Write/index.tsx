@@ -1,10 +1,11 @@
 import React, {
   MouseEvent, ChangeEvent, KeyboardEvent, CSSProperties,
 } from 'react';
+import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { observer, useLocalObservable } from 'mobx-react-lite';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 import dsPalette from '@constants/ds-palette';
 import TextField from '@atoms/TextField';
@@ -26,6 +27,8 @@ interface Form {
 }
 
 const Write = () => {
+  const router = useRouter();
+
   const form = useLocalObservable<Form>(() => ({
     inputs: {
       title: '',
@@ -57,6 +60,8 @@ const Write = () => {
     },
   }));
 
+  const moveHome = () => router.push('/');
+
   return (
     <Root>
       <WriteSection>
@@ -73,17 +78,17 @@ const Write = () => {
           <TagForm>
             <TagWrapper>
               {form.tags.map((tag) => <Tag onClick={form.onDelete}>{tag}</Tag>)}
+              <TextField
+                variant="outlined"
+                name="tag"
+                placeholder="태그를 입력하세요"
+                value={form.inputs.tag}
+                onKeyPress={form.onKeyPress}
+                onChange={form.onChange}
+                customStyles={tagInputStyles}
+                borderless
+              />
             </TagWrapper>
-            <TextField
-              variant="outlined"
-              name="tag"
-              placeholder="태그를 입력하세요"
-              value={form.inputs.tag}
-              onKeyPress={form.onKeyPress}
-              onChange={form.onChange}
-              customStyles={inputStyles}
-              borderless
-            />
           </TagForm>
           <Editor onChange={form.onChangeContent} />
         </WriteForm>
@@ -92,6 +97,7 @@ const Write = () => {
             size="small"
             variant="text"
             customStyles={buttonStyles}
+            onClick={moveHome}
           >
             <Icon icon={faArrowLeft} />
             나가기
@@ -111,15 +117,17 @@ const Write = () => {
               variant="contained"
               customStyles={buttonStyles}
             >
-              출간하기
+              작성
             </Button>
           </ButtonWrapper>
         </WriteFooter>
       </WriteSection>
-      <PostViewer>
-        <Title>{form.inputs.title}</Title>
-        <Viewer content={form.inputs.content} />
-      </PostViewer>
+      <ViewerSection>
+        <PostViewer>
+          <Title>{form.inputs.title}</Title>
+          <Viewer content={form.inputs.content} />
+        </PostViewer>
+      </ViewerSection>
     </Root>
   );
 };
@@ -134,17 +142,23 @@ const Root = styled.div({
 });
 
 const WriteForm = styled.form({
-  flex: '1 1 0%',
   padding: '3rem',
   boxSizing: 'border-box',
-  boxShadow: 'rgb(0 0 0 / 2%) 0px 0px 8px',
 });
 
 const WriteSection = styled.div({
   display: 'flex',
+  flex: '1 1 0%',
   flexDirection: 'column',
   justifyContent: 'space-between',
   boxShadow: 'rgb(0 0 0 / 2%) 0px 0px 8px',
+  position: 'relative',
+  zIndex: 1,
+});
+
+const ViewerSection = styled.div({
+  display: 'flex',
+  flex: '1 1 0%',
 });
 
 const WriteFooter = styled.div({
@@ -189,33 +203,38 @@ const TagForm = styled.div({
 
 const TagWrapper = styled.div({
   display: 'flex',
+  flexWrap: 'wrap',
 });
 
 const Tag = styled.div({
-  display: 'flex',
+  display: 'inline-flex',
   background: dsPalette.themePrimary.toString(),
   color: dsPalette.themeWhite.toString(),
   borderRadius: '1rem',
   fontSize: '1rem',
-  paddingLeft: '1rem',
-  paddingRight: '1rem',
-  height: '2rem',
+  padding: '4px 1rem',
+  marginBottom: '.75rem',
   alignItems: 'center',
   cursor: 'pointer',
   marginRight: '.75rem',
   transition: 'all 0.125s ease-in 0s',
   animation: '0.125s ease-in-out 0s 1 normal forwards running iMKika',
+
 });
 
 const inputStyles: CSSProperties = {
-  paddingLeft: 0,
-  paddingRight: 0,
+  padding: 0,
   fontSize: '1.125rem',
+  marginBottom: '.75rem',
+};
+
+const tagInputStyles: CSSProperties = {
+  ...inputStyles,
+  // height: '32px',
 };
 
 const titleInputStyles: CSSProperties = {
   ...inputStyles,
-  paddingTop: 0,
   fontSize: '2.75rem',
   fontWeight: 800,
 };
