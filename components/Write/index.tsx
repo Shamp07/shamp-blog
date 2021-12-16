@@ -214,18 +214,19 @@ const Tag = styled.div({
   fontSize: '1rem',
   padding: '4px 1rem',
   marginBottom: '.75rem',
+  wordBreak: 'break-all',
   alignItems: 'center',
   cursor: 'pointer',
   marginRight: '.75rem',
-  transition: 'all 0.125s ease-in 0s',
-  animation: '0.125s ease-in-out 0s 1 normal forwards running iMKika',
-
+  transition: 'all .125s ease-in 0s',
+  animation: '.125s ease-in-out 0s 1 normal forwards running iMKika',
 });
 
 const inputStyles: CSSProperties = {
   padding: 0,
   fontSize: '1.125rem',
-  marginBottom: '.75rem',
+  marginBottom: '.55rem',
+  marginTop: '.2rem',
 };
 
 const tagInputStyles: CSSProperties = {

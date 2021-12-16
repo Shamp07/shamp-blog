@@ -40,6 +40,27 @@ const Root = styled.div({
   '.toastui-editor-md-heading4': {
     fontSize: '1.125rem;',
   },
+
+  '&&& .toastui-editor-md-tab-container': {
+    display: 'none !important',
+  },
+
+  '.toastui-editor-defaultUI': {
+    border: 0,
+  },
+
+  '.toastui-editor-defaultUI-toolbar': {
+    padding: 0,
+    border: 0,
+    background: 'transparent',
+    button: {
+      border: '1.5px solid white',
+      backgroundPositionY: '4px',
+      ':not(:disabled):hover': {
+        border: '1.5px solid white',
+      },
+    },
+  },
 });
 
 export default WrappedEditor;

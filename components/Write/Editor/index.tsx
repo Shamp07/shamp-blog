@@ -37,7 +37,6 @@ const WysiwygEditor = ({ onChange }: Props) => {
       placeholder="내용을 입력해주세요..."
       useCommandShortcut
       hideModeSwitch
-      height="75vh"
       initialEditType="markdown"
       ref={editorRef}
       onChange={handleChange}
