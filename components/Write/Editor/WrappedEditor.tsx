@@ -21,8 +21,10 @@ const Root = styled.div({
     fontFamily: 'inherit',
   },
 
-  '.ProseMirror': {
+  '&&& .ProseMirror': {
     fontSize: '1.125rem',
+    paddingLeft: 0,
+    paddingRight: 0,
   },
 
   '.toastui-editor-md-heading1': {

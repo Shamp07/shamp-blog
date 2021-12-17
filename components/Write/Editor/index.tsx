@@ -38,6 +38,7 @@ const WysiwygEditor = ({ onChange }: Props) => {
       useCommandShortcut
       hideModeSwitch
       initialEditType="markdown"
+      height="70vh"
       ref={editorRef}
       onChange={handleChange}
     />
