@@ -11,7 +11,6 @@ export interface PostStore {
   article: T.Article | null;
   formHandleChange(event: string | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
   clearForm(): void;
-  addPost(): void;
   getPostList(category: string, tag: string, page: number): Promise<void>;
   getPost(id: number, isModify: boolean): Promise<void>;
   modifyPost(): void;
@@ -48,13 +47,6 @@ const postStore: PostStore = {
       title: '',
       content: '',
     };
-  },
-  addPost() {
-    Axios({
-      method: T.RequestMethod.POST,
-      url: '/api/post',
-      data: this.form,
-    });
   },
   async getPostList(category, tag, page) {
     await Axios({

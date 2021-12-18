@@ -14,12 +14,6 @@ export interface SignStore {
     email: string;
     password: string;
   }): Promise<T.Response>;
-  signUp(form: {
-    email: string;
-    name: string;
-    password: string;
-    passwordCheck: string;
-  }): void;
   signOut(): void;
   resetPassword(currentPassword: string, password: string): void;
   deleteUser(email: string): void;
@@ -46,21 +40,6 @@ const signStore: SignStore = {
   async signIn(signInForm) {
     const res = await axios.post<T.Response>('/api/user/login', signInForm);
     return res.data;
-  },
-  signUp(signUpForm) {
-    Axios({
-      method: T.RequestMethod.POST,
-      url: '/api/user',
-      data: signUpForm,
-      success: (response) => {
-        const { code, message } = response.data;
-        if (code === 1) {
-          this.verifyEmail(signUpForm.email);
-        } else {
-          utilStore.openPopup(T.Popup.ALERT, message);
-        }
-      },
-    });
   },
   signOut() {
     utilStore.closeHeaderMenu();

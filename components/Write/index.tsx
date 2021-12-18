@@ -57,6 +57,7 @@ const Write = () => {
         title={form.inputs.title}
         tag={form.inputs.tag}
         tags={form.tags}
+        content={form.inputs.content}
         onChange={form.onChange}
         onChangeContent={form.onChangeContent}
         onKeyPress={form.onKeyPress}

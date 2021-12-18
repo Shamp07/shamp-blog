@@ -1,7 +1,10 @@
 import React, {
-  ChangeEvent, CSSProperties, KeyboardEvent, MouseEvent,
+  ChangeEvent, CSSProperties, KeyboardEvent, MouseEvent, useEffect,
 } from 'react';
+import { useRouter } from 'next/router';
+import { useMutation } from 'react-query';
 import styled from '@emotion/styled';
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
@@ -9,12 +12,12 @@ import Button from '@atoms/Button';
 import TextField from '@atoms/TextField';
 import Editor from '@components/Write/Editor';
 import dsPalette from '@constants/ds-palette';
-import { useRouter } from 'next/router';
 
 interface Props {
   title: string;
   tag: string;
   tags: string[];
+  content: string;
   onChange(event: ChangeEvent<HTMLInputElement>): void;
   onChangeContent(value: string): void;
   onKeyPress(event: KeyboardEvent<HTMLInputElement>): void;
@@ -25,13 +28,28 @@ const WriteSection = ({
   title,
   tag,
   tags,
+  content,
   onChange,
   onChangeContent,
   onDelete,
   onKeyPress,
 }: Props) => {
   const router = useRouter();
+
+  const mutation = useMutation(() => axios.post('/api/post', { title, tags, content }));
+
+  useEffect(() => {
+    if (mutation.isSuccess) moveToHome();
+  }, [mutation.isSuccess]);
+
   const moveToHome = () => router.push('/');
+  const onAddPost = () => {
+    if (!title.trim() || !tags.length || !content.trim()) {
+      return;
+    }
+
+    mutation.mutate();
+  };
 
   return (
     <Root>
@@ -55,7 +73,7 @@ const WriteSection = ({
               value={tag}
               onKeyPress={onKeyPress}
               onChange={onChange}
-              customStyles={tagInputStyles}
+              customStyles={inputStyles}
               borderless
             />
           </TagWrapper>
@@ -86,6 +104,7 @@ const WriteSection = ({
             size="small"
             variant="contained"
             customStyles={buttonStyles}
+            onClick={onAddPost}
           >
             작성
           </Button>
@@ -171,11 +190,6 @@ const inputStyles: CSSProperties = {
   fontSize: '1.125rem',
   marginBottom: '.55rem',
   marginTop: '.2rem',
-};
-
-const tagInputStyles: CSSProperties = {
-  ...inputStyles,
-  // height: '32px',
 };
 
 const titleInputStyles: CSSProperties = {

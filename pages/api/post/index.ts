@@ -22,10 +22,9 @@ const handler = async (request: T.NextApiRequestToken, response: NextApiResponse
 };
 
 const addPost = async (request: NextApiRequest, response: NextApiResponse) => {
-  const {
-    category, tags, title, content,
-  } = request.body;
-  const values = [category, tags, title, content];
+  const { title, tags, content } = request.body;
+  const values = [tags, title, content];
+  console.log(tags);
 
   await Database.execute(
     (database: Client) => database.query(
@@ -33,9 +32,8 @@ const addPost = async (request: NextApiRequest, response: NextApiResponse) => {
       values,
     )
       .then(() => {
-        response.json({
+        response.status(200).json({
           success: true,
-          message: '😀 정상적으로 글이 등록 되었어요!',
         });
       }),
   ).then(() => {
@@ -117,15 +115,13 @@ const deletePost = async (request: NextApiRequest, response: NextApiResponse) =>
 
 const INSERT_POST = `
   INSERT INTO POST (
-    category,
     tags,
     title,
     content
   ) VALUES (
     $1,
     $2,
-    $3,
-    $4
+    $3
   );
 `;
 
