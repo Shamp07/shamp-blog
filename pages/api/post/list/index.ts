@@ -9,13 +9,9 @@ import * as T from '@types';
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   await cors(request, response);
   if (request.method === T.RequestMethod.GET) {
-    const { category, tag, page } = request.query;
-    const values = [category, tag, page];
-
     await Database.execute(
       (database: Client) => database.query(
         SELECT_POST_LIST,
-        values,
       )
         .then((result) => {
           response.json({
@@ -24,7 +20,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           });
         }),
     ).then(() => {
-      logger.info('[SELECT, GET /api/post/list] 카테고리 게시글 조회');
+      logger.info('[SELECT, GET /api/post/list] 게시글 조회');
     });
   }
 };
@@ -38,7 +34,6 @@ const SELECT_POST_LIST = `
     FROM (
       SELECT
         p.id,
-        p.category,
         p.tags AS tag,
         p.title,
         p.content,
@@ -54,18 +49,10 @@ const SELECT_POST_LIST = `
           ELSE TO_CHAR(crt_dttm, 'YYYY-MM-DD')
         END AS time
       FROM post p
-      WHERE
-        (($1 IN ('all', 'best')) OR (category = $1))
-        AND (($2 = 'best' OR $2 IS NULL) OR ($2::text IS NOT NULL AND p.tags = $2))
-        AND p.delete_fl = false
+      WHERE p.delete_fl = false
       ORDER BY p.crt_dttm DESC
     ) b
-    WHERE ((b."likeCnt" > 10) OR ($1 != 'best'))
-    AND ((b."likeCnt" > 10) OR ($2::text IS NULL OR $2 != 'best'))
   ) a
-  WHERE
-    (a.rownum > ($3 - 1) * 10)
-    AND (a.rownum <= ($3 * 10))
 `;
 
 export default handler;

@@ -3,10 +3,20 @@ import Link from 'next/link';
 import styled from '@emotion/styled';
 
 import dsPalette from '@constants/ds-palette';
+import * as T from '@types';
 
-const PostCard = () => (
+interface Props {
+  post: T.Post;
+}
+
+const PostCard = ({
+  post: {
+    id, title, content, likeCnt,
+    time, commentCnt,
+  },
+}: Props) => (
   <Root>
-    <Link href="/post/1" passHref>
+    <Link href={`/post/${id}`} passHref>
       <Section>
         {/* <Image */}
         {/*  src={temp} */}
@@ -14,16 +24,25 @@ const PostCard = () => (
         {/*  height="167" */}
         {/* /> */}
         <Inner>
-          <Title>Title</Title>
-          <Content>
-            Content
-          </Content>
+          <Title>{title}</Title>
+          <Content>{content}</Content>
         </Inner>
       </Section>
     </Link>
     <Footer>
-      <div>3일 전 · 2개의 댓글</div>
-      <div>좋아요 3</div>
+      <div>
+        {time}
+        {' '}
+        ·
+        {' '}
+        {commentCnt}
+        개의 댓글
+      </div>
+      <div>
+        좋아요
+        {' '}
+        {likeCnt}
+      </div>
     </Footer>
   </Root>
 );

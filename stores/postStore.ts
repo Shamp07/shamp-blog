@@ -3,6 +3,7 @@ import { observable } from 'mobx';
 
 import Axios from '@utilities/axios';
 import * as T from '@types';
+import axios from 'axios';
 import utilStore from './utilStore';
 
 export interface PostStore {
@@ -11,7 +12,7 @@ export interface PostStore {
   article: T.Article | null;
   formHandleChange(event: string | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
   clearForm(): void;
-  getPostList(category: string, tag: string, page: number): Promise<void>;
+  getPosts(): Promise<void>;
   getPost(id: number, isModify: boolean): Promise<void>;
   modifyPost(): void;
   deletePost(id: number): void;
@@ -48,16 +49,9 @@ const postStore: PostStore = {
       content: '',
     };
   },
-  async getPostList(category, tag, page) {
-    await Axios({
-      method: T.RequestMethod.GET,
-      url: `${process.env.BASE_PATH}/api/post/list`,
-      data: { category, tag, page },
-      success: (response) => {
-        const { result } = response.data;
-        this.posts = result;
-      },
-    });
+  async getPosts() {
+    const res = await axios.get(`${process.env.BASE_PATH}/api/post/list`);
+    this.posts = res.data.result;
   },
   async getPost(id, isModify) {
     await Axios({

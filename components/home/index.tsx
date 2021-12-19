@@ -1,26 +1,30 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 import styled from '@emotion/styled';
-import Grid from '@mui/material/Grid';
 
 import PostCard from '@components/Home/PostCard';
 import { MediaQuery } from '@constants/styles';
+import stores from '@stores';
 import * as T from '@types';
 
-const Home = () => (
-  <Root>
-    <Wrapper>
-      <Inner>
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-      </Inner>
-    </Wrapper>
-  </Root>
-);
+const Home = () => {
+  const { postStore } = stores();
+  const { posts } = postStore;
+
+  const postCards = posts.map((post) => (
+    <PostCard key={post.id} post={post} />
+  ));
+
+  return (
+    <Root>
+      <Wrapper>
+        <Inner>
+          {postCards}
+        </Inner>
+      </Wrapper>
+    </Root>
+  );
+};
 
 const Root = styled.div({
   width: '1728px',
@@ -49,4 +53,4 @@ const Inner = styled.div({
   flexWrap: 'wrap',
 });
 
-export default Home;
+export default observer(Home);
