@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import dsPalette from '@constants/ds-palette';
-import Viewer from './Viewer';
+import Viewer from '@atoms/Viewer';
 
 interface Props {
   title: string;

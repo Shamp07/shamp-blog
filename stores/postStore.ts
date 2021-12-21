@@ -50,20 +50,12 @@ const postStore: PostStore = {
     };
   },
   async getPosts() {
-    const res = await axios.get(`${process.env.BASE_PATH}/api/post/list`);
-    this.posts = res.data.result;
+    const { data } = await axios.get(`${process.env.BASE_PATH}/api/post/list`);
+    this.posts = data.result;
   },
-  async getPost(id, isModify) {
-    await Axios({
-      method: T.RequestMethod.GET,
-      url: `${process.env.BASE_PATH}/api/post`,
-      data: { id },
-      success: (response) => {
-        const { result } = response.data;
-        if (isModify) this.form = result;
-        else this.article = result;
-      },
-    });
+  async getPost(id) {
+    const { data } = await axios.get(`${process.env.BASE_PATH}/api/post`, { params: { id } });
+    this.article = data.result;
   },
   modifyPost() {
     Axios({

@@ -113,6 +113,7 @@ const SignIn = () => {
 const Root = styled.div({
   display: 'flex',
   width: '450px',
+  marginTop: '3.5rem',
   flexDirection: 'column',
   borderRadius: '1rem',
   background: dsPalette.themeWhite.toString(),

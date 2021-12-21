@@ -152,6 +152,7 @@ const Root = styled.div({
   borderRadius: '1rem',
   background: dsPalette.themeWhite.toString(),
   boxShadow: 'rgb(0 0 0 / 4%) 0px 4px 16px 0px',
+  marginTop: '3.5rem',
 });
 
 const Inner = styled.div({

@@ -28,7 +28,9 @@ const Home = () => {
 
 const Root = styled.div({
   width: '1728px',
-  margin: '0 auto',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  marginTop: '3.5rem',
 
   [MediaQuery[T.Device.DESKTOP]]: {
     width: '1376px',

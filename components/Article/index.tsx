@@ -3,6 +3,7 @@ import Link from 'next/link';
 import styled from '@emotion/styled';
 
 import dsPalette from '@constants/ds-palette';
+import Viewer from '@atoms/Viewer';
 
 interface Props {
   title: string;
@@ -25,6 +26,9 @@ const Article = () => (
           </Link>
         </TagWrapper>
       </HeadWrapper>
+      <Content>
+        <Viewer content="## 컨텐트" />
+      </Content>
     </Container>
   </Root>
 );
@@ -76,6 +80,10 @@ const Tag = styled.a({
   textDecoration: 'none',
   fontWeight: 500,
   fontSize: '1rem',
+});
+
+const Content = styled.div({
+  marginTop: '5rem',
 });
 
 export default Article;
