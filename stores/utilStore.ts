@@ -2,7 +2,6 @@ import { observable } from 'mobx';
 import { MouseEvent } from 'react';
 
 import * as T from '@types';
-import alertStore from './alertStore';
 
 export interface UtilStore {
   popup: {
@@ -42,8 +41,6 @@ const utilStore: UtilStore = {
     this.closePopup();
   },
   openHeaderMenu(event) {
-    if (!this.menu.name) alertStore.getAlerts();
-
     const element = event.currentTarget;
     this.menu = { name: element.getAttribute('name'), element };
   },

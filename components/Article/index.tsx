@@ -4,34 +4,40 @@ import styled from '@emotion/styled';
 
 import dsPalette from '@constants/ds-palette';
 import Viewer from '@atoms/Viewer';
+import stores from '@stores';
 
-interface Props {
-  title: string;
-  date: string;
-}
+const Article = () => {
+  const { postStore } = stores();
+  const { article } = postStore;
+  if (!article) return null;
 
-const Article = () => (
-  <Root>
-    <Container>
-      <HeadWrapper>
-        <Title>왜 Svelte(스벨트)를 좋아하나요?</Title>
-        <div>
-          <span>2021년 12월 12일</span>
-        </div>
-        <TagWrapper>
-          <Link href="/" passHref>
-            <Tag>
-              framework
-            </Tag>
-          </Link>
-        </TagWrapper>
-      </HeadWrapper>
-      <Content>
-        <Viewer content="## 컨텐트" />
-      </Content>
-    </Container>
-  </Root>
-);
+  const {
+    title, content, time, modifiedTime, tags,
+  } = article;
+
+  return (
+    <Root>
+      <Container>
+        <HeadWrapper>
+          <Title>{title}</Title>
+          <div>
+            <span>{modifiedTime || time}</span>
+          </div>
+          <TagWrapper>
+            {tags.map((tag) => (
+              <Link href="/" passHref>
+                <Tag>{tag}</Tag>
+              </Link>
+            ))}
+          </TagWrapper>
+        </HeadWrapper>
+        <Content>
+          <Viewer content={content} />
+        </Content>
+      </Container>
+    </Root>
+  );
+};
 
 const Root = styled.div({
   background: dsPalette.themeWhite.toString(),

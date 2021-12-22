@@ -144,8 +144,7 @@ export interface Post {
 
 export interface Article {
   id: number;
-  category: CategoryType;
-  tags: string;
+  tags: string[];
   title: string;
   content: string;
   viewCnt: string;

@@ -128,7 +128,6 @@ const INSERT_POST = `
 const SELECT_POST = `
   SELECT
     p.id,
-    p.category,
     p.tags,
     p.title,
     p.content,
