@@ -6,7 +6,6 @@ import stores from '@stores';
 import * as T from '@types';
 import { FontFamily, MediaQuery } from '@constants/styles';
 import dsPalette from '@constants/ds-palette';
-import Popup from '@components/Popup';
 import NextNprogress from 'nextjs-progressbar';
 import Header from './Header';
 
@@ -19,16 +18,11 @@ const options = {
 };
 
 const Layout = ({ children }: Props) => {
-  const { signStore, alertStore } = stores();
-  const { userData } = signStore;
+  const { signStore } = stores();
 
   useEffect(() => {
     signStore.authCheck();
   }, []);
-
-  useEffect(() => {
-    if (userData) alertStore.getAlerts();
-  }, [userData]);
 
   return (
     <Root>
@@ -37,7 +31,6 @@ const Layout = ({ children }: Props) => {
       <CenterContent>
         {children}
       </CenterContent>
-      <Popup />
       <NextNprogress
         color={dsPalette.typeWhite.toString()}
         startPosition={0.3}

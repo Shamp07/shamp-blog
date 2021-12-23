@@ -24,7 +24,6 @@ const handler = async (request: T.NextApiRequestToken, response: NextApiResponse
 const addPost = async (request: NextApiRequest, response: NextApiResponse) => {
   const { title, tags, content } = request.body;
   const values = [tags, title, content];
-  console.log(tags);
 
   await Database.execute(
     (database: Client) => database.query(
@@ -140,7 +139,7 @@ const SELECT_POST = `
         THEN (CAST(TO_CHAR(NOW() - p.crt_dttm, 'MI') AS INTEGER)) || ' 분 전'
       WHEN (CAST(TO_CHAR(NOW() - p.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000)
         THEN (CAST(TO_CHAR(NOW() - p.crt_dttm, 'HH24') AS INTEGER)) || ' 시간 전'
-      ELSE TO_CHAR(p.crt_dttm, 'YYYY-MM-DD')
+      ELSE TO_CHAR(p.crt_dttm, 'YYYY년 MM월 DD일')
     END AS time,
     CASE WHEN (CAST(TO_CHAR(NOW() - p.mfy_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 100)
         THEN (CAST(TO_CHAR(NOW() - p.mfy_dttm, 'SS') AS INTEGER)) || ' 초 전 수정'
@@ -148,7 +147,7 @@ const SELECT_POST = `
         THEN (CAST(TO_CHAR(NOW() - p.mfy_dttm, 'MI') AS INTEGER)) || ' 분 전 수정'
       WHEN (CAST(TO_CHAR(NOW() - p.mfy_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000)
         THEN (CAST(TO_CHAR(NOW() - p.mfy_dttm, 'HH24') AS INTEGER)) || ' 시간 전 수정'
-      ELSE TO_CHAR(p.crt_dttm, 'YYYY-MM-DD')
+      ELSE TO_CHAR(p.crt_dttm, 'YYYY년 MM월 DD일')
     END AS "modifiedTime"
   FROM post p
   WHERE p.id = $1

@@ -2,15 +2,13 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
-import * as T from '@types';
 import dsPalette from '@constants/ds-palette';
 import LogoSVG from '@assets/icon/logo.svg';
 import { FontFamily } from '@constants/styles';
-import { getCategoryPath } from '@constants/category';
 
 const Logo = () => (
   <Root>
-    <Link href={getCategoryPath(T.CategoryType.HOME)} passHref>
+    <Link href="/" passHref>
       <Wrapper>
         <LogoSVG />
         <Title>Shamp Blog</Title>

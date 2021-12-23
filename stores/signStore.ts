@@ -2,7 +2,6 @@ import { observable } from 'mobx';
 import cookie from 'js-cookie';
 import axios from 'axios';
 
-import Axios from '@utilities/axios';
 import * as T from '@types';
 import utilStore from './utilStore';
 
@@ -15,27 +14,15 @@ export interface SignStore {
     password: string;
   }): Promise<T.Response>;
   signOut(): void;
-  resetPassword(currentPassword: string, password: string): void;
-  deleteUser(email: string): void;
-  verifyEmail(email: string): void;
-  verifyCode(email: string, code: string): void;
 }
 
 const signStore: SignStore = {
   authChecked: false,
   userData: null,
-  authCheck() {
-    Axios({
-      method: T.RequestMethod.GET,
-      url: '/api/user/cookie',
-      success: (response) => {
-        const { result } = response.data;
-        this.userData = result;
-      },
-      complete: () => {
-        this.authChecked = true;
-      },
-    });
+  async authCheck() {
+    const { data } = await axios.get('/api/user/cookie');
+    this.userData = data.result;
+    this.authChecked = true;
   },
   async signIn(signInForm) {
     const res = await axios.post<T.Response>('/api/user/login', signInForm);
@@ -45,65 +32,6 @@ const signStore: SignStore = {
     utilStore.closeHeaderMenu();
     cookie.remove('auth');
     this.userData = null;
-  },
-  resetPassword(currentPassword: string, password: string) {
-    Axios({
-      method: T.RequestMethod.PUT,
-      url: '/api/user/password',
-      data: {
-        currentPassword,
-        password,
-      },
-      success: (response) => {
-        const { code, message } = response.data;
-        if (code === 1) {
-          this.signOut();
-        }
-        utilStore.openPopup(T.Popup.ALERT, message);
-      },
-    });
-  },
-  deleteUser(email) {
-    Axios({
-      method: T.RequestMethod.DELETE,
-      url: '/api/user',
-      data: {
-        email,
-      },
-      success: (response) => {
-        const { code, message } = response.data;
-        if (code === 1) {
-          this.signOut();
-        }
-        utilStore.openPopup(T.Popup.ALERT, message);
-      },
-    });
-  },
-  verifyEmail(email: string) {
-    Axios({
-      method: T.RequestMethod.PUT,
-      url: '/api/user/verify',
-      data: {
-        email,
-      },
-      success: () => {
-        utilStore.openPopup(T.Popup.EMAIL_VERIFY);
-      },
-    });
-  },
-  verifyCode(email, code) {
-    Axios({
-      method: T.RequestMethod.PUT,
-      url: '/api/user/verify/code',
-      data: {
-        email,
-        code,
-      },
-      complete: (response) => {
-        const { message } = response.data;
-        utilStore.openPopup(T.Popup.ALERT, message);
-      },
-    });
   },
 };
 
