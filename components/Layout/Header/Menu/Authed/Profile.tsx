@@ -47,7 +47,6 @@ const Profile = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <ProfileMenuItem onClick={() => {}}>설정</ProfileMenuItem>
         <ProfileMenuItem onClick={onSignOut}>로그아웃</ProfileMenuItem>
       </ProfileMenu>
     </>

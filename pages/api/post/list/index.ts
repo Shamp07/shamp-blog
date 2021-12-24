@@ -46,7 +46,7 @@ const SELECT_POST_LIST = `
             THEN (CAST(TO_CHAR(NOW() - p.crt_dttm, 'MI') AS INTEGER)) || ' 분 전'
           WHEN (CAST(TO_CHAR(NOW() - p.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 1000000)
             THEN (CAST(TO_CHAR(NOW() - p.crt_dttm, 'HH24') AS INTEGER)) || ' 시간 전'
-          ELSE TO_CHAR(crt_dttm, 'YYYY-MM-DD')
+          ELSE TO_CHAR(crt_dttm, 'YYYY년 MM월 DD일')
         END AS time
       FROM post p
       WHERE p.delete_fl = false

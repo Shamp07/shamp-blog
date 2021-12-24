@@ -11,8 +11,7 @@ interface Props {
 
 const PostCard = ({
   post: {
-    id, title, content, likeCnt,
-    time, commentCnt,
+    id, title, content, time,
   },
 }: Props) => (
   <Root>
@@ -32,16 +31,6 @@ const PostCard = ({
     <Footer>
       <div>
         {time}
-        {' '}
-        ·
-        {' '}
-        {commentCnt}
-        개의 댓글
-      </div>
-      <div>
-        좋아요
-        {' '}
-        {likeCnt}
       </div>
     </Footer>
   </Root>

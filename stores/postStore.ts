@@ -16,6 +16,7 @@ const postStore: PostStore = {
   article: null,
   async getPosts() {
     const { data } = await axios.get(`${process.env.BASE_PATH}/api/post/list`);
+    console.log(data.result);
     this.posts = data.result;
   },
   async getPost(id) {

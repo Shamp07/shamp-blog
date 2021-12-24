@@ -94,14 +94,6 @@ const WriteSection = ({
           <Button
             color="primary"
             size="small"
-            variant="outlined"
-            customStyles={buttonStyles}
-          >
-            임시저장
-          </Button>
-          <Button
-            color="primary"
-            size="small"
             variant="contained"
             customStyles={buttonStyles}
             onClick={onAddPost}

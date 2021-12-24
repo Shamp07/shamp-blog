@@ -48,7 +48,6 @@ export interface Post {
   content: string;
   crtDttm: string;
   likeCnt: number;
-  commentCnt: number;
   time: string;
 }
 
@@ -57,9 +56,8 @@ export interface Article {
   tags: string[];
   title: string;
   content: string;
-  viewCnt: string;
-  likeCnt: string;
-  commentCnt: string;
+  viewCnt: number;
+  likeCnt: number;
   time: string;
   modifiedTime: string;
 }
