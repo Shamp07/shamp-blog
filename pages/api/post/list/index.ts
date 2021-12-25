@@ -1,5 +1,6 @@
 import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { marked } from 'marked';
 
 import Database from '@database/Database';
 import cors from '@middleware/cors';
@@ -14,9 +15,15 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         SELECT_POST_LIST,
       )
         .then((result) => {
+          const resultRows = result.rows.map((post) => {
+            // eslint-disable-next-line no-param-reassign
+            post.shortDescription = marked(post.content, { renderer: renderPlain() });
+            return post;
+          });
+
           response.json({
             success: true,
-            result: result.rows,
+            result: resultRows,
           });
         }),
     ).then(() => {
@@ -54,5 +61,39 @@ const SELECT_POST_LIST = `
     ) b
   ) a
 `;
+
+const htmlEscapeToText = (text: string) => text.replace(/&#[0-9]*;|&amp;/g, (escapeCode) => {
+  if (escapeCode.match(/amp/)) return '&';
+  return String.fromCharCode(Number(escapeCode.match(/[0-9]+/)));
+});
+
+const renderPlain = () => {
+  const render = new marked.Renderer();
+
+  render.paragraph = (text) => `${htmlEscapeToText(text)}\r\n`;
+
+  render.heading = (text) => text;
+  render.strong = (text) => text;
+  render.em = (text) => text;
+  render.del = (text) => text;
+
+  render.hr = () => '';
+  render.blockquote = (text) => text;
+
+  render.list = (text) => text;
+  render.listitem = (text) => text;
+  render.checkbox = () => '';
+
+  render.table = () => '';
+  render.tablerow = () => '';
+  render.tablecell = () => '';
+  render.image = () => '';
+  render.link = (href, title, text) => text;
+
+  render.codespan = (text) => text;
+  render.code = () => '';
+
+  return render;
+};
 
 export default handler;

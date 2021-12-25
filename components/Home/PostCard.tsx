@@ -11,7 +11,7 @@ interface Props {
 
 const PostCard = ({
   post: {
-    id, title, content, time,
+    id, title, time, shortDescription,
   },
 }: Props) => (
   <Root>
@@ -24,7 +24,7 @@ const PostCard = ({
         {/* /> */}
         <Inner>
           <Title>{title}</Title>
-          <Content>{content}</Content>
+          <Content>{shortDescription}</Content>
         </Inner>
       </Section>
     </Link>
