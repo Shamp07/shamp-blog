@@ -2,6 +2,7 @@ import React, {
   ChangeEvent, CSSProperties, KeyboardEvent, MouseEvent, useEffect,
 } from 'react';
 import { useRouter } from 'next/router';
+import { observer } from 'mobx-react-lite';
 import { useMutation } from 'react-query';
 import styled from '@emotion/styled';
 import axios from 'axios';
@@ -65,7 +66,7 @@ const WriteSection = ({
         />
         <TagForm>
           <TagWrapper>
-            {tags.map((value) => <Tag onClick={onDelete}>{value}</Tag>)}
+            {tags.map((value) => <Tag key={value} onClick={onDelete}>{value}</Tag>)}
             <TextField
               variant="outlined"
               name="tag"
@@ -156,19 +157,20 @@ const TagWrapper = styled.div({
 });
 
 const Tag = styled.div({
-  display: 'inline-flex',
-  background: dsPalette.themePrimary.toString(),
-  color: dsPalette.themeWhite.toString(),
+  marginBottom: '.875rem',
+  background: 'rgb(241, 243, 245)',
+  paddingLeft: '1rem',
+  paddingRight: '1rem',
+  height: '2rem',
   borderRadius: '1rem',
-  fontSize: '1rem',
-  padding: '4px 1rem',
-  marginBottom: '.75rem',
-  wordBreak: 'break-all',
+  display: 'inlineFlex',
   alignItems: 'center',
+  marginRight: '.875rem',
+  color: dsPalette.themePrimary.toString(),
+  textDecoration: 'none',
+  fontWeight: 500,
+  fontSize: '1rem',
   cursor: 'pointer',
-  marginRight: '.75rem',
-  transition: 'all .125s ease-in 0s',
-  animation: '.125s ease-in-out 0s 1 normal forwards running iMKika',
 });
 
 const buttonStyles: CSSProperties = {
@@ -190,4 +192,4 @@ const titleInputStyles: CSSProperties = {
   fontWeight: 800,
 };
 
-export default WriteSection;
+export default observer(WriteSection);
