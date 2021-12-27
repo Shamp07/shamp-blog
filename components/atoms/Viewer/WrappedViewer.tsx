@@ -2,7 +2,14 @@ import React, { MutableRefObject } from 'react';
 import { Viewer, ViewerProps } from '@toast-ui/react-editor';
 import styled from '@emotion/styled';
 import dsPalette from '@constants/ds-palette';
-import {FontFamily} from "@constants/styles";
+import { FontFamily } from '@constants/styles';
+import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
+import Prism from 'prismjs';
+import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
+import 'prismjs/themes/prism.css';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-jsx';
+import 'prismjs/components/prism-tsx';
 
 export interface Props extends ViewerProps {
   forwardedRef?: MutableRefObject<Viewer>;
@@ -12,7 +19,11 @@ const WrappedViewer = (props: Props) => {
   const { forwardedRef } = props;
   return (
     <Root>
-      <Viewer {...props} ref={forwardedRef} />
+      <Viewer
+        {...props}
+        plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
+        ref={forwardedRef}
+      />
     </Root>
   );
 };
@@ -83,14 +94,13 @@ const Root = styled.div({
   '.toastui-editor-contents pre': {
     borderRadius: '4px',
     margin: '1em 0',
-    '& > code': {
+    '& > code, & > code *': {
       fontFamily: FontFamily.JETBRAINS_MONO,
     },
   },
 
   '.toastui-editor-contents code': {
     color: dsPalette.typePrimary.toString(),
-    padding: '.2em .4em',
     borderRadius: '3px',
     fontSize: '85%',
   },
