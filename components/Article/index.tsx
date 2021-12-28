@@ -1,28 +1,38 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from '@emotion/styled';
+import { observer } from 'mobx-react-lite';
 
 import dsPalette from '@constants/ds-palette';
 import Viewer from '@atoms/Viewer';
 import stores from '@stores';
 
 const Article = () => {
-  const { postStore } = stores();
+  const { postStore, signStore } = stores();
   const { article } = postStore;
+  const { userData } = signStore;
   if (!article) return null;
 
   const {
     title, content, time, modifiedTime, tags,
   } = article;
 
+  const options = userData?.adminFl ? (
+    <OptionWrapper>
+      <Option>수정</Option>
+      <Option>삭제</Option>
+    </OptionWrapper>
+  ) : null;
+
   return (
     <Root>
       <Container>
-        <HeadWrapper>
+        <div>
           <Title>{title}</Title>
-          <div>
+          <DetailWrapper>
             <span>{modifiedTime || time}</span>
-          </div>
+            {options}
+          </DetailWrapper>
           <TagWrapper>
             {tags.map((tag) => (
               <Link href="/" passHref>
@@ -30,7 +40,7 @@ const Article = () => {
               </Link>
             ))}
           </TagWrapper>
-        </HeadWrapper>
+        </div>
         <Content>
           <Viewer content={content} />
         </Content>
@@ -46,14 +56,10 @@ const Root = styled.div({
 });
 
 const Container = styled.article({
-  marginTop: '5.5rem',
+  padding: '5.5rem 0',
   width: '768px',
   marginLeft: 'auto',
   marginRight: 'auto',
-});
-
-const HeadWrapper = styled.div({
-
 });
 
 const Title = styled.h1({
@@ -64,6 +70,29 @@ const Title = styled.h1({
   fontWeight: 800,
   marginBottom: '2rem',
   wordBreak: 'keep-all',
+});
+
+const DetailWrapper = styled.div({
+  display: 'flex',
+  justifyContent: 'space-between',
+});
+
+const OptionWrapper = styled.div({
+  display: 'flex',
+});
+
+const Option = styled.button({
+  fontSize: 'inherit',
+  marginLeft: '.5rem',
+  padding: 0,
+  outline: 'none',
+  border: 'none',
+  background: 'none',
+  cursor: 'pointer',
+  color: dsPalette.typeSecond.toString(),
+  '&:hover': {
+    color: dsPalette.typePrimary.toString(),
+  },
 });
 
 const TagWrapper = styled.div({
@@ -92,4 +121,4 @@ const Content = styled.div({
   marginTop: '5rem',
 });
 
-export default Article;
+export default observer(Article);

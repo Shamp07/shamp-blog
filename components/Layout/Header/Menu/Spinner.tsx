@@ -8,12 +8,12 @@ const Spinner = () => (
   </Root>
 );
 
-const Root = styled.div`
-  text-align: center;
-  margin: 10px 0;
-  & svg {
-    color: #2d79c7 !important;
-  }
-`;
+const Root = styled.div({
+  textAlign: 'center',
+  margin: '10px 0',
+  '& svg': {
+    color: '#2d79c7 !important',
+  },
+});
 
 export default Spinner;

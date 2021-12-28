@@ -73,8 +73,8 @@ const AvatarIcon = styled(Avatar)({
 const ProfileMenu = styled(Menu)({
   '&&&': {
     '& > .MuiPaper-elevation': {
+      boxShadow: 'rgb(0 0 0 / 10%) 0px 5px 8px',
       color: dsPalette.typePrimary.toString(),
-      boxShadow: 'none',
       borderTop: 0,
       marginTop: '11px',
       borderTopLeftRadius: 0,
