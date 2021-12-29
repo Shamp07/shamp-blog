@@ -35,7 +35,7 @@ const Article = () => {
           </DetailWrapper>
           <TagWrapper>
             {tags.map((tag) => (
-              <Link href="/" passHref>
+              <Link href="/" passHref key={tag}>
                 <Tag>{tag}</Tag>
               </Link>
             ))}
