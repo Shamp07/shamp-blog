@@ -1,10 +1,16 @@
-import React, { MouseEvent, ChangeEvent, KeyboardEvent } from 'react';
+import React, {
+  MouseEvent, ChangeEvent, KeyboardEvent, useEffect,
+} from 'react';
+import { useRouter } from 'next/router';
+import { useQuery } from 'react-query';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 
+import dsPalette from '@constants/ds-palette';
 import WriteSection from './WriteSection';
 import ViewerSection from './ViewerSection';
-import dsPalette from '@constants/ds-palette';
+import stores from "@stores";
+import axios from "axios";
 
 interface Form {
   inputs: {
@@ -20,6 +26,8 @@ interface Form {
 }
 
 const Write = () => {
+  const router = useRouter();
+
   const form = useLocalObservable<Form>(() => ({
     inputs: {
       title: '',
@@ -50,6 +58,12 @@ const Write = () => {
       }
     },
   }));
+
+  useEffect(() => {
+    if (router.query.id) console.log(router.query.id);
+  }, []);
+
+
 
   return (
     <Root>

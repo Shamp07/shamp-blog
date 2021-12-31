@@ -7,7 +7,7 @@ export interface PostStore {
   posts: T.Post[];
   article: T.Article | null;
   getPosts(): Promise<void>;
-  getPost(id: number, isModify: boolean): Promise<void>;
+  getPost(id: number): Promise<void>;
   modifyPost(): void;
 }
 

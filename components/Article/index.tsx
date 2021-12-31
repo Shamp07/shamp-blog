@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 
@@ -8,18 +9,25 @@ import Viewer from '@atoms/Viewer';
 import stores from '@stores';
 
 const Article = () => {
+  const router = useRouter();
+
   const { postStore, signStore } = stores();
   const { article } = postStore;
   const { userData } = signStore;
   if (!article) return null;
 
   const {
-    title, content, time, modifiedTime, tags,
+    id, title, content, time, modifiedTime,
+    tags,
   } = article;
+
+  const onModify = () => {
+    router.push(`/write?id=${id}`);
+  };
 
   const options = userData?.adminFl ? (
     <OptionWrapper>
-      <Option>수정</Option>
+      <Option onClick={onModify}>수정</Option>
       <Option>삭제</Option>
     </OptionWrapper>
   ) : null;
