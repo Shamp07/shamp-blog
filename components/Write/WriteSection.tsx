@@ -79,7 +79,7 @@ const WriteSection = ({
             />
           </TagWrapper>
         </TagForm>
-        <Editor onChange={onChangeContent} />
+        <Editor content={content} onChange={onChangeContent} />
       </WriteForm>
       <WriteFooter>
         <Button

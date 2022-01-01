@@ -2,15 +2,15 @@ import React, {
   MouseEvent, ChangeEvent, KeyboardEvent, useEffect,
 } from 'react';
 import { useRouter } from 'next/router';
-import { useQuery } from 'react-query';
+import { useMutation } from 'react-query';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import styled from '@emotion/styled';
+import axios from 'axios';
 
 import dsPalette from '@constants/ds-palette';
+import * as T from '@types';
 import WriteSection from './WriteSection';
 import ViewerSection from './ViewerSection';
-import stores from "@stores";
-import axios from "axios";
 
 interface Form {
   inputs: {
@@ -59,11 +59,30 @@ const Write = () => {
     },
   }));
 
+  const getPost = async () => {
+    const { data } = await axios.get('/api/post', { params: { id: router.query.id } });
+    return data;
+  };
+
+  const mutation = useMutation<T.Response, Error, void>(getPost);
+
   useEffect(() => {
-    if (router.query.id) console.log(router.query.id);
+    if (router.query.id) mutation.mutate();
   }, []);
 
-
+  useEffect(() => {
+    if (mutation.isSuccess && mutation.data.result) {
+      const { title, tags, content } = mutation.data.result;
+      setTimeout(() => {
+        form.inputs = {
+          title,
+          content,
+          tag: '',
+        };
+        form.tags = tags;
+      }, 1000);
+    }
+  }, [mutation.isSuccess]);
 
   return (
     <Root>

@@ -1,5 +1,6 @@
 import React, {
   forwardRef, useRef, useCallback, MutableRefObject,
+  useEffect,
 } from 'react';
 import dynamic from 'next/dynamic';
 import { Editor as EditorType, EditorProps } from '@toast-ui/react-editor';
@@ -17,10 +18,11 @@ const EditorWithForwardedRef = forwardRef<EditorType | undefined, EditorPropsWit
 );
 
 interface Props extends EditorProps {
+  content: string;
   onChange(value: string): void;
 }
 
-const WysiwygEditor = ({ onChange }: Props) => {
+const WysiwygEditor = ({ content, onChange }: Props) => {
   const editorRef = useRef<EditorType>();
   const handleChange = useCallback(() => {
     if (!editorRef.current) {
@@ -31,6 +33,16 @@ const WysiwygEditor = ({ onChange }: Props) => {
 
     onChange(instance.getMarkdown());
   }, [onChange, editorRef]);
+
+  useEffect(() => {
+    if (!editorRef.current) {
+      return;
+    }
+
+    const instance = editorRef.current.getInstance();
+
+    instance.setMarkdown(content);
+  }, [content]);
 
   return (
     <EditorWithForwardedRef
