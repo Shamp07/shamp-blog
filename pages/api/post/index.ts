@@ -71,10 +71,9 @@ const getPost = async (request: NextApiRequest, response: NextApiResponse) => {
 
 const modifyPost = async (request: NextApiRequest, response: NextApiResponse) => {
   const {
-    id,
-    category, tags, title, content,
+    id, tags, title, content,
   } = request.body;
-  const values = [category, tags, title, content, id];
+  const values = [tags, title, content, id];
 
   await Database.execute(
     (database: Client) => database.query(
@@ -84,7 +83,7 @@ const modifyPost = async (request: NextApiRequest, response: NextApiResponse) =>
       .then(() => {
         response.json({
           success: true,
-          message: '😀  정상적으로 글이 수정 되었어요!',
+          message: '😀 정상적으로 글이 수정 되었어요!',
         });
       }),
   ).then(() => {
@@ -162,12 +161,11 @@ const UPDATE_POST_VIEW_CNT = `
 const UPDATE_POST = `
   UPDATE post
   SET
-    category = $1,
-    tags = $2,
-    title = $3,
-    content = $4,
+    tags = $1,
+    title = $2,
+    content = $3,
     mfy_dttm = NOW()
-  WHERE id = $5
+  WHERE id = $4
 `;
 
 const DELETE_POST = `

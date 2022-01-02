@@ -53,9 +53,7 @@ const Write = () => {
     },
     onDelete(event) {
       const idx = this.tags.indexOf(event.currentTarget.innerText);
-      if (idx > -1) {
-        this.tags.splice(idx, 1);
-      }
+      if (idx > -1) this.tags.splice(idx, 1);
     },
   }));
 
@@ -64,15 +62,15 @@ const Write = () => {
     return data;
   };
 
-  const mutation = useMutation<T.Response, Error, void>(getPost);
+  const getMutation = useMutation<T.Response, Error, void>(getPost);
 
   useEffect(() => {
-    if (router.query.id) mutation.mutate();
+    if (router.query.id) getMutation.mutate();
   }, []);
 
   useEffect(() => {
-    if (mutation.isSuccess && mutation.data.result) {
-      const { title, tags, content } = mutation.data.result;
+    if (getMutation.isSuccess && getMutation.data.result) {
+      const { title, tags, content } = getMutation.data.result;
       setTimeout(() => {
         form.inputs = {
           title,
@@ -82,7 +80,7 @@ const Write = () => {
         form.tags = tags;
       }, 1000);
     }
-  }, [mutation.isSuccess]);
+  }, [getMutation.isSuccess]);
 
   return (
     <Root>

@@ -1,12 +1,13 @@
 import React, { ReactNode, useEffect } from 'react';
 import { css, Global } from '@emotion/react';
 import styled from '@emotion/styled';
+import NextNprogress from 'nextjs-progressbar';
 
 import stores from '@stores';
 import * as T from '@types';
 import { FontFamily, MediaQuery } from '@constants/styles';
 import dsPalette from '@constants/ds-palette';
-import NextNprogress from 'nextjs-progressbar';
+import Popup from '@components/Popup';
 import Header from './Header';
 
 interface Props {
@@ -27,6 +28,7 @@ const Layout = ({ children }: Props) => {
   return (
     <Root>
       <Global styles={GlobalStyle} />
+      <Popup />
       <Header />
       <CenterContent>
         {children}

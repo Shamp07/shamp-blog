@@ -1,20 +1,21 @@
 import { observable } from 'mobx';
 import { MouseEvent } from 'react';
 
-enum Popup {
-  CONFIRM
+import * as T from '@types';
+
+interface Popup {
+  type: T.PopupType | null;
+  description: string;
+  callback: (() => void) | null;
 }
 
 export interface UtilStore {
-  popup: {
-    type: Popup | null;
-    description: string;
-    callback: (() => void) | null;
-  },
+  popup: Popup,
   menu: {
     name: string | null;
     element: Element | null;
   }
+  openPopup(popup: Popup): void;
   closePopup(): void;
   openHeaderMenu(event: MouseEvent<HTMLElement>): void;
   closeHeaderMenu(): void;
@@ -29,6 +30,9 @@ const utilStore: UtilStore = {
   menu: {
     name: null,
     element: null,
+  },
+  openPopup(popup) {
+    this.popup = popup;
   },
   closePopup() {
     this.popup.type = null;

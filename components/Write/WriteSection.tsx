@@ -38,10 +38,16 @@ const WriteSection = ({
   const router = useRouter();
 
   const mutation = useMutation(() => axios.post('/api/post', { title, tags, content }));
+  const putMutation = useMutation(() => axios.put(
+    '/api/post',
+    {
+      id: router.query.id, title, tags, content,
+    },
+  ));
 
   useEffect(() => {
-    if (mutation.isSuccess) moveToHome();
-  }, [mutation.isSuccess]);
+    if (mutation.isSuccess || putMutation.isSuccess) moveToHome();
+  }, [mutation.isSuccess, putMutation.isSuccess]);
 
   const moveToHome = () => router.push('/');
   const onAddPost = () => {
@@ -49,7 +55,8 @@ const WriteSection = ({
       return;
     }
 
-    mutation.mutate();
+    if (router.query.id) putMutation.mutate();
+    else mutation.mutate();
   };
 
   return (

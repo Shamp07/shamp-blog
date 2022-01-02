@@ -78,3 +78,7 @@ export enum Device {
   LAPTOP = 'laptop',
   DESKTOP = 'desktop',
 }
+
+export enum PopupType {
+  CONFIRM,
+}

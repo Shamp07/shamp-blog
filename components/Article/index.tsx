@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
+import { useMutation } from 'react-query';
+import styled from '@emotion/styled';
+import axios from 'axios';
 
 import dsPalette from '@constants/ds-palette';
 import Viewer from '@atoms/Viewer';
 import stores from '@stores';
+import * as T from '@types';
 
 const Article = () => {
   const router = useRouter();
 
-  const { postStore, signStore } = stores();
+  const { postStore, signStore, utilStore } = stores();
   const { article } = postStore;
   const { userData } = signStore;
   if (!article) return null;
@@ -21,14 +24,30 @@ const Article = () => {
     tags,
   } = article;
 
+  const mutation = useMutation(() => axios.delete('/api/post', { params: { id } }));
+
+  useEffect(() => {
+    if (mutation.isSuccess) router.push('/');
+  }, [mutation.isSuccess]);
+
   const onModify = () => {
     router.push(`/write?id=${id}`);
+  };
+
+  const onDelete = () => {
+    utilStore.openPopup({
+      type: T.PopupType.CONFIRM,
+      description: '정말로 글을 삭제하겠습니까?',
+      callback: () => {
+        mutation.mutate();
+      },
+    });
   };
 
   const options = userData?.adminFl ? (
     <OptionWrapper>
       <Option onClick={onModify}>수정</Option>
-      <Option>삭제</Option>
+      <Option onClick={onDelete}>삭제</Option>
     </OptionWrapper>
   ) : null;
 
