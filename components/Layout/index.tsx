@@ -34,7 +34,7 @@ const Layout = ({ children }: Props) => {
         {children}
       </CenterContent>
       <NextNprogress
-        color={dsPalette.typeWhite.toString()}
+        color={dsPalette.themePrimary.toString()}
         startPosition={0.3}
         stopDelayMs={200}
         height={3}

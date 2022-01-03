@@ -67,7 +67,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.13",
     "@mui/lab": "^5.0.0-alpha.55",
-    "@mui/material": "^5.1.1",
+    "@mui/material": "^5.2.7",
     "@svgr/webpack": "^5.5.0",
     "@toast-ui/editor": "^3.1.1",
     "@toast-ui/editor-plugin-code-syntax-highlight": "^3.0.0",
