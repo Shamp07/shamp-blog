@@ -13,6 +13,7 @@ const ConfirmPopup = () => {
   const onClose = () => utilStore.closePopup();
   const onConfirm = () => {
     if (callback) callback();
+    onClose();
   };
 
   return (

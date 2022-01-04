@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect } from 'react';
+import React, {ChangeEvent, CSSProperties, useEffect} from 'react';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import { useMutation } from 'react-query';
 import axios from 'axios';
@@ -6,7 +6,7 @@ import axios from 'axios';
 import TextField from '@atoms/TextField';
 import styled from '@emotion/styled';
 import dsPalette from '@constants/ds-palette';
-import { SubmitButton } from '@atoms/Button';
+import Button from '@atoms/Button';
 
 interface Props {
   email: string;
@@ -48,9 +48,14 @@ const EmailVerify = ({ email, next }: Props) => {
         <Title>이메일 인증</Title>
         <Description>입력하신 이메일로 인증번호가 발송되었습니다.</Description>
         <TextField label="인증번호" variant="standard" onChange={form.onChange} value={form.values.code} />
-        <VerifyButton variant="contained" disabled={!isAvailable} onClick={onVerify}>
+        <Button
+          customStyles={signUpButtonStyles}
+          variant="contained"
+          disabled={!isAvailable}
+          onClick={onVerify}
+        >
           인증하기
-        </VerifyButton>
+        </Button>
       </Inner>
     </Root>
   );
@@ -78,12 +83,10 @@ const Description = styled.div({
   fontSize: '.875rem',
 });
 
-const VerifyButton = styled(SubmitButton)({
+const signUpButtonStyles: CSSProperties = {
   width: '100%',
-  fontSize: '1rem',
-  '&&&': {
-    padding: '1rem',
-  },
-});
+  fontSize: '.9rem',
+  padding: '.9rem',
+};
 
 export default observer(EmailVerify);

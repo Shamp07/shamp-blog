@@ -92,12 +92,6 @@ const SignIn = () => {
             onKeyPress={onEnter}
           />
         </Wrapper>
-        <Option>
-          <FormControlLabel control={<Checkbox checked={form.autoSignIn} onChange={form.onChangeAutoSignIn} />} label="자동 로그인" />
-          <Link href="/password" passHref>
-            <SignLink>비밀번호 찾기</SignLink>
-          </Link>
-        </Option>
         {errorMessage}
         <SignInButton variant="contained" loading={mutation.isLoading} disabled={!isAvailable} onClick={onSignIn}>
           로그인
@@ -143,23 +137,11 @@ const Wrapper = styled.div({
   },
 });
 
-const Option = styled.div({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-
-  '& span': {
-    fontFamily: 'inherit',
-    fontSize: '.875rem',
-    color: dsPalette.typeSecond.toString(),
-  },
-});
-
 const SignInButton = styled(LoadingButton)({
   width: '100%',
-  fontSize: '1rem',
+  fontSize: '.9rem',
   '&&&': {
-    padding: '1rem',
+    padding: '.9rem',
   },
 });
 
@@ -182,7 +164,7 @@ const SignUp = styled(SignLink)({
 const ErrorDescription = styled.div({
   color: dsPalette.themeError.toString(),
   lineHeight: 1.5,
-  fontSize: '.875rem',
+  fontSize: '.8rem',
   marginBottom: '1rem',
   wordBreak: 'keep-all',
 });

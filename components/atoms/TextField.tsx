@@ -63,6 +63,10 @@ interface RootProps {
 }
 
 const Root = styled.div<RootProps>(({ borderless, customStyles }) => ({
+  '& label': {
+    fontSize: '.8rem',
+  },
+
   ...(borderless ? ({
     '& fieldset': {
       border: 0,

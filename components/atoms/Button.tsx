@@ -3,8 +3,6 @@ import RawButton, { ButtonProps } from '@mui/material/Button';
 import RawLoadingButton from '@mui/lab/LoadingButton';
 import styled from '@emotion/styled';
 
-import dsPalette from '@constants/ds-palette';
-
 interface Props extends ButtonProps {
   onClick?(): void;
   customStyles?: CSSProperties;
@@ -50,17 +48,9 @@ const commonButtonStyle = {
   letterSpacing: 'normal',
 };
 
-export const SubmitButton = styled(Button)({});
-
 export const LoadingButton = styled(RawLoadingButton)({
   '&&&': {
     ...commonButtonStyle,
-  },
-});
-
-export const SubButton = styled(SubmitButton)({
-  '&&&': {
-    background: dsPalette.themePrimary.toString(),
   },
 });
 

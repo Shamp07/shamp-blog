@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect } from 'react';
+import React, { ChangeEvent, useEffect, CSSProperties } from 'react';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import { useMutation } from 'react-query';
@@ -6,7 +6,7 @@ import axios from 'axios';
 
 import dsPalette from '@constants/ds-palette';
 import TextField from '@atoms/TextField';
-import { SubmitButton } from '@atoms/Button';
+import Button from '@atoms/Button';
 import { emailValidator, passwordValidator } from '@utilities/validators';
 
 enum UI {
@@ -49,12 +49,24 @@ const Form = ({ setEmail, next }: Props) => {
       };
     },
     onValidation() {
-      const { email, password, passwordCheck } = this.values;
+      const {
+        email, name, password, passwordCheck,
+      } = this.values;
+
+      this.errors = INITIAL_ERRORS;
 
       if (!emailValidator(email)) {
         this.errors[UI.EMAIL] = {
           isError: true,
           message: '이메일 형식이 올바르지 않습니다. 다시 입력해주세요.',
+        };
+        return false;
+      }
+
+      if (!name.trim()) {
+        this.errors[UI.USERNAME] = {
+          isError: true,
+          message: '이름을 다시 입력해주세요.',
         };
         return false;
       }
@@ -102,6 +114,7 @@ const Form = ({ setEmail, next }: Props) => {
             value={form.values.email}
             helperText={form.errors[UI.EMAIL].message}
             description="회원가입을 위해서 해당 이메일을 통해 인증이 필요합니다."
+            error={form.errors[UI.EMAIL].isError}
           />
           <TextField
             label="이름"
@@ -109,6 +122,7 @@ const Form = ({ setEmail, next }: Props) => {
             name="name"
             onChange={form.onChange}
             value={form.values.name}
+            error={form.errors[UI.USERNAME].isError}
           />
           <TextField
             type="password"
@@ -137,9 +151,14 @@ const Form = ({ setEmail, next }: Props) => {
             <li>블로그는 오픈 소스로 공개되어있습니다.</li>
           </ul>
         </Notice>
-        <SignUpButton variant="contained" disabled={!isAvailable} onClick={onSignUp}>
+        <Button
+          customStyles={signUpButtonStyles}
+          variant="contained"
+          disabled={!isAvailable}
+          onClick={onSignUp}
+        >
           회원가입
-        </SignUpButton>
+        </Button>
       </Inner>
     </Root>
   );
@@ -170,13 +189,11 @@ const Wrapper = styled.div({
   },
 });
 
-const SignUpButton = styled(SubmitButton)({
+const signUpButtonStyles: CSSProperties = {
   width: '100%',
-  fontSize: '1rem',
-  '&&&': {
-    padding: '1rem',
-  },
-});
+  fontSize: '.9rem',
+  padding: '.9rem',
+};
 
 const Notice = styled.div({
   color: dsPalette.typeSecond.toString(),
