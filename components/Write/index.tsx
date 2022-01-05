@@ -7,8 +7,9 @@ import { observer, useLocalObservable } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import axios from 'axios';
 
-import dsPalette from '@constants/ds-palette';
+import stores from '@stores';
 import * as T from '@types';
+import dsPalette from '@constants/ds-palette';
 import WriteSection from './WriteSection';
 import ViewerSection from './ViewerSection';
 
@@ -27,6 +28,8 @@ interface Form {
 
 const Write = () => {
   const router = useRouter();
+  const { signStore } = stores();
+  const { userData } = signStore;
 
   const form = useLocalObservable<Form>(() => ({
     inputs: {
@@ -81,6 +84,11 @@ const Write = () => {
       }, 1000);
     }
   }, [getMutation.isSuccess]);
+
+  if (!userData?.adminFl) {
+    router.push('/');
+    return null;
+  }
 
   return (
     <Root>

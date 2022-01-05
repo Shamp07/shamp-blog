@@ -9,6 +9,7 @@ import { FontFamily, MediaQuery } from '@constants/styles';
 import dsPalette from '@constants/ds-palette';
 import Popup from '@components/Popup';
 import Header from './Header';
+import Content from './Content';
 
 interface Props {
   children: ReactNode;
@@ -30,9 +31,9 @@ const Layout = ({ children }: Props) => {
       <Global styles={GlobalStyle} />
       <Popup />
       <Header />
-      <CenterContent>
+      <Content>
         {children}
-      </CenterContent>
+      </Content>
       <NextNprogress
         color={dsPalette.themePrimary.toString()}
         startPosition={0.3}
@@ -49,17 +50,6 @@ const Root = styled.div({
   flexDirection: 'column',
   backgroundColor: dsPalette.themeBackground.toString(),
   minHeight: '100vh',
-});
-
-const CenterContent = styled.div({
-  display: 'flex',
-  height: 'inherit',
-  justifyContent: 'center',
-
-  [MediaQuery[T.Device.TABLET]]: {
-    width: 'calc(100% - 2rem)',
-    margin: 'auto 1rem',
-  },
 });
 
 const GlobalStyle = css({
