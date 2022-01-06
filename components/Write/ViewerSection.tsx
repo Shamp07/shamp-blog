@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import dsPalette from '@constants/ds-palette';
-import Viewer from '@atoms/Viewer';
+// import Viewer from '@atoms/Viewer';
 
 interface Props {
   title: string;
@@ -13,7 +13,7 @@ const ViewerSection = ({ title, content }: Props) => (
   <Root>
     <PostViewer>
       <Title>{title}</Title>
-      <Viewer content={content} />
+      {/* <Viewer content={content} /> */}
     </PostViewer>
   </Root>
 );

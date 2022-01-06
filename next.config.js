@@ -1,9 +1,10 @@
 const { PHASE_DEVELOPMENT_SERVER, PHASE_PRODUCTION_SERVER } = require('next/constants');
 const withPlugins = require('next-compose-plugins');
 const withImages = require('next-images');
+const withRemoveImports = require('next-remove-imports');
 const path = require('path');
 
-module.exports = withPlugins([withImages], {
+module.exports = withPlugins([withImages, withRemoveImports], {
   [PHASE_DEVELOPMENT_SERVER]: {
     env: {
       BASE_PATH: 'http://localhost',

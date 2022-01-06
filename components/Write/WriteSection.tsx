@@ -8,11 +8,12 @@ import styled from '@emotion/styled';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import '@uiw/react-md-editor/dist/markdown-editor.css';
 
 import Button from '@atoms/Button';
 import TextField from '@atoms/TextField';
-import Editor from '@components/Write/Editor';
 import dsPalette from '@constants/ds-palette';
+import Editor from './Editor';
 
 interface Props {
   title: string;
@@ -20,7 +21,7 @@ interface Props {
   tags: string[];
   content: string;
   onChange(event: ChangeEvent<HTMLInputElement>): void;
-  onChangeContent(value: string): void;
+  onChangeContent(value: string | undefined): void;
   onKeyPress(event: KeyboardEvent<HTMLInputElement>): void;
   onDelete(event: MouseEvent<HTMLElement>): void;
 }
