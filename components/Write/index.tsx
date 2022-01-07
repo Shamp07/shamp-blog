@@ -21,7 +21,7 @@ interface Form {
   };
   tags: string[];
   onChange(event: ChangeEvent<HTMLInputElement>): void;
-  onChangeContent(value: string | undefined): void;
+  onChangeContent(value: string): void;
   onKeyPress(event: KeyboardEvent<HTMLInputElement>): void;
   onDelete(event: MouseEvent<HTMLElement>): void;
 }
@@ -45,7 +45,7 @@ const Write = () => {
       };
     },
     onChangeContent(value) {
-      if (value) this.inputs.content = value;
+      this.inputs.content = value;
     },
     onKeyPress(event) {
       const { tags, inputs: { tag } } = this;
