@@ -6,7 +6,7 @@ import Viewer from '@atoms/Viewer';
 
 interface Props {
   title: string;
-  content: string;
+  content: string | null;
 }
 
 const ViewerSection = ({ title, content }: Props) => (

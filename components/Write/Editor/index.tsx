@@ -34,18 +34,9 @@ const WysiwygEditor = ({ content, onChange }: Props) => {
     onChange(instance.getMarkdown());
   }, [onChange, editorRef]);
 
-  useEffect(() => {
-    if (!editorRef.current) {
-      return;
-    }
-
-    const instance = editorRef.current.getInstance();
-
-    instance.setMarkdown(content);
-  }, [content]);
-
   return (
     <EditorWithForwardedRef
+      initialValue={content}
       placeholder="내용을 입력해주세요..."
       useCommandShortcut
       hideModeSwitch

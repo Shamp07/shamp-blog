@@ -18,7 +18,7 @@ interface Props {
   title: string;
   tag: string;
   tags: string[];
-  content: string;
+  content: string | null;
   onChange(event: ChangeEvent<HTMLInputElement>): void;
   onChangeContent(value: string): void;
   onKeyPress(event: KeyboardEvent<HTMLInputElement>): void;
@@ -86,7 +86,7 @@ const WriteSection = ({
             />
           </TagWrapper>
         </TagForm>
-        <Editor content={content} onChange={onChangeContent} />
+        {content && <Editor content={content} onChange={onChangeContent} />}
       </WriteForm>
       <WriteFooter>
         <Button

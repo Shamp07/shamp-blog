@@ -6,7 +6,7 @@ import dsPalette from '@constants/ds-palette';
 import { FontFamily } from '@constants/styles';
 
 interface Props {
-  content: string;
+  content: string | null;
 }
 
 const Viewer = ({ content }: Props) => (

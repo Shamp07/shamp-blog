@@ -17,7 +17,7 @@ interface Form {
   inputs: {
     title: string;
     tag: string;
-    content: string;
+    content: string | null;
   };
   tags: string[];
   onChange(event: ChangeEvent<HTMLInputElement>): void;
@@ -35,7 +35,7 @@ const Write = () => {
     inputs: {
       title: '',
       tag: '',
-      content: '',
+      content: null,
     },
     tags: [],
     onChange(event) {
@@ -74,14 +74,14 @@ const Write = () => {
   useEffect(() => {
     if (getMutation.isSuccess && getMutation.data.result) {
       const { title, tags, content } = getMutation.data.result;
-      setTimeout(() => {
-        form.inputs = {
-          title,
-          content,
-          tag: '',
-        };
-        form.tags = tags;
-      }, 1000);
+      form.inputs = {
+        title,
+        content,
+        tag: '',
+      };
+      form.tags = tags;
+    } else if (!router.query.id) {
+      form.inputs.content = '생각을 마음껏 공유해주세요!';
     }
   }, [getMutation.isSuccess]);
 
