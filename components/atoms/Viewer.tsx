@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import ReactMarkdown from 'react-markdown';
+import remarkBreaks from 'remark-breaks';
 
 import dsPalette from '@constants/ds-palette';
 import { FontFamily } from '@constants/styles';
@@ -9,18 +10,25 @@ interface Props {
   content: string | null;
 }
 
-const Viewer = ({ content }: Props) => (
-  <Root>
-    <ReactMarkdown>
-      {content}
-    </ReactMarkdown>
-  </Root>
-);
+const Viewer = ({ content }: Props) => {
+  console.log(content);
+  return (
+    <Root>
+      <ReactMarkdown remarkPlugins={remarkBreaks]}>
+        {content || ''}
+      </ReactMarkdown>
+    </Root>
+  );
+};
 
 const Root = styled.div({
   fontSize: '1.125rem',
   lineHeight: '1.7',
   fontFamily: 'inherit',
+
+  '& > div': {
+    whiteSpace: 'pre-wrap',
+  },
 
   blockquote: {
     margin: '2rem 0px',
@@ -58,7 +66,7 @@ const Root = styled.div({
     marginBottom: '1rem',
   },
 
-  '.toastui-editor-contents h2': {
+  h2: {
     lineHeight: '1.5',
     fontSize: '2rem',
     borderBottom: 0,

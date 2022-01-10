@@ -81,7 +81,7 @@ const Write = () => {
       };
       form.tags = tags;
     } else if (!router.query.id) {
-      form.inputs.content = '생각을 마음껏 공유해주세요!';
+      form.inputs.content = '';
     }
   }, [getMutation.isSuccess]);
 

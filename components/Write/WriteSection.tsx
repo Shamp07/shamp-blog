@@ -51,7 +51,7 @@ const WriteSection = ({
 
   const moveToHome = () => router.push('/');
   const onAddPost = () => {
-    if (!title.trim() || !tags.length || !content.trim()) {
+    if (!title.trim() || !tags.length || !content?.trim()) {
       return;
     }
 
@@ -86,7 +86,7 @@ const WriteSection = ({
             />
           </TagWrapper>
         </TagForm>
-        {content && <Editor content={content} onChange={onChangeContent} />}
+        {content !== null && <Editor content={content} onChange={onChangeContent} />}
       </WriteForm>
       <WriteFooter>
         <Button
