@@ -15,18 +15,42 @@
     "forceConsistentCasingInFileNames": false,
     "baseUrl": ".",
     "paths": {
-      "@assets/*": ["assets/*"],
-      "@components/*": ["components/*"],
-      "@atoms/*": ["components/atoms/*"],
-      "@config/*": ["config/*"],
-      "@constants/*": ["constants/*"],
-      "@database/*": ["database/*"],
-      "@middleware/*": ["middleware/*"],
-      "@stores/*": ["stores/*"],
-      "@stores": ["stores"],
-      "@utilities/*": ["utilities/*"],
-      "@styles": ["styles"],
-      "@types": ["types"]
+      "@assets/*": [
+        "assets/*"
+      ],
+      "@components/*": [
+        "components/*"
+      ],
+      "@atoms/*": [
+        "components/atoms/*"
+      ],
+      "@config/*": [
+        "config/*"
+      ],
+      "@constants/*": [
+        "constants/*"
+      ],
+      "@database/*": [
+        "database/*"
+      ],
+      "@middleware/*": [
+        "middleware/*"
+      ],
+      "@stores/*": [
+        "stores/*"
+      ],
+      "@stores": [
+        "stores"
+      ],
+      "@utilities/*": [
+        "utilities/*"
+      ],
+      "@styles": [
+        "styles"
+      ],
+      "@types": [
+        "types"
+      ]
     },
     "lib": [
       "dom",
@@ -35,7 +59,8 @@
     ],
     "noEmit": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "incremental": true
   },
   "include": [
     "./pages",
@@ -46,12 +71,11 @@
     "./middleware",
     "./utilities",
     "./config",
-    "./next.config.js",
-    "./server.js",
-    "./types.ts",
-    "./constants/styles.ts"
+    "./constants",
+    "./next.config.mjs",
+    "./types.ts"
   ],
   "exclude": [
-    "node_modules",
+    "node_modules"
   ]
 }

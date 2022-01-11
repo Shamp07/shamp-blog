@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node server.js",
+    "dev": "next",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js"
+    "start": "next start"
   },
   "repository": {
     "type": "git",
@@ -30,7 +30,6 @@
     "@types/js-cookie": "^2.2.6",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/marked": "^4.0.1",
-    "@types/next": "^9.0.0",
     "@types/node": "^14.14.14",
     "@types/nodemailer": "^6.4.0",
     "@types/nprogress": "^0.2.0",
@@ -81,11 +80,10 @@
     "mobx": "^6.1.4",
     "mobx-react": "^7.0.5",
     "mobx-react-lite": "^3.1.5",
-    "next": "^10.0.6",
+    "next": "^12.0.7",
     "next-compose-plugins": "^2.2.1",
     "next-images": "^1.8.1",
-    "next-remove-imports": "^1.0.6",
-    "nextjs-progressbar": "0.0.7",
+    "nextjs-progressbar": "^0.0.13",
     "nodemailer": "^6.4.17",
     "nodemailer-smtp-transport": "^2.7.4",
     "pg": "^8.5.1",
