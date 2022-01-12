@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 
 import dsPalette from '@constants/ds-palette';
@@ -10,16 +11,13 @@ interface Props {
   content: string | null;
 }
 
-const Viewer = ({ content }: Props) => {
-  console.log(content);
-  return (
-    <Root>
-      <ReactMarkdown remarkPlugins={remarkBreaks]}>
-        {content || ''}
-      </ReactMarkdown>
-    </Root>
-  );
-};
+const Viewer = ({ content }: Props) => (
+  <Root>
+    <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
+      {content || ''}
+    </ReactMarkdown>
+  </Root>
+);
 
 const Root = styled.div({
   fontSize: '1.125rem',
@@ -37,17 +35,21 @@ const Root = styled.div({
     background: dsPalette.write.blockquoteBackground.toString(),
     '& > p': {
       color: dsPalette.typePrimary.toString(),
+      '&:first-of-type, &:last-of-type': {
+        marginTop: 0,
+        marginBottom: 0,
+      },
     },
   },
 
-  'ul > li::before': {
-    marginTop: '11px',
-    backgroundColor: dsPalette.typePrimary.toString(),
-  },
-
-  'ul > li.task-list-item::before': {
-    marginTop: '4px',
-    backgroundColor: dsPalette.themeWhite.toString(),
+  ul: {
+    display: 'block',
+    listStyleType: 'disc',
+    marginBlockStart: '1em',
+    marginBlockEnd: '1em',
+    marginInlineStart: 0,
+    marginInlineEnd: 0,
+    paddingInlineStart: '40px',
   },
 
   'p + h1, p + h2, p + h3, p + h4': {

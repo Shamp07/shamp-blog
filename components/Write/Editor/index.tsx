@@ -1,13 +1,12 @@
 import React, {
   forwardRef, useRef, useCallback, MutableRefObject,
-  useEffect,
 } from 'react';
 import dynamic from 'next/dynamic';
 import { Editor as EditorType, EditorProps } from '@toast-ui/react-editor';
 import { Props as WrappedEditorProps } from './WrappedEditor';
 
 interface EditorPropsWithHandlers extends EditorProps {
-  onChange?(value: string): void;
+  onChange(value: string): void;
 }
 
 const Editor = dynamic<WrappedEditorProps>(() => import('./WrappedEditor'), { ssr: false });

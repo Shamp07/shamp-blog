@@ -72,7 +72,7 @@
     "./utilities",
     "./config",
     "./constants",
-    "./next.config.mjs",
+    "./next.config.js",
     "./types.ts"
   ],
   "exclude": [

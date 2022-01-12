@@ -2,11 +2,10 @@
   "name": "shamp-blog",
   "version": "2.0.0",
   "description": "",
-  "exports": "./index.js",
-  "type": "module",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "next",
+    "dev": "next dev -p 80",
     "build": "next build",
     "start": "next start"
   },
@@ -91,7 +90,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
-    "react-markdown": "^6.0.3",
+    "react-markdown": "^7.1.2",
     "react-query": "^3.29.0",
     "remark-breaks": "^3.0.2",
     "remark-gfm": "^3.0.1",
