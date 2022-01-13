@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 
 import dsPalette from '@constants/ds-palette';
 import { FontFamily } from '@constants/styles';
@@ -13,7 +14,29 @@ interface Props {
 
 const Viewer = ({ content }: Props) => (
   <Root>
-    <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm, remarkBreaks]}
+      components={{
+        code({
+          node, inline, className, children,
+          ...props
+        }) {
+          const match = /language-(\w+)/.exec(className || '');
+          return !inline && match ? (
+            <SyntaxHighlighter
+              children={String(children).replace(/\n$/, '')}
+              language={match[1]}
+              PreTag="div"
+              {...props}
+            />
+          ) : (
+            <code className={className} {...props}>
+              {children}
+            </code>
+          );
+        },
+      }}
+    >
       {content || ''}
     </ReactMarkdown>
   </Root>
@@ -89,10 +112,16 @@ const Root = styled.div({
   },
 
   pre: {
-    borderRadius: '4px',
     margin: '1em 0',
-    '& > code, & > code *': {
+    fontSize: '14px',
+    '& > div': {
+      borderRadius: '4px',
+    },
+    '& code, & code *': {
       fontFamily: FontFamily.JETBRAINS_MONO,
+      '&&&': {
+        background: 'transparent',
+      },
     },
   },
 
