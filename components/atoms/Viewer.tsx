@@ -22,15 +22,16 @@ const Viewer = ({ content }: Props) => (
           ...props
         }) {
           const match = /language-(\w+)/.exec(className || '');
-          return !inline && match ? (
+          return !inline ? (
             <SyntaxHighlighter
-              children={String(children).replace(/\n$/, '')}
-              language={match[1]}
+              language={match?.[1]}
               PreTag="div"
               {...props}
-            />
+            >
+              {String(children).replace(/\n$/, '')}
+            </SyntaxHighlighter>
           ) : (
-            <code className={className} {...props}>
+            <code>
               {children}
             </code>
           );
@@ -111,25 +112,27 @@ const Root = styled.div({
     marginBottom: '1rem',
   },
 
-  pre: {
+  '& > pre': {
     margin: '1em 0',
     fontSize: '14px',
     '& > div': {
       borderRadius: '4px',
-    },
-    '& code, & code *': {
-      fontFamily: FontFamily.JETBRAINS_MONO,
-      '&&&': {
-        background: 'transparent',
+      '& > code > span': {
+        fontFamily: FontFamily.JETBRAINS_MONO,
+        background: 'transparent !important',
       },
     },
   },
 
-  code: {
+  '& > code': {
     color: dsPalette.typePrimary.toString(),
     borderRadius: '3px',
     fontSize: '85%',
   },
+});
+
+const CodeWrapper = styled.div({
+  padding: '1em',
 });
 
 export default Viewer;
