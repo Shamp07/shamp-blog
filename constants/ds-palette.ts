@@ -16,5 +16,8 @@ export default {
   write: {
     viewerBackground: new Color('#FBFCFD'),
     blockquoteBackground: new Color('#F8F9FA'),
+    table: {
+      secondRowBackground: new Color('#F1F3F5'),
+    },
   },
 };

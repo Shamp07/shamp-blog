@@ -124,15 +124,48 @@ const Root = styled.div({
     },
   },
 
-  '& > code': {
+  '& > p > code': {
     color: dsPalette.typePrimary.toString(),
     borderRadius: '3px',
     fontSize: '85%',
+    background: 'rgba(27, 31, 35, 0.05)',
+    padding: '.2em .4em',
+  },
+
+  '& > p > a': {
+    color: dsPalette.themePrimary.toString(),
+    textDecoration: 'none',
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  },
+
+  '& > table': {
+    minWidth: '40%',
+    maxWidth: '100%',
+    border: `1px solid ${dsPalette.typePrimary.toString()}`,
+    borderCollapse: 'collapse',
+    fontSize: '.875rem',
+    '& tr': {
+      '& > th, & > td': {
+        wordBreak: 'break-word',
+        padding: '.5rem',
+      },
+      '& > td + td, & > th + th': {
+        borderLeft: '1px solid rgb(73, 80, 87)',
+      },
+      '& > th': {
+        borderBottom: `4px solid ${dsPalette.typePrimary.toString()}`,
+      },
+      '&:nth-child(2n+1)': {
+        background: dsPalette.themeWhite.toString(),
+      },
+      '&:nth-child(2n)': {
+        background: dsPalette.write.table.secondRowBackground.toString(),
+      },
+    },
   },
 });
 
-const CodeWrapper = styled.div({
-  padding: '1em',
-});
 
 export default Viewer;
