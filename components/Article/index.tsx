@@ -102,6 +102,7 @@ const Title = styled.h1({
 const DetailWrapper = styled.div({
   display: 'flex',
   justifyContent: 'space-between',
+  color: dsPalette.typeSecond.toString(),
 });
 
 const OptionWrapper = styled.div({
@@ -116,7 +117,8 @@ const Option = styled.button({
   border: 'none',
   background: 'none',
   cursor: 'pointer',
-  color: dsPalette.typeSecond.toString(),
+  color: 'inherit',
+
   '&:hover': {
     color: dsPalette.typePrimary.toString(),
   },

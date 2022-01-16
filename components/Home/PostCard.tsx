@@ -12,6 +12,7 @@ interface Props {
 const PostCard = ({
   post: {
     id, title, time, shortDescription,
+    modifiedTime,
   },
 }: Props) => (
   <Root>
@@ -30,7 +31,7 @@ const PostCard = ({
     </Link>
     <Footer>
       <div>
-        {time}
+        {modifiedTime || time}
       </div>
     </Footer>
   </Root>

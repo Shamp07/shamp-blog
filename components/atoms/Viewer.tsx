@@ -167,5 +167,4 @@ const Root = styled.div({
   },
 });
 
-
 export default Viewer;

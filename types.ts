@@ -50,6 +50,7 @@ export interface Post {
   crtDttm: string;
   likeCnt: number;
   time: string;
+  modifiedTime: string;
 }
 
 export interface Article {
