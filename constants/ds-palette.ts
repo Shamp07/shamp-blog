@@ -20,4 +20,7 @@ export default {
       secondRowBackground: new Color('#F1F3F5'),
     },
   },
+  tag: {
+    background: new Color('#F1F3F5'),
+  },
 };

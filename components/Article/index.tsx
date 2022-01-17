@@ -10,6 +10,7 @@ import dsPalette from '@constants/ds-palette';
 import Viewer from '@atoms/Viewer';
 import stores from '@stores';
 import * as T from '@types';
+import { MediaQuery } from '@constants/styles';
 
 const Article = () => {
   const router = useRouter();
@@ -27,6 +28,10 @@ const Article = () => {
   const mutation = useMutation(() => axios.delete('/api/post', { params: { id } }));
 
   useEffect(() => {
+    signStore.authCheck();
+  }, []);
+
+  useEffect(() => {
     if (mutation.isSuccess) router.push('/');
   }, [mutation.isSuccess]);
 
@@ -38,9 +43,7 @@ const Article = () => {
     utilStore.openPopup({
       type: T.PopupType.CONFIRM,
       description: '정말로 글을 삭제하겠습니까?',
-      callback: () => {
-        mutation.mutate();
-      },
+      callback: mutation.mutate,
     });
   };
 
@@ -80,6 +83,11 @@ const Root = styled.div({
   background: dsPalette.themeWhite.toString(),
   width: '100%',
   height: '100vh',
+
+  [MediaQuery[T.Device.TABLET]]: {
+    paddingLeft: '1rem',
+    paddingRight: '1rem',
+  },
 });
 
 const Container = styled.article({
@@ -87,6 +95,14 @@ const Container = styled.article({
   width: '768px',
   marginLeft: 'auto',
   marginRight: 'auto',
+
+  [MediaQuery[T.Device.TABLET]]: {
+    paddingTop: '2rem',
+  },
+
+  [MediaQuery[T.Device.MOBILE]]: {
+    width: '100%',
+  },
 });
 
 const Title = styled.h1({
@@ -97,6 +113,10 @@ const Title = styled.h1({
   fontWeight: 800,
   marginBottom: '2rem',
   wordBreak: 'keep-all',
+
+  [MediaQuery[T.Device.TABLET]]: {
+    fontSize: '2.25rem',
+  },
 });
 
 const DetailWrapper = styled.div({
@@ -132,7 +152,7 @@ const TagWrapper = styled.div({
 
 const Tag = styled.a({
   marginBottom: '.875rem',
-  background: 'rgb(241, 243, 245)',
+  background: dsPalette.tag.background.toString(),
   paddingLeft: '1rem',
   paddingRight: '1rem',
   height: '2rem',

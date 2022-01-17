@@ -165,7 +165,7 @@ const TagWrapper = styled.div({
 
 const Tag = styled.div({
   marginBottom: '.875rem',
-  background: 'rgb(241, 243, 245)',
+  background: dsPalette.tag.background.toString(),
   paddingLeft: '1rem',
   paddingRight: '1rem',
   height: '2rem',

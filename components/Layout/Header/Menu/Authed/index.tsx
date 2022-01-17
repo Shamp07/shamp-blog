@@ -3,12 +3,14 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 
 import dsPalette from '@constants/ds-palette';
+import { MediaQuery } from '@constants/styles';
+import * as T from '@types';
 import Profile from './Profile';
 
 const Authed = () => (
   <Root>
     <Link href="/write" passHref>
-      <Posting>글 작성</Posting>
+      <Write>글 작성</Write>
     </Link>
     <Profile />
   </Root>
@@ -19,7 +21,7 @@ const Root = styled.div({
   alignItems: 'center',
 });
 
-const Posting = styled.a({
+const Write = styled.a({
   display: 'flex',
   alignItems: 'center',
   fontSize: '1rem',
@@ -38,6 +40,10 @@ const Posting = styled.a({
     color: dsPalette.typeWhite.toString(),
     background: dsPalette.themePrimary.toString(),
     transition: 'all .125s ease-in 0s',
+  },
+
+  [MediaQuery[T.Device.MOBILE]]: {
+    display: 'none',
   },
 });
 

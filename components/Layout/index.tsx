@@ -1,49 +1,39 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode } from 'react';
 import { css, Global } from '@emotion/react';
 import styled from '@emotion/styled';
 import NextNprogress from 'nextjs-progressbar';
 
-import stores from '@stores';
-import * as T from '@types';
-import { FontFamily, MediaQuery } from '@constants/styles';
+import { FontFamily } from '@constants/styles';
 import dsPalette from '@constants/ds-palette';
 import Popup from '@components/Popup';
 import Header from './Header';
 import Content from './Content';
 
-interface Props {
-  children: ReactNode;
-}
-
 const options = {
   showSpinner: false,
 };
 
-const Layout = ({ children }: Props) => {
-  const { signStore } = stores();
+interface Props {
+  children: ReactNode;
+}
 
-  useEffect(() => {
-    signStore.authCheck();
-  }, []);
-
-  return (
-    <Root>
-      <Global styles={GlobalStyle} />
-      <Popup />
-      <Header />
-      <Content>
-        {children}
-      </Content>
-      <NextNprogress
-        color={dsPalette.themePrimary.toString()}
-        startPosition={0.3}
-        stopDelayMs={200}
-        height={3}
-        options={options}
-      />
-    </Root>
-  );
-};
+const Layout = ({ children }: Props) => (
+  <Root>
+    <Global styles={GlobalStyle} />
+    <Popup />
+    <Header />
+    <Content>
+      {children}
+    </Content>
+    <NextNprogress
+      color={dsPalette.themePrimary.toString()}
+      startPosition={0.3}
+      stopDelayMs={200}
+      height={3}
+      options={options}
+    />
+  </Root>
+);
 
 const Root = styled.div({
   display: 'flex',

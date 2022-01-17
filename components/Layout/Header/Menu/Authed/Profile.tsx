@@ -37,7 +37,7 @@ const Profile = () => {
     <>
       <Button onClick={menu.open}>
         <AvatarIcon>{userData.name.substring(0, 1)}</AvatarIcon>
-        <FontAwesomeIcon icon={faSortDown} />
+        <SortDownIcon icon={faSortDown} />
       </Button>
       <ProfileMenu
         anchorEl={menu.element}
@@ -61,6 +61,12 @@ const Button = styled.button({
   alignItems: 'center',
   background: 'transparent',
   fontFamily: 'inherit',
+
+  '&:hover': {
+    '& > svg': {
+      color: dsPalette.typePrimary.toString(),
+    }
+  },
 });
 
 const AvatarIcon = styled(Avatar)({
@@ -68,6 +74,10 @@ const AvatarIcon = styled(Avatar)({
   '&&&': {
     fontFamily: 'inherit',
   },
+});
+
+const SortDownIcon = styled(FontAwesomeIcon)({
+  color: dsPalette.typeSecond.toString(),
 });
 
 const ProfileMenu = styled(Menu)({
