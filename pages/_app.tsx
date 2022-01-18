@@ -1,7 +1,8 @@
 import React from 'react';
-import App, { AppContext } from 'next/app';
+import App, {AppContext} from 'next/app';
 import Head from 'next/head';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import {QueryClient, QueryClientProvider} from 'react-query';
+import axios from 'axios';
 
 import stores from '@stores';
 import Layout from '@components/Layout';
@@ -11,10 +12,15 @@ const queryClient = new QueryClient();
 
 class CustomApp extends App {
   static async getInitialProps(context: AppContext) {
+    axios.defaults.headers.Cookie = context.ctx.req?.headers.cookie ?? '';
+
+    const store = stores();
+    await store.signStore.authCheck();
+
     const appProps = await App.getInitialProps(context);
     return {
       ...appProps,
-      initialMobxState: stores(),
+      initialMobxState: store,
     };
   }
 

@@ -1,8 +1,9 @@
 import postStore, { PostStore, initialPost } from './postStore';
-import signStore, { SignStore } from './signStore';
+import signStore, { SignStore, initialSign } from './signStore';
 import utilStore, { UtilStore } from './utilStore';
 
 export const initialRoot = {
+  signStore: initialSign,
   postStore: initialPost,
 };
 
@@ -16,7 +17,7 @@ export default (() => {
   let instance: RootStore | undefined;
   const initialize = (initialStore = initialRoot) => ({
     postStore: postStore(initialStore.postStore),
-    signStore,
+    signStore: signStore(initialStore.signStore),
     utilStore,
   });
 

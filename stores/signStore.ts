@@ -16,6 +16,11 @@ export interface SignStore {
   signOut(): void;
 }
 
+export const initialSign: Pick<SignStore, 'authChecked' | 'userData'> = {
+  authChecked: false,
+  userData: null,
+};
+
 const signStore: SignStore = {
   authChecked: false,
   userData: null,
@@ -35,4 +40,16 @@ const signStore: SignStore = {
   },
 };
 
-export default observable(signStore);
+export default (() => {
+  let instance: SignStore | undefined;
+  const initialize = (initialState = initialSign) => ({
+    ...signStore,
+    ...initialState,
+  });
+  return (initialState = initialSign) => {
+    if (!instance) {
+      instance = initialize(initialState);
+    }
+    return observable(instance);
+  };
+})();

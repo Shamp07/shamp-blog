@@ -25,10 +25,7 @@ const postStore: PostStore = {
   modifyPost() {},
 };
 
-export const initialPost: {
-  posts: T.Post[];
-  article: T.Article | null;
-} = {
+export const initialPost: Pick<PostStore, 'posts' | 'article'> = {
   posts: [],
   article: null,
 };
