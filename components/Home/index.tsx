@@ -42,6 +42,7 @@ const Root = styled.div({
 
   [MediaQuery[T.Device.TABLET]]: {
     width: 'calc(100% - 2rem)',
+    marginTop: '1rem',
   },
 });
 
@@ -53,6 +54,10 @@ const Inner = styled.div({
   display: 'flex',
   margin: '-1rem',
   flexWrap: 'wrap',
+
+  [MediaQuery[T.Device.TABLET]]: {
+    margin: 0,
+  },
 });
 
 export default observer(Home);

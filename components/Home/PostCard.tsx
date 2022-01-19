@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 
 import dsPalette from '@constants/ds-palette';
 import * as T from '@types';
+import {MediaQuery} from "@constants/styles";
 
 interface Props {
   post: T.Post;
@@ -48,6 +49,19 @@ const Root = styled.div({
   '&:hover': {
     transform: 'translateY(-8px)',
     boxShadow: 'rgb(0 0 0 / 8%) 0px 12px 20px 0px',
+  },
+
+  [MediaQuery[T.Device.TABLET]]: {
+    width: 'calc(50% - 2rem)',
+  },
+
+  [MediaQuery[T.Device.MOBILE]]: {
+    margin: 0,
+    width: '100%',
+
+    '& + &': {
+      marginTop: '1rem',
+    },
   },
 });
 

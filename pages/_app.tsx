@@ -12,7 +12,9 @@ const queryClient = new QueryClient();
 
 class CustomApp extends App {
   static async getInitialProps(context: AppContext) {
-    axios.defaults.headers.Cookie = context.ctx.req?.headers.cookie ?? '';
+    if (typeof window === 'undefined') {
+      axios.defaults.headers.Cookie = context.ctx.req?.headers.cookie ?? '';
+    }
 
     const store = stores();
     await store.signStore.authCheck();

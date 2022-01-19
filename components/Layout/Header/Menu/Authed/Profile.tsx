@@ -65,7 +65,7 @@ const Button = styled.button({
   '&:hover': {
     '& > svg': {
       color: dsPalette.typePrimary.toString(),
-    }
+    },
   },
 });
 

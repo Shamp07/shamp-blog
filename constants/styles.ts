@@ -10,7 +10,7 @@ export enum FontFamily {
 
 export const DeviceWidth = {
   [T.Device.MOBILE]: 768,
-  [T.Device.TABLET]: 1024,
+  [T.Device.TABLET]: 1056,
   [T.Device.LAPTOP]: 1440,
   [T.Device.DESKTOP]: 1920,
 };
