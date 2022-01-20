@@ -6,7 +6,8 @@ import remarkBreaks from 'remark-breaks';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 
 import dsPalette from '@constants/ds-palette';
-import { FontFamily } from '@constants/styles';
+import { FontFamily, MediaQuery } from '@constants/styles';
+import * as T from '@types';
 
 interface Props {
   content: string | null;
@@ -85,31 +86,46 @@ const Root = styled.div({
     marginBlockEnd: '1em',
   },
 
-  h1: {
-    lineHeight: '1.5',
-    fontSize: '2.5rem',
+  'h1, h2, h3, h4': {
+    lineHeight: 1.5,
     borderBottom: 0,
     marginBottom: '1rem',
+
+    [MediaQuery[T.Device.MOBILE]]: {
+      marginBottom: '.75rem',
+    },
+  },
+
+  h1: {
+    fontSize: '2.5rem',
+
+    [MediaQuery[T.Device.MOBILE]]: {
+      fontSize: '2.25rem',
+    },
   },
 
   h2: {
-    lineHeight: '1.5',
     fontSize: '2rem',
-    borderBottom: 0,
-    marginBottom: '1rem',
+
+    [MediaQuery[T.Device.MOBILE]]: {
+      fontSize: '1.75rem',
+    },
   },
 
   h3: {
-    lineHeight: '1.5',
     fontSize: '1.5rem',
-    borderBottom: 0,
-    marginBottom: '1rem',
+
+    [MediaQuery[T.Device.MOBILE]]: {
+      fontSize: '1.25rem',
+    },
   },
 
   h4: {
-    lineHeight: '1.5',
     fontSize: '1.125rem',
-    marginBottom: '1rem',
+
+    [MediaQuery[T.Device.MOBILE]]: {
+      fontSize: '1rem',
+    },
   },
 
   '& > pre': {

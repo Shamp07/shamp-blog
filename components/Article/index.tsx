@@ -123,6 +123,10 @@ const DetailWrapper = styled.div({
   display: 'flex',
   justifyContent: 'space-between',
   color: dsPalette.typeSecond.toString(),
+
+  [MediaQuery[T.Device.MOBILE]]: {
+    fontSize: '.875rem',
+  },
 });
 
 const OptionWrapper = styled.div({
@@ -141,6 +145,10 @@ const Option = styled.button({
 
   '&:hover': {
     color: dsPalette.typePrimary.toString(),
+  },
+
+  [MediaQuery[T.Device.MOBILE]]: {
+    fontSize: '.875rem',
   },
 });
 
@@ -164,6 +172,16 @@ const Tag = styled.a({
   textDecoration: 'none',
   fontWeight: 500,
   fontSize: '1rem',
+
+  [MediaQuery[T.Device.MOBILE]]: {
+    height: '1.5rem',
+    fontSize: '.75rem',
+    borderRadius: '.75rem',
+    paddingLeft: '.75rem',
+    paddingRight: '.75rem',
+    marginRight: '.5rem',
+    marginBottom: '.5rem',
+  },
 });
 
 const Content = styled.div({
