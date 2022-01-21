@@ -57,7 +57,7 @@ const Article = () => {
   return (
     <Root>
       <Container>
-        <div>
+        <HeadWrapper>
           <Title>{title}</Title>
           <DetailWrapper>
             <span>{modifiedTime || time}</span>
@@ -70,7 +70,7 @@ const Article = () => {
               </Link>
             ))}
           </TagWrapper>
-        </div>
+        </HeadWrapper>
         <Content>
           <Viewer content={content} />
         </Content>
@@ -83,11 +83,6 @@ const Root = styled.div({
   background: dsPalette.themeWhite.toString(),
   width: '100%',
   height: '100vh',
-
-  [MediaQuery[T.Device.TABLET]]: {
-    paddingLeft: '1rem',
-    paddingRight: '1rem',
-  },
 });
 
 const Container = styled.article({
@@ -102,6 +97,13 @@ const Container = styled.article({
 
   [MediaQuery[T.Device.MOBILE]]: {
     width: '100%',
+  },
+});
+
+const HeadWrapper = styled.div({
+  [MediaQuery[T.Device.TABLET]]: {
+    paddingLeft: '1rem',
+    paddingRight: '1rem',
   },
 });
 
@@ -186,6 +188,11 @@ const Tag = styled.a({
 
 const Content = styled.div({
   marginTop: '5rem',
+
+  [MediaQuery[T.Device.TABLET]]: {
+    paddingLeft: '1rem',
+    paddingRight: '1rem',
+  },
 });
 
 export default observer(Article);
