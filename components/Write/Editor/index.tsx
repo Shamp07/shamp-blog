@@ -3,7 +3,10 @@ import React, {
 } from 'react';
 import dynamic from 'next/dynamic';
 import { Editor as EditorType, EditorProps } from '@toast-ui/react-editor';
+import axios from 'axios';
+
 import { Props as WrappedEditorProps } from './WrappedEditor';
+
 
 interface EditorPropsWithHandlers extends EditorProps {
   onChange(value: string): void;
@@ -29,7 +32,6 @@ const WysiwygEditor = ({ content, onChange }: Props) => {
     }
 
     const instance = editorRef.current.getInstance();
-
     onChange(instance.getMarkdown());
   }, [onChange, editorRef]);
 
@@ -43,6 +45,21 @@ const WysiwygEditor = ({ content, onChange }: Props) => {
       height="70vh"
       ref={editorRef}
       onChange={handleChange}
+      hooks={{
+        async addImageBlobHook(blob, callback){
+          const formData = new FormData();
+          formData.append('image', blob);
+          const { data } = await axios('/api/files/url', {
+            method: 'POST',
+            data: formData,
+            headers: {
+              'Content-type': 'multipart/form-data',
+            },
+          });
+          callback(data.result, 'alt_text');
+          return false;
+        },
+      }}
     />
   );
 };

@@ -8,7 +8,19 @@ import path from 'path';
 import cors from '@middleware/cors';
 import authMiddleware from '@middleware/auth';
 
-aws.config.loadFromPath('@config/aws-config.json');
+aws.config.loadFromPath('config/aws-config.json');
+
+const upload = multer({
+  storage: multerS3({
+    s3: new aws.S3(),
+    bucket: 'temporary',
+    key(req, file, cb) {
+      cb(null, Date.now().toString() + path.extname(file.originalname));
+    },
+    acl: 'public-read-write',
+  }),
+  dest: 'images/',
+});
 
 const handler = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
@@ -19,27 +31,19 @@ const handler = async (request: T.NextApiRequestToken, response: NextApiResponse
 };
 
 const createURL = async (request: NextApiRequest, response: NextApiResponse) => {
-  const s3 = new aws.S3();
 
-  const upload = multer({
-    storage: multerS3({
-      s3,
-      bucket: 'temporary',
-      key(req, file, cb) {
-        cb(null, Date.now().toString() + path.extname(file.originalname));
-      },
-      acl: 'public-read-write',
-    }),
-  });
+  // const uploadMiddleware = upload.single('image');
+  // uploadMiddleware(request, response (error) => {
+  //   if (error) {
+  //     console.error(error);
+  //   }
+  //
+  //   response.json({
+  //     success: true,
+  //     result: request.file.path,
+  //   });
+  // });
 
-  upload.single('imgFile');
-
-  response.json({
-    success: true,
-    result: {
-      path: 'temporary',
-    },
-  });
 };
 
 export default authMiddleware(handler, T.Auth.ADMIN);
