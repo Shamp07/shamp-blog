@@ -56,6 +56,7 @@ const WysiwygEditor = ({ content, onChange }: Props) => {
               'Content-type': 'multipart/form-data',
             },
           });
+          console.log(data);
           callback(data.result, 'alt_text');
           return false;
         },
