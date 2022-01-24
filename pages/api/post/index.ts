@@ -1,11 +1,13 @@
 import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { marked } from 'marked';
 
 import Database from '@database/Database';
 import authMiddleware from '@middleware/auth';
 import cors from '@middleware/cors';
 import logger from '@config/log.config';
 import * as T from '@types';
+import renderPlain from '@utilities/marked';
 
 const handler = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
@@ -23,7 +25,28 @@ const handler = async (request: T.NextApiRequestToken, response: NextApiResponse
 
 const addPost = async (request: NextApiRequest, response: NextApiResponse) => {
   const { title, tags, content } = request.body;
-  const values = [tags, title, content];
+
+  // TODO: 수많은 토큰 중에 image 토큰을 수월하게 찾아내는 방법이 있다면 개선대상에 포함됩니다. 타입가드의 정리가 필요해보입니다.
+  const thumbnail = (() => {
+    const paragraph = marked.lexer(content).find((token) => {
+      if (token.type !== 'paragraph') return false;
+
+      return token.tokens.findIndex((innerToken) => innerToken.type === 'image') > -1;
+    });
+
+    if (paragraph?.type !== 'paragraph') return undefined;
+
+    const idx = paragraph.tokens.findIndex((token) => token.type === 'image');
+    const image = paragraph.tokens[idx];
+
+    if (image.type !== 'image') return undefined;
+
+    return image.href;
+  })();
+
+  const values = [tags, title, content, marked(content, {
+    renderer: renderPlain(),
+  }), thumbnail];
 
   await Database.execute(
     (database: Client) => database.query(
@@ -73,7 +96,9 @@ const modifyPost = async (request: NextApiRequest, response: NextApiResponse) =>
   const {
     id, tags, title, content,
   } = request.body;
-  const values = [tags, title, content, id];
+  const values = [tags, title, content, id, marked(content, {
+    renderer: renderPlain(),
+  })];
 
   await Database.execute(
     (database: Client) => database.query(
@@ -115,11 +140,15 @@ const INSERT_POST = `
   INSERT INTO POST (
     tags,
     title,
-    content
+    content,
+    short_content,
+    thumbnail
   ) VALUES (
     $1,
     $2,
-    $3
+    $3,
+    $4,
+    $5
   );
 `;
 
@@ -168,6 +197,7 @@ const UPDATE_POST = `
     tags = $1,
     title = $2,
     content = $3,
+    short_content = $5,
     mfy_dttm = NOW()
   WHERE id = $4
 `;

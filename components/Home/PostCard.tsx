@@ -1,10 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import styled from '@emotion/styled';
 
 import dsPalette from '@constants/ds-palette';
 import * as T from '@types';
-import {MediaQuery} from "@constants/styles";
+import { MediaQuery } from '@constants/styles';
 
 interface Props {
   post: T.Post;
@@ -12,21 +13,23 @@ interface Props {
 
 const PostCard = ({
   post: {
-    id, title, time, shortDescription,
-    modifiedTime,
+    id, title, time, shortContent,
+    modifiedTime, thumbnail,
   },
 }: Props) => (
   <Root>
     <Link href={`/post/${id}`} passHref>
       <Section>
-        {/* <Image */}
-        {/*  src={temp} */}
-        {/*  width="100%" */}
-        {/*  height="167" */}
-        {/* /> */}
+        {thumbnail && (
+          <Image
+            src={thumbnail}
+            width="100%"
+            height="167"
+          />
+        )}
         <Inner>
           <Title>{title}</Title>
-          <Content>{shortDescription}</Content>
+          <Content>{shortContent}</Content>
         </Inner>
       </Section>
     </Link>

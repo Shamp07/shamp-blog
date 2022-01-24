@@ -7,7 +7,6 @@ import axios from 'axios';
 
 import { Props as WrappedEditorProps } from './WrappedEditor';
 
-
 interface EditorPropsWithHandlers extends EditorProps {
   onChange(value: string): void;
 }
@@ -46,18 +45,15 @@ const WysiwygEditor = ({ content, onChange }: Props) => {
       ref={editorRef}
       onChange={handleChange}
       hooks={{
-        async addImageBlobHook(blob, callback){
+        async addImageBlobHook(blob, callback) {
           const formData = new FormData();
           formData.append('image', blob);
-          const { data } = await axios('/api/files/url', {
-            method: 'POST',
-            data: formData,
+          const { data } = await axios.post('/api/files/url', formData, {
             headers: {
               'Content-type': 'multipart/form-data',
             },
           });
-          console.log(data);
-          callback(data.result, 'alt_text');
+          callback(data.result);
           return false;
         },
       }}

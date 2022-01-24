@@ -39,14 +39,14 @@
       "@stores/*": [
         "stores/*"
       ],
-      "@stores": [
-        "stores"
-      ],
       "@utilities/*": [
         "utilities/*"
       ],
       "@styles": [
         "styles"
+      ],
+      "@stores": [
+        "stores"
       ],
       "@types": [
         "types"
@@ -60,7 +60,7 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "incremental": true
+    "incremental": true,
   },
   "include": [
     "./pages",
@@ -72,8 +72,8 @@
     "./utilities",
     "./config",
     "./constants",
-    "./next.config.js",
-    "./types.ts"
+    "./types",
+    "./next.config.js"
   ],
   "exclude": [
     "node_modules"

@@ -46,7 +46,8 @@ export interface Post {
   tag: string;
   title: string;
   content: string;
-  shortDescription: string;
+  shortContent: string;
+  thumbnail: string;
   crtDttm: string;
   likeCnt: number;
   time: string;

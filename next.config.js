@@ -3,6 +3,8 @@ const withPlugins = require('next-compose-plugins');
 const withImages = require('next-images');
 const path = require('path');
 
+const multerConfig = require('./config/multer-s3-config.json');
+
 module.exports = withPlugins([withImages], {
   [PHASE_DEVELOPMENT_SERVER]: {
     env: {
@@ -13,6 +15,9 @@ module.exports = withPlugins([withImages], {
     env: {
       BASE_PATH: 'https://shamp.kr',
     },
+  },
+  images: {
+    domains: [multerConfig.bucketURL],
   },
   exclude: path.resolve(__dirname, 'assets/icon'),
   webpack(config) {

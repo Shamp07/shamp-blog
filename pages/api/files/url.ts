@@ -7,13 +7,14 @@ import nextConnect from 'next-connect';
 
 import * as T from '@types';
 import authMiddleware from '@middleware/auth';
+import multerConfig from '@config/multer-s3-config.json';
 
 aws.config.loadFromPath('config/aws-config.json');
 
 const upload = multer({
   storage: multerS3({
     s3: new aws.S3(),
-    bucket: 'temporary',
+    bucket: multerConfig.bucket,
     key(req, file, cb) {
       cb(null, `images/${Date.now().toString()}${path.extname(file.originalname)}`);
     },
@@ -33,7 +34,7 @@ const handler = nextConnect<NextApiRequest, NextApiResponse>({
   .post(upload.single('image'), (req, res) => {
     res.json({
       success: true,
-      result: req.file?.path,
+      result: req.file.location,
     });
   });
 

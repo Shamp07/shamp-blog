@@ -1,6 +1,5 @@
 import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { marked } from 'marked';
 
 import Database from '@database/Database';
 import cors from '@middleware/cors';
@@ -15,15 +14,9 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         SELECT_POST_LIST,
       )
         .then((result) => {
-          const resultRows = result.rows.map((post) => {
-            // eslint-disable-next-line no-param-reassign
-            post.shortDescription = marked(post.content, { renderer: renderPlain() });
-            return post;
-          });
-
           response.json({
             success: true,
-            result: resultRows,
+            result: result.rows,
           });
         }),
     ).then(() => {
@@ -44,6 +37,8 @@ const SELECT_POST_LIST = `
         p.tags AS tag,
         p.title,
         p.content,
+        p.short_content AS "shortContent",
+        p.thumbnail,
         p.crt_dttm AS "crtDttm",
         (SELECT COUNT(*) FROM post_like WHERE post_id = p.id) AS "likeCnt",
         (SELECT COUNT(*) FROM comment WHERE post_id = p.id AND delete_fl = false) AS "commentCnt",
@@ -73,39 +68,5 @@ const SELECT_POST_LIST = `
     ) b
   ) a
 `;
-
-const htmlEscapeToText = (text: string) => text.replace(/&#[0-9]*;|&amp;/g, (escapeCode) => {
-  if (escapeCode.match(/amp/)) return '&';
-  return String.fromCharCode(Number(escapeCode.match(/[0-9]+/)));
-});
-
-const renderPlain = () => {
-  const render = new marked.Renderer();
-
-  render.paragraph = (text) => `${htmlEscapeToText(text)}\r\n`;
-
-  render.heading = (text) => text;
-  render.strong = (text) => text;
-  render.em = (text) => text;
-  render.del = (text) => text;
-
-  render.hr = () => '';
-  render.blockquote = (text) => text;
-
-  render.list = (text) => text;
-  render.listitem = (text) => text;
-  render.checkbox = () => '';
-
-  render.table = () => '';
-  render.tablerow = () => '';
-  render.tablecell = () => '';
-  render.image = () => '';
-  render.link = (href, title, text) => text;
-
-  render.codespan = (text) => text;
-  render.code = () => '';
-
-  return render;
-};
 
 export default handler;
