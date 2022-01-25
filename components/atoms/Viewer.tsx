@@ -84,6 +84,12 @@ const Root = styled.div({
   p: {
     marginBlockStart: '1em',
     marginBlockEnd: '1em',
+
+    img: {
+      display: 'block',
+      margin: '3rem auto',
+      maxWidth: '100%',
+    },
   },
 
   'h1, h2, h3, h4': {

@@ -16,32 +16,43 @@ const PostCard = ({
     id, title, time, shortContent,
     modifiedTime, thumbnail,
   },
-}: Props) => (
-  <Root>
-    <Link href={`/post/${id}`} passHref>
-      <Section>
-        {thumbnail && (
-          <Image
-            src={thumbnail}
-            width="100%"
-            height="167"
-          />
-        )}
-        <Inner>
-          <Title>{title}</Title>
-          <Content>{shortContent}</Content>
-        </Inner>
-      </Section>
-    </Link>
-    <Footer>
-      <div>
-        {modifiedTime || time}
-      </div>
-    </Footer>
-  </Root>
-);
+}: Props) => {
+  const thumbnailImage = thumbnail ? (
+    <ImageWrapper>
+      <ImageInner>
+        <Image
+          src={thumbnail}
+          layout="fill"
+          objectFit="cover"
+        />
+      </ImageInner>
+    </ImageWrapper>
+  ) : null;
+
+  return (
+    <Root>
+      <Link href={`/post/${id}`} passHref>
+        <Section>
+          {thumbnailImage}
+          <Inner>
+            <Title>{title}</Title>
+            <Content>{shortContent}</Content>
+          </Inner>
+        </Section>
+      </Link>
+      <Footer>
+        <div>
+          {modifiedTime || time}
+        </div>
+      </Footer>
+    </Root>
+  );
+};
 
 const Root = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
   width: '20rem',
   backgroundColor: dsPalette.themeWhite.toString(),
   borderRadius: '4px',
@@ -68,6 +79,20 @@ const Root = styled.div({
   },
 });
 
+const ImageWrapper = styled.div({
+  width: '100%',
+  paddingTop: '60%',
+  position: 'relative',
+});
+
+const ImageInner = styled.div({
+  width: '100%',
+  height: '100%',
+  position: 'absolute',
+  top: 0,
+  left: 0,
+});
+
 const Title = styled.h4({
   fontSize: '1rem',
   margin: '0 0 .25rem',
@@ -80,7 +105,7 @@ const Inner = styled.div({
 const Content = styled.p({
   fontSize: '.875rem',
   margin: '0 0 1.5rem',
-  height: '3.9375rem',
+  height: '5.5rem',
   wordBreak: 'break-word',
   overflowWrap: 'break-word',
   overflow: 'hidden',

@@ -110,7 +110,7 @@ const HeadWrapper = styled.div({
 const Title = styled.h1({
   fontSize: '3rem',
   lineHeight: 1.5,
-  letterSpacing: '-0.004em',
+  letterSpacing: '-.004em',
   marginTop: 0,
   fontWeight: 800,
   marginBottom: '2rem',

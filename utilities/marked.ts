@@ -7,7 +7,7 @@ const htmlEscapeToText = (text: string) => text.replace(/&#[0-9]*;|&amp;/g, (esc
 
 const SPACING_CHARACTER = ' ';
 
-export default () => {
+export const renderPlain = () => {
   const render = new marked.Renderer();
 
   render.paragraph = (text) => `${htmlEscapeToText(text)}\r\n`;
@@ -36,10 +36,20 @@ export default () => {
   return render;
 };
 
-export const imageRenderer = () => {
-  const render = new marked.Renderer();
+// TODO: 수많은 토큰 중에 image 토큰을 수월하게 찾아내는 방법이 있다면 개선대상에 포함됩니다. 타입가드의 정리가 필요해보입니다.
+export const getImagePath = (text: string) => {
+  const paragraph = marked.lexer(text).find((token) => {
+    if (token.type !== 'paragraph') return false;
 
-  render.paragraph = () => 'dsadas';
+    return token.tokens.findIndex((innerToken) => innerToken.type === 'image') > -1;
+  });
 
-  return render;
+  if (paragraph?.type !== 'paragraph') return undefined;
+
+  const idx = paragraph.tokens.findIndex((token) => token.type === 'image');
+  const image = paragraph.tokens[idx];
+
+  if (image.type !== 'image') return undefined;
+
+  return image.href;
 };
