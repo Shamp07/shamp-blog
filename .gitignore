@@ -111,3 +111,7 @@ config/
 
 # Log
 logs/
+
+# macOS specific
+.DS_Store
+
