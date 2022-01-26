@@ -36,20 +36,17 @@ export const renderPlain = () => {
   return render;
 };
 
-// TODO: 수많은 토큰 중에 image 토큰을 수월하게 찾아내는 방법이 있다면 개선대상에 포함됩니다. 타입가드의 정리가 필요해보입니다.
 export const getImagePath = (text: string) => {
-  const paragraph = marked.lexer(text).find((token) => {
-    if (token.type !== 'paragraph') return false;
+  const paragraph = marked.lexer(text).find(getImageToken);
+  if (!paragraph) return undefined;
 
-    return token.tokens.findIndex((innerToken) => innerToken.type === 'image') > -1;
-  });
+  const image = getImageToken(paragraph);
 
-  if (paragraph?.type !== 'paragraph') return undefined;
+  return image && image.type === 'image' ? image.href : undefined;
+};
 
-  const idx = paragraph.tokens.findIndex((token) => token.type === 'image');
-  const image = paragraph.tokens[idx];
+const getImageToken = (token: marked.Token) => {
+  if (token.type !== 'paragraph') return false;
 
-  if (image.type !== 'image') return undefined;
-
-  return image.href;
+  return token.tokens.find(({ type }) => type === 'image');
 };
