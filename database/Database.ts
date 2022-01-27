@@ -1,6 +1,7 @@
 import { Client, QueryResult } from 'pg';
-import config from '../config/db.config.json';
-import logger from '../config/log.config';
+
+import config from '@config/db.config.json';
+import logger from '@config/log.config';
 
 class Database {
   connection: Client;

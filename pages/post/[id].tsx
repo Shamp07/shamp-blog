@@ -12,7 +12,7 @@ Post.getInitialProps = async ({ query }: NextPageContext) => {
   const id = Number(query.id);
 
   await Promise.all([
-    postStore.getPost(id, false),
+    postStore.getPost(id),
   ]);
 
   return {

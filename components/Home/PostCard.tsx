@@ -24,6 +24,7 @@ const PostCard = ({
           src={thumbnail}
           layout="fill"
           objectFit="cover"
+          priority
         />
       </ImageInner>
     </ImageWrapper>
