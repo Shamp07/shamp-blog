@@ -1,4 +1,4 @@
-import React, {ChangeEvent, CSSProperties, useEffect} from 'react';
+import React, { ChangeEvent, CSSProperties, useEffect } from 'react';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import { useMutation } from 'react-query';
 import axios from 'axios';

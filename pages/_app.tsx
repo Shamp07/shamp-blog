@@ -1,7 +1,7 @@
 import React from 'react';
-import App, {AppContext} from 'next/app';
+import App, { AppContext } from 'next/app';
 import Head from 'next/head';
-import {QueryClient, QueryClientProvider} from 'react-query';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import axios from 'axios';
 
 import stores from '@stores';

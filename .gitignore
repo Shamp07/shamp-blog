@@ -111,3 +111,6 @@ config/
 
 # Log
 logs/
+
+# OSX file
+.DS_Store

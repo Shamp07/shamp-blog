@@ -3,8 +3,6 @@ import Link from 'next/link';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import { useMutation } from 'react-query';
 import styled from '@emotion/styled';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import { useRouter } from 'next/router';
 
 import stores from '@stores';
