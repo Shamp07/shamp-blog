@@ -23,7 +23,8 @@ const Viewer = ({ content }: Props) => (
           ...props
         }) {
           const match = /language-(\w+)/.exec(className || '');
-          return !inline ? (
+
+          const highlighter = (
             <SyntaxHighlighter
               language={match?.[1]}
               PreTag="div"
@@ -31,11 +32,15 @@ const Viewer = ({ content }: Props) => (
             >
               {String(children).replace(/\n$/, '')}
             </SyntaxHighlighter>
-          ) : (
+          );
+
+          const code = (
             <code>
               {children}
             </code>
           );
+
+          return !inline ? highlighter : code;
         },
       }}
     >
@@ -46,7 +51,7 @@ const Viewer = ({ content }: Props) => (
 
 const Root = styled.div({
   fontSize: '1.125rem',
-  lineHeight: '1.7',
+  lineHeight: 1.7,
   fontFamily: 'inherit',
 
   '& > div': {
@@ -179,10 +184,10 @@ const Root = styled.div({
       '& > th': {
         borderBottom: `4px solid ${dsPalette.typePrimary.toString()}`,
       },
-      '&:nth-child(2n+1)': {
+      '&:nth-of-type(2n+1)': {
         background: dsPalette.themeWhite.toString(),
       },
-      '&:nth-child(2n)': {
+      '&:nth-of-type(2n)': {
         background: dsPalette.write.table.secondRowBackground.toString(),
       },
     },

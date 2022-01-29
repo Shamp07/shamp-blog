@@ -54,6 +54,12 @@ const Article = () => {
     </OptionWrapper>
   ) : null;
 
+  const tagList = tags.map((tag) => (
+    <Link href="/" passHref key={tag}>
+      <Tag>{tag}</Tag>
+    </Link>
+  ));
+
   return (
     <Root>
       <Container>
@@ -64,11 +70,7 @@ const Article = () => {
             {options}
           </DetailWrapper>
           <TagWrapper>
-            {tags.map((tag) => (
-              <Link href="/" passHref key={tag}>
-                <Tag>{tag}</Tag>
-              </Link>
-            ))}
+            {tagList}
           </TagWrapper>
         </HeadWrapper>
         <Content>

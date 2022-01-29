@@ -2,19 +2,29 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
+import stores from '@stores';
 import dsPalette from '@constants/ds-palette';
 import { MediaQuery } from '@constants/styles';
 import * as T from '@types';
 import Profile from './Profile';
 
-const Authed = () => (
-  <Root>
+const Authed = () => {
+  const { signStore } = stores();
+  const { userData } = signStore;
+
+  const writeButton = userData?.adminFl ? (
     <Link href="/write" passHref>
       <Write>글 작성</Write>
     </Link>
-    <Profile />
-  </Root>
-);
+  ) : null;
+
+  return (
+    <Root>
+      {writeButton}
+      <Profile />
+    </Root>
+  );
+}
 
 const Root = styled.div({
   display: 'flex',
