@@ -24,7 +24,7 @@ const Authed = () => {
       <Profile />
     </Root>
   );
-}
+};
 
 const Root = styled.div({
   display: 'flex',

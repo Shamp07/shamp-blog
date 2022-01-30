@@ -73,6 +73,7 @@
     "./config",
     "./constants",
     "./types",
+    "./server.js",
     "./next.config.js"
   ],
   "exclude": [

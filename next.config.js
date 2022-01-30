@@ -1,4 +1,4 @@
-const { PHASE_DEVELOPMENT_SERVER, PHASE_PRODUCTION_SERVER } = require('next/constants');
+const { PHASE_DEVELOPMENT_SERVER, PHASE_PRODUCTION_BUILD } = require('next/constants');
 const withPlugins = require('next-compose-plugins');
 const withImages = require('next-images');
 const path = require('path');
@@ -11,7 +11,7 @@ module.exports = withPlugins([withImages], {
       BASE_PATH: 'http://localhost',
     },
   },
-  [PHASE_PRODUCTION_SERVER]: {
+  [PHASE_PRODUCTION_BUILD]: {
     env: {
       BASE_PATH: 'https://shamp.kr',
     },
