@@ -25,13 +25,7 @@ if (!dev) {
 
 app.prepare().then(() => {
   http.createServer(options, (req, res) => {
-    if (!dev) {
-      res.statusCode = 307;
-      res.setHeader('Location', `https://shamp.kr${req.url}`);
-      res.end();
-    } else {
-      handle(req, res, parse(req.url, true));
-    }
+    handle(req, res, parse(req.url, true));
   }).listen(PORT, (err) => {
     if (err) throw err;
   });
