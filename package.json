@@ -77,6 +77,8 @@
     "axios": "^0.21.1",
     "color": "^3.2.1",
     "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "heroku-ssl-redirect": "^0.1.1",
     "js-cookie": "^2.2.1",
     "jsonwebtoken": "^8.5.1",
     "marked": "^4.0.8",
