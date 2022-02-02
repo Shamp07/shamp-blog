@@ -1,6 +1,5 @@
 const http = require('http');
 const https = require('https');
-const sslRedirect = require('heroku-ssl-redirect').default;
 
 const express = require('express');
 const next = require('next');
@@ -29,7 +28,6 @@ if (!dev) {
 app.prepare().then(() => {
   const server = express();
 
-  server.use(sslRedirect(['production'], 301));
   server.all('*', (req, res) => handle(req, res));
 
   http.createServer(server).listen(PORT, (err) => {
