@@ -8,7 +8,7 @@ const multerConfig = require('./config/multer-s3-config.json');
 module.exports = withPlugins([withImages], {
   [PHASE_DEVELOPMENT_SERVER]: {
     env: {
-      BASE_PATH: 'http://localhost',
+      BASE_PATH: 'https://dev.shamp.kr',
     },
   },
   [PHASE_PRODUCTION_BUILD]: {

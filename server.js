@@ -17,11 +17,18 @@ const PORT = 80;
 const SSL_PORT = 443;
 
 let options;
-if (!dev) {
+if (dev) {
+  options = {
+    ca: fs.readFileSync(path.join(__dirname, sslConfig.local.ca)),
+    key: fs.readFileSync(path.join(__dirname, sslConfig.local.key), 'utf8').toString(),
+    cert: fs.readFileSync(path.join(__dirname, sslConfig.local.cert), 'utf8').toString(),
+    passphrase: sslConfig.local.passphrase,
+  };
+} else {
   options = {
     ca: fs.readFileSync(sslConfig.ca),
-    key: fs.readFileSync(path.resolve(process.cwd(), sslConfig.key), 'utf8').toString(),
-    cert: fs.readFileSync(path.resolve(process.cwd(), sslConfig.cert), 'utf8').toString(),
+    key: fs.readFileSync(path.resolve(process.cwd(), sslConfig.remote.key), 'utf8').toString(),
+    cert: fs.readFileSync(path.resolve(process.cwd(), sslConfig.remote.cert), 'utf8').toString(),
   };
 }
 
@@ -34,9 +41,7 @@ app.prepare().then(() => {
     if (err) throw err;
   });
 
-  if (!dev) {
-    https.createServer(options, server).listen(SSL_PORT, (err) => {
-      if (err) throw err;
-    });
-  }
+  https.createServer(options, server).listen(SSL_PORT, (err) => {
+    if (err) throw err;
+  });
 });
