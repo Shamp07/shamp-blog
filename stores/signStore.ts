@@ -1,4 +1,4 @@
-import { observable } from 'mobx';
+import { observable, flow } from 'mobx';
 import cookie from 'js-cookie';
 import axios from 'axios';
 
@@ -24,11 +24,11 @@ export const initialSign: Pick<SignStore, 'authChecked' | 'userData'> = {
 const signStore: SignStore = {
   authChecked: false,
   userData: null,
-  async authCheck() {
-    const { data } = await axios.get('/api/user/cookie');
+  authCheck: flow(function* (this: SignStore) {
+    const { data } = yield axios.get('/api/user/cookie');
     this.userData = data.result;
     this.authChecked = true;
-  },
+  }),
   async signIn(signInForm) {
     const res = await axios.post<T.Response>('/api/user/login', signInForm);
     return res.data;

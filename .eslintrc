@@ -8,6 +8,7 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "func-names": [1, "always", { "generators": "never" }],
     "@typescript-eslint/no-use-before-define": 0,
     "react/jsx-props-no-spreading": 0,
     "react/no-this-in-sfc": 0

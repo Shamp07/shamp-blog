@@ -81,7 +81,7 @@ const Write = () => {
       };
       form.tags = tags;
     } else if (!router.query.id) {
-      form.inputs.content = '';
+      form.onChangeContent('');
     }
   }, [getMutation.isSuccess]);
 
