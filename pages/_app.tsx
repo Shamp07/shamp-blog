@@ -3,10 +3,14 @@ import App, { AppContext } from 'next/app';
 import Head from 'next/head';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import axios from 'axios';
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
 
 import stores from '@stores';
 import Layout from '@components/Layout';
 import * as T from '@types';
+
+config.autoAddCss = false;
 
 const queryClient = new QueryClient();
 
