@@ -11,6 +11,7 @@ import Viewer from '@atoms/Viewer';
 import stores from '@stores';
 import * as T from '@types';
 import { MediaQuery } from '@constants/styles';
+import { Page } from '@utilities/route';
 
 const Article = () => {
   const router = useRouter();
@@ -55,7 +56,7 @@ const Article = () => {
   ) : null;
 
   const tagList = tags.map((tag) => (
-    <Link href="/" passHref key={tag}>
+    <Link href={Page.HOME} passHref key={tag}>
       <Tag>{tag}</Tag>
     </Link>
   ));

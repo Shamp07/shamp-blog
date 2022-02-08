@@ -4,6 +4,7 @@ import { observer, useLocalObservable } from 'mobx-react-lite';
 import { useMutation } from 'react-query';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+import cookie from 'js-cookie';
 
 import stores from '@stores';
 import dsPalette from '@constants/ds-palette';
@@ -11,7 +12,7 @@ import { LoadingButton } from '@atoms/Button';
 import TextField from '@atoms/TextField';
 import { MediaQuery } from '@constants/styles';
 import * as T from '@types';
-import cookie from 'js-cookie';
+import { Page } from '@utilities/route';
 
 const SignIn = () => {
   const router = useRouter();
@@ -94,7 +95,7 @@ const SignIn = () => {
         <SignInButton variant="contained" loading={mutation.isLoading} disabled={!isAvailable} onClick={onSignIn}>
           로그인
         </SignInButton>
-        <Link href="/signup" passHref>
+        <Link href={Page.SIGN_UP} passHref>
           <SignUp>회원가입</SignUp>
         </Link>
       </Inner>

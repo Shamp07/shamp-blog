@@ -6,6 +6,7 @@ import styled from '@emotion/styled';
 import dsPalette from '@constants/ds-palette';
 import * as T from '@types';
 import { MediaQuery } from '@constants/styles';
+import { Page } from '@utilities/route';
 
 interface Props {
   post: T.Post;
@@ -32,7 +33,7 @@ const PostCard = ({
 
   return (
     <Root>
-      <Link href={`/post/${id}`} passHref>
+      <Link href={`${Page.POST}/${id}`} passHref>
         <Section>
           {thumbnailImage}
           <Inner>

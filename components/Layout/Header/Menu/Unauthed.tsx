@@ -3,9 +3,10 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 
 import dsPalette from '@constants/ds-palette';
+import { Page } from '@utilities/route';
 
 const Unauthed = () => (
-  <Link href="/signin" passHref>
+  <Link href={Page.SIGN_IN} passHref>
     <Root>로그인</Root>
   </Link>
 );

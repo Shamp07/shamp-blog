@@ -7,13 +7,14 @@ import dsPalette from '@constants/ds-palette';
 import { MediaQuery } from '@constants/styles';
 import * as T from '@types';
 import Profile from './Profile';
+import { Page } from '@utilities/route';
 
 const Authed = () => {
   const { signStore } = stores();
   const { userData } = signStore;
 
   const writeButton = userData?.adminFl ? (
-    <Link href="/write" passHref>
+    <Link href={Page.WRITE} passHref>
       <Write>글 작성</Write>
     </Link>
   ) : null;
