@@ -59,6 +59,7 @@ export interface Article {
   tags: string[];
   title: string;
   content: string;
+  shortContent: string;
   viewCnt: number;
   likeCnt: number;
   time: string;

@@ -5,15 +5,18 @@ const path = require('path');
 
 const multerConfig = require('./config/multer-s3-config.json');
 
+const DEVELOPMENT_BASE_PATH = 'https://dev.shamp.kr';
+const PRODUCTION_BASE_PATH = 'https://shamp.kr';
+
 module.exports = withPlugins([withImages], {
   [PHASE_DEVELOPMENT_SERVER]: {
     env: {
-      BASE_PATH: 'https://dev.shamp.kr',
+      BASE_PATH: DEVELOPMENT_BASE_PATH,
     },
   },
   [PHASE_PRODUCTION_BUILD]: {
     env: {
-      BASE_PATH: 'https://shamp.kr',
+      BASE_PATH: PRODUCTION_BASE_PATH,
     },
   },
   images: {

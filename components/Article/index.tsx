@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { observer } from 'mobx-react-lite';
@@ -13,6 +14,8 @@ import * as T from '@types';
 import { MediaQuery } from '@constants/styles';
 import { Page } from '@utilities/route';
 
+const ARTICLE_TITLE_SUFFIX = ' - Shamp Blog';
+
 const Article = () => {
   const router = useRouter();
 
@@ -23,7 +26,7 @@ const Article = () => {
 
   const {
     id, title, content, time, modifiedTime,
-    tags,
+    tags, shortContent,
   } = article;
 
   const mutation = useMutation(() => axios.delete('/api/post', { params: { id } }));
@@ -61,8 +64,23 @@ const Article = () => {
     </Link>
   ));
 
+  const description = shortContent.replaceAll('\n', ' ').trim();
+
   return (
     <Root>
+      <Head>
+        <title>
+          {title}
+          {ARTICLE_TITLE_SUFFIX}
+        </title>
+        <meta property="og:title" content={title} />
+        <meta property="twitter:title" content={title} />
+        <meta property="description" content={description} />
+        <meta property="og:description" content={description} />
+        <meta property="twitter:description" content={description} />
+        <meta property="og:url" content={`${process.env.BASE_PATH}${router.asPath}`} />
+        <meta property="og:type" content="article" />
+      </Head>
       <Container>
         <HeadWrapper>
           <Title>{title}</Title>
