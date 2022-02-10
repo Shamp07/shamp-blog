@@ -60,6 +60,7 @@ export interface Article {
   title: string;
   content: string;
   shortContent: string;
+  thumbnail: string;
   viewCnt: number;
   likeCnt: number;
   time: string;

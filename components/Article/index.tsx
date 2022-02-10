@@ -26,7 +26,7 @@ const Article = () => {
 
   const {
     id, title, content, time, modifiedTime,
-    tags, shortContent,
+    tags, shortContent, thumbnail,
   } = article;
 
   const mutation = useMutation(() => axios.delete('/api/post', { params: { id } }));
@@ -73,6 +73,7 @@ const Article = () => {
           {title}
           {ARTICLE_TITLE_SUFFIX}
         </title>
+        <meta property="title" content={title} />
         <meta property="og:title" content={title} />
         <meta property="twitter:title" content={title} />
         <meta property="description" content={description} />
@@ -80,6 +81,7 @@ const Article = () => {
         <meta property="twitter:description" content={description} />
         <meta property="og:url" content={`${process.env.BASE_PATH}${router.asPath}`} />
         <meta property="og:type" content="article" />
+        {thumbnail && <meta property="og:image" content={thumbnail} />}
       </Head>
       <Container>
         <HeadWrapper>

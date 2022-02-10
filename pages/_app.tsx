@@ -53,8 +53,6 @@ class CustomApp extends App {
             property="og:image"
             content="https://ko.gravatar.com/userimage/201440531/c7eb1d92694dfbcf00f7a79ea61811bf.png?size=512"
           />
-          <meta property="og:image:width" content="200" />
-          <meta property="og:image:height" content="200" />
           <meta property="og:site_name" content="Shamp Blog" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link

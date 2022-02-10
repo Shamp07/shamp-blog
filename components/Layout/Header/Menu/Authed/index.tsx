@@ -6,8 +6,8 @@ import stores from '@stores';
 import dsPalette from '@constants/ds-palette';
 import { MediaQuery } from '@constants/styles';
 import * as T from '@types';
-import Profile from './Profile';
 import { Page } from '@utilities/route';
+import Profile from './Profile';
 
 const Authed = () => {
   const { signStore } = stores();

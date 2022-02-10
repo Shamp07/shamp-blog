@@ -28,7 +28,7 @@ const addPost = async (request: NextApiRequest, response: NextApiResponse) => {
 
   const values = [tags, title, content, marked(content, {
     renderer: renderPlain(),
-  }), getImagePath(content)];
+  }).substring(0, 500), getImagePath(content)];
 
   await Database.execute(
     (database: Client) => database.query(
@@ -80,7 +80,7 @@ const modifyPost = async (request: NextApiRequest, response: NextApiResponse) =>
   } = request.body;
   const values = [tags, title, content, id, marked(content, {
     renderer: renderPlain(),
-  }), getImagePath(content)];
+  }).substring(0, 500), getImagePath(content)];
 
   await Database.execute(
     (database: Client) => database.query(
@@ -141,6 +141,7 @@ const SELECT_POST = `
     p.title,
     p.content,
     p.short_content AS "shortContent",
+    p.thumbnail,
     p.view_cnt AS "viewCnt",
     (SELECT COUNT(*) FROM post_like WHERE post_id = p.id) AS "likeCnt",
     (SELECT COUNT(*) FROM comment WHERE post_id = p.id AND delete_fl = false) AS "commentCnt",
