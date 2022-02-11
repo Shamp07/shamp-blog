@@ -64,7 +64,7 @@ const Article = () => {
     </Link>
   ));
 
-  const description = shortContent.replaceAll('\n', ' ').trim();
+  const description = shortContent.replaceAll('\n', ' ').trim().substring(0, 150);
 
   return (
     <Root>
@@ -73,15 +73,15 @@ const Article = () => {
           {title}
           {ARTICLE_TITLE_SUFFIX}
         </title>
-        <meta property="title" content={title} />
-        <meta property="og:title" content={title} />
+        <meta property="title" content={title} key="title" />
+        <meta property="og:title" content={title} key="og-title" />
         <meta property="twitter:title" content={title} />
-        <meta property="description" content={description} />
-        <meta property="og:description" content={description} />
+        <meta property="description" content={description} key="description" />
+        <meta property="og:description" content={description} key="og-description" />
         <meta property="twitter:description" content={description} />
         <meta property="og:url" content={`${process.env.BASE_PATH}${router.asPath}`} />
-        <meta property="og:type" content="article" />
-        {thumbnail && <meta property="og:image" content={thumbnail} />}
+        <meta property="og:type" content="article" key="og-type" />
+        {thumbnail && <meta property="og:image" content={thumbnail} key="og-image" />}
       </Head>
       <Container>
         <HeadWrapper>
