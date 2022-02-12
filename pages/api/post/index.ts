@@ -8,6 +8,7 @@ import cors from '@middleware/cors';
 import logger from '@config/log.config';
 import * as T from '@types';
 import { renderPlain, getImagePath } from '@utilities/marked';
+import titleURLParser from '@utilities/parser';
 
 const handler = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
@@ -26,7 +27,7 @@ const handler = async (request: T.NextApiRequestToken, response: NextApiResponse
 const addPost = async (request: NextApiRequest, response: NextApiResponse) => {
   const { title, tags, content } = request.body;
 
-  const values = [tags, title, content, marked(content, {
+  const values = [titleURLParser(title), tags, title, content, marked(content, {
     renderer: renderPlain(),
   }).substring(0, 500), getImagePath(content)];
 
@@ -120,6 +121,7 @@ const deletePost = async (request: NextApiRequest, response: NextApiResponse) =>
 
 const INSERT_POST = `
   INSERT INTO POST (
+    id,
     tags,
     title,
     content,
@@ -130,7 +132,8 @@ const INSERT_POST = `
     $2,
     $3,
     $4,
-    $5
+    $5,
+    $6
   );
 `;
 

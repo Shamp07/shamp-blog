@@ -42,7 +42,7 @@ export type Tag = string;
 export interface Post {
   rownum: number;
   page: number;
-  id: number;
+  id: string;
   tag: string;
   title: string;
   content: string;
@@ -55,7 +55,7 @@ export interface Post {
 }
 
 export interface Article {
-  id: number;
+  id: string;
   tags: string[];
   title: string;
   content: string;

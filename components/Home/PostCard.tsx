@@ -7,6 +7,7 @@ import dsPalette from '@constants/ds-palette';
 import * as T from '@types';
 import { MediaQuery } from '@constants/styles';
 import { Page } from '@utilities/route';
+import titleURLParser from '@utilities/parser';
 
 interface Props {
   post: T.Post;
@@ -33,7 +34,7 @@ const PostCard = ({
 
   return (
     <Root>
-      <Link href={`${Page.POST}/${id}`} passHref>
+      <Link href={`${Page.POST}/${titleURLParser(title)}`} passHref>
         <Section>
           {thumbnailImage}
           <Inner>
