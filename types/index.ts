@@ -42,9 +42,10 @@ export type Tag = string;
 export interface Post {
   rownum: number;
   page: number;
-  id: string;
+  id: number;
   tag: string;
   title: string;
+  titleId: string;
   content: string;
   shortContent: string;
   thumbnail: string;
@@ -55,7 +56,7 @@ export interface Post {
 }
 
 export interface Article {
-  id: string;
+  id: number;
   tags: string[];
   title: string;
   content: string;
@@ -66,6 +67,8 @@ export interface Article {
   time: string;
   modifiedTime: string;
 }
+
+export type EditArticle = Pick<Article, 'id' | 'tags' | 'title' | 'content'>;
 
 export interface User {
   id: number;

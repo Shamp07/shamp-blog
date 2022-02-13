@@ -9,10 +9,10 @@ const Post = () => <Article />;
 Post.getInitialProps = async ({ query }: NextPageContext) => {
   const { postStore } = stores();
 
-  const id = Number(query.id);
+  const titleId = String(query.titleId);
 
   await Promise.all([
-    postStore.getPost(id),
+    postStore.getPost(titleId),
   ]);
 
   return {

@@ -27,7 +27,7 @@ const handler = async (request: T.NextApiRequestToken, response: NextApiResponse
 const addPost = async (request: NextApiRequest, response: NextApiResponse) => {
   const { title, tags, content } = request.body;
 
-  const values = [titleURLParser(title), tags, title, content, marked(content, {
+  const values = [tags, title, titleURLParser(title), content, marked(content, {
     renderer: renderPlain(),
   }).substring(0, 500), getImagePath(content)];
 
@@ -47,10 +47,10 @@ const addPost = async (request: NextApiRequest, response: NextApiResponse) => {
 };
 
 const getPost = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { id } = request.query;
-  const values = [id];
+  const { titleId } = request.query;
+  const values = [titleId];
 
-  let post: object;
+  let article: T.Article | undefined;
 
   await Database.execute(
     (database: Client) => database.query(
@@ -58,16 +58,16 @@ const getPost = async (request: NextApiRequest, response: NextApiResponse) => {
       values,
     )
       .then((result) => {
-        [post] = result.rows;
+        [article] = result.rows;
         return database.query(
           UPDATE_POST_VIEW_CNT,
-          values,
+          [article?.id],
         );
       })
       .then(() => {
         response.json({
           success: true,
-          result: post,
+          result: article,
         });
       }),
   ).then(() => {
@@ -121,9 +121,9 @@ const deletePost = async (request: NextApiRequest, response: NextApiResponse) =>
 
 const INSERT_POST = `
   INSERT INTO POST (
-    id,
     tags,
     title,
+    title_id,
     content,
     short_content,
     thumbnail
@@ -169,7 +169,7 @@ const SELECT_POST = `
       ELSE TO_CHAR(p.mfy_dttm, 'YYYY년 MM월 DD일')
     END AS "modifiedTime"
   FROM post p
-  WHERE p.id = $1
+  WHERE p.title_id = $1
 `;
 
 const UPDATE_POST_VIEW_CNT = `

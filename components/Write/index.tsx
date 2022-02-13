@@ -24,6 +24,7 @@ interface Form {
   onChangeContent(value: string): void;
   onKeyPress(event: KeyboardEvent<HTMLInputElement>): void;
   onDelete(event: MouseEvent<HTMLElement>): void;
+  onLoadEditPost(article: T.EditArticle): void;
 }
 
 const Write = () => {
@@ -58,14 +59,23 @@ const Write = () => {
       const idx = this.tags.indexOf(event.currentTarget.innerText);
       if (idx > -1) this.tags.splice(idx, 1);
     },
+    onLoadEditPost(article) {
+      const { title, content, tags } = article;
+      form.inputs = {
+        title,
+        content,
+        tag: '',
+      };
+      form.tags = tags;
+    },
   }));
 
-  const getPost = async () => {
-    const { data } = await axios.get('/api/post', { params: { id: router.query.id } });
+  const getEditPost = async () => {
+    const { data } = await axios.get('/api/post/edit', { params: { id: router.query.id } });
     return data;
   };
 
-  const getMutation = useMutation<T.Response, Error, void>(getPost);
+  const getMutation = useMutation<T.Response, Error, void>(getEditPost);
 
   useEffect(() => {
     if (router.query.id) getMutation.mutate();
@@ -73,13 +83,7 @@ const Write = () => {
 
   useEffect(() => {
     if (getMutation.isSuccess && getMutation.data.result) {
-      const { title, tags, content } = getMutation.data.result;
-      form.inputs = {
-        title,
-        content,
-        tag: '',
-      };
-      form.tags = tags;
+      form.onLoadEditPost(getMutation.data.result);
     } else if (!router.query.id) {
       form.onChangeContent('');
     }

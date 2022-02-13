@@ -7,7 +7,7 @@ export interface PostStore {
   posts: T.Post[];
   article: T.Article | null;
   getPosts(): Promise<void>;
-  getPost(id: number): Promise<void>;
+  getPost(titleId: T.Post['titleId']): Promise<void>;
   modifyPost(): void;
 }
 
@@ -18,8 +18,8 @@ const postStore: PostStore = {
     const { data } = await axios.get(`${process.env.BASE_PATH}/api/post/list`);
     this.posts = data.result;
   },
-  async getPost(id) {
-    const { data } = await axios.get(`${process.env.BASE_PATH}/api/post`, { params: { id } });
+  async getPost(titleId) {
+    const { data } = await axios.get(`${process.env.BASE_PATH}/api/post`, { params: { titleId } });
     this.article = data.result;
   },
   modifyPost() {},
