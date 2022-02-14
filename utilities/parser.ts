@@ -1,4 +1,4 @@
-const HYPHEN_CHARACTER = '-';
+export const HYPHEN_CHARACTER = '-';
 
 const titleURLParser = (title: string) => (
   title

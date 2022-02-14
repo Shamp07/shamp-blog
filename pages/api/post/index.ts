@@ -1,4 +1,4 @@
-import { Client } from 'pg';
+import { Client, QueryResult } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { marked } from 'marked';
 
@@ -24,18 +24,37 @@ const handler = async (request: T.NextApiRequestToken, response: NextApiResponse
   }
 };
 
+const generateRandomString = () => Math.random().toString(36).substring(2, 11);
+
+const generateUniqueTitleId = (result: QueryResult, parsedTitle: string): string => {
+  if (result.rows.length === 0) return parsedTitle;
+
+  const generatedTitleId = `${parsedTitle}-${generateRandomString()}`;
+  if (result.rows.find((row) => row.titleId !== generatedTitleId)) return generatedTitleId;
+
+  return generateUniqueTitleId(result, parsedTitle);
+};
+
 const addPost = async (request: NextApiRequest, response: NextApiResponse) => {
   const { title, tags, content } = request.body;
 
-  const values = [tags, title, titleURLParser(title), content, marked(content, {
-    renderer: renderPlain(),
-  }).substring(0, 500), getImagePath(content)];
+  const parsedTitle = titleURLParser(title);
 
   await Database.execute(
     (database: Client) => database.query(
-      INSERT_POST,
-      values,
-    )
+      SELECT_POST_TITLE_ID,
+      [parsedTitle],
+    ).then((result) => {
+      const titleId = generateUniqueTitleId(result, parsedTitle);
+
+      const values = [tags, title, titleId, content, marked(content, {
+        renderer: renderPlain(),
+      }).substring(0, 500), getImagePath(content)];
+      return database.query(
+        INSERT_POST,
+        values,
+      );
+    })
       .then(() => {
         response.status(200).json({
           success: true,
@@ -135,6 +154,13 @@ const INSERT_POST = `
     $5,
     $6
   );
+`;
+
+const SELECT_POST_TITLE_ID = `
+  SELECT
+    COUNT(p.*) AS count
+  FROM post p
+  WHERE p.title_id = $1
 `;
 
 const SELECT_POST = `
