@@ -36,7 +36,7 @@ const SignIn = () => {
     },
   }));
 
-  const mutation = useMutation<T.Response, Error, void>(async () => signStore.signIn(form.values));
+  const mutation = useMutation<T.Response, Error, void>(() => signStore.signIn(form.values));
 
   const isAvailable = form.values.email.trim() && form.values.password.trim();
 

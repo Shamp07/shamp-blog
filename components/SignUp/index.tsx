@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 
-import EmailVerify from '@components/EmailVerify';
+import EmailVerify from './EmailVerify';
 import Form from './Form';
 
 enum Page {

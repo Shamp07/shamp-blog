@@ -37,13 +37,11 @@ const verifyUser = async (request: NextApiRequest, response: NextApiResponse) =>
         response.json({
           success: true,
           code: 1,
-          message: '😀 회원가입이 모두 완료되었습니다! 로그인 해보세요!',
         });
       }, () => {
         response.json({
           success: true,
           code: 2,
-          message: '😳 이메일로 전송된 코드와 입력하신 인증번호가 다릅니다 ㅠㅜ.',
         });
       }),
   ).then(() => {

@@ -110,7 +110,6 @@ const modifyPost = async (request: NextApiRequest, response: NextApiResponse) =>
       .then(() => {
         response.json({
           success: true,
-          message: '😀 정상적으로 글이 수정 되었어요!',
         });
       }),
   ).then(() => {
@@ -130,7 +129,6 @@ const deletePost = async (request: NextApiRequest, response: NextApiResponse) =>
       .then(() => {
         response.json({
           success: true,
-          message: '😀 정상적으로 글이 삭제 되었어요!',
         });
       }),
   ).then(() => {

@@ -28,8 +28,9 @@ export enum RequestMethod {
 }
 
 export interface Response {
-  code: number;
+  success: boolean;
   result: any;
+  code?: number;
 }
 
 export enum Auth {

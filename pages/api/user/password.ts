@@ -50,20 +50,17 @@ const handler = async (request: T.NextApiRequestToken, response: NextApiResponse
           response.json({
             success: true,
             code: 3,
-            message: '유저 정보가 올바르지 않습니다.',
           });
         })
         .then(() => {
           response.json({
             success: true,
             code: 1,
-            message: '비밀번호가 성공적으로 변경되었습니다!',
           });
         }, () => {
           response.json({
             success: true,
             code: 2,
-            message: '현재 비밀번호가 올바르지 않습니다.',
           });
         }),
     ).then(() => {

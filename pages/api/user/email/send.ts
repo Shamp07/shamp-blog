@@ -48,7 +48,6 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
       if (error) {
         response.json({
           success: false,
-          message: '😀 메일 송신 중 오류가 발생하였습니다.',
         });
       }
       smtpTransport.close();
@@ -63,7 +62,6 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         .then(() => {
           response.json({
             success: true,
-            message: '😀 입력하신 이메일로 가입 메일이 전송되었어요!',
           });
         }),
     ).then(() => {

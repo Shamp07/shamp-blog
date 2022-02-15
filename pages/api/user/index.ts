@@ -24,8 +24,6 @@ const addUser = async (request: T.NextApiRequestToken, response: NextApiResponse
 
   const values = [email, name];
 
-  let message: string;
-
   await Database.execute(
     (database: Client) => database.query(
       SELECT_USER_DUPLICATE,
@@ -33,11 +31,6 @@ const addUser = async (request: T.NextApiRequestToken, response: NextApiResponse
     )
       .then((result) => {
         if (result.rows.length) {
-          if (!result.rows[0].verifyFl) {
-            message = '😳 해당 이메일은 인증이 완료되지 않은 계정입니다.<br /> 로그인을 하신 뒤, 인증을 진행하여 회원가입을 완료하세요!';
-          } else {
-            message = `😳 동일한 ${result.rows[0].duplicate}를 사용하는 유저가 이미 있습니다 ㅠㅜ.`;
-          }
           return Promise.reject();
         }
 
@@ -56,7 +49,6 @@ const addUser = async (request: T.NextApiRequestToken, response: NextApiResponse
         response.json({
           success: true,
           code: 2,
-          message,
         });
       }),
   ).then(() => {
@@ -72,7 +64,6 @@ const deleteUser = async (request: T.NextApiRequestToken, response: NextApiRespo
     response.json({
       success: true,
       code: 2,
-      message: '이메일이 올바르지 않습니다.',
     });
   } else {
     const values = [emailText, id];
@@ -86,7 +77,6 @@ const deleteUser = async (request: T.NextApiRequestToken, response: NextApiRespo
           response.json({
             success: true,
             code: 1,
-            message: '회원탈퇴가 정상적으로 완료되었습니다!',
           });
         }),
     ).then(() => {

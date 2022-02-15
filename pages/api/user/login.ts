@@ -22,12 +22,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         values,
       )
         .then((result) => {
-          if (result.rows.length <= 0) {
-            message = '😅 ID가 존재하지 않거나 비밀번호가 일치하지 않습니다.';
-            return Promise.reject();
-          }
-          if (result.rows[0].deleteFl) {
-            message = '😅 해당 계정을 탈퇴된 상태입니다.';
+          if (result.rows.length <= 0 || result.rows[0].deleteFl) {
             return Promise.reject();
           }
 
@@ -45,7 +40,6 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             return response.status(400).json({
               success: true,
               code: 2,
-              message: '😅 ID가 존재하지 않거나 비밀번호가 일치하지 않습니다.',
             });
           }
 
@@ -65,7 +59,6 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           );
           return response.json({
             success: true,
-            message: '😀 정상적으로 로그인 되었어요!',
             code: 1,
             result: token,
           });
