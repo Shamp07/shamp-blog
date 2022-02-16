@@ -5,7 +5,6 @@ import axios from 'axios';
 
 import TextField from '@atoms/TextField';
 import styled from '@emotion/styled';
-import dsPalette from '@constants/ds-palette';
 import Button from '@atoms/Button';
 import * as T from '@types';
 
@@ -55,10 +54,10 @@ const EmailVerify = ({ email, next }: Props) => {
   const isAvailable = form.values.code.length === 6;
 
   return (
-    <Root>
-      <Inner>
-        <Title>이메일 인증</Title>
-        <Description>입력하신 이메일로 인증번호가 발송되었습니다.</Description>
+    <div>
+      <Title>이메일 인증</Title>
+      <Description>입력하신 이메일로 인증번호가 발송되었습니다.</Description>
+      <Wrapper>
         <TextField
           label="인증번호"
           variant="standard"
@@ -67,44 +66,33 @@ const EmailVerify = ({ email, next }: Props) => {
           helperText="이메일로 발송된 인증번호를 입력해주세요."
           error={form.error}
         />
-        <Button
-          customStyles={signUpButtonStyles}
-          variant="contained"
-          disabled={!isAvailable}
-          onClick={onVerify}
-        >
-          인증하기
-        </Button>
-      </Inner>
-    </Root>
+      </Wrapper>
+      <Button
+        customStyles={signUpButtonStyles}
+        variant="contained"
+        disabled={!isAvailable}
+        onClick={onVerify}
+      >
+        인증하기
+      </Button>
+    </div>
   );
 };
-
-const Root = styled.div({
-  display: 'flex',
-  width: '450px',
-  marginTop: '3.5rem',
-  flexDirection: 'column',
-  borderRadius: '1rem',
-  background: dsPalette.themeWhite.toString(),
-  boxShadow: 'rgb(0 0 0 / 4%) 0px 4px 16px 0px',
-});
-
-const Inner = styled.div({
-  padding: '3rem',
-
-  '& > div': {
-    marginBottom: '20px',
-  },
-});
 
 const Title = styled.h1({
   marginBottom: '1rem',
   textAlign: 'center',
 });
 
+const Wrapper = styled.div({
+  '& > div': {
+    marginBottom: '20px',
+  },
+});
+
 const Description = styled.div({
   fontSize: '.875rem',
+  marginBottom: '20px',
 });
 
 const signUpButtonStyles: CSSProperties = {

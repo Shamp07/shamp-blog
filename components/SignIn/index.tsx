@@ -113,6 +113,7 @@ const Root = styled.div({
   boxShadow: 'rgb(0 0 0 / 4%) 0px 4px 16px 0px',
 
   [MediaQuery[T.Device.TABLET]]: {
+    marginTop: '1rem',
     width: '100%',
   },
 });

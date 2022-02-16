@@ -1,8 +1,13 @@
 import React from 'react';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 
-import EmailVerify from './EmailVerify';
+import styled from '@emotion/styled';
+import dsPalette from '@constants/ds-palette';
+import { MediaQuery } from '@constants/styles';
+import * as T from '@types';
 import Form from './Form';
+import EmailVerify from './EmailVerify';
+import Done from './Done';
 
 enum Page {
   FORM = 'form',
@@ -34,10 +39,35 @@ const SignUp = () => {
   const pages = {
     [Page.FORM]: <Form setEmail={page.setEmail} next={page.next} />,
     [Page.EMAIL_VERIFY]: <EmailVerify email={page.email} next={page.next} />,
-    [Page.DONE]: <></>,
+    [Page.DONE]: <Done />,
   };
 
-  return pages[page.current];
+  return (
+    <Root>
+      <Inner>
+        {pages[page.current]}
+      </Inner>
+    </Root>
+  );
 };
+
+const Root = styled.div({
+  display: 'flex',
+  width: '450px',
+  flexDirection: 'column',
+  borderRadius: '1rem',
+  background: dsPalette.themeWhite.toString(),
+  boxShadow: 'rgb(0 0 0 / 4%) 0px 4px 16px 0px',
+  marginTop: '3.5rem',
+
+  [MediaQuery[T.Device.TABLET]]: {
+    width: '100%',
+    marginTop: '1rem',
+  },
+});
+
+const Inner = styled.div({
+  padding: '3rem',
+});
 
 export default observer(SignUp);
