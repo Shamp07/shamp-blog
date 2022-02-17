@@ -8,6 +8,7 @@ import dsPalette from '@constants/ds-palette';
 import TextField from '@atoms/TextField';
 import Button from '@atoms/Button';
 import { emailValidator, passwordValidator } from '@utilities/validators';
+import * as T from '@types';
 
 enum UI {
   EMAIL = 'EMAIL',
@@ -82,9 +83,18 @@ const Form = ({ setEmail, next }: Props) => {
 
       return true;
     },
+    setEmailDuplicateError() {
+      this.errors[UI.EMAIL] = {
+        isError: true,
+        message: '이미 사용중이거나 탈퇴한 아이디입니다.',
+      };
+    },
   }));
 
-  const mutation = useMutation(() => axios.post('/api/user', form.values));
+  const mutation = useMutation<T.Response, Error, void>(async () => {
+    const { data } = await axios.post('/api/user', form.values);
+    return data;
+  });
 
   const onSignUp = () => {
     if (!form.onValidation()) return;
@@ -94,8 +104,12 @@ const Form = ({ setEmail, next }: Props) => {
 
   useEffect(() => {
     if (mutation.isSuccess) {
-      setEmail(form.values.email);
-      next();
+      if (mutation.data.code === 2) {
+        form.setEmailDuplicateError();
+      } else {
+        setEmail(form.values.email);
+        next();
+      }
     }
   }, [mutation.isSuccess]);
 

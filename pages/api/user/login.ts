@@ -14,7 +14,6 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   if (request.method === T.RequestMethod.POST) {
     const { email, password } = request.body;
     const values = [email];
-    let message: string;
 
     await Database.execute(
       (database: Client) => database.query(
@@ -22,7 +21,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         values,
       )
         .then((result) => {
-          if (result.rows.length <= 0 || result.rows[0].deleteFl) {
+          if (!result.rows.length || result.rows[0].deleteFl || result.rows[0].verifyFl) {
             return Promise.reject();
           }
 
@@ -35,38 +34,20 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             values2,
           );
         })
-        .then((result) => {
-          if (result.rows.length <= 0) {
-            return response.status(400).json({
-              success: true,
-              code: 2,
-            });
-          }
-
-          if (!result.rows[0].verifyFl) {
-            return response.json({
-              success: true,
-              code: 3,
-            });
-          }
-
-          const token = jwt.sign(
+        .then((result) => response.json({
+          success: true,
+          code: 1,
+          result: jwt.sign(
             result.rows[0],
             config.secret,
             {
               expiresIn: 30000,
             },
-          );
-          return response.json({
-            success: true,
-            code: 1,
-            result: token,
-          });
-        }, () => {
+          ),
+        }), () => {
           response.status(400).json({
             success: true,
             code: 2,
-            message,
           });
         }),
     ).then(() => {
@@ -81,7 +62,6 @@ const SELECT_USER = `
     name,
     email,
     admin_fl AS "adminFl",
-    verify_fl AS "verifyFl"
   FROM "user"
   WHERE
     email = $1
@@ -91,6 +71,7 @@ const SELECT_USER = `
 const SELECT_USER_SALT = `
   SELECT
     salt,
+    verify_fl AS "verifyFl",
     delete_fl AS "deleteFl" 
   FROM "user" 
   WHERE email = $1

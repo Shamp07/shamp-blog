@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 
 import Button from '@atoms/Button';
 import { Page } from '@utilities/route';
+import dsPalette from '@constants/ds-palette';
 
 const Done = () => (
   <div>
@@ -14,13 +15,15 @@ const Done = () => (
       <br />
       아래의 버튼을 눌러 로그인 해보세요!
     </Description>
-    <Link href={Page.SIGN_IN}>
-      <Button
-        customStyles={signInButtonStyles}
-        variant="contained"
-      >
-        로그인 하러가기
-      </Button>
+    <Link href={Page.SIGN_IN} passHref>
+      <SignInLink>
+        <Button
+          customStyles={signInButtonStyles}
+          variant="contained"
+        >
+          로그인하러 가기
+        </Button>
+      </SignInLink>
     </Link>
   </div>
 );
@@ -34,6 +37,14 @@ const Description = styled.div({
   fontSize: '.875rem',
   margin: '30px 0',
   textAlign: 'center',
+});
+
+const SignInLink = styled.a({
+  display: 'block',
+  color: dsPalette.typeWhite.toString(),
+  textDecorationLine: 'none',
+  width: '100%',
+  height: '100%',
 });
 
 const signInButtonStyles: CSSProperties = {

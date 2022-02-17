@@ -22,7 +22,7 @@ const addUser = async (request: T.NextApiRequestToken, response: NextApiResponse
   const salt = String(Math.round((new Date().valueOf() * Math.random())));
   const hashPassword = crypto.createHash('sha512').update(password + salt).digest('hex');
 
-  const values = [email, name];
+  const values = [email];
 
   await Database.execute(
     (database: Client) => database.query(
@@ -30,11 +30,17 @@ const addUser = async (request: T.NextApiRequestToken, response: NextApiResponse
       values,
     )
       .then((result) => {
+        const values2 = [email, hashPassword, salt, name];
+
         if (result.rows.length) {
-          return Promise.reject();
+          if (result.rows[0].verifyFl) return Promise.reject();
+
+          return database.query(
+            UPDATE_USER,
+            values2,
+          );
         }
 
-        const values2 = [email, hashPassword, salt, name];
         return database.query(
           INSERT_USER,
           values2,
@@ -99,17 +105,20 @@ const INSERT_USER = `
   )
 `;
 
+const UPDATE_USER = `
+  UPDATE "user"
+  SET
+    password = $2,
+    salt = $3,
+    name = $4
+  WHERE email = $1
+`;
+
 const SELECT_USER_DUPLICATE = `
   SELECT 
-    CASE
-      WHEN ($1 = email) THEN '이메일'
-      WHEN ($2 = name) THEN '이름'
-    END AS duplicate,
     verify_fl AS "verifyFl"
   FROM "user"
-  WHERE
-    email = $1
-    OR name = $2
+  WHERE email = $1
 `;
 
 const DELETE_USER = `
