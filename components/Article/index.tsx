@@ -13,6 +13,7 @@ import stores from '@stores';
 import * as T from '@types';
 import { MediaQuery } from '@constants/styles';
 import { Page } from '@utilities/route';
+import NotExist from './NotExist';
 
 const ARTICLE_TITLE_SUFFIX = ' - Shamp Blog';
 
@@ -22,7 +23,8 @@ const Article = () => {
   const { postStore, signStore, utilStore } = stores();
   const { article } = postStore;
   const { userData } = signStore;
-  if (!article) return null;
+
+  if (!article) return <NotExist />;
 
   const {
     id, title, content, time, modifiedTime,

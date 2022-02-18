@@ -77,6 +77,10 @@ const getPost = async (request: NextApiRequest, response: NextApiResponse) => {
       values,
     )
       .then((result) => {
+        if (!result.rows.length) {
+          return Promise.reject();
+        }
+
         [article] = result.rows;
         return database.query(
           UPDATE_POST_VIEW_CNT,
@@ -87,6 +91,11 @@ const getPost = async (request: NextApiRequest, response: NextApiResponse) => {
         response.json({
           success: true,
           result: article,
+        });
+      }, () => {
+        response.json({
+          success: true,
+          result: null,
         });
       }),
   ).then(() => {
@@ -193,7 +202,9 @@ const SELECT_POST = `
       ELSE TO_CHAR(p.mfy_dttm, 'YYYY년 MM월 DD일')
     END AS "modifiedTime"
   FROM post p
-  WHERE p.title_id = $1
+  WHERE 
+    p.title_id = $1
+    AND p.delete_fl = false
 `;
 
 const UPDATE_POST_VIEW_CNT = `
