@@ -89,11 +89,6 @@ const Write = () => {
     }
   }, [getMutation.isSuccess]);
 
-  if (!userData?.adminFl) {
-    router.push('/');
-    return null;
-  }
-
   return (
     <Root>
       <WriteSection

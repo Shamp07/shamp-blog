@@ -21,7 +21,9 @@ class CustomApp extends App {
     }
 
     const store = stores();
+    console.log('1')
     await store.signStore.authCheck();
+    console.log('2')
 
     const appProps = await App.getInitialProps(context);
     return {

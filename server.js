@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const http = require('http');
 const https = require('https');
 
@@ -9,12 +8,12 @@ const fs = require('fs');
 
 const sslConfig = require('./config/ssl.config.json');
 
-const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev });
-const handle = app.getRequestHandler();
-
 const PORT = 80;
 const SSL_PORT = 443;
+
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev, port: SSL_PORT, hostname: dev ? 'dev.shamp.kr' : 'shamp.kr' });
+const handle = app.getRequestHandler();
 
 const options = (() => (dev ? {
   ca: fs.readFileSync(path.join(__dirname, sslConfig.local.ca)),
