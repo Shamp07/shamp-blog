@@ -164,8 +164,7 @@ const INSERT_POST = `
 `;
 
 const SELECT_POST_TITLE_ID = `
-  SELECT
-    COUNT(p.*) AS count
+  SELECT p.*
   FROM post p
   WHERE p.title_id = $1
 `;

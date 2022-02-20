@@ -11,8 +11,13 @@ const sslConfig = require('./config/ssl.config.json');
 const PORT = 80;
 const SSL_PORT = 443;
 
+const HTTPS_PREFIX = 'https://';
+
+const DEV_HOSTNAME = 'dev.shamp.kr';
+const PROD_HOSTNAME = 'shamp.kr';
+
 const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev, port: SSL_PORT, hostname: dev ? 'dev.shamp.kr' : 'shamp.kr' });
+const app = next({ dev, port: SSL_PORT, hostname: dev ? DEV_HOSTNAME : PROD_HOSTNAME });
 const handle = app.getRequestHandler();
 
 const options = (() => (dev ? {
@@ -30,7 +35,7 @@ app.prepare().then(() => {
   if (!dev) {
     http.createServer((req, res) => {
       res.writeHead(301, {
-        Location: `https://${req.headers.host}${req.url}`,
+        Location: `${HTTPS_PREFIX}${req.headers.host}${req.url}`,
       });
       res.end();
     }).listen(PORT, (err) => {

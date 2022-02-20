@@ -7,7 +7,6 @@ import { observer, useLocalObservable } from 'mobx-react-lite';
 import styled from '@emotion/styled';
 import axios from 'axios';
 
-import stores from '@stores';
 import * as T from '@types';
 import dsPalette from '@constants/ds-palette';
 import WriteSection from './WriteSection';
@@ -29,8 +28,6 @@ interface Form {
 
 const Write = () => {
   const router = useRouter();
-  const { signStore } = stores();
-  const { userData } = signStore;
 
   const form = useLocalObservable<Form>(() => ({
     inputs: {

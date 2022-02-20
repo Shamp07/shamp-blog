@@ -21,7 +21,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         values,
       )
         .then((result) => {
-          if (!result.rows.length || result.rows[0].deleteFl || result.rows[0].verifyFl) {
+          if (!result.rows.length || result.rows[0].deleteFl || !result.rows[0].verifyFl) {
             return Promise.reject();
           }
 
@@ -61,7 +61,7 @@ const SELECT_USER = `
     id,
     name,
     email,
-    admin_fl AS "adminFl",
+    admin_fl AS "adminFl"
   FROM "user"
   WHERE
     email = $1

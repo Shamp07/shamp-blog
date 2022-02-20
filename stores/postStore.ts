@@ -1,4 +1,4 @@
-import { observable } from 'mobx';
+import {flow, observable} from 'mobx';
 
 import * as T from '@types';
 import axios from 'axios';
@@ -8,21 +8,19 @@ export interface PostStore {
   article: T.Article | null;
   getPosts(): Promise<void>;
   getPost(titleId: T.Post['titleId']): Promise<void>;
-  modifyPost(): void;
 }
 
 const postStore: PostStore = {
   posts: [],
   article: null,
-  async getPosts() {
-    const { data } = await axios.get(`${process.env.BASE_PATH}/api/post/list`);
+  getPosts: flow(function* (this: PostStore) {
+    const { data } = yield axios.get(`${process.env.BASE_PATH}/api/post/list`);
     this.posts = data.result;
-  },
-  async getPost(titleId) {
-    const { data } = await axios.get(`${process.env.BASE_PATH}/api/post`, { params: { titleId } });
+  }),
+  getPost: flow(function* (this: PostStore, titleId) {
+    const { data } = yield axios.get(`${process.env.BASE_PATH}/api/post`, { params: { titleId } });
     this.article = data.result;
-  },
-  modifyPost() {},
+  }),
 };
 
 export const initialPost: Pick<PostStore, 'posts' | 'article'> = {
