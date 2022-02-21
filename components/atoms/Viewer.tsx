@@ -6,8 +6,9 @@ import remarkBreaks from 'remark-breaks';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 
 import dsPalette from '@constants/ds-palette';
-import { FontFamily, MediaQuery } from '@constants/styles';
+import { MediaQuery } from '@constants/styles';
 import * as T from '@types';
+import { FontFamily } from '@constants/styles/fonts';
 
 interface Props {
   content: string | null;

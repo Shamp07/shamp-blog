@@ -111,7 +111,7 @@ const Root = styled.div({
 });
 
 const Container = styled.article({
-  padding: '5.5rem 0',
+  padding: '5.4rem 0',
   width: '768px',
   marginLeft: 'auto',
   marginRight: 'auto',

@@ -4,8 +4,8 @@ import Link from 'next/link';
 
 import dsPalette from '@constants/ds-palette';
 import LogoSVG from '@assets/icon/logo.svg';
-import { FontFamily } from '@constants/styles';
 import { Page } from '@utilities/route';
+import { FontFamily } from '@constants/styles/fonts';
 
 const Logo = () => (
   <Root>

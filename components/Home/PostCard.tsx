@@ -69,6 +69,11 @@ const Root = styled.div({
 
   [MediaQuery[T.Device.TABLET]]: {
     width: 'calc(50% - 2rem)',
+
+    '&:hover': {
+      transform: 'none',
+      boxShadow: 'rgb(0 0 0 / 8%) 0px 12px 20px 0px',
+    },
   },
 
   [MediaQuery[T.Device.MOBILE]]: {

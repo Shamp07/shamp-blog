@@ -3,9 +3,9 @@ import { css, Global } from '@emotion/react';
 import styled from '@emotion/styled';
 import NextNprogress from 'nextjs-progressbar';
 
-import { FontFamily } from '@constants/styles';
 import dsPalette from '@constants/ds-palette';
 import Popup from '@components/Popup';
+import { FontFamily } from '@constants/styles/fonts';
 import Header from './Header';
 import Content from './Content';
 
