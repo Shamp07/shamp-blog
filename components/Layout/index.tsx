@@ -5,7 +5,7 @@ import NextNprogress from 'nextjs-progressbar';
 
 import dsPalette from '@constants/ds-palette';
 import Popup from '@components/Popup';
-import { FontFamily } from '@constants/styles/fonts';
+import { FontFamily, fontStyles } from '@constants/styles/fonts';
 import Header from './Header';
 import Content from './Content';
 
@@ -19,7 +19,8 @@ interface Props {
 
 const Layout = ({ children }: Props) => (
   <Root>
-    <Global styles={GlobalStyle} />
+    <Global styles={globalStyle} />
+    <Global styles={fontStyles} />
     <Popup />
     <Header />
     <Content>
@@ -42,7 +43,7 @@ const Root = styled.div({
   minHeight: '100vh',
 });
 
-const GlobalStyle = css({
+const globalStyle = css({
   'header, body, span, div, nav, ul, li, h1, h2, h3, h4, pre': {
     fontFamily: `${FontFamily.ROBOTO}, ${FontFamily.NOTO_SANS_KR}, ${FontFamily.SERIF}`,
     margin: 0,

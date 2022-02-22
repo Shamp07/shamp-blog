@@ -8,4 +8,11 @@ export const enum FontFamily {
   SERIF = 'serif',
 }
 
-export const fontStyles = css``;
+export const fontStyles = css({
+  '@font-face': {
+    fontFamily: FontFamily.NOTO_SANS_KR,
+    fontStyle: 'normal',
+    fontWeight: 400,
+    src: "local(''), url('../../public/fonts/noto-sans-kr-v25-korean-regular.woff')",
+  },
+});
