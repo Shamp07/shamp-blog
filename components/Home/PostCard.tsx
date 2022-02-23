@@ -112,7 +112,7 @@ const Inner = styled.div({
 const Content = styled.p({
   fontSize: '.875rem',
   margin: '0 0 1.5rem',
-  height: '5.5rem',
+  height: '5.4rem',
   wordBreak: 'break-word',
   overflowWrap: 'break-word',
   overflow: 'hidden',
