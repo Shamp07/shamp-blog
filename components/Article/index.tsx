@@ -84,6 +84,8 @@ const Article = () => {
         <meta property="og:url" content={`${process.env.BASE_PATH}${router.asPath}`} />
         <meta property="og:type" content="article" key="og-type" />
         {thumbnail && <meta property="og:image" content={thumbnail} key="og-image" />}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet" />
       </Head>
       <Container>
         <HeadWrapper>

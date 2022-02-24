@@ -1,6 +1,7 @@
 import React, {
   MouseEvent, ChangeEvent, KeyboardEvent, useEffect,
 } from 'react';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useMutation } from 'react-query';
 import { observer, useLocalObservable } from 'mobx-react-lite';
@@ -88,6 +89,10 @@ const Write = () => {
 
   return (
     <Root>
+      <Head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet" />
+      </Head>
       <WriteSection
         title={form.inputs.title}
         tag={form.inputs.tag}
