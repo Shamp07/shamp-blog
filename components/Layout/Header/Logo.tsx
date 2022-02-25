@@ -2,17 +2,16 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
-import dsPalette from '@constants/ds-palette';
 import LogoSVG from '@assets/icon/logo.svg';
+import LogoTitleSVG from '@assets/icon/logo-title.svg';
 import { Page } from '@utilities/route';
-import { FontFamily } from '@constants/styles/fonts';
 
 const Logo = () => (
   <Root>
     <Link href={Page.HOME} passHref>
       <Wrapper>
         <LogoSVG />
-        <Title>Shamp Blog</Title>
+        <LogoTitleSVG />
       </Wrapper>
     </Link>
   </Root>
@@ -28,18 +27,10 @@ const Wrapper = styled.a({
   display: 'flex',
   alignItems: 'center',
   textDecorationLine: 'none',
-});
 
-const Title = styled.div({
-  maxWidth: 'calc(100vw - 170px)',
-  color: dsPalette.themePrimary.toString(),
-  fontSize: '1.3125rem',
-  fontWeight: 700,
-  fontFamily: FontFamily.PT_SANS,
-  marginLeft: '1rem',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
+  '& > svg:last-of-type': {
+    marginLeft: '1rem',
+  },
 });
 
 export default Logo;
