@@ -21,13 +21,14 @@ const ViewerSection = ({ title, content }: Props) => (
 const Root = styled.div({
   display: 'flex',
   flex: '1 1 0%',
+  minWidth: 0,
 });
 
 const PostViewer = styled.div({
   flex: '1 1 0%',
   padding: '3rem',
   background: dsPalette.write.viewerBackground.toString(),
-  overflow: 'auto',
+  overflowY: 'auto',
 });
 
 const Title = styled.h1({

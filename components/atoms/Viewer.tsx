@@ -51,6 +51,8 @@ const Viewer = ({ content }: Props) => (
 );
 
 const Root = styled.div({
+  wordBreak: 'keep-all',
+  overflowWrap: 'break-word',
   fontSize: '1.125rem',
   lineHeight: 1.7,
   fontFamily: 'inherit',

@@ -20,14 +20,12 @@ const PostCard = ({
 }: Props) => {
   const thumbnailImage = thumbnail ? (
     <ImageWrapper>
-      <ImageInner>
-        <Image
-          src={thumbnail}
-          layout="fill"
-          objectFit="cover"
-          priority
-        />
-      </ImageInner>
+      <Image
+        src={thumbnail}
+        layout="fill"
+        objectFit="cover"
+        priority
+      />
     </ImageWrapper>
   ) : null;
 
@@ -90,14 +88,6 @@ const ImageWrapper = styled.div({
   width: '100%',
   paddingTop: '60%',
   position: 'relative',
-});
-
-const ImageInner = styled.div({
-  width: '100%',
-  height: '100%',
-  position: 'absolute',
-  top: 0,
-  left: 0,
 });
 
 const Title = styled.h4({
