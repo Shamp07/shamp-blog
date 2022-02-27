@@ -25,6 +25,7 @@ const signStore: SignStore = {
   authChecked: false,
   userData: null,
   authCheck: flow(function* (this: SignStore) {
+    console.log('hi');
     const { data } = yield axios.get(`${process.env.BASE_PATH}/api/user/cookie`);
     this.userData = data.result;
     this.authChecked = true;

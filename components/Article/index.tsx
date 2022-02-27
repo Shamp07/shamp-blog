@@ -34,10 +34,6 @@ const Article = () => {
   const mutation = useMutation(() => axios.delete('/api/post', { params: { id } }));
 
   useEffect(() => {
-    signStore.authCheck();
-  }, []);
-
-  useEffect(() => {
     if (mutation.isSuccess) router.push('/');
   }, [mutation.isSuccess]);
 

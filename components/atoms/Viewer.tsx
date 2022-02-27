@@ -57,6 +57,10 @@ const Root = styled.div({
   lineHeight: 1.7,
   fontFamily: 'inherit',
 
+  [MediaQuery[T.Device.MOBILE]]: {
+    fontSize: '1rem',
+  },
+
   '& > div': {
     whiteSpace: 'pre-wrap',
   },
