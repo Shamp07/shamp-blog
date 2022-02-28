@@ -28,7 +28,7 @@ const EmailVerify = ({ email, next }: Props) => {
   }));
 
   const sendMutation = useMutation(() => axios.post('/api/user/email/send', { email }));
-  const verifyMutation = useMutation<T.Response, Error, void>(async (): Promise<T.Response> => {
+  const verifyMutation = useMutation<T.Response, Error, void>(async () => {
     const { data } = await axios.post('/api/user/email/verify', { email, code: form.values.code });
     return data;
   });

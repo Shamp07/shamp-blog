@@ -1,4 +1,4 @@
-import {flow, observable} from 'mobx';
+import { flow, observable } from 'mobx';
 
 import * as T from '@types';
 import axios from 'axios';

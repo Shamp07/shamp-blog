@@ -10,6 +10,8 @@ export interface NextApiRequestToken extends NextApiRequest {
   decodedToken: AuthToken;
 }
 
+export type EncodedAuthToken = string;
+
 export interface AuthToken {
   id: number;
   email: string;
@@ -27,9 +29,9 @@ export enum RequestMethod {
   DELETE = 'DELETE',
 }
 
-export interface Response {
+export interface Response<R = undefined> {
   success: boolean;
-  result: any;
+  result?: R;
   code?: number;
 }
 

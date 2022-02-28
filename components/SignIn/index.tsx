@@ -36,7 +36,9 @@ const SignIn = () => {
     },
   }));
 
-  const mutation = useMutation<T.Response, Error, void>(() => signStore.signIn(form.values));
+  const mutation = useMutation<T.Response<T.EncodedAuthToken>, Error, void>(
+    () => signStore.signIn(form.values),
+  );
 
   const isAvailable = form.values.email.trim() && form.values.password.trim();
 
@@ -49,7 +51,7 @@ const SignIn = () => {
   };
 
   useEffect(() => {
-    if (mutation.isSuccess) {
+    if (mutation.isSuccess && mutation.data.result) {
       cookie.set('auth', mutation.data.result, { expires: 2 });
       signStore.authCheck();
       router.push('/');

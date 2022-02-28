@@ -12,7 +12,7 @@ export interface SignStore {
   signIn(form: {
     email: string;
     password: string;
-  }): Promise<T.Response>;
+  }): Promise<T.Response<T.EncodedAuthToken>>;
   signOut(): void;
 }
 
@@ -25,13 +25,12 @@ const signStore: SignStore = {
   authChecked: false,
   userData: null,
   authCheck: flow(function* (this: SignStore) {
-    console.log('hi');
     const { data } = yield axios.get(`${process.env.BASE_PATH}/api/user/cookie`);
     this.userData = data.result;
     this.authChecked = true;
   }),
   async signIn(signInForm) {
-    const res = await axios.post<T.Response>('/api/user/login', signInForm);
+    const res = await axios.post('/api/user/login', signInForm);
     return res.data;
   },
   signOut() {

@@ -73,7 +73,7 @@ const Write = () => {
     return data;
   };
 
-  const getMutation = useMutation<T.Response, Error, void>(getEditPost);
+  const getMutation = useMutation<T.Response<T.EditArticle>, Error, void>(getEditPost);
 
   useEffect(() => {
     if (router.query.id) getMutation.mutate();
