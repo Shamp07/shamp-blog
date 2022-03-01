@@ -34,7 +34,6 @@ const authMiddleware = (
       } else {
         response.status(200).json({
           success: false,
-          message: '권한이 없습니다.',
         });
       }
     } else {
