@@ -81,12 +81,13 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+개발에 관련된 내용을 주력으로 작성해나가는 저만의 블로그입니다.
 
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
+계기:
+* 단순히 기록용 게시글이 아닌 실제로 다른 개발자에게 도움이 될 수 있는 기록 플랫폼이 필요했습니다.
+* 빠르게 변화하는 프론트엔드 기술 스택을 손쉽게 도입해보고 도전해볼 수 있는 나만의 프로젝트가 필요했습니다.  
+* 나만의 게시글을 양질로 작성함으로 나를 어필하고 마케팅하고 싶었습니다.
+* 개발에 관련된 글을 꾸준히 작성함으로써 자연스럽게 기술 스택의 트렌트를 쫓고 누구에게나 읽기 쉬우며 이해하기 쉬운 글을 작성할 수 있는 능력을 기르고 싶었습니다. 
 
 Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
 
@@ -115,7 +116,7 @@ Use the `BLANK_README.md` to get started.
 This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
-### Prerequisites
+### 전제조건
 
 This is an example of how to list things you need to use the software and how to install them.
 * npm
@@ -123,7 +124,7 @@ This is an example of how to list things you need to use the software and how to
   npm install npm@latest -g
   ```
 
-### Installation
+### 설치
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
@@ -146,7 +147,7 @@ _Below is an example of how you can instruct your audience on installing and set
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## 용도
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
@@ -157,7 +158,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 
 <!-- ROADMAP -->
-## Roadmap
+## 로드맵
 
 - [x] Add Changelog
 - [x] Add back to top links
@@ -167,14 +168,15 @@ _For more examples, please refer to the [Documentation](https://example.com)_
     - [ ] Chinese
     - [ ] Spanish
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
+제안된 기능(및 알려진 문제)의 전체 목록을 보려면 [열린 이슈](https://github.com/Shamp07/shamp-blog) 를 참조하십시오.
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
 
 <!-- CONTRIBUTING -->
-## Contributing
+## 기여하기
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -192,7 +194,7 @@ Don't forget to give the project a star! Thanks again!
 
 
 <!-- LICENSE -->
-## License
+## 라이센스
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
@@ -201,29 +203,22 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 
 <!-- CONTACT -->
-## Contact
+##연락처
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+blog.shamp@gmail.com
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
 
 <!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
+## 감사의 말
 
 Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
 
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
 * [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
+* [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
+* [tui.editor](https://ui.toast.com/tui-editor)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
