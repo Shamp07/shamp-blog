@@ -53,25 +53,25 @@
   <summary>목차</summary>
   <ol>
     <li>
-      <a href="#about-the-project">프로젝트 정보</a>
+      <a href="#프로젝트-정보">프로젝트 정보</a>
       <ul>
-        <li><a href="#built-with">기술 스택</a></li>
+        <li><a href="#기술-스택">기술 스택</a></li>
       </ul>
     </li>
     <li>
-      <a href="#getting-started">시작하기</a>
+      <a href="#시작하기">시작하기</a>
       <ul>
-        <li><a href="#prerequisites">전제조건</a></li>
-        <li><a href="#installation">설치</a></li>
-        <li><a href="#run">실행</a></li>
+        <li><a href="#전제조건">전제조건</a></li>
+        <li><a href="#설치">설치</a></li>
+        <li><a href="#실행">실행</a></li>
       </ul>
     </li>
-    <li><a href="#usage">용도</a></li>
-    <li><a href="#roadmap">로드맵</a></li>
-    <li><a href="#contributing">기여하기</a></li>
-    <li><a href="#license">라이센스</a></li>
-    <li><a href="#contact">연락처</a></li>
-    <li><a href="#acknowledgments">감사의 말</a></li>
+    <li><a href="#용도">용도</a></li>
+    <li><a href="#로드맵">로드맵</a></li>
+    <li><a href="#기여하기">기여하기</a></li>
+    <li><a href="#라이센스">라이센스</a></li>
+    <li><a href="#연락처">연락처</a></li>
+    <li><a href="#감사의-말">감사의 말</a></li>
   </ol>
 </details>
 
@@ -94,7 +94,7 @@
 * 단순히 기록용 게시글이 아닌 실제로 다른 개발자에게 도움이 될 수 있는 기록 플랫폼이 필요했습니다.
 * 빠르게 변화하는 프론트엔드 기술 스택을 손쉽게 도입해보고 도전해볼 수 있는 나만의 프로젝트가 필요했습니다.  
 * 나만의 게시글을 양질로 작성함으로 나를 어필하고 마케팅하고 싶었습니다.
-* 개발에 관련된 글을 꾸준히 작성함으로써 자연스럽게 기술 스택의 트렌트를 쫓고 누구에게나 읽기 쉬우며 이해하기 쉬운 글을 작성할 수 있는 능력을 기르고 싶었습니다. 
+* 개발에 관련된 글을 꾸준히 작성함으로써 자연스럽게 기술 스택의 트렌드를 쫓고 누구에게나 읽기 쉬우며 이해하기 쉬운 글을 작성할 수 있는 능력을 기르고 싶었습니다. 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -133,13 +133,13 @@
 
 ### 설치
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
 1. 레파지토리를 클론합니다.
+
    ```sh
    git clone https://github.com/Shamp07/shamp-blog.git
    ```
 2. NPM 패키지들을 설치합니다.
+
    ```sh
    npm install
    ```
@@ -157,7 +157,7 @@ _Below is an example of how you can instruct your audience on installing and set
 <!-- USAGE EXAMPLES -->
 ## 용도
 
-직접 글을 작성하여 여러 개발자들한테 
+제가 작성한 글을 다른 사람들이 볼 수 있게 만든 블로그입니다.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -171,7 +171,7 @@ _Below is an example of how you can instruct your audience on installing and set
 - [ ] 영어 언어 지원
 - [ ] 기여할 수 있는 로컬 환경 지원
 
-제안된 기능(및 알려진 문제)의 전체 목록을 보려면 [열린 이슈](https://github.com/Shamp07/shamp-blog) 를 참조하십시오.
+제안된 기능(및 알려진 문제)의 전체 목록을 보려면 [열린 이슈](https://github.com/Shamp07/shamp-blog) 를 참조하세요.
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -181,17 +181,18 @@ _Below is an example of how you can instruct your audience on installing and set
 <!-- CONTRIBUTING -->
 ## 기여하기
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+기여는 오픈 소스 커뮤니티를 배우고, 영감을 주고, 창조할 수 있는 놀라운 장소로 만드는 것입니다.     어떤 기여라도 해주신다면 정말 감사드리겠습니다.
+이를 개선할 수 있는 제안이 있으면 포크를 사용하여 풀 리퀘스트를 작성해보세요. 또한 "enhancement" 태그를 사용하여 이슈를 간단히 열 수 있습니다.
 
 1. 레파지토리를 포크해주세요.
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+2. 관련 브랜치를 만들어주세요. (`git checkout -b feat/something`)
+3. 변경사항을 커밋해주세요. (`git commit -m 'some message'`)
+4. 해당 브랜치에 푸시해주세요. (`git push origin feat/some-feature`)
+5. 양식에 맞게 Pull request 를 작성해주세요.
+   1. 아직은 양식(Pull request template)이 존재하지 않습니다. 적절한 로컬 환경을 지원함과 동시에 추가하겠습니다.
 
+기본적으로 커밋 메시지와 브랜치 명은 [여기](https://www.conventionalcommits.org/en/v1.0.0/) 를 참고해서 작성해주시면 감사하겠습니다.
+    
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
@@ -199,14 +200,14 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## 라이센스
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+MIT 라이센스로 배포됩니다. 자세한 내용은 `LICENSE`를 참조하세요.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
 
 <!-- CONTACT -->
-##연락처
+## 연락처
 
 blog.shamp@gmail.com
 
