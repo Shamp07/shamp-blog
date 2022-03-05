@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import styled from '@emotion/styled';
 
 import dsPalette from '@constants/ds-palette';
@@ -20,12 +19,7 @@ const PostCard = ({
 }: Props) => {
   const thumbnailImage = thumbnail ? (
     <ImageWrapper>
-      <Image
-        src={thumbnail}
-        layout="fill"
-        objectFit="cover"
-        priority
-      />
+      <Thumbnail src={thumbnail} alt="article_thumbnail" />
     </ImageWrapper>
   ) : null;
 
@@ -88,6 +82,16 @@ const ImageWrapper = styled.div({
   width: '100%',
   paddingTop: '60%',
   position: 'relative',
+});
+
+const Thumbnail = styled.img({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  display: 'block',
+  objectFit: 'cover',
 });
 
 const Title = styled.h4({
