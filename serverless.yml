@@ -1,0 +1,9 @@
+myNextApplication:
+  component: '@sls-next/serverless-component@latest'
+  inputs:
+    name:
+      defaultLambda: DefaultLambda
+      imageLambda: ImageLambda
+    bucketRegion: 'ap-northeast-2'
+    cloudfront:
+      comment: 'next application deployment'

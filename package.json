@@ -6,8 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "NODE_TLS_REJECT_UNAUTHORIZED='0' node server.js",
-    "build": "next build",
-    "start": "NODE_ENV=production node server.js"
+    "build": "next build && next export",
+    "start": "NODE_ENV=production node server.js",
+    "deploy": "serverless"
   },
   "repository": {
     "type": "git",
@@ -55,6 +56,7 @@
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "file-loader": "^6.2.0",
+    "serverless": "^2.72.3",
     "ts-loader": "^8.0.12",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3",
@@ -94,6 +96,7 @@
     "nextjs-progressbar": "^0.0.13",
     "nodemailer": "^6.4.17",
     "nodemailer-smtp-transport": "^2.7.4",
+    "npm": "^8.5.3",
     "path": "^0.12.7",
     "pg": "^8.5.1",
     "prism-themes": "^1.9.0",
