@@ -1,15 +1,23 @@
-name: NEXT Deploy
+name: Blog Application Deploy
 on:
   push:
-    branches: master
+    branches: develop
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source code.
+      - name: Checkout source code
         uses: actions/checkout@master
         with:
+          ref: develop
+
+      - name: Checkout configuration files
+        uses: actions/checkout@master
+        with:
+          repository: Shamp07/shamp-blog-config
           ref: master
+          path: 'config/'
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
       - name: Install Dependencies
         run: |
@@ -21,6 +29,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
+
 
       - name: Deploy Next.js app
         run: |

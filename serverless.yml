@@ -7,3 +7,7 @@ myNextApplication:
     bucketRegion: 'ap-northeast-2'
     cloudfront:
       comment: 'next application deployment'
+custom:
+  bundle:
+    ignorePackages:
+      - pg-native
