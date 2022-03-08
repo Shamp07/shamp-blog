@@ -23,7 +23,7 @@ module.exports = withPlugins([withImages], {
     domains: [multerConfig.bucketURL],
   },
   exclude: path.resolve(__dirname, 'assets/icon'),
-  webpack(config) {
+  webpack(config, { webpack }) {
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
@@ -39,6 +39,8 @@ module.exports = withPlugins([withImages], {
         },
       },
     });
+
+    config.plugins.push(new webpack.IgnorePlugin({ resourceRegExp: /^(pg-native)$/ }));
 
     return config;
   },
