@@ -1,20 +1,14 @@
-plugins:
-  - serverless-bundle
-
-custom:
-  bundle:
-    ignorePackages:
-      - pg-native
-
-myNextApplication:
+blogAplication:
   component: '@sls-next/serverless-component@latest'
   inputs:
     name:
       defaultLambda: DefaultLambda
       imageLambda: ImageLambda
     bucketRegion: 'ap-northeast-2'
+    bucketName: '35favf-hmwthws'
     cloudfront:
-      comment: 'next application deployment'
+      distributionId: 'E57J6VJ1VPR3J',
+      comment: 'Next Application Deployment'
 
 
 

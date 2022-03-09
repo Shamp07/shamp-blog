@@ -166,8 +166,9 @@
 <!-- ROADMAP -->
 ## 로드맵
 
-- [ ] CI/CD 구축
-- [ ] S3 Bucket 웹 호스팅 및 CloudFront 배포
+- [x] CI/CD 구축
+  - [ ] [@sls-next/serverless-component](https://github.com/serverless-nextjs/serverless-next.js#features) 에서 Next.js v12 기능 지원 시 middleware 다시 추가
+- [x] S3 Bucket 및 CloudFront 배포
 - [ ] 영어 언어 지원
 - [ ] 기여할 수 있는 로컬 환경 지원
 
