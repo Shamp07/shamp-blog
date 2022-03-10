@@ -96,8 +96,6 @@ const Write = () => {
     }
   }, [getMutation.isSuccess]);
 
-
-
   return (
     <Root>
       <Head>

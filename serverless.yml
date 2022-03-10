@@ -1,14 +1,9 @@
 blogAplication:
-  component: '@sls-next/serverless-component@latest'
+  component: '@sls-next/serverless-component@3.6.0'
   inputs:
     name:
-      defaultLambda: DefaultLambda
-      imageLambda: ImageLambda
+      defaultLambda: 'falsy-exemple-default-lambda'
+      apiLambda: 'falsy-exemple-api-lambda'
     bucketRegion: 'ap-northeast-2'
-    bucketName: '35favf-hmwthws'
     cloudfront:
-      distributionId: 'E57J6VJ1VPR3J',
       comment: 'Next Application Deployment'
-
-
-

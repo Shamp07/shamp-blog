@@ -13,11 +13,8 @@ const SSL_PORT = 443;
 
 const HTTPS_PREFIX = 'https://';
 
-const DEV_HOSTNAME = 'dev.shamp.kr';
-const PROD_HOSTNAME = 'shamp.kr';
-
 const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev, port: SSL_PORT, hostname: dev ? DEV_HOSTNAME : PROD_HOSTNAME });
+const app = next({ dev });
 const handle = app.getRequestHandler();
 
 const options = (() => (dev ? {

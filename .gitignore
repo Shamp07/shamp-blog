@@ -110,7 +110,7 @@ dist
 config/
 
 # Log
-logs/
+logs/*.log
 
 # OSX file
 .DS_Store
