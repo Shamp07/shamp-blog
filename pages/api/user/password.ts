@@ -5,7 +5,6 @@ import crypto from 'crypto';
 import Database from '@database/Database';
 import cors from '@middleware/cors';
 import authMiddleware from '@middleware/auth';
-import logger from '@config/log.config';
 import * as T from '@types';
 
 const handler = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
@@ -63,9 +62,7 @@ const handler = async (request: T.NextApiRequestToken, response: NextApiResponse
             code: 2,
           });
         }),
-    ).then(() => {
-      logger.info('[UPDATE, PUT /api/user/password] 비밀번호 변경');
-    });
+    );
   }
 };
 

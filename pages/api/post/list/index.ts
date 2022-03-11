@@ -3,7 +3,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import Database from '@database/Database';
 import cors from '@middleware/cors';
-import logger from '@config/log.config';
 import * as T from '@types';
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -19,9 +18,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             result: result.rows,
           });
         }),
-    ).then(() => {
-      logger.info('[SELECT, GET /api/post/list] 게시글 조회');
-    });
+    );
   }
 };
 

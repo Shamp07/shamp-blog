@@ -5,7 +5,6 @@ import crypto from 'crypto';
 import Database from '@database/Database';
 import cors from '@middleware/cors';
 import authMiddleware from '@middleware/auth';
-import logger from '@config/log.config';
 import * as T from '@types';
 
 const handler = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
@@ -57,9 +56,7 @@ const addUser = async (request: T.NextApiRequestToken, response: NextApiResponse
           code: 2,
         });
       }),
-  ).then(() => {
-    logger.info('[INSERT, POST /api/user] 회원가입');
-  });
+  );
 };
 
 const deleteUser = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
@@ -85,9 +82,7 @@ const deleteUser = async (request: T.NextApiRequestToken, response: NextApiRespo
             code: 1,
           });
         }),
-    ).then(() => {
-      logger.info('[UPDATE, DELETE /api/user] 회원탈퇴');
-    });
+    );
   }
 };
 

@@ -5,7 +5,6 @@ import { marked } from 'marked';
 import Database from '@database/Database';
 import authMiddleware from '@middleware/auth';
 import cors from '@middleware/cors';
-import logger from '@config/log.config';
 import * as T from '@types';
 import { renderPlain, getImagePath } from '@utilities/marked';
 import titleURLParser from '@utilities/parser';
@@ -60,9 +59,7 @@ const addPost = async (request: NextApiRequest, response: NextApiResponse) => {
           success: true,
         });
       }),
-  ).then(() => {
-    logger.info('[INSERT, POST /api/post] 게시글 작성');
-  });
+  );
 };
 
 const getPost = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -98,9 +95,7 @@ const getPost = async (request: NextApiRequest, response: NextApiResponse) => {
           result: null,
         });
       }),
-  ).then(() => {
-    logger.info('[SELECT, GET /api/post] 게시글 조회');
-  });
+  );
 };
 
 const modifyPost = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -121,9 +116,7 @@ const modifyPost = async (request: NextApiRequest, response: NextApiResponse) =>
           success: true,
         });
       }),
-  ).then(() => {
-    logger.info('[UPDATE, PUT /api/post] 게시글 수정');
-  });
+  );
 };
 
 const deletePost = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -140,9 +133,7 @@ const deletePost = async (request: NextApiRequest, response: NextApiResponse) =>
           success: true,
         });
       }),
-  ).then(() => {
-    logger.info('[UPDATE, PUT /api/post] 게시글 삭제');
-  });
+  );
 };
 
 const INSERT_POST = `

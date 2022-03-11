@@ -4,7 +4,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import Database from '@database/Database';
 import authMiddleware from '@middleware/auth';
 import cors from '@middleware/cors';
-import logger from '@config/log.config';
 import * as T from '@types';
 
 const handler = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
@@ -30,9 +29,7 @@ const getEditPost = async (request: NextApiRequest, response: NextApiResponse) =
           result: result.rows[0],
         });
       }),
-  ).then(() => {
-    logger.info('[SELECT, GET /api/post/edit] 수정 게시글 조회');
-  });
+  );
 };
 
 const SELECT_EDIT_POST = `

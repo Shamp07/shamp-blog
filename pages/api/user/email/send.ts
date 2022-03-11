@@ -4,7 +4,6 @@ import { Client } from 'pg';
 import smtpTransport from '@config/email.config';
 import Database from '@database/Database';
 import cors from '@middleware/cors';
-import logger from '@config/log.config';
 import * as T from '@types';
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -64,9 +63,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             success: true,
           });
         }),
-    ).then(() => {
-      logger.info('[UPDATE, PUT /api/footprint] 발자취 수정');
-    });
+    );
   }
 };
 

@@ -2,7 +2,6 @@ import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import Database from '@database/Database';
-import logger from '@config/log.config';
 import cors from '@middleware/cors';
 import * as T from '@types';
 
@@ -44,9 +43,7 @@ const verifyUser = async (request: NextApiRequest, response: NextApiResponse) =>
           code: 2,
         });
       }),
-  ).then(() => {
-    logger.info('[UPDATE, PUT /api/verify/code] 이메일 코드 인증');
-  });
+  );
 };
 
 const SELECT_USER_VERIFY_CODE = `

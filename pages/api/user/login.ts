@@ -6,7 +6,6 @@ import crypto from 'crypto';
 import Database from '@database/Database';
 import cors from '@middleware/cors';
 import config from '@config/jwt.config.json';
-import logger from '@config/log.config';
 import * as T from '@types';
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -50,9 +49,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             code: 2,
           });
         }),
-    ).then(() => {
-      logger.info('[SELECT, GET /api/user/login] 로그인');
-    });
+    );
   }
 };
 
