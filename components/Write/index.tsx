@@ -10,8 +10,6 @@ import axios from 'axios';
 
 import * as T from '@types';
 import dsPalette from '@constants/ds-palette';
-import { Page } from '@utilities/route';
-import stores from '@stores';
 import WriteSection from './WriteSection';
 import ViewerSection from './ViewerSection';
 
@@ -31,13 +29,6 @@ interface Form {
 
 const Write = () => {
   const router = useRouter();
-
-  const { signStore } = stores();
-  const { userData } = signStore;
-
-  if (typeof window !== 'undefined' && !userData?.adminFl) {
-    router.push(Page.HOME);
-  }
 
   const form = useLocalObservable<Form>(() => ({
     inputs: {

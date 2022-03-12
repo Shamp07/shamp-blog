@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "NODE_TLS_REJECT_UNAUTHORIZED='0' node server.js",
+    "build": "next build",
     "deploy": "serverless"
   },
   "repository": {
@@ -23,6 +24,7 @@
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
     "@types/color": "^3.0.2",
+    "@types/cookie": "^0.4.1",
     "@types/cors": "^2.8.9",
     "@types/js-cookie": "^2.2.6",
     "@types/jsonwebtoken": "^8.5.0",
@@ -75,6 +77,7 @@
     "aws-sdk": "^2.1061.0",
     "axios": "^0.21.1",
     "color": "^3.2.1",
+    "cookie": "^0.4.2",
     "cors": "^2.8.5",
     "express": "^4.17.2",
     "js-cookie": "^2.2.1",
