@@ -2,8 +2,12 @@ blogAplication:
   component: '@sls-next/serverless-component@3.6.0'
   inputs:
     name:
-      defaultLambda: 'falsy-exemple-default-lambda'
-      apiLambda: 'falsy-exemple-api-lambda'
+      defaultLambda: 'blog-lambda'
+      apiLambda: 'blog-api-lambda'
     bucketRegion: 'ap-northeast-2'
     cloudfront:
       comment: 'Next Application Deployment'
+      certificate:
+        cloudFrontDefaultCertificate: false
+        acmCertificateArn: 'arn:aws:acm:us-east-1:938082459747:certificate/1e72a4c0-55fa-4701-ba96-d272b453e5e0'
+        minimumProtocolVersion: 'TLSv1.2_2021'
