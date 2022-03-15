@@ -8,6 +8,7 @@ import cors from '@middleware/cors';
 import * as T from '@types';
 import { renderPlain, getImagePath } from '@utilities/marked';
 import titleURLParser from '@utilities/parser';
+import logger from '@utilities/logger';
 
 const handler = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
@@ -85,6 +86,7 @@ const getPost = async (request: NextApiRequest, response: NextApiResponse) => {
         );
       })
       .then(() => {
+        logger.info(article);
         response.json({
           success: true,
           result: article,

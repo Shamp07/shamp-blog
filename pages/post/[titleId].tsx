@@ -11,9 +11,7 @@ Post.getInitialProps = async ({ query }: NextPageContext) => {
 
   const titleId = String(query.titleId);
 
-  await Promise.all([
-    postStore.getPost(titleId),
-  ]);
+  await postStore.getPost(titleId);
 
   return {
     props: {},
