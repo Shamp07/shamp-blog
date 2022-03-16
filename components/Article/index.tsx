@@ -62,7 +62,7 @@ const Article = () => {
     </Link>
   ));
 
-  const description = shortContent.replaceAll('\n', ' ').trim().substring(0, 150);
+  const description = shortContent.replace(/\n/g, ' ').trim().substring(0, 150);
 
   return (
     <Root>
