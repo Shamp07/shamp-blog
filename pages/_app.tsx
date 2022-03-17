@@ -59,7 +59,6 @@ class CustomApp extends App {
             key="og-image"
           />
           <meta property="og:site_name" content="Shamp Blog" />
-
         </Head>
         <QueryClientProvider client={queryClient}>
           <Layout>
