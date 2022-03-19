@@ -1,7 +1,7 @@
 name: Blog Application Deploy
 on:
   push:
-    branches: master
+    branches: develop
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -9,7 +9,7 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@master
         with:
-          ref: master
+          ref: develop
 
       - name: Checkout configuration files
         uses: actions/checkout@master
