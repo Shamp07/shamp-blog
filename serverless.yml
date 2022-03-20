@@ -7,11 +7,8 @@ blogAplication:
     bucketRegion: 'ap-northeast-2'
     bucketName: 'vsr54t7-bo9v6jb'
     cloudfront:
+      distributionId: 'E3KC61D5AC0EOY'
       comment: 'Next Application Deployment'
-      defaults:
-        ttl: 31536000
-        cloudfront-functions:
-          viewer-response: 'arn:aws:cloudfront::938082459747:function/cf-function'
       certificate:
         cloudFrontDefaultCertificate: false
         acmCertificateArn: 'arn:aws:acm:us-east-1:938082459747:certificate/1e72a4c0-55fa-4701-ba96-d272b453e5e0'

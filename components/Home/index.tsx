@@ -28,9 +28,7 @@ const Home = () => {
 
 const Root = styled.div({
   width: '1728px',
-  marginLeft: 'auto',
-  marginRight: 'auto',
-  marginTop: '3.5rem',
+  margin: '3.5rem auto',
 
   [MediaQuery[T.Device.DESKTOP]]: {
     width: '1376px',
@@ -43,6 +41,7 @@ const Root = styled.div({
   [MediaQuery[T.Device.TABLET]]: {
     width: 'calc(100% - 2rem)',
     marginTop: '1rem',
+    marginBottom: '1rem',
   },
 });
 
