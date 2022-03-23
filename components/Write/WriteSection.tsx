@@ -14,6 +14,14 @@ import TextField from '@atoms/TextField';
 import dsPalette from '@constants/ds-palette';
 import Editor from './Editor';
 
+interface WriteMutationVariables {
+  id?: number;
+  title: Props['title'];
+  tags: Props['tags'];
+  content: Props['content'];
+  isTemporary: boolean;
+}
+
 interface Props {
   title: string;
   tag: string;
@@ -37,27 +45,33 @@ const WriteSection = ({
 }: Props) => {
   const router = useRouter();
 
-  const mutation = useMutation(() => axios.post('/api/post', { title, tags, content }));
-  const putMutation = useMutation(() => axios.put(
-    '/api/post',
-    {
-      id: router.query.id, title, tags, content,
-    },
-  ));
+  const mutation = useMutation<unknown, Error, WriteMutationVariables>((data) => axios.post('/api/post', data));
+  const putMutation = useMutation<unknown, Error, WriteMutationVariables>((data) => axios.put('/api/post', data));
 
   useEffect(() => {
     if (mutation.isSuccess || putMutation.isSuccess) moveToHome();
   }, [mutation.isSuccess, putMutation.isSuccess]);
 
   const moveToHome = () => router.push('/');
-  const onAddPost = () => {
+  const addPost = (isTemporary: WriteMutationVariables['isTemporary']) => {
     if (!title.trim() || !tags.length || !content?.trim()) {
       return;
     }
 
-    if (router.query.id) putMutation.mutate();
-    else mutation.mutate();
+    const data = {
+      title, tags, content, isTemporary,
+    };
+
+    if (router.query.id) {
+      const { id } = router.query;
+      putMutation.mutate({ id: Number(id), ...data });
+    } else {
+      mutation.mutate(data);
+    }
   };
+
+  const onAddPost = () => addPost(false);
+  const onTemporaryAddPost = () => addPost(true);
 
   return (
     <Root>
@@ -99,6 +113,14 @@ const WriteSection = ({
           나가기
         </Button>
         <ButtonWrapper>
+          <Button
+            size="small"
+            variant="text"
+            customStyles={buttonStyles}
+            onClick={onTemporaryAddPost}
+          >
+            임시저장
+          </Button>
           <Button
             color="primary"
             size="small"

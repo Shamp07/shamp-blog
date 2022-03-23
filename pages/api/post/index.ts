@@ -35,7 +35,9 @@ const generateUniqueTitleId = (result: QueryResult, parsedTitle: string): string
 };
 
 const addPost = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { title, tags, content } = request.body;
+  const {
+    title, tags, content, isTemporary,
+  } = request.body;
 
   const parsedTitle = titleURLParser(title);
 
@@ -48,7 +50,7 @@ const addPost = async (request: NextApiRequest, response: NextApiResponse) => {
 
       const values = [tags, title, titleId, content, marked(content, {
         renderer: renderPlain(),
-      }).substring(0, 500), getImagePath(content)];
+      }).substring(0, 500), getImagePath(content), isTemporary];
       return database.query(
         INSERT_POST,
         values,
@@ -101,10 +103,11 @@ const getPost = async (request: NextApiRequest, response: NextApiResponse) => {
 const modifyPost = async (request: NextApiRequest, response: NextApiResponse) => {
   const {
     id, tags, title, content,
+    isTemporary,
   } = request.body;
   const values = [tags, title, content, id, marked(content, {
     renderer: renderPlain(),
-  }).substring(0, 500), getImagePath(content)];
+  }).substring(0, 500), getImagePath(content), isTemporary];
 
   await Database.execute(
     (database: Client) => database.query(
@@ -143,14 +146,16 @@ const INSERT_POST = `
     title_id,
     content,
     short_content,
-    thumbnail
+    thumbnail,
+    temporary_fl
   ) VALUES (
     $1,
     $2,
     $3,
     $4,
     $5,
-    $6
+    $6,
+    $7
   );
 `;
 
@@ -195,6 +200,7 @@ const SELECT_POST = `
   WHERE 
     p.title_id = $1
     AND p.delete_fl = false
+    AND p.temporary_fl = false
 `;
 
 const UPDATE_POST_VIEW_CNT = `
@@ -211,6 +217,7 @@ const UPDATE_POST = `
     content = $3,
     short_content = $5,
     thumbnail = $6,
+    temporary_fl = $7,
     mfy_dttm = NOW()
   WHERE id = $4
 `;

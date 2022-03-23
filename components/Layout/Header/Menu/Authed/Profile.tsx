@@ -1,4 +1,5 @@
 import React, { MouseEvent } from 'react';
+import { useRouter } from 'next/router';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import MenuItem from '@mui/material/MenuItem';
 import styled from '@emotion/styled';
@@ -9,6 +10,8 @@ import Avatar from '@mui/material/Avatar';
 
 import stores from '@stores';
 import dsPalette from '@constants/ds-palette';
+import { Page } from '@utilities/route';
+
 
 interface MenuObservable {
   element: HTMLButtonElement | null;
@@ -17,6 +20,8 @@ interface MenuObservable {
 }
 
 const Profile = () => {
+  const router = useRouter();
+
   const { signStore } = stores();
   const { userData } = signStore;
   if (!userData) return null;
@@ -32,6 +37,7 @@ const Profile = () => {
   }));
 
   const onSignOut = () => signStore.signOut();
+  const onTemporaryPost = () => router.push(Page.temporaries);
 
   return (
     <>
@@ -47,6 +53,7 @@ const Profile = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
+        <ProfileMenuItem onClick={onTemporaryPost}>임시 글</ProfileMenuItem>
         <ProfileMenuItem onClick={onSignOut}>로그아웃</ProfileMenuItem>
       </ProfileMenu>
     </>

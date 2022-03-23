@@ -10,7 +10,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   if (request.method === T.RequestMethod.GET) {
     await Database.execute(
       (database: Client) => database.query(
-        SELECT_POST_LIST,
+        SELECT_TEMPORARY_POST_LIST,
       )
         .then((result) => {
           response.json({
@@ -22,7 +22,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   }
 };
 
-const SELECT_POST_LIST = `
+const SELECT_TEMPORARY_POST_LIST = `
   SELECT * FROM (
     SELECT
       ROW_NUMBER() OVER(ORDER BY b."crtDttm" DESC) AS rownum,
@@ -63,7 +63,6 @@ const SELECT_POST_LIST = `
       FROM post p
       WHERE 
         p.delete_fl = false
-        AND p.temporary_fl = false
       ORDER BY p.crt_dttm DESC
     ) b
   ) a
