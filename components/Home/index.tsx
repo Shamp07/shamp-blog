@@ -4,15 +4,16 @@ import styled from '@emotion/styled';
 
 import PostCard from '@components/Home/PostCard';
 import { MediaQuery } from '@constants/styles';
-import stores from '@stores';
 import * as T from '@types';
 
-const Home = () => {
-  const { postStore } = stores();
-  const { posts } = postStore;
+interface Props {
+  posts: T.Post[];
+  isTemporary: boolean;
+}
 
+const Home = ({ posts, isTemporary }: Props) => {
   const postCards = posts.map((post) => (
-    <PostCard key={post.id} post={post} />
+    <PostCard key={post.id} post={post} isTemporary={isTemporary} />
   ));
 
   return (

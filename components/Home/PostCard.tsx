@@ -9,23 +9,26 @@ import { Page } from '@utilities/route';
 
 interface Props {
   post: T.Post;
+  isTemporary: boolean;
 }
 
-const PostCard = ({
-  post: {
+const PostCard = ({ post, isTemporary }: Props) => {
+  const {
     title, titleId, time, shortContent,
     modifiedTime, thumbnail,
-  },
-}: Props) => {
+  } = post;
+
   const thumbnailImage = thumbnail ? (
     <ImageWrapper>
       <Thumbnail src={thumbnail} alt="article_thumbnail" />
     </ImageWrapper>
   ) : null;
 
+  const path = isTemporary ? `${Page.WRITE}?id=${1}` : `${Page.POST}/${titleId}`;
+
   return (
     <Root>
-      <Link href={`${Page.POST}/${titleId}`} passHref>
+      <Link href={path} passHref>
         <Section>
           {thumbnailImage}
           <Inner>

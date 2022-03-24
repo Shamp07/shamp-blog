@@ -2,16 +2,25 @@ import React from 'react';
 
 import Home from '@components/Home';
 import stores from '@stores';
+import * as T from '@types';
 
-const Page = () => <Home />;
+interface Props {
+  posts: T.Post[];
+}
+
+const Page = ({ posts }: Props) => {
+  return (
+    <Home posts={posts} isTemporary={false} />
+  );
+};
 
 Page.getInitialProps = async () => {
   const { postStore } = stores();
 
-  await postStore.getPosts();
+  const posts = await postStore.getPosts();
 
   return {
-    props: {},
+    posts,
   };
 };
 

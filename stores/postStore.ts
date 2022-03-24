@@ -4,18 +4,21 @@ import * as T from '@types';
 import axios from 'axios';
 
 export interface PostStore {
-  posts: T.Post[];
   article: T.Article | null;
-  getPosts(): Promise<void>;
+  getPosts(): Promise<T.Post[]>;
+  getTemporaryPosts(): Promise<T.Post[]>;
   getPost(titleId: T.Post['titleId']): Promise<void>;
 }
 
 const postStore: PostStore = {
-  posts: [],
   article: null,
   getPosts: flow(function* (this: PostStore) {
     const { data } = yield axios.get(`${process.env.BASE_PATH}/api/post/list`);
-    this.posts = data.result;
+    return data.result;
+  }),
+  getTemporaryPosts: flow(function* (this: PostStore) {
+    const { data } = yield axios.get(`${process.env.BASE_PATH}/api/post/list/temporary`);
+    return data.result;
   }),
   getPost: flow(function* (this: PostStore, titleId) {
     const { data } = yield axios.get(`${process.env.BASE_PATH}/api/post`, { params: { titleId } });
@@ -23,8 +26,7 @@ const postStore: PostStore = {
   }),
 };
 
-export const initialPost: Pick<PostStore, 'posts' | 'article'> = {
-  posts: [],
+export const initialPost: Pick<PostStore, 'article'> = {
   article: null,
 };
 

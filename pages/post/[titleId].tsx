@@ -13,9 +13,7 @@ Post.getInitialProps = async ({ query }: NextPageContext) => {
 
   await postStore.getPost(titleId);
 
-  return {
-    props: {},
-  };
+  return {};
 };
 
 export default Post;

@@ -39,7 +39,7 @@ const SELECT_POST_LIST = `
         p.thumbnail,
         p.crt_dttm AS "crtDttm",
         (SELECT COUNT(*) FROM post_like WHERE post_id = p.id) AS "likeCnt",
-        (SELECT COUNT(*) FROM comment WHERE post_id = p.id AND delete_fl = false) AS "commentCnchrot",
+        (SELECT COUNT(*) FROM comment WHERE post_id = p.id AND delete_fl = false) AS "commentCnt",
         CASE WHEN (CAST(TO_CHAR(NOW() - p.crt_dttm, 'YYYYMMDDHH24MISS') AS INTEGER) < 100)
             THEN '방금 전'
           WHEN (CAST(TO_CHAR(NOW() - p.crt_dttm,'YYYYMMDDHH24MISS') AS INTEGER) < 10000)
