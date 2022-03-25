@@ -14,7 +14,7 @@ interface Props {
 
 const PostCard = ({ post, isTemporary }: Props) => {
   const {
-    title, titleId, time, shortContent,
+    id, title, titleId, time, shortContent,
     modifiedTime, thumbnail,
   } = post;
 
@@ -24,7 +24,7 @@ const PostCard = ({ post, isTemporary }: Props) => {
     </ImageWrapper>
   ) : null;
 
-  const path = isTemporary ? `${Page.WRITE}?id=${1}` : `${Page.POST}/${titleId}`;
+  const path = isTemporary ? `${Page.WRITE}?id=${id}` : `${Page.POST}/${titleId}`;
 
   return (
     <Root>

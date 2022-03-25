@@ -5,5 +5,5 @@ export enum Page {
   SIGN_IN = '/signin',
   SIGN_UP = '/signup',
   POST = '/post',
-  temporaries = '/temporaries'
+  TEMPORARIES = '/temporaries',
 }

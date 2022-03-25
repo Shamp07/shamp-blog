@@ -12,7 +12,6 @@ import stores from '@stores';
 import dsPalette from '@constants/ds-palette';
 import { Page } from '@utilities/route';
 
-
 interface MenuObservable {
   element: HTMLButtonElement | null;
   open(event: MouseEvent<HTMLButtonElement>): void;
@@ -37,7 +36,10 @@ const Profile = () => {
   }));
 
   const onSignOut = () => signStore.signOut();
-  const onTemporaryPost = () => router.push(Page.temporaries);
+  const onTemporaryPost = () => {
+    menu.close();
+    router.push(Page.TEMPORARIES);
+  };
 
   return (
     <>

@@ -8,11 +8,7 @@ interface Props {
   posts: T.Post[];
 }
 
-const Page = ({ posts }: Props) => {
-  return (
-    <Home posts={posts} isTemporary={false} />
-  );
-};
+const Page = ({ posts }: Props) => <Home posts={posts} isTemporary={false} />;
 
 Page.getInitialProps = async () => {
   const { postStore } = stores();

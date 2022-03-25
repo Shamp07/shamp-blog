@@ -74,7 +74,8 @@
     "./constants",
     "./types",
     "./server.js",
-    "./next.config.js"
+    "./next.config.js",
+    "./next-env.d.ts"
   ],
   "exclude": [
     "node_modules"

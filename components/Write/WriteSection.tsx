@@ -2,7 +2,7 @@ import React, {
   ChangeEvent, CSSProperties, KeyboardEvent, MouseEvent, useEffect,
 } from 'react';
 import { useRouter } from 'next/router';
-import { observer } from 'mobx-react-lite';
+import { observer, useLocalObservable } from 'mobx-react-lite';
 import { useMutation } from 'react-query';
 import styled from '@emotion/styled';
 import axios from 'axios';
@@ -12,6 +12,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import Button from '@atoms/Button';
 import TextField from '@atoms/TextField';
 import dsPalette from '@constants/ds-palette';
+import { Page } from '@utilities/route';
 import Editor from './Editor';
 
 interface WriteMutationVariables {
@@ -45,18 +46,32 @@ const WriteSection = ({
 }: Props) => {
   const router = useRouter();
 
+  const state = useLocalObservable(() => ({
+    isTemporary: false,
+    setTemporary(value: boolean) {
+      this.isTemporary = value;
+    },
+  }));
+
   const mutation = useMutation<unknown, Error, WriteMutationVariables>((data) => axios.post('/api/post', data));
   const putMutation = useMutation<unknown, Error, WriteMutationVariables>((data) => axios.put('/api/post', data));
 
   useEffect(() => {
-    if (mutation.isSuccess || putMutation.isSuccess) moveToHome();
-  }, [mutation.isSuccess, putMutation.isSuccess]);
+    if (mutation.isSuccess || putMutation.isSuccess) {
+      if (state.isTemporary) moveToTemporaries();
+      else moveToHome();
+    }
+  }, [mutation.isSuccess, putMutation.isSuccess, state.isTemporary]);
 
-  const moveToHome = () => router.push('/');
+  const moveToHome = () => router.push(Page.HOME);
+  const moveToTemporaries = () => router.push(Page.TEMPORARIES);
+
   const addPost = (isTemporary: WriteMutationVariables['isTemporary']) => {
     if (!title.trim() || !tags.length || !content?.trim()) {
       return;
     }
+
+    state.setTemporary(isTemporary);
 
     const data = {
       title, tags, content, isTemporary,

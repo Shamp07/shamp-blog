@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "NODE_TLS_REJECT_UNAUTHORIZED='0' node server.js",
     "build": "next build",
-    "deploy": "serverless"
+    "deploy": "serverless",
+    "lint": "eslint  \"./**/*.ts\" \"./**/*.tsx\""
   },
   "repository": {
     "type": "git",

@@ -13,7 +13,6 @@ interface Props {
 const TemporariesPage = ({ posts }: Props) => <Home posts={posts} isTemporary />;
 
 TemporariesPage.getInitialProps = async (context: NextPageContext) => {
-
   if (!isAdmin(context)) {
     const { res } = context;
 
