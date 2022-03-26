@@ -7,9 +7,14 @@ import nextConnect from 'next-connect';
 
 import * as T from '@types';
 import authMiddleware from '@middleware/auth';
+import awsConfig from '@config/aws-config.json';
 import multerConfig from '@config/multer-s3-config.json';
 
-aws.config.loadFromPath('config/aws-config.json');
+aws.config.update({
+  accessKeyId: awsConfig.accessKeyId,
+  secretAccessKey: awsConfig.secretAccessKey,
+  region: awsConfig.region,
+});
 
 const upload = multer({
   storage: multerS3({
