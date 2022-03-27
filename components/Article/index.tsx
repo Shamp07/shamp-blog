@@ -34,7 +34,7 @@ const Article = () => {
   const mutation = useMutation(() => axios.delete('/api/post', { params: { id } }));
 
   useEffect(() => {
-    if (mutation.isSuccess) router.push('/');
+    if (mutation.isSuccess) router.push(Page.HOME);
   }, [mutation.isSuccess]);
 
   const onModify = () => {

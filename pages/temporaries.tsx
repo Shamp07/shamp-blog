@@ -5,6 +5,7 @@ import stores from '@stores';
 import { isAdmin } from '@utilities/auth';
 import Home from '@components/Home';
 import * as T from '@types';
+import { Page } from '@utilities/route';
 
 interface Props {
   posts: T.Post[];
@@ -16,7 +17,7 @@ TemporariesPage.getInitialProps = async (context: NextPageContext) => {
   if (!isAdmin(context)) {
     const { res } = context;
 
-    res?.writeHead(307, { Location: '/' });
+    res?.writeHead(307, { Location: Page.HOME });
     res?.end();
   } else {
     const { postStore } = stores();

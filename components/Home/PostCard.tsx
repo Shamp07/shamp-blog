@@ -100,6 +100,11 @@ const Thumbnail = styled.img({
 const Title = styled.h4({
   fontSize: '1rem',
   margin: '0 0 .25rem',
+  lineHeight: 1.5,
+  wordBreak: 'break-word',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
 });
 
 const Inner = styled.div({

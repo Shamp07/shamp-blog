@@ -54,7 +54,7 @@ const SignIn = () => {
     if (mutation.isSuccess && mutation.data.result) {
       cookie.set('auth', mutation.data.result, { expires: 2 });
       signStore.authCheck();
-      router.push('/');
+      router.push(Page.HOME);
     }
   }, [mutation.isSuccess]);
 
