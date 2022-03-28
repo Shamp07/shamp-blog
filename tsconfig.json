@@ -39,6 +39,9 @@
       "@stores/*": [
         "stores/*"
       ],
+      "@database": [
+        "database"
+      ],
       "@utilities/*": [
         "utilities/*"
       ],
