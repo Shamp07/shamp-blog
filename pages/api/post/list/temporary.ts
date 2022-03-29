@@ -1,24 +1,18 @@
-import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import Database from '@database/Database';
+import database from '@database';
 import cors from '@middleware/cors';
 import * as T from '@types';
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   await cors(request, response);
   if (request.method === T.RequestMethod.GET) {
-    await Database.execute(
-      (database: Client) => database.query(
-        SELECT_TEMPORARY_POST_LIST,
-      )
-        .then((result) => {
-          response.json({
-            success: true,
-            result: result.rows,
-          });
-        }),
-    );
+    const { rows } = await database.query(SELECT_TEMPORARY_POST_LIST);
+
+    response.json({
+      success: true,
+      result: rows,
+    });
   }
 };
 

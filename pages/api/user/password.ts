@@ -1,8 +1,7 @@
-import { Client } from 'pg';
 import { NextApiResponse } from 'next';
 import crypto from 'crypto';
 
-import Database from '@database/Database';
+import database from '@database';
 import cors from '@middleware/cors';
 import authMiddleware from '@middleware/auth';
 import * as T from '@types';
@@ -12,59 +11,41 @@ const handler = async (request: T.NextApiRequestToken, response: NextApiResponse
   if (request.method === T.RequestMethod.PUT) {
     const { id } = request.decodedToken;
     const { currentPassword, password } = request.body;
-    const values = [id];
-    await Database.execute(
-      (database: Client) => database.query(
-        SELECT_USER_SALT,
-        values,
-      )
-        .then((result) => {
-          if (result.rows.length < 1) {
-            return Promise.reject();
-          }
 
-          const { salt } = result.rows[0];
-          const hashPassword = crypto.createHash('sha512').update(currentPassword + salt).digest('hex');
-          const values2 = [id, hashPassword];
+    const saltResult = await database.query(SELECT_USER_SALT, [id]);
 
-          return database.query(
-            SELECT_USER_PASSWORD,
-            values2,
-          );
-        })
-        .then((result) => {
-          if (result.rows[0].count <= 0) {
-            return Promise.reject();
-          }
+    if (!saltResult.rows.length) {
+      response.json({
+        success: true,
+        code: 3,
+      });
+    }
 
-          const salt = String(Math.round((new Date().valueOf() * Math.random())));
-          const hashPassword = crypto.createHash('sha512').update(password + salt).digest('hex');
-          const values3 = [hashPassword, salt, id];
+    const { salt } = saltResult.rows[0];
+    const hashPassword = getHashPassword(currentPassword, salt);
 
-          return database.query(
-            UPDATE_USER_PASSWORD,
-            values3,
-          );
-        }, () => {
-          response.json({
-            success: true,
-            code: 3,
-          });
-        })
-        .then(() => {
-          response.json({
-            success: true,
-            code: 1,
-          });
-        }, () => {
-          response.json({
-            success: true,
-            code: 2,
-          });
-        }),
-    );
+    const passwordResult = await database.query(SELECT_USER_PASSWORD, [id, hashPassword]);
+
+    if (!passwordResult.rows[0].count) {
+      return response.json({
+        success: true,
+        code: 2,
+      });
+    }
+
+    const newSalt = String(Math.round((new Date().valueOf() * Math.random())));
+    const newHashPassword = getHashPassword(password, newSalt);
+
+    await database.query(UPDATE_USER_PASSWORD, [newHashPassword, newSalt, id]);
+
+    return response.json({
+      success: true,
+      code: 1,
+    });
   }
 };
+
+const getHashPassword = (password: string, salt: string) => crypto.createHash('sha512').update(password + salt).digest('hex');
 
 const SELECT_USER_SALT = `
   SELECT salt FROM "user"

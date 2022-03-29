@@ -1,7 +1,6 @@
-import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import Database from '@database/Database';
+import database from '@database';
 import cors from '@middleware/cors';
 import * as T from '@types';
 
@@ -15,35 +14,22 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 
 const verifyUser = async (request: NextApiRequest, response: NextApiResponse) => {
   const { email, code } = request.body;
-  const values = [email];
 
-  await Database.execute(
-    (database: Client) => database.query(
-      SELECT_USER_VERIFY_CODE,
-      values,
-    )
-      .then((result) => {
-        if (String(result.rows[0].verifyCode) !== code) {
-          return Promise.reject();
-        }
+  const { rows } = await database.query(SELECT_USER_VERIFY_CODE, [email]);
 
-        return database.query(
-          UPDATE_USER_VERIFY,
-          values,
-        );
-      })
-      .then(() => {
-        response.json({
-          success: true,
-          code: 1,
-        });
-      }, () => {
-        response.json({
-          success: true,
-          code: 2,
-        });
-      }),
-  );
+  if (String(rows[0].verifyCode) !== code) {
+    return response.json({
+      success: true,
+      code: 2,
+    });
+  }
+
+  await database.query(UPDATE_USER_VERIFY, [email]);
+
+  response.json({
+    success: true,
+    code: 1,
+  });
 };
 
 const SELECT_USER_VERIFY_CODE = `

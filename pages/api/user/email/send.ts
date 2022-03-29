@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Client } from 'pg';
 
 import smtpTransport from '@config/email.config';
-import Database from '@database/Database';
+import database from '@database';
 import cors from '@middleware/cors';
 import * as T from '@types';
 
@@ -43,27 +42,14 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
       `,
     };
 
-    await smtpTransport.sendMail(mailOptions, (error) => {
-      if (error) {
-        response.json({
-          success: false,
-        });
-      }
-      smtpTransport.close();
-    });
+    await smtpTransport.sendMail(mailOptions);
+    smtpTransport.close();
 
-    const values = [email, code];
-    await Database.execute(
-      (database: Client) => database.query(
-        UPDATE_USER_VERIFY_CODE,
-        values,
-      )
-        .then(() => {
-          response.json({
-            success: true,
-          });
-        }),
-    );
+    await database.query(UPDATE_USER_VERIFY_CODE, [email, code]);
+
+    response.json({
+      success: true,
+    });
   }
 };
 

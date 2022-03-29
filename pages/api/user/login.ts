@@ -1,9 +1,8 @@
-import { Client } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 
-import Database from '@database/Database';
+import database from '@database';
 import cors from '@middleware/cors';
 import config from '@config/jwt.config.json';
 import * as T from '@types';
@@ -12,44 +11,32 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   await cors(request, response);
   if (request.method === T.RequestMethod.POST) {
     const { email, password } = request.body;
-    const values = [email];
 
-    await Database.execute(
-      (database: Client) => database.query(
-        SELECT_USER_SALT,
-        values,
-      )
-        .then((result) => {
-          if (!result.rows.length || result.rows[0].deleteFl || !result.rows[0].verifyFl) {
-            return Promise.reject();
-          }
+    const saltResult = await database.query(SELECT_USER_SALT, [email]);
 
-          const { salt } = result.rows[0];
-          const hashPassword = crypto.createHash('sha512').update(password + salt).digest('hex');
-          const values2 = [email, hashPassword];
+    if (!saltResult.rows.length || saltResult.rows[0].deleteFl || !saltResult.rows[0].verifyFl) {
+      return response.status(400).json({
+        success: true,
+        code: 2,
+      });
+    }
 
-          return database.query(
-            SELECT_USER,
-            values2,
-          );
-        })
-        .then((result) => response.json({
-          success: true,
-          code: 1,
-          result: jwt.sign(
-            result.rows[0],
-            config.secret,
-            {
-              expiresIn: 30000,
-            },
-          ),
-        }), () => {
-          response.status(400).json({
-            success: true,
-            code: 2,
-          });
-        }),
-    );
+    const { salt } = saltResult.rows[0];
+    const hashPassword = crypto.createHash('sha512').update(password + salt).digest('hex');
+
+    const userResult = await database.query(SELECT_USER, [email, hashPassword]);
+
+    response.json({
+      success: true,
+      code: 1,
+      result: jwt.sign(
+        userResult.rows[0],
+        config.secret,
+        {
+          expiresIn: 30000,
+        },
+      ),
+    });
   }
 };
 

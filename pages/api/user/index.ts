@@ -1,8 +1,7 @@
-import { Client } from 'pg';
 import { NextApiResponse } from 'next';
 import crypto from 'crypto';
 
-import Database from '@database/Database';
+import database from '@database';
 import cors from '@middleware/cors';
 import authMiddleware from '@middleware/auth';
 import * as T from '@types';
@@ -21,42 +20,25 @@ const addUser = async (request: T.NextApiRequestToken, response: NextApiResponse
   const salt = String(Math.round((new Date().valueOf() * Math.random())));
   const hashPassword = crypto.createHash('sha512').update(password + salt).digest('hex');
 
-  const values = [email];
+  const { rows } = await database.query(SELECT_USER_DUPLICATE, [email]);
 
-  await Database.execute(
-    (database: Client) => database.query(
-      SELECT_USER_DUPLICATE,
-      values,
-    )
-      .then((result) => {
-        const values2 = [email, hashPassword, salt, name];
+  if (rows.length) {
+    if (rows[0].verifyFl) {
+      return response.json({
+        success: true,
+        code: 2,
+      });
+    }
 
-        if (result.rows.length) {
-          if (result.rows[0].verifyFl) return Promise.reject();
+    await database.query(UPDATE_USER, [email, hashPassword, salt, name]);
+  } else {
+    await database.query(INSERT_USER, [email, hashPassword, salt, name]);
+  }
 
-          return database.query(
-            UPDATE_USER,
-            values2,
-          );
-        }
-
-        return database.query(
-          INSERT_USER,
-          values2,
-        );
-      })
-      .then(() => {
-        response.json({
-          success: true,
-          code: 1,
-        });
-      }, () => {
-        response.json({
-          success: true,
-          code: 2,
-        });
-      }),
-  );
+  return response.json({
+    success: true,
+    code: 1,
+  });
 };
 
 const deleteUser = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
@@ -64,26 +46,18 @@ const deleteUser = async (request: T.NextApiRequestToken, response: NextApiRespo
   const { email, id } = request.decodedToken;
 
   if (email !== emailText) {
-    response.json({
+    return response.json({
       success: true,
       code: 2,
     });
-  } else {
-    const values = [emailText, id];
-
-    await Database.execute(
-      (database: Client) => database.query(
-        DELETE_USER,
-        values,
-      )
-        .then(() => {
-          response.json({
-            success: true,
-            code: 1,
-          });
-        }),
-    );
   }
+
+  await database.query(DELETE_USER, [emailText, id]);
+
+  response.json({
+    success: true,
+    code: 1,
+  });
 };
 
 const INSERT_USER = `

@@ -1,8 +1,8 @@
-import { Client, QueryResult } from 'pg';
+import { QueryResult } from 'pg';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { marked } from 'marked';
 
-import Database from '@database/Database';
+import database from '@database';
 import authMiddleware from '@middleware/auth';
 import cors from '@middleware/cors';
 import * as T from '@types';
@@ -40,64 +40,49 @@ const addPost = async (request: NextApiRequest, response: NextApiResponse) => {
   } = request.body;
 
   const parsedTitle = titleURLParser(title);
+  const postTitleIdResult = await database.query(SELECT_POST_TITLE_ID, [parsedTitle]);
+  const titleId = generateUniqueTitleId(postTitleIdResult, parsedTitle);
 
-  await Database.execute(
-    (database: Client) => database.query(
-      SELECT_POST_TITLE_ID,
-      [parsedTitle],
-    ).then((result) => {
-      const titleId = generateUniqueTitleId(result, parsedTitle);
-
-      const values = [tags, title, titleId, content, marked(content, {
+  await database.query(INSERT_POST, [
+    tags,
+    title,
+    titleId,
+    content,
+    marked(
+      content,
+      {
         renderer: renderPlain(),
-      }).substring(0, 500), getImagePath(content), isTemporary];
-      return database.query(
-        INSERT_POST,
-        values,
-      );
-    })
-      .then(() => {
-        response.status(200).json({
-          success: true,
-        });
-      }),
-  );
+      },
+    ).substring(0, 500),
+    getImagePath(content),
+    isTemporary,
+  ]);
+
+  response.status(200).json({
+    success: true,
+  });
 };
 
 const getPost = async (request: NextApiRequest, response: NextApiResponse) => {
   const { titleId } = request.query;
-  const values = [titleId];
 
-  let article: T.Article | undefined;
+  const { rows } = await database.query(SELECT_POST, [titleId]);
 
-  await Database.execute(
-    (database: Client) => database.query(
-      SELECT_POST,
-      values,
-    )
-      .then((result) => {
-        if (!result.rows.length) {
-          return Promise.reject();
-        }
+  if (!rows.length) {
+    return response.json({
+      success: true,
+      result: null,
+    });
+  }
 
-        [article] = result.rows;
-        return database.query(
-          UPDATE_POST_VIEW_CNT,
-          [article?.id],
-        );
-      })
-      .then(() => {
-        response.json({
-          success: true,
-          result: article,
-        });
-      }, () => {
-        response.json({
-          success: true,
-          result: null,
-        });
-      }),
-  );
+  const article: T.Article = rows[0];
+
+  await database.query(UPDATE_POST_VIEW_CNT, [article.id]);
+
+  return response.json({
+    success: true,
+    result: article,
+  });
 };
 
 const modifyPost = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -105,38 +90,35 @@ const modifyPost = async (request: NextApiRequest, response: NextApiResponse) =>
     id, tags, title, content,
     isTemporary,
   } = request.body;
-  const values = [tags, title, content, id, marked(content, {
-    renderer: renderPlain(),
-  }).substring(0, 500), getImagePath(content), isTemporary];
 
-  await Database.execute(
-    (database: Client) => database.query(
-      UPDATE_POST,
-      values,
-    )
-      .then(() => {
-        response.json({
-          success: true,
-        });
-      }),
-  );
+  await database.query(UPDATE_POST, [
+    tags,
+    title,
+    content,
+    id,
+    marked(
+      content,
+      {
+        renderer: renderPlain(),
+      },
+    ).substring(0, 500),
+    getImagePath(content),
+    isTemporary,
+  ]);
+
+  response.json({
+    success: true,
+  });
 };
 
 const deletePost = async (request: NextApiRequest, response: NextApiResponse) => {
   const { id } = request.query;
-  const values = [id];
 
-  await Database.execute(
-    (database: Client) => database.query(
-      DELETE_POST,
-      values,
-    )
-      .then(() => {
-        response.json({
-          success: true,
-        });
-      }),
-  );
+  await database.query(DELETE_POST, [id]);
+
+  response.json({
+    success: true,
+  });
 };
 
 const INSERT_POST = `
