@@ -9,40 +9,44 @@ import * as T from '@types';
 const handler = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
   await cors(request, response);
   if (request.method === T.RequestMethod.PUT) {
-    const { id } = request.decodedToken;
-    const { currentPassword, password } = request.body;
+    await resetPassword(request, response);
+  }
+};
 
-    const saltResult = await database.query(SELECT_USER_SALT, [id]);
+const resetPassword = async (request: T.NextApiRequestToken, response: NextApiResponse) => {
+  const { id } = request.decodedToken;
+  const { currentPassword, password } = request.body;
 
-    if (!saltResult.rows.length) {
-      response.json({
-        success: true,
-        code: 3,
-      });
-    }
+  const saltResult = await database.query(SELECT_USER_SALT, [id]);
 
-    const { salt } = saltResult.rows[0];
-    const hashPassword = getHashPassword(currentPassword, salt);
-
-    const passwordResult = await database.query(SELECT_USER_PASSWORD, [id, hashPassword]);
-
-    if (!passwordResult.rows[0].count) {
-      return response.json({
-        success: true,
-        code: 2,
-      });
-    }
-
-    const newSalt = String(Math.round((new Date().valueOf() * Math.random())));
-    const newHashPassword = getHashPassword(password, newSalt);
-
-    await database.query(UPDATE_USER_PASSWORD, [newHashPassword, newSalt, id]);
-
+  if (!saltResult.rows.length) {
     return response.json({
       success: true,
-      code: 1,
+      code: 3,
     });
   }
+
+  const { salt } = saltResult.rows[0];
+  const hashPassword = getHashPassword(currentPassword, salt);
+
+  const passwordResult = await database.query(SELECT_USER_PASSWORD, [id, hashPassword]);
+
+  if (!passwordResult.rows[0].count) {
+    return response.json({
+      success: true,
+      code: 2,
+    });
+  }
+
+  const newSalt = String(Math.round((new Date().valueOf() * Math.random())));
+  const newHashPassword = getHashPassword(password, newSalt);
+
+  await database.query(UPDATE_USER_PASSWORD, [newHashPassword, newSalt, id]);
+
+  return response.json({
+    success: true,
+    code: 1,
+  });
 };
 
 const getHashPassword = (password: string, salt: string) => crypto.createHash('sha512').update(password + salt).digest('hex');

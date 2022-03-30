@@ -26,7 +26,7 @@ const verifyUser = async (request: NextApiRequest, response: NextApiResponse) =>
 
   await database.query(UPDATE_USER_VERIFY, [email]);
 
-  response.json({
+  return response.json({
     success: true,
     code: 1,
   });

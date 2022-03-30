@@ -54,7 +54,7 @@ const deleteUser = async (request: T.NextApiRequestToken, response: NextApiRespo
 
   await database.query(DELETE_USER, [emailText, id]);
 
-  response.json({
+  return response.json({
     success: true,
     code: 1,
   });
