@@ -119,8 +119,10 @@ const Content = styled.p({
   overflowWrap: 'break-word',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  webkitLineClamp: '3',
-  webkitBoxOrient: 'vertical',
+  display: '-webkit-box',
+  lineHeight: 1.5,
+  '-webkitLineClamp': '4',
+  '-webkitBoxOrient': 'vertical',
 });
 
 const Section = styled.a({
