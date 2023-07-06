@@ -1,13 +1,11 @@
-blogAplication:
+blogApplication:
   component: '@sls-next/serverless-component@3.6.0'
   inputs:
     name:
       defaultLambda: 'blog-lambda'
       apiLambda: 'blog-api-lambda'
     bucketRegion: 'ap-northeast-2'
-    bucketName: 'vsr54t7-bo9v6jb'
     cloudfront:
-      distributionId: 'E3KC61D5AC0EOY'
       comment: 'Next Application Deployment'
       certificate:
         cloudFrontDefaultCertificate: false
