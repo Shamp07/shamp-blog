@@ -9,6 +9,6 @@ blogApplication:
       comment: 'Next Application Deployment'
       certificate:
         cloudFrontDefaultCertificate: false
-        acmCertificateArn: 'arn:aws:acm:us-east-1:938082459747:certificate/1e72a4c0-55fa-4701-ba96-d272b453e5e0'
+        acmCertificateArn: 'arn:aws:acm:us-east-1:117282331385:certificate/d5cf16d5-f4e1-46a7-a1f0-714f100d320f'
         minimumProtocolVersion: 'TLSv1.2_2021'
 
