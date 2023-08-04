@@ -92,7 +92,7 @@ const SortDownIcon = styled(FontAwesomeIcon)({
 const ProfileMenu = styled(Menu)({
   '&&&': {
     '& > .MuiPaper-elevation': {
-      boxShadow: 'rgb(0 0 0 / 10%) 0px 5px 8px',
+      boxShadow: 'rgb(0 0 0 / 10%) 0 5px 8px',
       color: dsPalette.typePrimary.toString(),
       borderTop: 0,
       marginTop: '11px',

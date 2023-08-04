@@ -156,7 +156,7 @@ const Root = styled.div({
   flex: '1 1 0%',
   flexDirection: 'column',
   justifyContent: 'space-between',
-  boxShadow: 'rgb(0 0 0 / 2%) 0px 0px 8px',
+  boxShadow: 'rgb(0 0 0 / 2%) 0 0 8px',
   position: 'relative',
   zIndex: 1,
 });
@@ -175,7 +175,7 @@ const WriteFooter = styled.div({
   paddingRight: '1rem',
   height: '4rem',
   width: '100%',
-  boxShadow: 'rgb(0 0 0 / 10%) 0px 0px 8px',
+  boxShadow: 'rgb(0 0 0 / 10%) 0 0 8px',
 });
 
 const Icon = styled(FontAwesomeIcon)({

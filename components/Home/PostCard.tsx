@@ -59,7 +59,7 @@ const Root = styled.div({
 
   '&:hover': {
     transform: 'translateY(-8px)',
-    boxShadow: 'rgb(0 0 0 / 8%) 0px 12px 20px 0px',
+    boxShadow: 'rgb(0 0 0 / 8%) 0 12px 20px 0',
   },
 
   [MediaQuery[T.Device.TABLET]]: {
@@ -67,7 +67,7 @@ const Root = styled.div({
 
     '&:hover': {
       transform: 'none',
-      boxShadow: 'rgb(0 0 0 / 8%) 0px 12px 20px 0px',
+      boxShadow: 'rgb(0 0 0 / 8%) 0 12px 20px 0',
     },
   },
 

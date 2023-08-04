@@ -57,7 +57,7 @@ const Root = styled.div({
   flexDirection: 'column',
   borderRadius: '1rem',
   background: dsPalette.themeWhite.toString(),
-  boxShadow: 'rgb(0 0 0 / 4%) 0px 4px 16px 0px',
+  boxShadow: 'rgb(0 0 0 / 4%) 0 4px 16px 0',
   marginTop: '3.5rem',
 
   [MediaQuery[T.Device.TABLET]]: {

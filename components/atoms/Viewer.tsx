@@ -66,7 +66,7 @@ const Root = styled.div({
   },
 
   blockquote: {
-    margin: '2rem 0px',
+    margin: '2rem 0',
     borderLeft: `4px solid ${dsPalette.themePrimary.toString()}`,
     padding: '1rem 1rem 1rem 2rem',
     background: dsPalette.write.blockquoteBackground.toString(),
