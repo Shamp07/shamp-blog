@@ -19,6 +19,11 @@ jobs:
           path: 'config/'
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.14.2
+
       - name: Install Dependencies
         uses: actions/setup-node@v3
         with:
