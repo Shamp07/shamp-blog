@@ -41,6 +41,10 @@ const Profile = () => {
     router.push(Page.TEMPORARIES);
   };
 
+  const temporaryPostItem = userData.adminFl ? (
+    <ProfileMenuItem onClick={onTemporaryPost}>임시 글</ProfileMenuItem>
+  ) : null;
+
   return (
     <>
       <Button onClick={menu.open}>
@@ -55,7 +59,7 @@ const Profile = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <ProfileMenuItem onClick={onTemporaryPost}>임시 글</ProfileMenuItem>
+        {temporaryPostItem}
         <ProfileMenuItem onClick={onSignOut}>로그아웃</ProfileMenuItem>
       </ProfileMenu>
     </>
