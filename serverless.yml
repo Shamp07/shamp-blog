@@ -5,7 +5,9 @@ blogApplication:
       defaultLambda: 'blog-lambda'
       apiLambda: 'blog-api-lambda'
     bucketRegion: 'ap-northeast-2'
+    bucketName: '0903pah-0jjeymj'
     cloudfront:
+      distributionId: 'E2D9PO8N4DKP57'
       comment: 'Next Application Deployment'
       certificate:
         cloudFrontDefaultCertificate: false
